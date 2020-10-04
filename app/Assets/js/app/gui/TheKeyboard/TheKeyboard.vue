@@ -56,11 +56,13 @@ export default {
                 && this.toggleState[keyObject.toggle] === true) {
                 cls += " key-toggle-on ";
             }
-            if (typeof keyObject.transform !== 'undefined') {
-                cls += " key-transform ";
-                if (this.transform.upperCase === true) {
-                    cls += " key-transform-uppercase ";
-                }
+            if (this.transform.upperCase === true
+                && typeof keyObject.transform !== 'undefined') {
+                cls += " key-transform-uppercase ";
+            }
+            if (typeof keyObject.flex !== 'undefined') {
+                cls += " key-flexible ";
+
             }
             return cls;
         },
@@ -121,6 +123,7 @@ export default {
     flex-direction: column;
     align-items: stretch;
 }
+
 .key-row {
     display: flex;
     flex-direction: row;
@@ -132,9 +135,11 @@ export default {
     flex-grow: 1;
     align-items: stretch;
 }
+
 .key-row-sm {
     flex-grow: 0.6;
 }
+
 .key-item {
     background: tomato;
     margin: 5px;
@@ -148,29 +153,43 @@ export default {
     justify-content: center;
     border-radius: 8px;
 }
+
 .key-item-4 {
     flex-grow: 5;
 }
+
 .key-item-2 {
     flex-grow: 1.5;
 }
+
 .key-color-alt {
     background: #c9412a;
 }
+
 .key-item:hover {
     background: #b13924;
 }
+
 .key-color-alt:hover {
     background: #8e291b;
 }
+
 .key-toggle-on {
     color: lightskyblue;
 }
-.key-transform-uppercase span{
+
+.key-transform-uppercase span {
     text-transform: uppercase;
 }
-.key-transform span {
+
+.key-flexible span {
+    width: 100% !important;
+}
+
+.key-item span {
     display: inline-block;
     width: 1em;
+    height: 1.5em;
 }
+
 </style>

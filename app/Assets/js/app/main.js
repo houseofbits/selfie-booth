@@ -3,11 +3,14 @@ import MainScene from './scene/MainScene';
 import Vue from 'vue'
 import App from './gui/GuiOverlay.vue'
 
+let mainScene = new MainScene(document.getElementById('renderCanvas'));
+
 if(document.getElementById('gui')) {
-    new Vue({
+    const AppRoot = Vue.extend(App);
+    new AppRoot({
         el: '#gui',
-        render: h => h(App)
+        propsData: {
+            mainScene: mainScene
+        }
     });
 }
-
-//let mainView = new MainScene(document.getElementById('renderCanvas'));

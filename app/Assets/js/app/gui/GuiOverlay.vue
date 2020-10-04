@@ -1,8 +1,8 @@
 <template>
     <div>
-        <div>Send in E-mail</div>
-        <div>Share to Facebook</div>
-        <div>Download to smartphone</div>
+        <div class="share-button">Send in E-mail</div>
+        <div class="share-button">Share to Facebook</div>
+        <div class="share-button">Download to smartphone</div>
 
         <the-keyboard-email-input></the-keyboard-email-input>
     </div>
@@ -19,6 +19,12 @@ export default {
 
         }
     },
+    props: {
+        mainScene: {
+            type: Object,
+            required: true
+        },
+    },
     components: {TheKeyboardEmailInput},
     methods: {
 
@@ -30,7 +36,17 @@ export default {
 </script>
 
 <style scoped>
-
+.share-button{
+    display: inline-block;
+    width:100%;
+    height:50px;
+    line-height: 50px;
+    border: solid 1px gray;
+    border-radius: 10px;
+    text-align: center;
+    margin-top: 20px;
+    background-color: #7e89b8;
+}
 </style>
 <style>
 @font-face {
