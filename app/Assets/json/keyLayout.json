@@ -1,0 +1,278 @@
+{
+  "default": [
+    {
+      "height": "sm",
+      "keys": [
+        {"cap": "0", "action": "0"},
+        {"cap": "1", "action": "1"},
+        {"cap": "2", "action": "2"},
+        {"cap": "3", "action": "3"},
+        {"cap": "4", "action": "4"},
+        {"cap": "5", "action": "5"},
+        {"cap": "6", "action": "6"},
+        {"cap": "7", "action": "7"},
+        {"cap": "8", "action": "8"},
+        {"cap": "9", "action": "9"}
+      ]
+    },
+    {
+      "keys": [
+        {"cap": "q", "action": "q", "transform": true},
+        {"cap": "w", "action": "w", "transform": true},
+        {"cap": "e", "action": "e", "transform": true},
+        {"cap": "r", "action": "r", "transform": true},
+        {"cap": "t", "action": "t", "transform": true},
+        {"cap": "y", "action": "y", "transform": true},
+        {"cap": "u", "action": "u", "transform": true},
+        {"cap": "i", "action": "i", "transform": true},
+        {"cap": "o", "action": "o", "transform": true},
+        {"cap": "p", "action": "p", "transform": true}
+      ]
+    },
+    {
+      "keys": [
+        {"cap": "Alt", "action": "layout-alt", "color":"alt", "toggle":"alt"},
+        {"cap": "a", "action": "a", "transform": true},
+        {"cap": "s", "action": "s", "transform": true},
+        {"cap": "d", "action": "d", "transform": true},
+        {"cap": "f", "action": "f", "transform": true},
+        {"cap": "g", "action": "g", "transform": true},
+        {"cap": "h", "action": "h", "transform": true},
+        {"cap": "j", "action": "j", "transform": true},
+        {"cap": "k", "action": "k", "transform": true},
+        {"cap": "l", "action": "l", "transform": true}
+      ]
+    },
+    {
+      "keys": [
+        {"cap": "<i class='fas fa-arrow-alt-circle-up'></i>", "action": "uppercase", "size": "2", "color":"alt",
+          "toggle":"shift"
+        },
+        {"cap": "z", "action": "z", "transform": true},
+        {"cap": "x", "action": "x", "transform": true},
+        {"cap": "c", "action": "c", "transform": true},
+        {"cap": "v", "action": "v", "transform": true},
+        {"cap": "b", "action": "b", "transform": true},
+        {"cap": "n", "action": "n", "transform": true},
+        {"cap": "m", "action": "m", "transform": true},
+        {"cap": "<i class='fas fa-backspace'></i>", "action": "backspace", "size": "2", "color":"alt"}
+      ]
+    },
+    {
+      "keys": [
+        {"cap": "!#1", "action": "layout-symbols1", "size": "2", "color":"alt"},
+        {"cap": ".", "action": "."},
+        {"cap": "@", "action": "@"},
+        {"cap": "Space", "action": "space", "size": "4"},
+        {"cap": ".lv", "action": ".lv"},
+        {"cap": ".com", "action": ".com"}
+      ]
+    }
+  ],
+  "alt": [
+    {
+      "height": "sm",
+      "keys": [
+        {"cap": "0", "action": "0"},
+        {"cap": "1", "action": "1"},
+        {"cap": "2", "action": "2"},
+        {"cap": "3", "action": "3"},
+        {"cap": "4", "action": "4"},
+        {"cap": "5", "action": "5"},
+        {"cap": "6", "action": "6"},
+        {"cap": "7", "action": "7"},
+        {"cap": "8", "action": "8"},
+        {"cap": "9", "action": "9"}
+      ]
+    },
+    {
+      "keys": [
+        {"cap": "q", "action": "q", "transform": true},
+        {"cap": "w", "action": "w", "transform": true},
+        {"cap": "ē", "action": "ē", "transform": true},
+        {"cap": "ŗ", "action": "ŗ", "transform": true},
+        {"cap": "t", "action": "t", "transform": true},
+        {"cap": "y", "action": "y", "transform": true},
+        {"cap": "ū", "action": "ū", "transform": true},
+        {"cap": "ī", "action": "ī", "transform": true},
+        {"cap": "ō", "action": "ō", "transform": true},
+        {"cap": "p", "action": "p", "transform": true}
+      ]
+    },
+    {
+      "keys": [
+        {"cap": "Alt", "action": "layout-default", "color":"alt", "toggle":"alt"},
+        {"cap": "ā", "action": "ā", "transform": true},
+        {"cap": "š", "action": "š", "transform": true},
+        {"cap": "d", "action": "d", "transform": true},
+        {"cap": "f", "action": "f", "transform": true},
+        {"cap": "ģ", "action": "ģ", "transform": true},
+        {"cap": "h", "action": "h", "transform": true},
+        {"cap": "j", "action": "j", "transform": true},
+        {"cap": "ķ", "action": "ķ", "transform": true},
+        {"cap": "ļ", "action": "ķ", "transform": true}
+      ]
+    },
+    {
+      "keys": [
+        {"cap": "<i class='fas fa-arrow-alt-circle-up'></i>", "action": "uppercase", "size": "2", "color":"alt",
+          "toggle":"shift"
+        },
+        {"cap": "ž", "action": "ž", "transform": true},
+        {"cap": "x", "action": "x", "transform": true},
+        {"cap": "č", "action": "č", "transform": true},
+        {"cap": "v", "action": "v", "transform": true},
+        {"cap": "b", "action": "b", "transform": true},
+        {"cap": "ņ", "action": "ņ", "transform": true},
+        {"cap": "m", "action": "m", "transform": true},
+        {"cap": "<i class='fas fa-backspace'></i>", "action": "backspace", "size": "2", "color":"alt"}
+      ]
+    },
+    {
+      "keys": [
+        {"cap": "!#1", "action": "layout-symbols1", "size": "2", "color":"alt"},
+        {"cap": ".", "action": "."},
+        {"cap": "@", "action": "@"},
+        {"cap": "Space", "action": "space", "size": "4"},
+        {"cap": ".lv", "action": ".lv"},
+        {"cap": ".com", "action": ".com"}
+      ]
+    }
+  ],
+  "symbols1": [
+    {
+      "height": "sm",
+      "keys": [
+        {"cap": "0", "action": "0"},
+        {"cap": "1", "action": "1"},
+        {"cap": "2", "action": "2"},
+        {"cap": "3", "action": "3"},
+        {"cap": "4", "action": "4"},
+        {"cap": "5", "action": "5"},
+        {"cap": "6", "action": "6"},
+        {"cap": "7", "action": "7"},
+        {"cap": "8", "action": "8"},
+        {"cap": "9", "action": "9"}
+      ]
+    },
+    {
+      "keys": [
+        {"cap": "+", "action": "+", "transform": true},
+        {"cap": "\u008E", "action": "\u008E", "transform": true},
+        {"cap": "\u008F", "action": "\u008F", "transform": true},
+        {"cap": "=", "action": "=", "transform": true},
+        {"cap": "/", "action": "/", "transform": true},
+        {"cap": "_", "action": "_", "transform": true},
+        {"cap": "\u20AC", "action": "\u20AC", "transform": true},
+        {"cap": "\u00A3", "action": "\u00A3", "transform": true},
+        {"cap": "\u00A5", "action": "\u00A5", "transform": true},
+        {"cap": "\u20A9", "action": "\u20A9", "transform": true}
+      ]
+    },
+    {
+      "keys": [
+        {"cap": "!", "action": "!"},
+        {"cap": "@", "action": "@"},
+        {"cap": "#", "action": "#"},
+        {"cap": "$", "action": "$"},
+        {"cap": "%", "action": "%"},
+        {"cap": "^", "action": "^"},
+        {"cap": "&", "action": "&"},
+        {"cap": "*", "action": "*"},
+        {"cap": "(", "action": "("},
+        {"cap": ")", "action": ")"}
+      ]
+    },
+    {
+      "keys": [
+        {"cap": "1/2", "action": "layout-symbols2", "size": "2", "color":"alt"},
+        {"cap": "-", "action": "-", "transform": true},
+        {"cap": "'", "action": "'", "transform": true},
+        {"cap": "\"", "action": "\"", "transform": true},
+        {"cap": ":", "action": ":", "transform": true},
+        {"cap": ";", "action": ";", "transform": true},
+        {"cap": ",", "action": ",", "transform": true},
+        {"cap": "?", "action": "?", "transform": true},
+        {"cap": "<i class='fas fa-backspace'></i>", "action": "backspace", "size": "2", "color":"alt"}
+      ]
+    },
+    {
+      "keys": [
+        {"cap": "abc", "action": "layout-default", "size": "2", "color":"alt"},
+        {"cap": ".", "action": "."},
+        {"cap": "@", "action": "@"},
+        {"cap": "Space", "action": "space", "size": "4"},
+        {"cap": ".lv", "action": ".lv"},
+        {"cap": ".com", "action": ".com"}
+      ]
+    }
+  ],
+  "symbols2": [
+    {
+      "height": "sm",
+      "keys": [
+        {"cap": "0", "action": "0"},
+        {"cap": "1", "action": "1"},
+        {"cap": "2", "action": "2"},
+        {"cap": "3", "action": "3"},
+        {"cap": "4", "action": "4"},
+        {"cap": "5", "action": "5"},
+        {"cap": "6", "action": "6"},
+        {"cap": "7", "action": "7"},
+        {"cap": "8", "action": "8"},
+        {"cap": "9", "action": "9"}
+      ]
+    },
+    {
+      "keys": [
+        {"cap": "`", "action": "`"},
+        {"cap": "~", "action": "~"},
+        {"cap": "\\", "action": "\\"},
+        {"cap": "|", "action": "|"},
+        {"cap": "<", "action": "<"},
+        {"cap": ">", "action": ">"},
+        {"cap": "{", "action": "{"},
+        {"cap": "}", "action": "}"},
+        {"cap": "[", "action": "["},
+        {"cap": "]", "action": "]"}
+      ]
+    },
+    {
+      "keys": [
+        {"cap": "\u00B0", "action": "\u00B0"},
+        {"cap": "\u2022", "action": "\u2022"},
+        {"cap": "\u25CB", "action": "\u25CB"},
+        {"cap": "\u25CF", "action": "\u25CF"},
+        {"cap": "\u25A1", "action": "\u25A1"},
+        {"cap": "\u25A0", "action": "\u25A0"},
+        {"cap": "\u2664", "action": "\u2664"},
+        {"cap": "\u2661", "action": "\u2661"},
+        {"cap": "\u2662", "action": "\u2662"},
+        {"cap": "\u2667", "action": "\u2667"}
+      ]
+    },
+    {
+      "keys": [
+        {"cap": "2/2", "action": "layout-symbols1", "size": "2", "color":"alt"},
+        {"cap": "\u2606", "action": "\u2606"},
+        {"cap": "\u25AA", "action": "\u25AA"},
+        {"cap": "\u00A4", "action": "\u00A4"},
+        {"cap": "\u00AB", "action": "\u00AB"},
+        {"cap": "\u00BB", "action": "\u00BB"},
+        {"cap": "\u00A1", "action": "\u00A1"},
+        {"cap": "\u00BF", "action": "\u00BF"},
+        {"cap": "<i class='fas fa-backspace'></i>", "action": "backspace", "size": "2", "color":"alt"}
+      ]
+    },
+    {
+      "keys": [
+        {"cap": "abc", "action": "layout-default", "size": "2", "color":"alt"},
+        {"cap": ".", "action": "."},
+        {"cap": "@", "action": "@"},
+        {"cap": "Space", "action": "space", "size": "4"},
+        {"cap": ".lv", "action": ".lv"},
+        {"cap": ".com", "action": ".com"}
+      ]
+    }
+  ]
+}

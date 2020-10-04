@@ -1,0 +1,16 @@
+#!/bin/bash
+
+
+function up(){
+
+    docker-compose up -d;
+
+}
+
+function down(){
+
+    docker-compose down;
+
+}
+
+$1 $2 $3 $4 $5
