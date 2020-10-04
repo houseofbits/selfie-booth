@@ -6,8 +6,8 @@ const webpack = require("webpack");
 
 module.exports = {    
     entry: {
-      main: './app/Assets/js/main.js',    
-      admin: './app/Assets/js/admin.js',
+      main: './app/Assets/js/app/main.js',
+      admin: './app/Assets/js/admin/main.js',
     },     
     output: {
       filename: '[name].js',
@@ -76,6 +76,11 @@ module.exports = {
      resolve: {
       alias: {
         '/bootstrap': path.resolve(__dirname, './node_modules/bootstrap/scss'),
+        '/js/app': path.resolve(__dirname, './app/Assets/js/app'),
+        '/js/admin': path.resolve(__dirname, './app/Assets/js/admin'),
+        '/json': path.resolve(__dirname, './app/Assets/json'),
+        '/css': path.resolve(__dirname, './app/Assets/css'),
+        '/fonts': path.resolve(__dirname, './app/Assets/fonts'),
       }
     },
     performance: { hints: false },

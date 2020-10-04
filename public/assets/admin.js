@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./app/Assets/js/admin.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./app/Assets/js/admin/main.js");
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -94,18 +94,6 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 eval("// extracted by mini-css-extract-plugin\n\n//# sourceURL=webpack:///./app/Assets/css/admin-theme.scss?");
-
-/***/ }),
-
-/***/ "./app/Assets/js/admin.js":
-/*!********************************!*\
-  !*** ./app/Assets/js/admin.js ***!
-  \********************************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _css_admin_theme_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../css/admin-theme.scss */ \"./app/Assets/css/admin-theme.scss\");\n/* harmony import */ var _css_admin_theme_scss__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_css_admin_theme_scss__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _fortawesome_fontawesome_free_js_all_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @fortawesome/fontawesome-free/js/all.js */ \"./node_modules/@fortawesome/fontawesome-free/js/all.js\");\n/* harmony import */ var _fortawesome_fontawesome_free_js_all_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_fortawesome_fontawesome_free_js_all_js__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var bootstrap__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! bootstrap */ \"./node_modules/bootstrap/dist/js/bootstrap.js\");\n/* harmony import */ var bootstrap__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(bootstrap__WEBPACK_IMPORTED_MODULE_2__);\n/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue */ \"./node_modules/vue/dist/vue.runtime.esm.js\");\n/* harmony import */ var _admin_CameraPreview_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./admin/CameraPreview.vue */ \"./app/Assets/js/admin/CameraPreview.vue\");\n\n\n// import axios from 'axios';\n\n\n\n\n\nif(document.getElementById('react-camera-preview')) {\n    new vue__WEBPACK_IMPORTED_MODULE_3__[\"default\"]({\n        el: '#react-camera-preview',\n        render: h => h(_admin_CameraPreview_vue__WEBPACK_IMPORTED_MODULE_4__[\"default\"])\n    });\n}\n\n//# sourceURL=webpack:///./app/Assets/js/admin.js?");
 
 /***/ }),
 
@@ -154,6 +142,18 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _nod
 
 "use strict";
 eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CameraPreview_vue_vue_type_template_id_3a7b48c6_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./CameraPreview.vue?vue&type=template&id=3a7b48c6&scoped=true& */ \"./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./app/Assets/js/admin/CameraPreview.vue?vue&type=template&id=3a7b48c6&scoped=true&\");\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"render\", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CameraPreview_vue_vue_type_template_id_3a7b48c6_scoped_true___WEBPACK_IMPORTED_MODULE_0__[\"render\"]; });\n\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"staticRenderFns\", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CameraPreview_vue_vue_type_template_id_3a7b48c6_scoped_true___WEBPACK_IMPORTED_MODULE_0__[\"staticRenderFns\"]; });\n\n\n\n//# sourceURL=webpack:///./app/Assets/js/admin/CameraPreview.vue?");
+
+/***/ }),
+
+/***/ "./app/Assets/js/admin/main.js":
+/*!*************************************!*\
+  !*** ./app/Assets/js/admin/main.js ***!
+  \*************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _css_admin_theme_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../css/admin-theme.scss */ \"./app/Assets/css/admin-theme.scss\");\n/* harmony import */ var _css_admin_theme_scss__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_css_admin_theme_scss__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _fortawesome_fontawesome_free_js_all_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @fortawesome/fontawesome-free/js/all.js */ \"./node_modules/@fortawesome/fontawesome-free/js/all.js\");\n/* harmony import */ var _fortawesome_fontawesome_free_js_all_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_fortawesome_fontawesome_free_js_all_js__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var bootstrap__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! bootstrap */ \"./node_modules/bootstrap/dist/js/bootstrap.js\");\n/* harmony import */ var bootstrap__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(bootstrap__WEBPACK_IMPORTED_MODULE_2__);\n/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue */ \"./node_modules/vue/dist/vue.runtime.esm.js\");\n/* harmony import */ var _CameraPreview_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./CameraPreview.vue */ \"./app/Assets/js/admin/CameraPreview.vue\");\n\n\n// import axios from 'axios';\n\n\n\n\n\nif(document.getElementById('react-camera-preview')) {\n    new vue__WEBPACK_IMPORTED_MODULE_3__[\"default\"]({\n        el: '#react-camera-preview',\n        render: h => h(_CameraPreview_vue__WEBPACK_IMPORTED_MODULE_4__[\"default\"])\n    });\n}\n\n//# sourceURL=webpack:///./app/Assets/js/admin/main.js?");
 
 /***/ }),
 
