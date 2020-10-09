@@ -50,6 +50,8 @@ class Paths
 	 */
 	public $writableDirectory = __DIR__ . '/../../writable';
 
+	public $writeableModelsDirectory = __DIR__ . '/../../writable/models';
+
 	/*
 	 * ---------------------------------------------------------------
 	 * TESTS DIRECTORY NAME

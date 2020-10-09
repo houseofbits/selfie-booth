@@ -1,22 +1,27 @@
 <template>
-    <div>
-        <div class="share-button">Send in E-mail</div>
-        <div class="share-button">Share to Facebook</div>
-        <div class="share-button">Download to smartphone</div>
+    <div class="gui-frame">
+        <div v-if="isDemoModeActive">
+            <div class="share-button" @click="modeStart">Start</div>
+        </div>
+        <div v-if="isPreviewModeActive">
+            <div class="share-button" @click="modeShare">Take picture</div>
+        </div>
 
-        <the-keyboard-email-input></the-keyboard-email-input>
+        <sharing-view v-if="isShareModeActive"></sharing-view>
+
     </div>
 </template>
 
 <script>
 
-import TheKeyboardEmailInput from "./TheKeyboard/TheKeyboardEmailInput.vue";
+import SharingView from "/js/app/gui/SharingView.vue";
+import {FlowState} from "/js/app/gui/Constants";
 
 export default {
     name: "app",
     data: function () {
         return {
-
+            flowState: FlowState.DemoMode,
         }
     },
     props: {
@@ -25,9 +30,25 @@ export default {
             required: true
         },
     },
-    components: {TheKeyboardEmailInput},
+    computed: {
+        isDemoModeActive() {
+            return this.flowState === FlowState.DemoMode;
+        },
+        isPreviewModeActive() {
+            return this.flowState === FlowState.PreviewMode;
+        },
+        isShareModeActive() {
+            return this.flowState === FlowState.SharingMode;
+        }
+    },
+    components: {SharingView},
     methods: {
-
+        modeStart() {
+            this.flowState = FlowState.PreviewMode;
+        },
+        modeShare() {
+            this.flowState = FlowState.SharingMode;
+        },
     },
     mounted: function () {
 
@@ -36,16 +57,23 @@ export default {
 </script>
 
 <style scoped>
-.share-button{
+.gui-frame{
+    position:absolute;
+    top:0;
+    left:0;
+    width:1080px;
+    height:1920px;
+    border:solid 1px red;
+}
+.share-button {
     display: inline-block;
-    width:100%;
-    height:50px;
-    line-height: 50px;
+    width: 100%;
     border: solid 1px gray;
     border-radius: 10px;
     text-align: center;
-    margin-top: 20px;
+    margin-top: 1000px;
     background-color: #7e89b8;
+    font-size: 50px;
 }
 </style>
 <style>
@@ -53,7 +81,6 @@ export default {
     font-family: "customFont";
     src: url("../../../fonts/font.ttf");
 }
-
 body {
     font-family: "customFont", serif;
     user-select: none;

@@ -1,5 +1,6 @@
 <?php namespace App\Controllers;
 
+use App\Models\EmailConfigModel;
 use CodeIgniter\Controller;
 
 class AdminController extends Controller

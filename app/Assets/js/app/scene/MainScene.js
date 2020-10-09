@@ -1,7 +1,6 @@
 import * as BABYLON from 'babylonjs';
 
-export default 
-class MainScene {
+export default class MainScene {
     constructor(canvas) {
 
         this.canvas = canvas;
@@ -15,30 +14,40 @@ class MainScene {
         camera.setTarget(new BABYLON.Vector3(0, 1, 0));
 
         camera.attachControl(this.canvas, true);
-        
+
         var plane = BABYLON.Mesh.CreatePlane("sphere1", 7, this.scene);
         plane.rotation.z = Math.PI;
 
         plane.position.y = 1;
-        
+
         var mat = new BABYLON.StandardMaterial("mat", this.scene);
         mat.diffuseColor = BABYLON.Color3.White();
 
-        BABYLON.VideoTexture.CreateFromWebCam(this.scene, function(videoTexture) {
+        BABYLON.VideoTexture.CreateFromWebCam(this.scene, function (videoTexture) {
             mat.emissiveTexture = videoTexture;
             plane.material = mat;
-        }, { maxWidth: 256, maxHeight: 256 });
+        }, {maxWidth: 256, maxHeight: 256});
 
         let self = this;
-        this.engine.runRenderLoop(function(){
+        this.engine.runRenderLoop(function () {
             self.renderLoop();
-        });    
+        });
 
     }
 
-    renderLoop(){
-        
+    renderLoop() {
+
         this.scene.render();
+    }
+
+    captureScreenshot() {
+
+        BABYLON.Tools.CreateScreenshotUsingRenderTarget(this.engine, this.scene.activeCamera, 400, (base64ImageData) => {
+
+            //data: base64ImageData
+
+        });
+
     }
 
 }

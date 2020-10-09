@@ -9,7 +9,7 @@
 	<link rel="stylesheet" href="/assets/main.css">
 </head>
 <body>
-<canvas id="renderCanvas" width="1280" height="800" style="z-index:-1;position:absolute;left:0;top:0; border:solid 1px black;"></canvas>
+<canvas id="renderCanvas" width="1080" height="1920" style="z-index:-1;position:absolute;left:0;top:0; border:solid 1px black;"></canvas>
 <div id="gui"></div>
 <script src="/assets/main.js"></script>
 </body>

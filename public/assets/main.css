@@ -78,16 +78,36 @@ input[data-v-0e538532]:focus {outline:none!important;}
 
 
 
-.share-button[data-v-4544180d]{
+.share-button[data-v-03cf7b4e] {
     display: inline-block;
-    width:100%;
-    height:50px;
-    line-height: 50px;
+    width: 100%;
     border: solid 1px gray;
     border-radius: 10px;
     text-align: center;
     margin-top: 20px;
     background-color: #7e89b8;
+    font-size: 50px;
+}
+
+
+
+.gui-frame[data-v-4544180d]{
+    position:absolute;
+    top:0;
+    left:0;
+    width:1080px;
+    height:1920px;
+    border:solid 1px red;
+}
+.share-button[data-v-4544180d] {
+    display: inline-block;
+    width: 100%;
+    border: solid 1px gray;
+    border-radius: 10px;
+    text-align: center;
+    margin-top: 1000px;
+    background-color: #7e89b8;
+    font-size: 50px;
 }
 
 
