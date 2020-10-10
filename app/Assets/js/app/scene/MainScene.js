@@ -15,18 +15,33 @@ export default class MainScene {
 
         camera.attachControl(this.canvas, true);
 
-        var plane = BABYLON.Mesh.CreatePlane("sphere1", 7, this.scene);
-        plane.rotation.z = Math.PI;
+        // This creates a light, aiming 0,1,0 - to the sky (non-mesh)
+        var light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0), this.scene);
 
-        plane.position.y = 1;
+        // Default intensity is 1. Let's dim the light a small amount
+        light.intensity = 0.7;
 
-        var mat = new BABYLON.StandardMaterial("mat", this.scene);
-        mat.diffuseColor = BABYLON.Color3.White();
+        // Our built-in 'sphere' shape.
+        var sphere = BABYLON.MeshBuilder.CreateSphere("sphere", {diameter: 2, segments: 32}, this.scene);
 
-        BABYLON.VideoTexture.CreateFromWebCam(this.scene, function (videoTexture) {
-            mat.emissiveTexture = videoTexture;
-            plane.material = mat;
-        }, {maxWidth: 256, maxHeight: 256});
+        // Move the sphere upward 1/2 its height
+        sphere.position.y = 1;
+
+        // Our built-in 'ground' shape.
+        let ground = BABYLON.MeshBuilder.CreateGround("ground", {width: 6, height: 6}, this.scene);
+
+        // var plane = BABYLON.Mesh.CreatePlane("sphere1", 7, this.scene);
+        // plane.rotation.z = Math.PI;
+        //
+        // plane.position.y = 1;
+        //
+        // var mat = new BABYLON.StandardMaterial("mat", this.scene);
+        // mat.diffuseColor = BABYLON.Color3.White();
+        //
+        // BABYLON.VideoTexture.CreateFromWebCam(this.scene, function (videoTexture) {
+        //     mat.emissiveTexture = videoTexture;
+        //     plane.material = mat;
+        // }, {maxWidth: 256, maxHeight: 256});
 
         let self = this;
         this.engine.runRenderLoop(function () {
@@ -41,14 +56,11 @@ export default class MainScene {
     }
 
     captureScreenshot() {
-
-        BABYLON.Tools.CreateScreenshotUsingRenderTarget(this.engine, this.scene.activeCamera, 400, (base64ImageData) => {
-
-            //data: base64ImageData
-
-        });
-
+        this.scene.render();
+        return BABYLON.Tools.CreateScreenshotUsingRenderTargetAsync(this.engine, this.scene.activeCamera, 400);
     }
-
+    onModeSelected(state) {
+        //Callback from gui state change
+    }
 }
 
