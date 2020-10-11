@@ -1,20 +1,36 @@
 #!/bin/bash
 
-
 function up(){
-
     docker-compose up -d;
-
 }
 
 function down(){
-
     docker-compose down;
-
 }
 
 function ssh(){
     docker-compose exec php bash;
+}
+
+function build_release(){
+
+    ###npm ci;
+    ###npm install;
+    ###npm run build;
+
+
+    if [ ! -d "releases/tmp" ]
+    then
+        mkdir -m a=rwx -p releases/tmp;
+    fi
+
+    rm -Rf releases/tmp/*
+
+    cp -r app releases/tmp/
+    cp -r public releases/tmp/
+    cp -r vendor releases/tmp/
+
+    ###mkdir writable/models, etc.
 }
 
 $1 $2 $3 $4 $5

@@ -3,6 +3,8 @@
 #-------------------------
 
 node_modules
+releases
+writable
 
 # OS X
 .DS_Store
