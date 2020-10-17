@@ -1,6 +1,6 @@
 <template>
     <div>
-        <input id="input-text" spellcheck="false" type="text" v-model="inputText"/>
+        <label for="input-text"></label><input id="input-text" spellcheck="false" type="text" v-model="inputText"/>
         <the-keyboard :layout="keyboardLayout" @key-press="keyPressEvent"></the-keyboard>
     </div>
 </template>
