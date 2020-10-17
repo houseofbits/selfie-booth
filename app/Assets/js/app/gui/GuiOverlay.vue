@@ -31,7 +31,7 @@ export default {
     name: "app",
     data: function () {
         return {
-            flowState: FlowState.DemoMode,
+            flowState: FlowState.CaptureMode,
             capturedImageData: [],
             selectedImage: null,
         }

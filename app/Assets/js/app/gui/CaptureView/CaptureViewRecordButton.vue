@@ -1,0 +1,38 @@
+<template>
+    <div class="record-button">
+        <div class="button" @click="startCapture">Capture</div>
+    </div>
+</template>
+
+<script>
+export default {
+    props: {},
+    methods:{
+        startCapture(){
+            //TODO: start timer and disable clicks
+            //TODO: Show some cool transition and timer animation
+            this.$emit('record');
+        }
+    }
+};
+</script>
+
+<style scoped>
+.record-button{
+    position:absolute;
+    top:1700px;
+    left:460px;
+    width: 160px;
+    height: 160px;
+}
+.button {
+    width: 160px;
+    height: 160px;
+    border-radius: 80px;
+    background-color: crimson;
+    text-align: center;
+    font-size: 30px;
+    line-height: 160px;
+    vertical-align: middle;
+}
+</style>

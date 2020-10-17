@@ -6,7 +6,11 @@
 	"license": "MIT",
 	"require": {
 		"php": ">=7.4",
-		"codeigniter4/framework": "^4"
+		"codeigniter4/framework": "^4",
+		"phpmailer/phpmailer": "^6.1",
+		"symfony/polyfill-mbstring": "^1.18",
+		"facebook/graph-sdk": "^5.7",
+		"guzzlehttp/guzzle": "^7.2"
 	},
 	"require-dev": {
 		"fzaninotto/faker": "^1.9@dev",

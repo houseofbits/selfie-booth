@@ -7,9 +7,10 @@ export default class MainScene {
         this.engine = new BABYLON.Engine(canvas, true, {preserveDrawingBuffer: true, stencil: true});
         this.scene = new BABYLON.Scene(this.engine);
 
-        this.scene.clearColor = BABYLON.Color3.Blue();
+        this.scene.clearColor = new BABYLON.Color3(0.3,0.3,0.4);
 
-        var camera = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(0, 1, -10), this.scene);
+        //var camera = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(0, 1, -10), this.scene);
+        var camera = new BABYLON.ArcRotateCamera("Camera", 0, 45, 10, new BABYLON.Vector3(0, 0, 0), this.scene);
 
         camera.setTarget(new BABYLON.Vector3(0, 1, 0));
 
@@ -26,6 +27,11 @@ export default class MainScene {
 
         // Move the sphere upward 1/2 its height
         sphere.position.y = 1;
+
+
+        var box = BABYLON.MeshBuilder.CreateBox("box", {width: 2, height: 3, depth:1}, this.scene);
+        box.position.x = 2;
+        box.position.y = 1.5;
 
         // Our built-in 'ground' shape.
         let ground = BABYLON.MeshBuilder.CreateGround("ground", {width: 6, height: 6}, this.scene);
@@ -51,13 +57,17 @@ export default class MainScene {
     }
 
     renderLoop() {
-
+        this.scene.activeCamera.alpha += 0.002;
         this.scene.render();
     }
 
     captureScreenshot() {
         this.scene.render();
-        return BABYLON.Tools.CreateScreenshotUsingRenderTargetAsync(this.engine, this.scene.activeCamera, 400);
+        return BABYLON.Tools.CreateScreenshotUsingRenderTargetAsync(this.engine, this.scene.activeCamera, {
+            width:1080,
+            height:1920,
+            precision:1.0
+        });
     }
     onModeSelected(state) {
         //Callback from gui state change
