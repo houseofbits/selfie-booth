@@ -13,14 +13,17 @@
             </div>
         </div>
         <div class="button-row" :class="{'enabled':isSelected}">
-            <div class="share-button" @click="share">Share to Facebook</div>
-            <div class="share-button" @click="share">Send to E-mail</div>
-            <div class="share-button" @click="share">Download to smartphone</div>
+            <div class="share-button" @click="shareFacebook">Share to Facebook</div>
+            <div class="share-button" @click="shareEmail">Send to E-mail</div>
+            <div class="share-button" @click="shareDownload">Download to smartphone</div>
         </div>
     </div>
 </template>
 
 <script>
+
+import {SharingViewState} from '/js/app/gui/Constants';
+
 export default {
     props: {
         capturedImageData: {
@@ -50,8 +53,14 @@ export default {
         deleteImage(index) {
             this.$emit('delete', index);
         },
-        share(){
-            this.$emit('share');
+        shareFacebook(){
+            this.$emit('share', SharingViewState.FacebookView);
+        },
+        shareEmail(){
+            this.$emit('share', SharingViewState.EmailView);
+        },
+        shareDownload(){
+            this.$emit('share', SharingViewState.DownloadView);
         }
     }
 };

@@ -54,13 +54,13 @@ export default {
 
         let el = document.getElementById('input-text');
 
-        el.focus();
+        //el.focus();
 
-        el.onblur = function () {
-            setTimeout(function () {
-                el.focus();
-            });
-        };
+        // el.onblur = function () {
+        //     setTimeout(function () {
+        //         el.focus();
+        //     });
+        // };
 
     }
 }

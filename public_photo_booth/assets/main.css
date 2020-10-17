@@ -204,10 +204,19 @@
 
 
 .container[data-v-e35b00c2] {
-    height: 100%;
-    min-height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1080px;
+    height: 1920px;
     display: flex;
     flex-direction: column;
+    transform: translateX(-1080px);
+    transition: transform 0.5s;
+}
+.active[data-v-e35b00c2]{
+    transform: translateX(0px);
+    transition: transform 0.5s;
 }
 .footer div[data-v-e35b00c2] {
     border: solid 1px darkblue;
@@ -318,59 +327,43 @@ input[data-v-1e322f59]:focus {outline:none!important;}
 
 
 .container[data-v-1ca635cb] {
-    height: 100%;
-    min-height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1080px;
+    height: 1920px;
     display: flex;
     flex-direction: column;
+    transform: translateX(1080px);
+    transition: transform 0.5s;
 }
-.row[data-v-1ca635cb] {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+.active[data-v-1ca635cb] {
+    transform: translateX(0px);
+    transition: transform 0.5s;
 }
-.row.header[data-v-1ca635cb] {
-    flex: 3;
-    background-color: green;
-
-    align-items: center;
-    flex-direction: column;
-    justify-content: center;
+.back-button[data-v-1ca635cb] {
+    position: absolute;
+    top: 1700px;
+    left: 50px;
+    width: 160px;
+    height: 160px;
 }
-.row.content[data-v-1ca635cb] {
-    flex: 1;
-    align-items: flex-end;
-    flex-direction: column;
-    justify-content: flex-end;
+.button[data-v-1ca635cb] {
+    width: 160px;
+    height: 160px;
+    border-radius: 80px;
+    background-color: greenyellow;
+    text-align: center;
+    font-size: 30px;
+    line-height: 160px;
+    vertical-align: middle;
 }
-.row.footer[data-v-1ca635cb] {
-    flex: 1;
-    margin-bottom: 50px;
-    padding: 50px;
-}
-.container div[data-v-1ca635cb] {
-    border: solid 1px darkblue;
-}
-.share-button[data-v-1ca635cb] {
-    display: inline-block;
+.image-preview[data-v-1ca635cb] {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
-    border: solid 1px gray;
-    border-radius: 10px;
-    text-align: center;
-    margin-top: 20px;
-    background-color: #7e89b8;
-    font-size: 50px;
-}
-.image-thumbnail[data-v-1ca635cb] {
-    background: tomato;
-    padding: 5px;
-    width: 350px;
-    height: 550px;
-    margin-top: 10px;
-    line-height: 150px;
-    color: white;
-    font-weight: bold;
-    font-size: 3em;
-    text-align: center;
+    height: 100%;
 }
 
 

@@ -1,35 +1,39 @@
 <template>
-    <div class="container">
-        <div class="row header">
-            <div class="image-thumbnail">
-                <img alt="Thumbnail" :src="capturedImageData[selectedImage]" width="100%" height="100%"/>
-            </div>
+    <div :class="{'active':isActive}" class="container">
+
+        <div class="image-preview">
+            <img :src="imageDataCopy" alt="Thumbnail" height="100%" width="100%"/>
         </div>
-        <div class="row content">
-            <div class="share-button" @click="back"><< Go back</div>
-            <div class="share-button">Send in E-mail</div>
-            <div class="share-button">Share to Facebook</div>
-            <div class="share-button">Download to smartphone</div>
+
+        <share-facebook :is-active="isShareFacebookActive"></share-facebook>
+        <share-email :is-active="isShareEmailActive"></share-email>
+        <share-download :is-active="isShareDownloadActive"></share-download>
+
+        <div class="back-button" @click="back">
+            <div class="button">Go back</div>
         </div>
-        <div class="row footer">
-            <the-keyboard-email-input v-if="isEmailVisible"></the-keyboard-email-input>
-        </div>
+
     </div>
 </template>
 
 <script>
 
-import TheKeyboardEmailInput from "./TheKeyboard/TheKeyboardEmailInput.vue";
+import ShareFacebook from './SharingViewFacebook.vue';
+import ShareEmail from './SharingViewEmail.vue';
+import ShareDownload from './SharingViewDownload.vue';
 import {SharingViewState} from "/js/app/gui/Constants";
 
 export default {
     name: "SharingView",
-    data: function () {
-        return {
-            state: SharingViewState.MainView
-        }
-    },
     props: {
+        isActive: {
+            type: Boolean,
+            required: true,
+        },
+        type: {
+            type: Number,
+            required: true,
+        },
         capturedImageData: {
             type: Array,
             required: true,
@@ -38,85 +42,84 @@ export default {
             required: true,
         },
     },
+    components: {
+        ShareFacebook,
+        ShareEmail,
+        ShareDownload
+    },
+    data: function () {
+        return {
+            imageDataCopy: null
+        }
+    },
+    watch: {
+        isActive(value) {
+            if (value === true) {
+                this.imageDataCopy = this.capturedImageData[this.selectedImage];
+            }
+        }
+    },
     computed: {
-        isMainViewVisible() {
-            return this.state === SharingViewState.MainView;
+        isShareFacebookActive() {
+            return this.type === SharingViewState.FacebookView;
         },
-        isEmailVisible() {
-            return true;//this.state === SharingViewState.EmailView;
+        isShareEmailActive() {
+            return this.type === SharingViewState.EmailView;
         },
-
+        isShareDownloadActive() {
+            return this.type === SharingViewState.DownloadView;
+        }
     },
     methods: {
         back() {
             this.$emit('back');
         }
     },
-    components: {TheKeyboardEmailInput},
 };
 </script>
 
 <style scoped>
 .container {
-    height: 100%;
-    min-height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1080px;
+    height: 1920px;
     display: flex;
     flex-direction: column;
+    transform: translateX(1080px);
+    transition: transform 0.5s;
 }
 
-.row {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+.active {
+    transform: translateX(0px);
+    transition: transform 0.5s;
 }
 
-.row.header {
-    flex: 3;
-    background-color: green;
-
-    align-items: center;
-    flex-direction: column;
-    justify-content: center;
+.back-button {
+    position: absolute;
+    top: 1700px;
+    left: 50px;
+    width: 160px;
+    height: 160px;
 }
 
-.row.content {
-    flex: 1;
-    align-items: flex-end;
-    flex-direction: column;
-    justify-content: flex-end;
+.button {
+    width: 160px;
+    height: 160px;
+    border-radius: 80px;
+    background-color: greenyellow;
+    text-align: center;
+    font-size: 30px;
+    line-height: 160px;
+    vertical-align: middle;
 }
 
-.row.footer {
-    flex: 1;
-    margin-bottom: 50px;
-    padding: 50px;
-}
-
-.container div {
-    border: solid 1px darkblue;
-}
-
-.share-button {
-    display: inline-block;
+.image-preview {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
-    border: solid 1px gray;
-    border-radius: 10px;
-    text-align: center;
-    margin-top: 20px;
-    background-color: #7e89b8;
-    font-size: 50px;
-}
-
-.image-thumbnail {
-    background: tomato;
-    padding: 5px;
-    width: 350px;
-    height: 550px;
-    margin-top: 10px;
-    line-height: 150px;
-    color: white;
-    font-weight: bold;
-    font-size: 3em;
-    text-align: center;
+    height: 100%;
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container" :class="{'active':isActive}">
         <gallery :captured-image-data="capturedImageData"
                  :selected-image="selectedImage"
                  :visible="thumbnailsVisible"
@@ -26,6 +26,10 @@ import Gallery from "./CaptureViewGallery.vue";
 
 export default {
     props: {
+        isActive: {
+            type: Boolean,
+            required: true,
+        },
         capturedImageData: {
             type: Array,
             required: true,
@@ -62,11 +66,11 @@ export default {
             this.thumbnailsVisible = false;
             this.$emit('capture');
         },
-        share() {
+        share(type) {
             if (this.selectedImage === null) {
                 this.thumbnailsVisible = true;
             } else {
-                this.$emit('share');
+                this.$emit('share', type);
             }
         },
         deleteImage(index) {
@@ -85,10 +89,19 @@ export default {
 <style scoped>
 
 .container {
-    height: 100%;
-    min-height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1080px;
+    height: 1920px;
     display: flex;
     flex-direction: column;
+    transform: translateX(-1080px);
+    transition: transform 0.5s;
+}
+.active{
+    transform: translateX(0px);
+    transition: transform 0.5s;
 }
 
 .footer div {

@@ -5,7 +5,6 @@ export const FlowState = {
 };
 
 export const SharingViewState = {
-    MainView: 0,
     EmailView: 1,
     FacebookView: 2,
     DownloadView: 3

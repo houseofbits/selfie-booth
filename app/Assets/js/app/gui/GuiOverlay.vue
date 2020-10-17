@@ -5,7 +5,7 @@
             <div class="start-button" @click="modeStart">Start</div>
         </div>
 
-        <capture-view v-if="isPreviewModeActive"
+        <capture-view :is-active="isPreviewModeActive"
                       :capturedImageData="capturedImageData"
                       :selectedImage="selectedImage"
                       @capture="captureImage"
@@ -13,7 +13,8 @@
                       @delete="deleteImage"
                       @select="selectImage"></capture-view>
 
-        <sharing-view v-if="isShareModeActive"
+        <sharing-view :is-active="isShareModeActive"
+                      :type="sharingType"
                       :capturedImageData="capturedImageData"
                       :selectedImage="selectedImage"
                       @back="modeStart"></sharing-view>
@@ -32,6 +33,7 @@ export default {
     data: function () {
         return {
             flowState: FlowState.CaptureMode,
+            sharingType:0,
             capturedImageData: [],
             selectedImage: null,
         }
@@ -60,7 +62,8 @@ export default {
             this.mainScene.onModeSelected(FlowState.CaptureMode);
             this.selectedImage = null;
         },
-        modeShare() {
+        modeShare(type) {
+            this.sharingType = type;
             this.flowState = FlowState.SharingMode;
             this.mainScene.onModeSelected(FlowState.SharingMode);
         },
