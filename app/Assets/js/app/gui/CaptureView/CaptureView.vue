@@ -16,7 +16,6 @@
         <div class="row footer">
             <div class="side flex-start">
                 <div class="gallery-button">Theme</div>
-                <div class="gallery-button">Effect</div>
             </div>
             <div class="center">
                 <div v-if="isImageCaptureAvailable" class="capture-button" @click="capture">Capture</div>
@@ -47,6 +46,11 @@ export default {
         return {
             thumbnailsVisible: false,
             showSelectImagePrompt: false,
+        }
+    },
+    watch:{
+        capturedImageData(newData){
+            console.log("New image was generated, congrats. Now do something with it");docker
         }
     },
     computed: {

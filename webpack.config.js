@@ -6,13 +6,14 @@ const webpack = require("webpack");
 
 module.exports = {    
     entry: {
-      main: './app/Assets/js/app/main.js',
-      admin: './app/Assets/js/admin/main.js',
+      'public_photo_booth/assets/main': './app/Assets/js/app/main.js',
+      'public_photo_booth/assets/admin': './app/Assets/js/admin/main.js',
+      'public_facebook/assets/admin': './app/Assets/js/facebook/main.js',
     },     
     output: {
       filename: '[name].js',
       publicPath: '/',
-      path: path.resolve(__dirname, 'public/assets'),
+      path: path.resolve(__dirname, './'),
     },
     module: {
       rules: [

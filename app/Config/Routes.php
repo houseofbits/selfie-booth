@@ -22,36 +22,12 @@ $routes->setTranslateURIDashes(false);
 $routes->set404Override();
 $routes->setAutoRoute(true);
 
-/**
- * --------------------------------------------------------------------
- * Route Definitions
- * --------------------------------------------------------------------
- */
-
-// We get a performance increase by specifying the default
-// route since we don't have to scan directories.
-$routes->get('/', 'ApplicationController::index');
-$routes->get('/admin', 'AdminController::index');
-$routes->get('/admin/smtp', 'AdminController::smtpSettings');
-$routes->get('/admin/content', 'AdminController::emailEditor');
-$routes->get('/admin/log', 'AdminController::logHistory');
-$routes->get('/api/upload', 'ApiController::uploadImage');
-$routes->get('/api/mail', 'ApiController::sendEmail');
-
-/**
- * --------------------------------------------------------------------
- * Additional Routing
- * --------------------------------------------------------------------
- *
- * There will often be times that you need additional routing and you
- * need it to be able to override any defaults in this file. Environment
- * based routes is one such time. require() additional route files here
- * to make that happen.
- *
- * You will have access to the $routes object within that file without
- * needing to reload it.
- */
 if (file_exists(APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php'))
 {
 	require APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php';
+}
+
+if (file_exists(APPPATH . 'Config/' . APPLICATION_TYPE . '/Routes.php'))
+{
+    require APPPATH . 'Config/' . APPLICATION_TYPE . '/Routes.php';
 }
