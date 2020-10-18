@@ -2,7 +2,7 @@
     <div :class="{'active':isActive}" class="container">
 
         <div class="image-preview">
-            <img :src="imageDataCopy" alt="Thumbnail" height="100%" width="100%"/>
+            <div><img v-if="imageDataCopy" :src="imageData" alt="Thumbnail"/></div>
         </div>
 
         <share-facebook :is-active="isShareFacebookActive"></share-facebook>
@@ -56,10 +56,18 @@ export default {
         isActive(value) {
             if (value === true) {
                 this.imageDataCopy = this.capturedImageData[this.selectedImage];
+                this.$emit('sync', this.selectedImage);
             }
         }
     },
     computed: {
+        imageData() {
+            if (this.imageDataCopy.id !== null) {
+                return '/api/image/' + this.imageDataCopy.id;
+            } else {
+                return this.imageDataCopy.base64data;
+            }
+        },
         isShareFacebookActive() {
             return this.type === SharingViewState.FacebookView;
         },
@@ -119,6 +127,21 @@ export default {
     position: absolute;
     top: 0;
     left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #585454;
+}
+
+.image-preview div {
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    right: 30px;
+    bottom: 30px;
+    box-shadow: -1px 17px 38px 9px rgba(0, 0, 0, 0.6);
+}
+
+.image-preview div img {
     width: 100%;
     height: 100%;
 }

@@ -1,7 +1,7 @@
 <template>
     <div class="images-button" v-if="imageCunt">
         <div class="button" :class="selectedClass" @click="open">
-            <img :src="lastImageData" width="100%" height="100%" alt=""/>
+            <img :src="lastImage.base64data" width="100%" height="100%" alt=""/>
         </div>
         <div class="image-counter">{{ imageCunt }}/4</div>
     </div>
@@ -23,7 +23,7 @@ export default {
         imageCunt() {
             return this.capturedImageData.length;
         },
-        lastImageData() {
+        lastImage() {
             if (this.imageCunt) {
                 return this.capturedImageData[this.capturedImageData.length - 1];
             }

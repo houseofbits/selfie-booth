@@ -10,8 +10,13 @@ class EmailConfigModel extends FileStorageModel
 
     public string $host;
 
+    public string $port;
+
     public string $username;
 
     public string $password;
+
+    public string $senderAddress;
+
 
 }

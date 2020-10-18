@@ -67,7 +67,7 @@ module.exports = {
               options: {
                 name: '[name].[ext]',
                 publicPath: 'fonts',
-                outputPath: 'fonts/'
+                outputPath: 'public_photo_booth/assets/fonts/'
               }
             }
           ]

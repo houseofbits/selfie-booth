@@ -5,19 +5,20 @@
             <div class="start-button" @click="modeStart">Start</div>
         </div>
 
-        <capture-view :is-active="isPreviewModeActive"
-                      :capturedImageData="capturedImageData"
+        <capture-view :capturedImageData="capturedImageData"
+                      :is-active="isPreviewModeActive"
                       :selectedImage="selectedImage"
                       @capture="captureImage"
-                      @share="modeShare"
                       @delete="deleteImage"
-                      @select="selectImage"></capture-view>
+                      @select="selectImage"
+                      @share="modeShare"></capture-view>
 
-        <sharing-view :is-active="isShareModeActive"
-                      :type="sharingType"
-                      :capturedImageData="capturedImageData"
+        <sharing-view :capturedImageData="capturedImageData"
+                      :is-active="isShareModeActive"
                       :selectedImage="selectedImage"
-                      @back="modeStart"></sharing-view>
+                      :type="sharingType"
+                      @back="modeStart"
+                      @sync="syncImageData"></sharing-view>
 
     </div>
 </template>
@@ -27,13 +28,15 @@
 import CaptureView from "/js/app/gui/CaptureView/CaptureView.vue";
 import SharingView from "/js/app/gui/SharingView/SharingView.vue";
 import {FlowState} from "/js/app/gui/Constants";
+import CaptureImageData from "./Structures/CapturedImageData";
+import ImageDataSyncService from "./Services/ImageDataSyncService";
 
 export default {
     name: "app",
     data: function () {
         return {
             flowState: FlowState.CaptureMode,
-            sharingType:0,
+            sharingType: 0,
             capturedImageData: [],
             selectedImage: null,
         }
@@ -80,7 +83,16 @@ export default {
             this.mainScene.captureScreenshot().then(this.imageCaptureFinished);
         },
         imageCaptureFinished(base64Image) {
-            this.capturedImageData.push(base64Image);
+            this.capturedImageData.push(new CaptureImageData(base64Image));
+        },
+        syncImageData(imageIndex) {
+            if (typeof this.capturedImageData[imageIndex] !== 'undefined') {
+                const image = this.capturedImageData[imageIndex];
+                if (image.id === null) {
+                    const service = new ImageDataSyncService();
+                    service.sync(image);
+                }
+            }
         }
     },
     mounted: function () {

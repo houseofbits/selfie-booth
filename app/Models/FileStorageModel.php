@@ -9,10 +9,19 @@ use Exception;
 class FileStorageModel
 {
     public $id = null;
+    public bool $GENERATE_ID = false;
+    public int $GENERATED_ID_LENGTH = 8;
+
+    public function __construct()
+    {
+        if ($this->GENERATE_ID) {
+            $this->id = self::generateId($this->GENERATED_ID_LENGTH);
+        }
+    }
 
     public static function fullClassName(): string
     {
-        return strtolower(preg_replace('/(?<!^)(\\\\?)([A-Z])/m', '_$2', self::class));
+        return strtolower(preg_replace('/(?<!^)(\\\\?)([A-Z])/m', '_$2', static::class));
     }
 
     protected static function _getModelFileName($id): string
@@ -96,5 +105,19 @@ class FileStorageModel
         }
 
         return $objects;
+    }
+
+    public static function generateId($length = 8)
+    {
+        $paths = new \Config\Paths();
+        $try = 0;
+        while ($try < 20) {
+            $id = substr(md5(uniqid(mt_rand() . microtime(), true)), 0, $length);
+            $filePath = $paths->writeableModelsDirectory . '/' . self::_getModelFileName($id);
+            if (!is_file($filePath)) {
+                return $id;
+            }
+            $try++;
+        }
     }
 }

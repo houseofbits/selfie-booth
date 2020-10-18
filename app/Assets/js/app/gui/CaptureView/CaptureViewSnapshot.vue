@@ -1,6 +1,6 @@
 <template>
     <div class="snap" v-if="imageData" :class="transitionClass">
-        <img :src="imageData" @load="imageLoaded" width="100%" height="100%" alt=""/>
+        <img :src="imageData.base64data" @load="imageLoaded" width="100%" height="100%" alt=""/>
     </div>
 </template>
 

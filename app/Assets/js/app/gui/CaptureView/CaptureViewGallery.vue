@@ -7,7 +7,7 @@
             <div v-for="(imgData, index) in capturedImageData" :class="{'selected':isImageSelected(index)}"
                  class="image-thumbnail">
                 <div class="image-thumbnail-static">
-                    <img :src="imgData" alt="Thumbnail" height="100%" width="100%" @click="selectImage(index)"/>
+                    <img :src="imgData.base64data" alt="Thumbnail" height="100%" width="100%" @click="selectImage(index)"/>
                     <div class="image-delete-button" @click="deleteImage(index)">X</div>
                 </div>
             </div>
@@ -78,12 +78,12 @@ export default {
     justify-content: stretch;
     flex-direction: column;
     transform: translateX(100%);
-    transition: transform 0.5s ease-out;
+    transition: transform 0.3s ease-out;
 }
 
 .visible {
     transform: translateX(0%);
-    transition: transform 0.5s ease-in;
+    transition: transform 0.3s ease-in;
 }
 
 .header-row {
