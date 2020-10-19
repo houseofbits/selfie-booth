@@ -1,6 +1,8 @@
 <template>
-    <div v-if="isActive">
-
+    <div>
+        <div v-if="isActive">
+            <img :src="qrCodeImage" alt="QR Code" width="100%" height="100%">
+        </div>
     </div>
 </template>
 
@@ -13,10 +15,19 @@ export default {
             type: Boolean,
             required: true,
         },
+        imageId: {
+            type: String,
+            required: false,
+        },
     },
     data: function () {
         return {
 
+        }
+    },
+    computed:{
+        qrCodeImage(){
+            return '/api/qr/fb/' + this.imageId;
         }
     }
 };

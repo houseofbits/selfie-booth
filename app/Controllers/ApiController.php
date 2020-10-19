@@ -72,12 +72,12 @@ class ApiController extends ResourceController
         return $this->respond(['id' => $imageModel->id]);
     }
 
-    public function getQRCode(string $id)
+    public function getQRCode(string $id, string $type)
     {
         $imageModel = ImageModel::findOne($id);
         if ($imageModel instanceof ImageModel) {
 
-            $qrCode = new QrCode('https://www.somerandomwebpage.lv/atteelushariite/' . $imageModel->id);
+            $qrCode = new QrCode('https://www.somerandomwebpage.lv/atteelushariite/' . $type . '/' . $imageModel->id);
 
             return $this->response->setHeader('Content-Type', $qrCode->getContentType())
                 ->setBody($qrCode->writeString());

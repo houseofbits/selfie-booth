@@ -11,4 +11,4 @@ $routes->get('/admin/log', 'AdminController::logHistory');
 $routes->post('/api/upload', 'ApiController::uploadImage');
 $routes->get('/api/mail', 'ApiController::sendEmail');
 $routes->get('/api/image/(:alphanum)', 'ApiController::serveImage/$1');
-$routes->get('/api/qr/(:alphanum)', 'ApiController::getQRCode/$1');
+$routes->get('/api/qr/(:segment)/(:alphanum)', 'ApiController::getQRCode/$2/$1');

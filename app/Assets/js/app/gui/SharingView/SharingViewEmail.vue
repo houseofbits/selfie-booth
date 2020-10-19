@@ -1,6 +1,11 @@
 <template>
-    <div v-if="isActive">
+    <div>
+        <div v-if="isActive">
 
+        </div>
+        <div>
+
+        </div>
     </div>
 </template>
 
@@ -14,6 +19,10 @@ export default {
         isActive: {
             type: Boolean,
             required: true,
+        },
+        imageId: {
+            type: String,
+            required: false,
         },
     },
     components: {

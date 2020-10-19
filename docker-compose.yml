@@ -12,7 +12,7 @@ services:
         ports:
             - 80:8080
         volumes:
-            - ./docker/vhosts.conf:/vhosts/myapp.conf:ro
+            - ./config/vhosts.conf:/vhosts/myapp.conf:ro
             - ./:/app
         depends_on:
             - php

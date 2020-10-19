@@ -1,6 +1,11 @@
 <template>
-    <div v-if="isActive">
+    <div>
+        <div v-if="isActive">
+            <img :src="qrCodeImage" alt="QR Code">
+        </div>
+        <div>
 
+        </div>
     </div>
 </template>
 
@@ -13,10 +18,19 @@ export default {
             type: Boolean,
             required: true,
         },
+        imageId: {
+            type: String,
+            required: false,
+        },
     },
     data: function () {
         return {
 
+        }
+    },
+    computed:{
+        qrCodeImage(){
+            return '/api/qr/download/' + this.imageId;
         }
     }
 };
