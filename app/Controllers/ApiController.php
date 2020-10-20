@@ -6,6 +6,7 @@ namespace App\Controllers;
 
 use App\Models\EmailConfigModel;
 use App\Models\ImageModel;
+use App\Services\EmailService;
 use CodeIgniter\Files\File;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\RESTful\ResourceController;
@@ -15,6 +16,13 @@ use Exception;
 class ApiController extends ResourceController
 {
     protected $format = 'json';
+
+    protected EmailService $emailService;
+
+    public function __construct()
+    {
+        $this->emailService = new EmailService();
+    }
 
     public function sendEmail()
     {
@@ -76,7 +84,6 @@ class ApiController extends ResourceController
     {
         $imageModel = ImageModel::findOne($id);
         if ($imageModel instanceof ImageModel) {
-
             $qrCode = new QrCode('https://www.somerandomwebpage.lv/atteelushariite/' . $type . '/' . $imageModel->id);
 
             return $this->response->setHeader('Content-Type', $qrCode->getContentType())
@@ -104,5 +111,11 @@ class ApiController extends ResourceController
                 ->setBody($contents);
         }
         return $this->response->setStatusCode(404, 'Image not found!');
+    }
+
+    public function validateEmail()
+    {
+        $email = $this->request->getVar('email');
+        return $this->respond($this->emailService->validateEmailAddress($email));
     }
 }

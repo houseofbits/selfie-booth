@@ -1,7 +1,8 @@
 #!/bin/bash
 
-function up(){
+function dev(){
     docker-compose up -d;
+    npm run watch;
 }
 
 function down(){

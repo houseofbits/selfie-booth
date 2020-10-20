@@ -1,9 +1,9 @@
 <template>
     <div :class="{'active':isActive}" class="container">
 
-        <div class="image-preview">
+        <!--div class="image-preview">
             <div><img v-if="imageDataCopy" :src="imageData" alt="Thumbnail"/></div>
-        </div>
+        </div-->
 
         <share-facebook :image-id="imageId" :is-active="isShareFacebookActive"></share-facebook>
         <share-email :image-id="imageId" :is-active="isShareEmailActive"></share-email>
@@ -96,8 +96,6 @@ export default {
     left: 0;
     width: 1080px;
     height: 1920px;
-    display: flex;
-    flex-direction: column;
     transform: translateX(1080px);
     transition: transform 0.5s;
 }

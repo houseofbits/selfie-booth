@@ -12,3 +12,4 @@ $routes->post('/api/upload', 'ApiController::uploadImage');
 $routes->get('/api/mail', 'ApiController::sendEmail');
 $routes->get('/api/image/(:alphanum)', 'ApiController::serveImage/$1');
 $routes->get('/api/qr/(:segment)/(:alphanum)', 'ApiController::getQRCode/$2/$1');
+$routes->post('/api/validate', 'ApiController::validateEmail');

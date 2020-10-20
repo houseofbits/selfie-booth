@@ -1,6 +1,6 @@
 <template>
     <div>
-        <label for="input-text"></label><input id="input-text" spellcheck="false" type="text" v-model="inputText"/>
+        <label for="input-text"></label><input id="input-text" v-model="inputText" spellcheck="false" type="text"/>
         <the-keyboard :layout="keyboardLayout" @key-press="keyPressEvent"></the-keyboard>
     </div>
 </template>
@@ -19,6 +19,11 @@ export default {
         }
     },
     components: {TheKeyboard},
+    watch:{
+        inputText(){
+            this.$emit('change', this.inputText);
+        }
+    },
     methods: {
         keyPressEvent(key) {
             let el = document.getElementById('input-text');
@@ -70,12 +75,19 @@ export default {
 #input-text {
     color: white;
     font: 50px "customFont";
-    background-color: rgba(255,255,255,0);
+    background-color: rgba(255, 255, 255, 0);
     display: block;
-    width:100%;
+    width: 100%;
     text-align: center;
 }
-input {border:0;outline:0;}
-input:focus {outline:none!important;}
+
+input {
+    border: 0;
+    outline: 0;
+}
+
+input:focus {
+    outline: none !important;
+}
 
 </style>

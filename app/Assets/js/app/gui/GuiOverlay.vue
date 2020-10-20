@@ -63,7 +63,7 @@ export default {
         modeStart() {
             this.flowState = FlowState.CaptureMode;
             this.mainScene.onModeSelected(FlowState.CaptureMode);
-            this.selectedImage = null;
+            //this.selectedImage = null;
         },
         modeShare(type) {
             this.sharingType = type;
@@ -89,8 +89,8 @@ export default {
             if (typeof this.capturedImageData[imageIndex] !== 'undefined') {
                 const image = this.capturedImageData[imageIndex];
                 if (image.id === null) {
-                    const service = new ImageDataSyncService();
-                    service.sync(image);
+                    // const service = new ImageDataSyncService();
+                    // service.sync(image);
                 }
             }
         }
