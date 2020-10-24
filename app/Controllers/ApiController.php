@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace App\Controllers;
 
 use App\Models\EmailConfigModel;
+use App\Models\ImageDataStructure;
 use App\Models\ImageModel;
 use App\Services\EmailService;
+use App\Services\ImageService;
 use CodeIgniter\Files\File;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\RESTful\ResourceController;
@@ -18,14 +20,18 @@ class ApiController extends ResourceController
     protected $format = 'json';
 
     protected EmailService $emailService;
+    protected ImageService $imageService;
 
     public function __construct()
     {
         $this->emailService = new EmailService();
+        $this->imageService = new ImageService();
     }
 
     public function sendEmail()
     {
+        $email = $this->request->getVar('email');
+
 //        $emailModel = new EmailConfigModel();
 //
 //        $emailModel->enabled = true;
@@ -67,29 +73,21 @@ class ApiController extends ResourceController
             return $this->failNotFound($e->getMessage());
         }
 
-        $imageModel = new ImageModel();
-        $imageModel->imageUrl = $path;
-        $imageModel->createdAt = time();
-
-        try {
-            $imageModel->save();
-        } catch (Exception $e) {
-            return $this->failNotFound($e->getMessage());
+        $image = $this->imageService->createImage($path);
+        if ($image instanceof ImageModel) {
+            return $this->respond(['id' => $image->id]);
         }
-
-        return $this->respond(['id' => $imageModel->id]);
+        return $this->failNotFound("Failed to create image");
     }
 
     public function getQRCode(string $id, string $type)
     {
-        $imageModel = ImageModel::findOne($id);
-        if ($imageModel instanceof ImageModel) {
-            $qrCode = new QrCode('https://www.somerandomwebpage.lv/atteelushariite/' . $type . '/' . $imageModel->id);
-
-            return $this->response->setHeader('Content-Type', $qrCode->getContentType())
-                ->setBody($qrCode->writeString());
+        $imageData = $this->imageService->getQrCodeForPublicApp($id, $type);
+        if ($imageData instanceof ImageDataStructure) {
+            return $this->response->setHeader('Content-Type', $imageData->mimeType)
+                ->setBody($imageData->data);
         }
-        return $this->response->setStatusCode(404, 'Image not found!');
+        return $this->failNotFound("QR Code not found");
     }
 
     public function dropExpiredImages()
@@ -99,18 +97,12 @@ class ApiController extends ResourceController
 
     public function serveImage(string $id)
     {
-        $imageModel = ImageModel::findOne($id);
-        if ($imageModel instanceof ImageModel) {
-            $file = new File(WRITEPATH . 'uploads' . DIRECTORY_SEPARATOR . $imageModel->imageUrl);
-
-            $fileData = $file->openFile('r');
-
-            $contents = $fileData->fread($fileData->getSize());
-
-            return $this->response->setHeader('Content-Type', $file->getMimeType())
-                ->setBody($contents);
+        $imageData = $this->imageService->getImageData($id);
+        if ($imageData instanceof ImageDataStructure) {
+            return $this->response->setHeader('Content-Type', $imageData->mimeType)
+                ->setBody($imageData->data);
         }
-        return $this->response->setStatusCode(404, 'Image not found!');
+        return $this->failNotFound("Image not found");
     }
 
     public function validateEmail()

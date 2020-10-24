@@ -121,6 +121,7 @@ export default {
 
 <style scoped>
 .key-frame {
+    pointer-events: auto;
     width: 100%;
     height: 100%;
     display: flex;
@@ -145,9 +146,8 @@ export default {
 }
 
 .key-item {
-    background: tomato;
     margin: 5px;
-    color: white;
+    color: #aaaaaa;
     font-weight: bold;
     font-size: 3em;
     text-align: center;
@@ -156,6 +156,11 @@ export default {
     display: flex;
     justify-content: center;
     border-radius: 8px;
+    text-shadow: 0 2px 3px white;
+    background: linear-gradient(to bottom, #e8e8e8 0%,#eeeff1 65%, #eae7e7 100%);
+    box-shadow: 0 5px 7px 2px #000000;
+    border-bottom: solid 6px #c9c7c7;
+    border-top: solid 4px white;
 }
 
 .key-item-4 {
@@ -167,15 +172,28 @@ export default {
 }
 
 .key-color-alt {
-    background: #c9412a;
+    color: #8d8d8d;
+    text-shadow: 0 2px 3px rgba(220, 219, 219,1);
+    background: linear-gradient(to bottom, #a8a8a8 0%, #b3b6bb 65%, #b3b3b3 100%);
+    border-bottom: solid 6px #909090;
+    border-top: solid 4px rgba(220, 219, 219,1);
 }
 
 .key-item:hover {
-    background: #b13924;
+    color: #807b7b;
+    background: linear-gradient(to bottom, #cdcdcd 0%, #cccfd5 65%, #b6b1b1 100%);
+    border-bottom: solid 4px #7d7a7a;
+    border-top: solid 2px white;
+    box-shadow: 0 5px 4px 1px #000000;
 }
 
 .key-color-alt:hover {
-    background: #8e291b;
+    color: #635c5c;
+    text-shadow: 0 2px 3px rgb(196, 190, 190);
+    background: linear-gradient(to bottom, #7b7a7a 0%, #929ba0 65%, #8d8686 100%);
+    border-bottom: solid 4px #585050;
+    border-top: solid 2px rgba(220, 219, 219,1);
+    box-shadow: 0 5px 4px 1px #000000;
 }
 
 .key-toggle-on {

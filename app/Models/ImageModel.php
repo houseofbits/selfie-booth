@@ -19,10 +19,15 @@ class ImageModel extends FileStorageModel
     public function delete()
     {
         try {
-            if (unlink(WRITEPATH . 'uploads' . DIRECTORY_SEPARATOR . $this->imageUrl)) {
+            if (unlink($this->getFullUrl())) {
                 parent::delete();
             }
         } catch (Exception $e) {
         }
+    }
+
+    public function getFullUrl(): string
+    {
+        return WRITEPATH . 'uploads' . DIRECTORY_SEPARATOR . $this->imageUrl;
     }
 }

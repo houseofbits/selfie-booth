@@ -7,7 +7,6 @@ export default class EmailService {
         formData.append('email', address);
         axios
             .post("/api/validate", formData).then(response => {
-            console.log(response);
             if (response.status === 200) {
                 handler(response.data);
             }

@@ -43,6 +43,7 @@ export default {
 
 <style scoped>
 .images-button {
+    pointer-events: auto;
     position: absolute;
     top: 1700px;
     right: 50px;

@@ -5,9 +5,9 @@
             <div><img v-if="imageDataCopy" :src="imageData" alt="Thumbnail"/></div>
         </div-->
 
-        <share-facebook :image-id="imageId" :is-active="isShareFacebookActive"></share-facebook>
-        <share-email :image-id="imageId" :is-active="isShareEmailActive"></share-email>
-        <share-download :image-id="imageId" :is-active="isShareDownloadActive"></share-download>
+        <share-facebook v-if="imageId" :image-id="imageId" :is-active="isShareFacebookActive"></share-facebook>
+        <share-email v-if="imageId" :image-id="imageId" :is-active="isShareEmailActive"></share-email>
+        <share-download v-if="imageId" :image-id="imageId" :is-active="isShareDownloadActive"></share-download>
 
         <div class="back-button" @click="back">
             <div class="button">Go back</div>
@@ -61,8 +61,8 @@ export default {
         }
     },
     computed: {
-        imageId(){
-            return this.imageDataCopy ? this.imageDataCopy.id : '';
+        imageId() {
+            return this.imageDataCopy ? this.imageDataCopy.id : null;
         },
         imageData() {
             if (this.imageDataCopy.id !== null) {

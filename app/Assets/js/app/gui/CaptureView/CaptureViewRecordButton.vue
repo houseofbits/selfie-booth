@@ -19,6 +19,7 @@ export default {
 
 <style scoped>
 .record-button{
+    pointer-events: auto;
     position:absolute;
     top:1700px;
     left:460px;

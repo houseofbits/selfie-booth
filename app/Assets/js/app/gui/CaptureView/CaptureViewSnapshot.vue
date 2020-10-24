@@ -63,6 +63,8 @@ export default {
     height: 1920px;
     transform: scale(1.0);
     box-shadow: -1px 17px 38px 9px rgba(0, 0, 0, 0.6);
+    overflow: hidden;
+    border: solid 2px black;
 }
 
 .transition {
@@ -80,13 +82,15 @@ export default {
     40% {
         transform: translate(0px, 0px) scale(0.6);
         filter: brightness(2.0);
+        border-radius: 0;
     }
     60% {
         opacity: 1.0;
     }
     100% {
-        transform: translate(470px, 880px) scale(0.05);
+        transform: translate(470px, 880px) scale(0.07, 0.03);
         opacity: 0;
+        border-radius: 50%;
     }
 }
 

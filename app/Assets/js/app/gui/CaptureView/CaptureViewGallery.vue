@@ -69,6 +69,7 @@ export default {
 <style scoped>
 
 .gallery {
+    pointer-events: auto;
     position: absolute;
     background-color: rgba(0, 0, 0, 0.6);
     top: 1000px;
