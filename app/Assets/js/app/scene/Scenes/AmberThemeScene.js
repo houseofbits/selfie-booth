@@ -11,7 +11,7 @@ export default class AmberThemeScene extends BaseScene {
     constructor(mainScene) {
         super(mainScene);
         this.theme.name = "Amber theme";
-        this.theme.imagePath = "images/themes/amber/icon.png";
+        this.theme.setImage("assets/images/themes/amber/icon.png");
         this.theme.addEffect(EffectTypes.Bg1, "Background1", "icon1.png");
         this.theme.addEffect(EffectTypes.Bg2, "Background2", "icon2.png");
         this.theme.addEffect(EffectTypes.Bg3, "Background3", "icon3.png");

@@ -4,13 +4,17 @@ export default class ThemeStructure {
     constructor() {
         this.scene = null;
         this.name = "";
-        this.imagePath = "";
+        this.image = null;
         this.effects = [];
     }
-    addEffect(id, name, image) {
+    setImage(path){
+        this.image = new Image();
+        this.image.src = path;
+    }
+    addEffect(id, name, imagePath) {
         let effect = new EffectStructure();
         effect.name = name;
-        effect.imagePath = image;
+        effect.setImage(imagePath);
         effect.id = id;
         this.effects[id] = effect;
     }

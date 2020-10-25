@@ -1,5 +1,5 @@
-import MainScene from '/js/app/scene/Scenes/MainScene';
+import SceneManager from '/js/app/scene/Scenes/SceneManager';
 
-const MainSceneInstance = new MainScene(document.getElementById('renderCanvas'));
+const MainSceneInstance = new SceneManager(document.getElementById('renderCanvas'));
 
 export default MainSceneInstance;

@@ -1,24 +1,26 @@
 <template>
     <div class="gui-frame">
 
-        <div v-if="isDemoModeActive">
-            <div class="start-button" @click="modeStart">Start</div>
-        </div>
+        <!--        <div v-if="isDemoModeActive">-->
+        <!--            <div class="start-button" @click="modeStart">Start</div>-->
+        <!--        </div>-->
 
-        <capture-view :capturedImageData="capturedImageData"
-                      :is-active="isPreviewModeActive"
-                      :selectedImage="selectedImage"
-                      @capture="captureImage"
-                      @delete="deleteImage"
-                      @select="selectImage"
-                      @share="modeShare"></capture-view>
+        <!--        <capture-view :capturedImageData="capturedImageData"-->
+        <!--                      :is-active="isPreviewModeActive"-->
+        <!--                      :selectedImage="selectedImage"-->
+        <!--                      @capture="captureImage"-->
+        <!--                      @delete="deleteImage"-->
+        <!--                      @select="selectImage"-->
+        <!--                      @share="modeShare"></capture-view>-->
 
-        <sharing-view :capturedImageData="capturedImageData"
-                      :is-active="isShareModeActive"
-                      :selectedImage="selectedImage"
-                      :type="sharingType"
-                      @back="modeStart"
-                      @sync="syncImageData"></sharing-view>
+        <!--        <sharing-view :capturedImageData="capturedImageData"-->
+        <!--                      :is-active="isShareModeActive"-->
+        <!--                      :selectedImage="selectedImage"-->
+        <!--                      :type="sharingType"-->
+        <!--                      @back="modeStart"-->
+        <!--                      @sync="syncImageData"></sharing-view>-->
+
+        <transition-mockup></transition-mockup>
 
     </div>
 </template>
@@ -31,6 +33,8 @@ import {FlowState} from "/js/app/gui/Constants";
 import CaptureImageData from "./Structures/CapturedImageData";
 import ImageDataSyncService from "./Services/ImageDataSyncService";
 import MainSceneInstance from '/js/app/scene/MainInstance';
+
+import TransitionMockup from './TransitionsMockup.vue';
 
 export default {
     name: "app",
@@ -53,7 +57,11 @@ export default {
             return this.flowState === FlowState.SharingMode;
         },
     },
-    components: {SharingView, CaptureView},
+    components: {
+        SharingView,
+        CaptureView,
+        TransitionMockup
+    },
     methods: {
         modeStart() {
             this.flowState = FlowState.CaptureMode;
@@ -103,7 +111,7 @@ export default {
     width: 1080px;
     height: 1920px;
     border: solid 1px red;
-    pointer-events: none;
+/*    pointer-events: none;*/
 }
 
 .start-button {
