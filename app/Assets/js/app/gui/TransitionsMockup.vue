@@ -276,4 +276,17 @@ $theme-pos-top: 1000px;
     }
 }
 
+
+.items { position: relative; }
+.items li { 
+position: absolute; top: ; left: ;
+transition: all 0.2s ease-out;
+}
+ 
+.items li:nth-child(1)  { transform: translate(0, 0%); }
+.items li:nth-child(2)  { transform: translate(0, 100%); }
+.items li:nth-child(3)  { transform: translate(0, 200%); }
+.items li:nth-child(4)  { transform: translate(0, 300%); }
+.items li:nth-child(5)  { transform: translate(0, 400%); }
+
 </style>
