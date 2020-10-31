@@ -1,28 +1,25 @@
 <template>
     <div>
-        <h1 class="msg"></h1>
-
-
-
-
+        home view
     </div>
 </template>
 
 <script>
 export default {
-    name: "app",
-    data: function () {
+name: "HomeView",
+    props: {
+    },
+    data() {
         return {
 
-        }
+        };
     },
-    mounted: function () {
+    mounted() {
+
     }
 }
 </script>
 
 <style scoped>
-.msg {
-    color: red;
-}
+
 </style>

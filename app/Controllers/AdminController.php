@@ -7,11 +7,13 @@ class AdminController extends Controller
 {
 	public function index()
 	{
-		log_message('critical', "TEst error");
+        return view('admin/index');
 
-		$segment = $this->request->uri->getSegment(2);
-
-		return view('admin/main', \compact('segment'));
+//		log_message('critical', "TEst error");
+//
+//		$segment = $this->request->uri->getSegment(2);
+//
+//		return view('admin/main', \compact('segment'));
 	}
 
 	public function smtpSettings()

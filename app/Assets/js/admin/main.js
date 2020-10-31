@@ -3,12 +3,33 @@ import '@fortawesome/fontawesome-free/js/all.js';
 // import axios from 'axios';
 import 'bootstrap';
 
-import Vue from 'vue'
-import App from './CameraPreview.vue'
+import Vue from 'vue';
+import VueRouter from 'vue-router'
+import AdminApp from './AdminApp.vue'
+import EmailConfigView from './EmailConfigView.vue'
+import HomeView from './HomeView.vue'
 
-if(document.getElementById('react-camera-preview')) {
-    new Vue({
-        el: '#react-camera-preview',
-        render: h => h(App)
-    });
-}
+Vue.use(VueRouter);
+
+const routes = [
+    {
+        path: "/",
+        name: "Home",
+        component: HomeView,
+    },
+    {
+        path: "/email",
+        name: "email",
+        component: EmailConfigView,
+    }
+];
+
+const router = new VueRouter({
+    routes
+});
+
+new Vue({
+    el: "#admin-app",
+    router: router,
+    render: h => h(AdminApp)
+})

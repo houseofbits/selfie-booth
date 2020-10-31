@@ -2,7 +2,7 @@ const path = require('path');
 
 module.exports = {
     entry: {
-        'main': './app/Assets/js/app/main.js',
+        'admin': './app/Assets/js/admin/main.js',
     },
     output: {
         filename: '[name].js',

@@ -2,7 +2,7 @@ const path = require('path');
 
 module.exports = {
     entry: {
-        'admin': './app/Assets/js/facebook/main.js',
+        'main': './app/Assets/js/app/main.js',
     },
     output: {
         filename: '[name].js',

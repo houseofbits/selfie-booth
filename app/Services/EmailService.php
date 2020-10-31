@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Models\EmailConfigModel;
+use CodeIgniter\HTTP\Request;
 use CodeIgniter\Model;
 use PHPMailer\PHPMailer\PHPMailer;
 
@@ -21,4 +23,50 @@ class EmailService extends Model
         return PHPMailer::validateAddress($address);
     }
 
+    /**
+     * @param $emailAddress
+     * @param null $imageId
+     * @throws \Exception
+     */
+    public function sendEmail($emailAddress, $imageId = null, $language = null): void
+    {
+        throw new \Exception("Not implemented");
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function testConnection(): void
+    {
+        throw new \Exception("Not implemented");
+    }
+
+    public function getConfiguration(): EmailConfigModel
+    {
+        $emailModelLoaded = EmailConfigModel::findOne();
+        if (!$emailModelLoaded) {
+            $emailModelLoaded = new EmailConfigModel();
+        }
+        return $emailModelLoaded;
+    }
+
+    /**
+     * @param Request $request
+     * @throws \Exception
+     */
+    public function saveConfiguration(Request $request): void
+    {
+        $emailModel = EmailConfigModel::findOne();
+        if (!$emailModel) {
+            $emailModel = new EmailConfigModel();
+        }
+        $emailModel->enabled = $request->getVar('enabled', FILTER_VALIDATE_BOOLEAN) ?? false;
+        $emailModel->host = $request->getVar('host') ?? '';
+        $emailModel->username = $request->getVar('username') ?? '';
+        $emailModel->password = $request->getVar('password') ?? '';
+        $emailModel->port = $request->getVar('port') ?? '';
+        $emailModel->senderAddress = $request->getVar('senderAddress') ?? '';
+
+        $emailModel->save();
+    }
 }

@@ -7,11 +7,4 @@ $theme-colors: (
 
 $body-bg: rgb(255, 255, 255);
 
-#videoElement {
-	width: 500px;
-	height: 375px;
-  background-color: #666;
-  border:solid 1px black;
-}
-
 @import "~/bootstrap/bootstrap.scss";
