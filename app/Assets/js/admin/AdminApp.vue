@@ -9,14 +9,14 @@
             <div class="col-md-3 bg-secondary p-1">
                 <div class="btn-group-vertical btn-block">
                     <router-link class="btn btn-secondary btn-sm" exact-active-class="active" to="/">Home</router-link>
-                    <router-link class="btn btn-secondary btn-sm" exact-active-class="active" to="/images">Captured
-                        images
+                    <router-link class="btn btn-secondary btn-sm" exact-active-class="active" to="/images">
+                        Captured images
                     </router-link>
-                    <router-link class="btn btn-secondary btn-sm" exact-active-class="active" to="/email">Email
-                        settings
+                    <router-link class="btn btn-secondary btn-sm" exact-active-class="active" to="/email">
+                        Email settings
                     </router-link>
-                    <router-link class="btn btn-secondary btn-sm" exact-active-class="active" to="/facebook">Facebook
-                        settings
+                    <router-link class="btn btn-secondary btn-sm" exact-active-class="active" to="/facebook">
+                        Facebook settings
                     </router-link>
                 </div>
             </div>
@@ -30,17 +30,5 @@
 <script>
 export default {
     name: "AdminApp",
-    data() {
-        return {
-
-        }
-    },
-    methods: {
-
-    }
 }
 </script>
-
-<style scoped>
-
-</style>

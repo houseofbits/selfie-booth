@@ -23,7 +23,7 @@ import AlertBox from './Components/AlertBox.vue';
 import axios from 'axios';
 
 export default {
-    name: "FacebookConfigView",
+    name: "ImagesConfigView",
     props: {},
     components: {
         AlertBox

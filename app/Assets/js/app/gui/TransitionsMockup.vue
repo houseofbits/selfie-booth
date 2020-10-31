@@ -1,13 +1,13 @@
 <template>
     <div>
 
-<!--        <div :class="galleryFrameClass" class="gallery-frame" @click.self="openGallery">-->
-<!--            <div class="close-button" @click.self="closeGallery"></div>-->
-<!--        </div>-->
+        <div :class="galleryFrameClass" class="gallery-frame" @click.self="openGallery">
+            <div class="close-button" @click.self="closeGallery"></div>
+        </div>
 
-<!--        <div :class="themesFrameClass" class="themes-frame" @click.self="openThemes">-->
-<!--            <div class="close-button" @click.self="closeThemes"></div>-->
-<!--        </div>-->
+        <div :class="themesFrameClass" class="themes-frame" @click.self="openThemes">
+            <div class="close-button" @click.self="closeThemes"></div>
+        </div>
 
 <!--        <div class="images-row">-->
 <!--            <transition-group name="images-reduce" tag="p">-->
@@ -20,14 +20,14 @@
 <!--            </transition-group>-->
 <!--        </div>-->
 
-<!--        <div class="images-row">-->
-<!--            <div v-for="(item, index) in items" :key="item" class="image-thumbnail">-->
-<!--                <div class="image-thumbnail-inner">-->
-<!--                    <div class="delete-image-button" @click.self="remove(index)"></div>-->
-<!--                    <img src="https://picsum.photos/200/350" width="100%" height="100%" @click.self="select(index)"/>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
+        <div class="images-row">
+            <div v-for="(item, index) in items" :key="index" class="image-thumbnail" :class="{remove:item.remove}">
+                <div class="image-thumbnail-inner">
+                    <div class="delete-image-button" @click.self="remove(index)"></div>
+                    <img :src="'https://picsum.photos/' + item.id" width="100%" height="100%" @click.self="select(index)"/>
+                </div>
+            </div>
+        </div>
 
     </div>
 </template>
@@ -39,7 +39,24 @@ export default {
         return {
             isGallerySelected: false,
             isThemesSelected: false,
-            items: [1, 2, 3, 4],
+            items: [
+                {
+                    id:1,
+                    remove:false
+                },
+                {
+                    id:2,
+                    remove:false
+                },
+                {
+                    id:3,
+                    remove:false
+                },
+                {
+                    id:4,
+                    remove:false
+                }
+            ],
             selected: null,
         };
     },
@@ -76,7 +93,8 @@ export default {
             this.selected = index;
         },
         remove(i) {
-            this.items.splice(i, 1);
+            this.items[i].remove = true;
+            setTimeout(() => this.items.splice(i, 1), 400);
         }
     }
 }
@@ -108,12 +126,16 @@ export default {
     border: solid 5px darkgray;
 }
 
-
-
 .image-thumbnail-inner {
     position: relative;
     width: 100%;
     height: 100%;
+}
+
+.image-thumbnail.remove{
+    width: 0;
+    margin-left: 0;
+    margin-right: 0;
 }
 
 .images-reduce-enter-from,
@@ -283,10 +305,10 @@ $theme-pos-top: 1000px;
 //transition: all 0.2s ease-out;
 //}
  
-.items li:nth-child(1)  { transform: translate(0, 0%); }
-.items li:nth-child(2)  { transform: translate(0, 100%); }
-.items li:nth-child(3)  { transform: translate(0, 200%); }
-.items li:nth-child(4)  { transform: translate(0, 300%); }
-.items li:nth-child(5)  { transform: translate(0, 400%); }
+//.items li:nth-child(1)  { transform: translate(0, 0%); }
+//.items li:nth-child(2)  { transform: translate(0, 100%); }
+//.items li:nth-child(3)  { transform: translate(0, 200%); }
+//.items li:nth-child(4)  { transform: translate(0, 300%); }
+//.items li:nth-child(5)  { transform: translate(0, 400%); }
 
 </style>
