@@ -1,13 +1,13 @@
 <template>
     <div>
 
-        <div :class="galleryFrameClass" class="gallery-frame" @click.self="openGallery">
-            <div class="close-button" @click.self="closeGallery"></div>
-        </div>
+<!--        <div :class="galleryFrameClass" class="gallery-frame" @click.self="openGallery">-->
+<!--            <div class="close-button" @click.self="closeGallery"></div>-->
+<!--        </div>-->
 
-        <div :class="themesFrameClass" class="themes-frame" @click.self="openThemes">
-            <div class="close-button" @click.self="closeThemes"></div>
-        </div>
+<!--        <div :class="themesFrameClass" class="themes-frame" @click.self="openThemes">-->
+<!--            <div class="close-button" @click.self="closeThemes"></div>-->
+<!--        </div>-->
 
 <!--        <div class="images-row">-->
 <!--            <transition-group name="images-reduce" tag="p">-->
@@ -20,14 +20,14 @@
 <!--            </transition-group>-->
 <!--        </div>-->
 
-        <div class="images-row">
-            <div v-for="(item, index) in items" :key="item" class="image-thumbnail">
-                <div class="image-thumbnail-inner">
-                    <div class="delete-image-button" @click.self="remove(index)"></div>
-                    <img src="https://picsum.photos/200/350" width="100%" height="100%" @click.self="select(index)"/>
-                </div>
-            </div>
-        </div>
+<!--        <div class="images-row">-->
+<!--            <div v-for="(item, index) in items" :key="item" class="image-thumbnail">-->
+<!--                <div class="image-thumbnail-inner">-->
+<!--                    <div class="delete-image-button" @click.self="remove(index)"></div>-->
+<!--                    <img src="https://picsum.photos/200/350" width="100%" height="100%" @click.self="select(index)"/>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
 
     </div>
 </template>
@@ -277,11 +277,11 @@ $theme-pos-top: 1000px;
 }
 
 
-.items { position: relative; }
-.items li { 
-position: absolute; top: ; left: ;
-transition: all 0.2s ease-out;
-}
+//.items { position: relative; }
+//.items li {
+//position: absolute; top: ; left: ;
+//transition: all 0.2s ease-out;
+//}
  
 .items li:nth-child(1)  { transform: translate(0, 0%); }
 .items li:nth-child(2)  { transform: translate(0, 100%); }
