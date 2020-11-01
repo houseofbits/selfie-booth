@@ -50,38 +50,6 @@
 
                 <button class="btn btn-success" @click="save(true)">Test connection</button>
             </div>
-
-            <!--        <div class="card-header p-2 font-weight-bolder">Email content</div>-->
-            <!--        <div class="container p-3">-->
-            <!--            <ul class="nav nav-tabs">-->
-            <!--                <li class="nav-item">-->
-            <!--                    <a class="nav-link active" data-toggle="tab" href="#home">LV</a>-->
-            <!--                </li>-->
-            <!--                <li class="nav-item">-->
-            <!--                    <a class="nav-link" data-toggle="tab" href="#menu1">EN</a>-->
-            <!--                </li>-->
-            <!--                <li class="nav-item">-->
-            <!--                    <a class="nav-link" data-toggle="tab" href="#menu2">RU</a>-->
-            <!--                </li>-->
-            <!--            </ul>-->
-            <!--            <div class="tab-content mt-3">-->
-            <!--                <div id="home" class="tab-pane container active">-->
-            <!--                    <div class="form-group">-->
-            <!--                        <textarea id="comment" class="form-control" rows="5"></textarea>-->
-            <!--                    </div>-->
-            <!--                </div>-->
-            <!--                <div id="menu1" class="tab-pane container fade">-->
-            <!--                    <div class="form-group">-->
-            <!--                        <textarea id="comment" class="form-control" rows="5"></textarea>-->
-            <!--                    </div>-->
-            <!--                </div>-->
-            <!--                <div id="menu2" class="tab-pane container fade">-->
-            <!--                    <div class="form-group">-->
-            <!--                        <textarea id="comment" class="form-control" rows="5"></textarea>-->
-            <!--                    </div>-->
-            <!--                </div>-->
-            <!--            </div>-->
-            <!--        </div>-->
         </form>
         <form id="formTestMessage" @submit.prevent="()=>{}">
             <div class="card-header p-2 font-weight-bolder">Send</div>

@@ -15,13 +15,20 @@
                     <router-link class="btn btn-secondary btn-sm" exact-active-class="active" to="/email">
                         Email settings
                     </router-link>
-                    <router-link class="btn btn-secondary btn-sm" exact-active-class="active" to="/facebook">
-                        Facebook settings
+                    <router-link class="btn btn-secondary btn-sm" exact-active-class="active" to="/sharing">
+                        Sharing settings
+                    </router-link>
+                    <router-link class="btn btn-secondary btn-sm" exact-active-class="active" to="/translate">
+                        Translations
                     </router-link>
                 </div>
             </div>
             <div class="col-md-9 bg-light p-0">
-                <router-view></router-view>
+                <transition
+                    mode="out-in"
+                    name="fade">
+                    <router-view></router-view>
+                </transition>
             </div>
         </div>
     </div>
@@ -32,3 +39,17 @@ export default {
     name: "AdminApp",
 }
 </script>
+
+<style scoped>
+.fade-enter-active,
+.fade-leave-active {
+    transition-duration: 0.2s;
+    transition-property: opacity;
+    transition-timing-function: ease;
+}
+
+.fade-enter,
+.fade-leave-active {
+    opacity: 0
+}
+</style>

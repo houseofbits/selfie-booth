@@ -21,10 +21,10 @@
 <!--        </div>-->
 
         <div class="images-row">
-            <div v-for="(item, index) in items" :key="index" class="image-thumbnail" :class="{remove:item.remove}">
+            <div v-for="(item, index) in items" :key="item.id" class="image-thumbnail" :class="{remove:item.remove, selected:(index===selected)}">
                 <div class="image-thumbnail-inner">
                     <div class="delete-image-button" @click.self="remove(index)"></div>
-                    <img :src="'https://picsum.photos/' + item.id" width="100%" height="100%" @click.self="select(index)"/>
+                    <img :src="'https://picsum.photos/200/300?random=' + item.id" width="100%" height="100%" @click.self="select(index)" alt=""/>
                 </div>
             </div>
         </div>
@@ -93,8 +93,11 @@ export default {
             this.selected = index;
         },
         remove(i) {
+            if(this.selected === i){
+                this.selected = null;
+            }
             this.items[i].remove = true;
-            setTimeout(() => this.items.splice(i, 1), 400);
+            setTimeout(() => this.items.splice(i, 1), 200);
         }
     }
 }
@@ -108,17 +111,15 @@ export default {
     background-color: rgba(0, 0, 0, 0.6);
     width: 1080px;
     height: 600px;
-    top: 1000px;
-
-    flex-grow: 1;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
+    top: 300px;
+    text-align: center;
+    line-height: 600px;
 }
 
 .image-thumbnail {
-    transition: all 0.4s ease-out;
+    transition: all 0.2s linear;
     display: inline-block;
+    vertical-align: middle;
     margin-right: 15px;
     margin-left: 15px;
     width: 200px;
@@ -136,7 +137,14 @@ export default {
     width: 0;
     margin-left: 0;
     margin-right: 0;
+    transition: all 0.2s ease-in;
 }
+.image-thumbnail.selected{
+    width: 270px;
+    height: 470px;
+    transition: all 0.2s linear;
+}
+
 
 .images-reduce-enter-from,
 .images-reduce-leave-to {
@@ -175,9 +183,9 @@ $theme-pos-top: 1000px;
     position: absolute;
     background-color: rgba(0, 0, 0, 0.6);
     border: 2px solid red;
-    display: flex;
-    justify-content: stretch;
-    flex-direction: column;
+    //display: flex;
+    //justify-content: stretch;
+    //flex-direction: column;
 }
 
 .close-button {

@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\EmailConfigModel;
 use App\Services\EmailService;
+use App\Services\TranslationsService;
 use CodeIgniter\Controller;
 use CodeIgniter\RESTful\ResourceController;
 
@@ -77,5 +78,32 @@ class ConfigurationApiController extends ResourceController
         }
 
         return $this->respond(true);
+    }
+
+    public function getSharingConfiguration()
+    {
+
+    }
+
+    public function saveSharingConfiguration()
+    {
+
+    }
+
+    public function getTranslationsList()
+    {
+        $translationsService = new TranslationsService();
+        return $this->respond($translationsService->getTranslationsListResponse());
+    }
+
+    public function getTranslation($key)
+    {
+        $translationsService = new TranslationsService();
+        return $this->respond($translationsService->getTranslation($key));
+    }
+
+    public function saveTranslation()
+    {
+
     }
 }
