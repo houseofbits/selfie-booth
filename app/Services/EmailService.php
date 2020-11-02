@@ -43,11 +43,7 @@ class EmailService extends Model
 
     public function getConfiguration(): EmailConfigModel
     {
-        $emailModelLoaded = EmailConfigModel::findOne();
-        if (!$emailModelLoaded) {
-            $emailModelLoaded = new EmailConfigModel();
-        }
-        return $emailModelLoaded;
+        return EmailConfigModel::findOrCreate();
     }
 
     /**
@@ -56,10 +52,7 @@ class EmailService extends Model
      */
     public function saveConfiguration(Request $request): void
     {
-        $emailModel = EmailConfigModel::findOne();
-        if (!$emailModel) {
-            $emailModel = new EmailConfigModel();
-        }
+        $emailModel = EmailConfigModel::findOrCreate();
         $emailModel->enabled = $request->getVar('enabled', FILTER_VALIDATE_BOOLEAN) ?? false;
         $emailModel->host = $request->getVar('host') ?? '';
         $emailModel->username = $request->getVar('username') ?? '';

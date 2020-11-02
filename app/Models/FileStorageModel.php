@@ -79,6 +79,15 @@ class FileStorageModel
         return null;
     }
 
+    public static function findOrCreate($id = null)
+    {
+        $model = self::findOne($id);
+        if (!$model) {
+            $model = new static;
+        }
+        return $model;
+    }
+
     public static function findAll(): array
     {
         $objects = [];

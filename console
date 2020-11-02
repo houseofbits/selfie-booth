@@ -1,5 +1,9 @@
 #!/bin/bash
 
+function transl(){
+    docker-compose exec php bash -c "php public_photo_booth/index.php cli translate $1";
+}
+
 function dev(){
     docker-compose up -d;
     npm run watch;

@@ -18,7 +18,7 @@
                 <thead class="thead-light">
                 <tr>
                     <th scope="col">Key</th>
-                    <th scope="col">Default text</th>
+                    <th scope="col">Default text (Eng)</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -37,44 +37,47 @@
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 id="exampleModalLabel" class="modal-title">Translate</h5>
+                        <h5 id="exampleModalLabel" class="modal-title">Translate "{{ formData.key }}"</h5>
                         <button aria-label="Close" class="close" data-dismiss="modal" type="button">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <ul class="nav nav-tabs">
-                            <li class="nav-item">
-                                <a class="nav-link active" data-toggle="tab" href="#home">LV</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#menu1">EN</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#menu2">RU</a>
-                            </li>
-                        </ul>
-                        <div class="tab-content mt-3">
-                            <div id="home" class="tab-pane container active p-0">
-                                <div class="form-group m-0">
-                                    <textarea class="form-control" rows="5"></textarea>
+                        <form id="formTranslate" @submit.prevent="()=>{}">
+                            <ul class="nav nav-tabs">
+                                <li class="nav-item">
+                                    <a class="nav-link active" data-toggle="tab" href="#home">LV</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#menu1">EN</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#menu2">RU</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content mt-3">
+                                <div id="home" class="tab-pane container active p-0">
+                                    <div class="form-group m-0">
+                                        <textarea v-model="formData.textLV" name="textLV" class="form-control" rows="5"></textarea>
+                                    </div>
+                                </div>
+                                <div id="menu1" class="tab-pane container fade p-0">
+                                    <div class="form-group m-0">
+                                        <textarea v-model="formData.textEN" name="textEN" class="form-control" rows="5"></textarea>
+                                    </div>
+                                </div>
+                                <div id="menu2" class="tab-pane container fade p-0">
+                                    <div class="form-group m-0">
+                                        <textarea v-model="formData.textRU" name="textRU" class="form-control" rows="5"></textarea>
+                                    </div>
                                 </div>
                             </div>
-                            <div id="menu1" class="tab-pane container fade p-0">
-                                <div class="form-group m-0">
-                                    <textarea class="form-control" rows="5"></textarea>
-                                </div>
-                            </div>
-                            <div id="menu2" class="tab-pane container fade p-0">
-                                <div class="form-group m-0">
-                                    <textarea class="form-control" rows="5"></textarea>
-                                </div>
-                            </div>
-                        </div>
+                        </form>
                     </div>
                     <div class="modal-footer">
                         <button class="btn btn-secondary" data-dismiss="modal" type="button">Close</button>
-                        <button class="btn btn-primary" type="button">Save changes</button>
+                        <button class="btn btn-primary" data-dismiss="modal" type="button" @click="save">Save changes
+                        </button>
                     </div>
                 </div>
             </div>
@@ -97,17 +100,18 @@ export default {
     data() {
         return {
             translationsList: [],
-            formData: {},
+            formData: {
+                textLV: '',
+                textEN: '',
+                textRU: '',
+                key: '',
+            },
             message: {
                 isActive: false,
                 type: '',
                 content: ''
             },
             saveButtonDisabled: true,
-            selectedTranslation:{
-                key: '',
-                data: [],
-            }
         };
     },
     watch: {
@@ -120,9 +124,17 @@ export default {
     },
     methods: {
         save() {
-            // axios.post('admin/email', this.formData).then(response => {
-            //
-            // });
+            const form = document.getElementById('formTranslate');
+            const formData = new FormData(form);
+            formData.append('key', this.formData.key);
+            axios.post('conf/translation-save', formData).then(response => {
+                if (response.status === 200) {
+                    this.setMessage('success', 'Translation ' + this.formData.key + ' settings');
+                    this.formData.key = null;
+                    this.loadList();
+                }
+            })
+                .catch(error => this.setMessage('error', error.response.data));
         },
         setMessage(type, message) {
             this.message.type = type || '';
@@ -130,22 +142,27 @@ export default {
             this.message.isActive = !!(type && message);
         },
         loadTranslation(key) {
-            console.log('key: ' + key);
-            axios.get('admin/translation/' + key).then(response => {
+            this.setMessage();
+            axios.get('conf/translation/' + key).then(response => {
                 console.log(response);
                 if (response.status === 200) {
-                    this.selectedTranslation.key = key;
-                    this.selectedTranslation.data = response.data.translations;
+                    this.formData.key = key;
+                    this.formData.textLV = response.data.translations[0];
+                    this.formData.textEN = response.data.translations[1];
+                    this.formData.textRU = response.data.translations[2];
+                }
+            });
+        },
+        loadList() {
+            axios.get('conf/translations').then(response => {
+                if (response.status === 200) {
+                    this.translationsList = response.data;
                 }
             });
         }
     },
     mounted() {
-        axios.get('admin/translations').then(response => {
-            if (response.status === 200) {
-                this.translationsList = response.data;
-            }
-        });
+        this.loadList();
     },
     created() {
         axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';

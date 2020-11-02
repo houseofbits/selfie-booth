@@ -5,35 +5,19 @@ namespace App\Services;
 use App\Models\TranslationsModel;
 use App\Structures\TranslationsListItemResponseStructure;
 use App\Structures\TranslationStructure;
+use CodeIgniter\HTTP\Request;
+use Exception;
 
 class TranslationsService
 {
     public function getTranslations(): TranslationsModel
     {
-        $translationsModel = TranslationsModel::findOne();
-        if (!$translationsModel) {
-            $translationsModel = new TranslationsModel();
-        }
-
-        $translationsModel->updateTranslation('test-key-0', "Test translation");
-        $translationsModel->updateTranslation('test-key-1', "Test translation 1");
-        $translationsModel->updateTranslation('test-key-2', "Test translation 2");
-
-        return $translationsModel;
+        return TranslationsModel::findOrCreate();
     }
 
     public function getTranslation(string $key): TranslationStructure
     {
-        $translationsModel = TranslationsModel::findOne();
-        if (!$translationsModel) {
-            $translationsModel = new TranslationsModel();
-        }
-
-        $translationsModel->updateTranslation('test-key-0', "Test translation");
-        $translationsModel->updateTranslation('test-key-1', "Test translation 1");
-        $translationsModel->updateTranslation('test-key-2', "Test translation 2");
-
-        return $translationsModel->findOrCreate($key);
+        return TranslationsModel::findOrCreate()->findOrCreateTranslation($key);
     }
 
     /**
@@ -53,5 +37,33 @@ class TranslationsService
             );
         }
         return [];
+    }
+
+    /**
+     * @param Request $request
+     * @throws Exception
+     */
+    public function saveTranslation(Request $request): void
+    {
+        $translationsModel = TranslationsModel::findOrCreate();
+        $key = $request->getVar('key');
+        $textLat = $request->getVar('textLV') ?? '';
+        $textEng = $request->getVar('textEN') ?? '';
+        $textRus = $request->getVar('textRU') ?? '';
+
+        if (!$key) {
+            throw new Exception("Key is not defined");
+        }
+        $translationsModel->updateTranslation($key, $textLat, TranslationStructure::LAT);
+        $translationsModel->updateTranslation($key, $textEng, TranslationStructure::ENG);
+        $translationsModel->updateTranslation($key, $textRus, TranslationStructure::RUS);
+        $translationsModel->save();
+    }
+
+    public function createTranslationKey(string $key)
+    {
+        $translationsModel = TranslationsModel::findOrCreate();
+        $translationsModel->insertTranslationKey($key);
+        $translationsModel->save();
     }
 }

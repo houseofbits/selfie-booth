@@ -82,12 +82,10 @@ class ConfigurationApiController extends ResourceController
 
     public function getSharingConfiguration()
     {
-
     }
 
     public function saveSharingConfiguration()
     {
-
     }
 
     public function getTranslationsList()
@@ -104,6 +102,28 @@ class ConfigurationApiController extends ResourceController
 
     public function saveTranslation()
     {
+        $translationsService = new TranslationsService();
+        try {
+            $translationsService->saveTranslation($this->request);
+        } catch (\Exception $e) {
+            return $this->respond("Translation save failed. " . $e->getMessage(), 400);
+        }
 
+        return $this->respond(true);
+    }
+
+    public function cliCreateTranslationKey(string $key)
+    {
+        $translationsService = new TranslationsService();
+        $translationsService->createTranslationKey($key);
+        echo "Translation key inserted " . $key;
+    }
+
+    public function getTranslationsResource()
+    {
+        $translationsService = new TranslationsService();
+        $translations = $translationsService->getTranslations();
+        return $this->response->setHeader('Content-Type', 'application/json')
+            ->setJSON($translations->translations);
     }
 }

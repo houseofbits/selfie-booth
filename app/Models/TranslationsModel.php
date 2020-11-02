@@ -18,14 +18,19 @@ class TranslationsModel extends FileStorageModel
         string $text,
         int $lang = TranslationStructure::ENG
     ): TranslationStructure {
-        $translationStruct = $this->findOrCreate($key);
+        $translationStruct = $this->findOrCreateTranslation($key);
         $translationStruct->updateTranslation($text, $lang);
         $this->translations[$key] = $translationStruct;
         return $translationStruct;
     }
 
-    public function findOrCreate(string $key): TranslationStructure
+    public function findOrCreateTranslation(string $key): TranslationStructure
     {
         return $this->translations[$key] ?? new TranslationStructure();
+    }
+
+    public function insertTranslationKey(string $key)
+    {
+        $this->translations[$key] = $this->findOrCreateTranslation($key);
     }
 }

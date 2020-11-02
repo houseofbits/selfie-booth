@@ -74,7 +74,7 @@
                 </div>
                 <div class="row mb-2">
                     <div class="form-group col-12 col-md-6">
-                        <label for="imagename">Attacment image name (located in <i>writable/uploads/</i>)</label>
+                        <label for="imagename">Attacment image name (located in uploads folder)</label>
                         <input id="imagename" class="form-control" name="imageName"
                                placeholder="Image file name">
                     </div>
@@ -141,7 +141,7 @@ export default {
             const form = document.getElementById('form');
             const formData = new FormData(form);
             formData.append('testConnection', testConnection || false);
-            axios.post('admin/email', formData).then(response => {
+            axios.post('conf/email', formData).then(response => {
                 if (response.status === 200) {
                     if (testConnection) {
                         this.setMessage('success', 'Connection to email server OK!');
@@ -156,7 +156,7 @@ export default {
         sendEmail(){
             const form = document.getElementById('formTestMessage');
             const formData = new FormData(form);
-            axios.post('admin/email-test', formData).then(response => {
+            axios.post('conf/email-test', formData).then(response => {
                 if (response.status === 200) {
                     this.setMailTestMessage('success', 'Email settings saved');
                 }
@@ -175,7 +175,7 @@ export default {
         }
     },
     mounted() {
-        axios.get('admin/email').then(response => {
+        axios.get('conf/email').then(response => {
             if (response.status === 200) {
                 this.formData.enabled = response.data.enabled;
                 this.formData.host = response.data.host;
