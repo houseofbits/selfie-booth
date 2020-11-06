@@ -1,5 +1,6 @@
 <template>
     <div>
+        <span @click="lang.setLanguage(0)">LV</span>|<span @click="lang.setLanguage(1)">EN</span>|<span @click="lang.setLanguage(2)">RU</span> => {{ lang.translate('test-key') }}
 
         <div :class="galleryFrameClass" class="gallery-frame" @click.self="openGallery">
             <div class="close-button" @click.self="closeGallery"></div>
@@ -60,6 +61,7 @@ export default {
             selected: null,
         };
     },
+    inject: ['lang'],
     computed: {
         galleryFrameClass() {
             if (this.isGallerySelected) {
@@ -156,6 +158,17 @@ export default {
     position: absolute;
 }
 
+.image-thumbnail.remove .delete-image-button {
+    transform: scale(0);
+    left:-40px;
+    transition: all 0.2s ease-in;
+}
+
+.image-thumbnail.selected .delete-image-button {
+    left: 95px;
+    transition: all 0.2s linear;
+}
+
 .delete-image-button {
     position: absolute;
     bottom: -40px;
@@ -164,6 +177,7 @@ export default {
     width: 80px;
     height: 80px;
     border-radius: 50%;
+    transition: all 0.2s linear;
 }
 
 $gallery-icon-pos-top: 1730px;

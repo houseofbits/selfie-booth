@@ -33,7 +33,6 @@ import {FlowState} from "/js/app/gui/Constants";
 import CaptureImageData from "./Structures/CapturedImageData";
 import ImageDataSyncService from "./Services/ImageDataSyncService";
 import MainSceneInstance from '/js/app/scene/MainInstance';
-
 import TransitionMockup from './TransitionsMockup.vue';
 
 export default {

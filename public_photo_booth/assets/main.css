@@ -538,6 +538,15 @@ input[data-v-1e322f59]:focus {
 .images-reduce-leave-active[data-v-9ca62e8a] {
   position: absolute;
 }
+.image-thumbnail.remove .delete-image-button[data-v-9ca62e8a] {
+  transform: scale(0);
+  left: -40px;
+  transition: all 0.2s ease-in;
+}
+.image-thumbnail.selected .delete-image-button[data-v-9ca62e8a] {
+  left: 95px;
+  transition: all 0.2s linear;
+}
 .delete-image-button[data-v-9ca62e8a] {
   position: absolute;
   bottom: -40px;
@@ -546,6 +555,7 @@ input[data-v-1e322f59]:focus {
   width: 80px;
   height: 80px;
   border-radius: 50%;
+  transition: all 0.2s linear;
 }
 .gallery-frame[data-v-9ca62e8a], .themes-frame[data-v-9ca62e8a] {
   pointer-events: auto;
