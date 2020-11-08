@@ -9,7 +9,8 @@ if(document.getElementById('gui')) {
     new AppRoot({
         el: '#gui',
         provide:{
-            lang: languageServiceObservable
+            langService: languageServiceObservable,
+            lang: languageServiceObservable.translate.bind(languageServiceObservable)
         },
     });
 }

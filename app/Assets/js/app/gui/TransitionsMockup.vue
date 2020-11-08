@@ -1,6 +1,7 @@
 <template>
     <div>
-        <span @click="lang.setLanguage(0)">LV</span>|<span @click="lang.setLanguage(1)">EN</span>|<span @click="lang.setLanguage(2)">RU</span> => {{ lang.translate('test-key') }}
+        <span @click="langService.setLanguage(0)">LV</span>|<span @click="langService.setLanguage(1)">EN</span>|<span
+        @click="langService.setLanguage(2)">RU</span> => {{ lang('test-key') }}
 
         <div :class="galleryFrameClass" class="gallery-frame" @click.self="openGallery">
             <div class="close-button" @click.self="closeGallery"></div>
@@ -10,58 +11,80 @@
             <div class="close-button" @click.self="closeThemes"></div>
         </div>
 
-<!--        <div class="images-row">-->
-<!--            <transition-group name="images-reduce" tag="p">-->
-<!--                <div v-for="(item, index) in items" :key="item" class="image-thumbnail">-->
-<!--                    <div class="image-thumbnail-inner">-->
-<!--                        <div class="delete-image-button" @click.self="remove(index)"></div>-->
-<!--                        <img src="https://picsum.photos/200/350" width="100%" height="100%" @click.self="select(index)"/>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </transition-group>-->
+        <!--        <div class="images-row">-->
+        <!--            <div v-for="(item, index) in items" :key="item.id"-->
+        <!--                 :class="{remove:item.remove, selected:(index===selected), 'not-selected': notSelected(index)}"-->
+        <!--                 class="image-thumbnail">-->
+        <!--                <div class="image-thumbnail-inner">-->
+        <!--                    &lt;!&ndash;                    <div class="delete-image-button" @click.self="remove(index)"></div>&ndash;&gt;-->
+        <!--                    <buttons-mockup :is-active="(index===selected)" class="delete-image-button buttons-block"-->
+        <!--                                    @close="remove(index)"></buttons-mockup>-->
+        <!--                    <img :src="'https://picsum.photos/200/300?random=' + item.id" alt="" height="100%"-->
+        <!--                         width="100%" @click.self="select(index)"/>-->
+        <!--                </div>-->
+        <!--            </div>-->
+        <!--        </div>-->
+
+<!--        <div class="relative-items">-->
+<!--            <div v-for="(item, index) in items" :key="item.id"-->
+<!--                 :class="{remove:item.remove, selected:(index===selected), 'not-selected': notSelected(index), collapse:collapse}"-->
+<!--                 class="image">-->
+<!--                <buttons-mockup :is-visible="!collapse && !item.remove" :is-active="(index===selected && !collapse)" class="buttons-block"-->
+<!--                                @delete="remove(index)"></buttons-mockup>-->
+<!--                <img :src="'https://picsum.photos/200/300?random=' + item.id" alt="" height="100%"-->
+<!--                     width="100%" @click.self="select(index)"/>-->
+<!--            </div>-->
 <!--        </div>-->
 
-        <div class="images-row">
-            <div v-for="(item, index) in items" :key="item.id" class="image-thumbnail" :class="{remove:item.remove, selected:(index===selected)}">
-                <div class="image-thumbnail-inner">
-                    <div class="delete-image-button" @click.self="remove(index)"></div>
-                    <img :src="'https://picsum.photos/200/300?random=' + item.id" width="100%" height="100%" @click.self="select(index)" alt=""/>
-                </div>
-            </div>
+        <div class="relative-items">
+            <gallery-image v-for="(image, index) in items"
+                          :key="image.id"
+                          :image="image"
+                          :selected="selected"
+                          :collapse="collapse"
+                          @action="imageAction"
+                          @select="selectImage"
+                          @delete-image="deleteImage"/>
         </div>
 
     </div>
 </template>
 
 <script>
+import GalleryImage from './GalleryImage.vue';
+
 export default {
     name: "TransitionsMockup",
+    components: {
+        GalleryImage
+    },
     data() {
         return {
             isGallerySelected: false,
             isThemesSelected: false,
             items: [
                 {
-                    id:1,
-                    remove:false
+                    id: 1,
+                    remove: false
                 },
                 {
-                    id:2,
-                    remove:false
+                    id: 2,
+                    remove: false
                 },
                 {
-                    id:3,
-                    remove:false
+                    id: 3,
+                    remove: false
                 },
                 {
-                    id:4,
-                    remove:false
+                    id: 4,
+                    remove: false
                 }
             ],
             selected: null,
+            collapse: null,
         };
     },
-    inject: ['lang'],
+    inject: ['lang', 'langService'],
     computed: {
         galleryFrameClass() {
             if (this.isGallerySelected) {
@@ -91,94 +114,172 @@ export default {
         closeGallery() {
             this.isGallerySelected = false;
         },
-        select(index){
+        selectImage(index) {
             this.selected = index;
         },
-        remove(i) {
-            if(this.selected === i){
-                this.selected = null;
-            }
-            this.items[i].remove = true;
-            setTimeout(() => this.items.splice(i, 1), 200);
+        deleteImage(i) {
+           // console.log(parseInt(i));
+           // console.log(this.items.splice(parseInt(i), 1));
+            this.items.splice(parseInt(i), 1);
+        },
+        imageAction(action){
+            this.collapse = true;
         }
     }
 }
 </script>
 
 <style lang="scss" scoped>
-
-.images-row {
+/**********************************************************************************/
+.relative-items {
     pointer-events: auto;
     position: absolute;
     background-color: rgba(0, 0, 0, 0.6);
     width: 1080px;
     height: 600px;
-    top: 300px;
+    top: 100px;
     text-align: center;
     line-height: 600px;
+    vertical-align: bottom;
+
+    //.image {
+    //    display: inline-block;
+    //    position: relative;
+    //    width: 200px;
+    //    height: 380px;
+    //    background-color: #6c6b6b;
+    //    padding: 0;
+    //    transition: all 0.2s linear;
+    //    vertical-align: middle;
+    //    margin: 0 15px;
+    //
+    //    .buttons-block {
+    //        position: absolute;
+    //        bottom: -40px;
+    //        width: 100%;
+    //        height: 80px;
+    //        transition: all 0.2s linear;
+    //    }
+    //
+    //    &.selected {
+    //        width: 270px;
+    //        height: 470px;
+    //        transition: all 0.2s linear;
+    //        z-index: 5;
+    //    }
+    //
+    //    &.not-selected {
+    //        width: 170px;
+    //        height: 330px;
+    //        transition: all 0.2s linear;
+    //    }
+    //
+    //    &.collapse {
+    //        margin: 0 0 0 -200px;
+    //        transform: translateX(50%);
+    //    }
+    //
+    //    &.not-selected.collapse {
+    //        margin: 0 0 0 -170px;
+    //        transform: translateX(50%);
+    //    }
+    //
+    //    &.selected.collapse {
+    //        margin: 0 0 0 -270px;
+    //        transform: translateX(50%);
+    //    }
+    //
+    //    &.remove {
+    //        width: 0;
+    //        margin-left: 0;
+    //        margin-right: 0;
+    //        transition: all 0.2s ease-in;
+    //    }
+    //}
 }
 
-.image-thumbnail {
-    transition: all 0.2s linear;
-    display: inline-block;
-    vertical-align: middle;
-    margin-right: 15px;
-    margin-left: 15px;
-    width: 200px;
-    height: 380px;
-    border: solid 5px darkgray;
-}
+/**********************************************************************************/
+//.images-row {
+//    pointer-events: auto;
+//    position: absolute;
+//    background-color: rgba(0, 0, 0, 0.6);
+//    width: 1080px;
+//    height: 600px;
+//    top: 800px;
+//    text-align: center;
+//    line-height: 600px;
+//}
+//
+//.image-thumbnail {
+//    transition: all 0.2s linear;
+//    display: inline-block;
+//    vertical-align: middle;
+//    margin-right: 15px;
+//    margin-left: 15px;
+//    width: 200px;
+//    height: 380px;
+//    border: solid 5px darkgray;
+//}
+//
+//.image-thumbnail-inner {
+//    position: relative;
+//    width: 100%;
+//    height: 100%;
+//}
+//
+//.image-thumbnail.remove {
+//    width: 0;
+//    margin-left: 0;
+//    margin-right: 0;
+//    transition: all 0.2s ease-in;
+//    //transition-delay: 400ms;
+//}
 
-.image-thumbnail-inner {
-    position: relative;
-    width: 100%;
-    height: 100%;
-}
+//.image-thumbnail.selected {
+//    width: 270px;
+//    height: 470px;
+//    transition: all 0.2s linear;
+//}
+//
+//.image-thumbnail.not-selected {
+//    width: 170px;
+//    height: 330px;
+//    transition: all 0.2s linear;
+//}
+//
+//.images-reduce-enter-from,
+//.images-reduce-leave-to {
+//    opacity: 0;
+//    transform: translateX(-100px) translateY(160px) scale(0.1);
+//}
+//
+//.images-reduce-leave-active {
+//    position: absolute;
+//}
+//
+//.image-thumbnail.remove .delete-image-button {
+//    transform: scale(0);
+//    left: -40px;
+//    transition: all 0.2s ease-in;
+//}
 
-.image-thumbnail.remove{
-    width: 0;
-    margin-left: 0;
-    margin-right: 0;
-    transition: all 0.2s ease-in;
-}
-.image-thumbnail.selected{
-    width: 270px;
-    height: 470px;
-    transition: all 0.2s linear;
-}
+//.image-thumbnail.remove .delete-image-button {
+//    transform: scale(0);
+//    transition: all 0.2s ease-in;
+//    transition-delay: 400ms;
+//}
 
+//.image-thumbnail.selected .delete-image-button {
+//    left: 95px;
+//    transition: all 0.2s linear;
+//}
+//
+//.image-thumbnail.not-selected .delete-image-button {
+//    left: 45px;
+//    transition: all 0.2s linear;
+//}
 
-.images-reduce-enter-from,
-.images-reduce-leave-to {
-    opacity: 0;
-    transform: translateX(-100px) translateY(160px) scale(0.1);
-}
-
-.images-reduce-leave-active {
-    position: absolute;
-}
-
-.image-thumbnail.remove .delete-image-button {
-    transform: scale(0);
-    left:-40px;
-    transition: all 0.2s ease-in;
-}
-
-.image-thumbnail.selected .delete-image-button {
-    left: 95px;
-    transition: all 0.2s linear;
-}
-
-.delete-image-button {
-    position: absolute;
-    bottom: -40px;
-    left: 60px;
-    background-color: red;
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    transition: all 0.2s linear;
-}
+/******************************************************************************************/
 
 $gallery-icon-pos-top: 1730px;
 $gallery-icon-pos-left: 880px;
@@ -326,7 +427,7 @@ $theme-pos-top: 1000px;
 //position: absolute; top: ; left: ;
 //transition: all 0.2s ease-out;
 //}
- 
+
 //.items li:nth-child(1)  { transform: translate(0, 0%); }
 //.items li:nth-child(2)  { transform: translate(0, 100%); }
 //.items li:nth-child(3)  { transform: translate(0, 200%); }

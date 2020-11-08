@@ -21,7 +21,7 @@
         <!--                      @sync="syncImageData"></sharing-view>-->
 
         <transition-mockup></transition-mockup>
-
+<!--        <buttons-mockup></buttons-mockup>-->
     </div>
 </template>
 
@@ -34,6 +34,7 @@ import CaptureImageData from "./Structures/CapturedImageData";
 import ImageDataSyncService from "./Services/ImageDataSyncService";
 import MainSceneInstance from '/js/app/scene/MainInstance';
 import TransitionMockup from './TransitionsMockup.vue';
+import ButtonsMockup from './GalleryImageActions.vue';
 
 export default {
     name: "app",
@@ -59,7 +60,8 @@ export default {
     components: {
         SharingView,
         CaptureView,
-        TransitionMockup
+        TransitionMockup,
+        ButtonsMockup
     },
     methods: {
         modeStart() {
