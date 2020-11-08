@@ -34,7 +34,6 @@ import CaptureImageData from "./Structures/CapturedImageData";
 import ImageDataSyncService from "./Services/ImageDataSyncService";
 import MainSceneInstance from '/js/app/scene/MainInstance';
 import TransitionMockup from './TransitionsMockup.vue';
-import ButtonsMockup from './GalleryImageActions.vue';
 
 export default {
     name: "app",
@@ -61,7 +60,6 @@ export default {
         SharingView,
         CaptureView,
         TransitionMockup,
-        ButtonsMockup
     },
     methods: {
         modeStart() {

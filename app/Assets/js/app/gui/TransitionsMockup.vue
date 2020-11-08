@@ -5,6 +5,8 @@
 
         <div :class="galleryFrameClass" class="gallery-frame" @click.self="openGallery">
             <div class="close-button" @click.self="closeGallery"></div>
+            <gallery />
+            <div class="gallery-icon-overlay" @click.self="openGallery"></div>
         </div>
 
         <div :class="themesFrameClass" class="themes-frame" @click.self="openThemes">
@@ -36,52 +38,23 @@
 <!--            </div>-->
 <!--        </div>-->
 
-        <div class="relative-items">
-            <gallery-image v-for="(image, index) in items"
-                          :key="image.id"
-                          :image="image"
-                          :selected="selected"
-                          :collapse="collapse"
-                          @action="imageAction"
-                          @select="selectImage"
-                          @delete-image="deleteImage"/>
-        </div>
+        <gallery />
 
     </div>
 </template>
 
 <script>
-import GalleryImage from './GalleryImage.vue';
+import Gallery from './Gallery.vue';
 
 export default {
     name: "TransitionsMockup",
     components: {
-        GalleryImage
+        Gallery
     },
     data() {
         return {
             isGallerySelected: false,
             isThemesSelected: false,
-            items: [
-                {
-                    id: 1,
-                    remove: false
-                },
-                {
-                    id: 2,
-                    remove: false
-                },
-                {
-                    id: 3,
-                    remove: false
-                },
-                {
-                    id: 4,
-                    remove: false
-                }
-            ],
-            selected: null,
-            collapse: null,
         };
     },
     inject: ['lang', 'langService'],
@@ -114,179 +87,11 @@ export default {
         closeGallery() {
             this.isGallerySelected = false;
         },
-        selectImage(index) {
-            if(this.selected === index){
-                this.collapse = false;
-                this.selected = null;
-                return;
-            }
-            this.selected = index;
-        },
-        deleteImage(image) {
-            const index = this.items.findIndex(element => element.id === image.id);
-            if(index >= 0) {
-                this.items.splice(parseInt(index), 1);
-            }
-        },
-        imageAction(action){
-            this.collapse = true;
-        }
     }
 }
 </script>
 
 <style lang="scss" scoped>
-/**********************************************************************************/
-.relative-items {
-    pointer-events: auto;
-    position: absolute;
-    background-color: rgba(0, 0, 0, 0.6);
-    width: 1080px;
-    height: 600px;
-    top: 100px;
-    text-align: center;
-    line-height: 600px;
-    vertical-align: bottom;
-
-    //.image {
-    //    display: inline-block;
-    //    position: relative;
-    //    width: 200px;
-    //    height: 380px;
-    //    background-color: #6c6b6b;
-    //    padding: 0;
-    //    transition: all 0.2s linear;
-    //    vertical-align: middle;
-    //    margin: 0 15px;
-    //
-    //    .buttons-block {
-    //        position: absolute;
-    //        bottom: -40px;
-    //        width: 100%;
-    //        height: 80px;
-    //        transition: all 0.2s linear;
-    //    }
-    //
-    //    &.selected {
-    //        width: 270px;
-    //        height: 470px;
-    //        transition: all 0.2s linear;
-    //        z-index: 5;
-    //    }
-    //
-    //    &.not-selected {
-    //        width: 170px;
-    //        height: 330px;
-    //        transition: all 0.2s linear;
-    //    }
-    //
-    //    &.collapse {
-    //        margin: 0 0 0 -200px;
-    //        transform: translateX(50%);
-    //    }
-    //
-    //    &.not-selected.collapse {
-    //        margin: 0 0 0 -170px;
-    //        transform: translateX(50%);
-    //    }
-    //
-    //    &.selected.collapse {
-    //        margin: 0 0 0 -270px;
-    //        transform: translateX(50%);
-    //    }
-    //
-    //    &.remove {
-    //        width: 0;
-    //        margin-left: 0;
-    //        margin-right: 0;
-    //        transition: all 0.2s ease-in;
-    //    }
-    //}
-}
-
-/**********************************************************************************/
-//.images-row {
-//    pointer-events: auto;
-//    position: absolute;
-//    background-color: rgba(0, 0, 0, 0.6);
-//    width: 1080px;
-//    height: 600px;
-//    top: 800px;
-//    text-align: center;
-//    line-height: 600px;
-//}
-//
-//.image-thumbnail {
-//    transition: all 0.2s linear;
-//    display: inline-block;
-//    vertical-align: middle;
-//    margin-right: 15px;
-//    margin-left: 15px;
-//    width: 200px;
-//    height: 380px;
-//    border: solid 5px darkgray;
-//}
-//
-//.image-thumbnail-inner {
-//    position: relative;
-//    width: 100%;
-//    height: 100%;
-//}
-//
-//.image-thumbnail.remove {
-//    width: 0;
-//    margin-left: 0;
-//    margin-right: 0;
-//    transition: all 0.2s ease-in;
-//    //transition-delay: 400ms;
-//}
-
-//.image-thumbnail.selected {
-//    width: 270px;
-//    height: 470px;
-//    transition: all 0.2s linear;
-//}
-//
-//.image-thumbnail.not-selected {
-//    width: 170px;
-//    height: 330px;
-//    transition: all 0.2s linear;
-//}
-//
-//.images-reduce-enter-from,
-//.images-reduce-leave-to {
-//    opacity: 0;
-//    transform: translateX(-100px) translateY(160px) scale(0.1);
-//}
-//
-//.images-reduce-leave-active {
-//    position: absolute;
-//}
-//
-//.image-thumbnail.remove .delete-image-button {
-//    transform: scale(0);
-//    left: -40px;
-//    transition: all 0.2s ease-in;
-//}
-
-//.image-thumbnail.remove .delete-image-button {
-//    transform: scale(0);
-//    transition: all 0.2s ease-in;
-//    transition-delay: 400ms;
-//}
-
-//.image-thumbnail.selected .delete-image-button {
-//    left: 95px;
-//    transition: all 0.2s linear;
-//}
-//
-//.image-thumbnail.not-selected .delete-image-button {
-//    left: 45px;
-//    transition: all 0.2s linear;
-//}
-
-/******************************************************************************************/
-
 $gallery-icon-pos-top: 1730px;
 $gallery-icon-pos-left: 880px;
 $gallery-icon-size: 160px;
@@ -299,6 +104,13 @@ $theme-icon-size: 160px;
 $theme-height: 650px;
 $theme-pos-top: 1000px;
 
+.gallery-icon-overlay{
+    position:absolute;
+    width: 100%;
+    height:100%;
+    background-color: rgba(255,255,0, 0.4);
+}
+
 .gallery-frame, .themes-frame {
     pointer-events: auto;
     position: absolute;
@@ -307,6 +119,7 @@ $theme-pos-top: 1000px;
     //display: flex;
     //justify-content: stretch;
     //flex-direction: column;
+    overflow: hidden;
 }
 
 .close-button {

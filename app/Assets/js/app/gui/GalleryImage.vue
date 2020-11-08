@@ -3,11 +3,11 @@
         :class="getMainClass"
         class="image">
         <gallery-image-actions :is-expanded="isButtonsExpanded" :is-visible="isButtonsVisible"
-                        class="buttons-block"
-                        @action-delete="setForRemoval"
-                        @action-download="selectDownload"
-                        @action-email="selectEmail"
-                        @action-share="selectShare"/>
+                               class="buttons-block"
+                               @action-delete="setForRemoval"
+                               @action-download="selectDownload"
+                               @action-email="selectEmail"
+                               @action-share="selectShare"/>
         <img :src="'https://picsum.photos/200/300?random=' + image.id" alt="" height="100%"
              width="100%" @click.self="setSelected"/>
     </div>
@@ -27,6 +27,10 @@ export default {
             type: Number
         },
         collapse: {
+            type: Boolean,
+            default: false
+        },
+        collapsedLarge: {
             type: Boolean,
             default: false
         },
@@ -70,7 +74,8 @@ export default {
                 remove: this.markedForRemoval,
                 selected: this.isSelected,
                 'not-selected': this.isNotSelected,
-                collapse: this.collapse
+                collapse: this.collapse,
+                large: this.collapsedLarge,
             };
         }
     },
@@ -102,16 +107,24 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+$image-default-width: 200;
+$image-default-height: 380;
+$image-selected-width: 270;
+$image-selected-height: 470;
+$image-not-selected-width: 170;
+$image-not-selected-height: 330;
+
 .image {
     display: inline-block;
     position: relative;
-    width: 200px;
-    height: 380px;
+    width: $image-default-width+px;
+    height: $image-default-height+px;
     background-color: #6c6b6b;
     padding: 0;
     transition: all 0.2s linear;
     vertical-align: middle;
     margin: 0 15px;
+    box-shadow: 0 3px 9px 0 rgba(0, 0, 0, 0.38);
 
     .buttons-block {
         position: absolute;
@@ -122,38 +135,40 @@ export default {
     }
 
     &.selected {
-        width: 270px;
-        height: 470px;
+        width: $image-selected-width+px;
+        height: $image-selected-height+px;
         transition: all 0.2s linear;
         z-index: 5;
+        box-shadow: 0 3px 20px 0 rgba(0, 0, 0, 0.79);
     }
 
     &.not-selected {
-        width: 170px;
-        height: 330px;
+        width: $image-not-selected-width+px;
+        height: $image-not-selected-height+px;
         transition: all 0.2s linear;
     }
 
     &.collapse {
-        margin: 0 0 0 -200px;
+        margin: 0 0 0 -$image-default-width+px;
         transform: translateX(50%);
     }
 
     &.not-selected.collapse {
-        margin: 0 0 0 -170px;
+        margin: 0 0 0 -$image-not-selected-width+px;
         opacity: 0;
         transform: translateX(50%);
     }
 
     &.selected.collapse {
-        margin: 0 0 0 -270px;
+        margin: 0 0 0 -$image-selected-width+px;
         transform: translateX(50%);
     }
 
-    &.selected.collapse.large{
-        margin: 0 0 0 -670px;
-        width: 670px;
-        height: 1000px;
+    &.selected.collapse.large {
+        margin: -900px 0 0 -900px;
+        width: 900px;
+        height: 1600px;
+        box-shadow: 0 3px 44px 5px rgba(0, 0, 0, 0.87);
     }
 
     &.remove {

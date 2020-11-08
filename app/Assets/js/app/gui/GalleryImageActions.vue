@@ -102,7 +102,7 @@ $duration: 600;
 }
 
 .animated-button {
-    color:white;
+    color: white;
     font-size: 25px;
     line-height: 50px;
     text-align: center;
@@ -116,6 +116,7 @@ $duration: 600;
     overflow: hidden;
     transition: all 0.2s linear;
     opacity: 1;
+    box-shadow: 0 3px 9px 0 rgba(0, 0, 0, 0.38);
 
     &.red {
         background-color: red;
