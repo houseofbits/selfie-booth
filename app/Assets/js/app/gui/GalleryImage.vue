@@ -83,7 +83,7 @@ export default {
         setForRemoval() {
             this.isButtonsExpanded = false;
             setTimeout(() => this.markedForRemoval = true, this.isSelected ? 400 : 0);
-            setTimeout(() => this.$emit('delete-image', this.$vnode.key), this.isSelected ? 800 : 200);
+            setTimeout(() => this.$emit('delete-image', this.image), this.isSelected ? 800 : 200);
         },
         selectShare() {
             this.selectAction(SharingViewState.FacebookView);
@@ -141,12 +141,19 @@ export default {
 
     &.not-selected.collapse {
         margin: 0 0 0 -170px;
+        opacity: 0;
         transform: translateX(50%);
     }
 
     &.selected.collapse {
         margin: 0 0 0 -270px;
         transform: translateX(50%);
+    }
+
+    &.selected.collapse.large{
+        margin: 0 0 0 -670px;
+        width: 670px;
+        height: 1000px;
     }
 
     &.remove {

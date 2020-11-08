@@ -115,12 +115,18 @@ export default {
             this.isGallerySelected = false;
         },
         selectImage(index) {
+            if(this.selected === index){
+                this.collapse = false;
+                this.selected = null;
+                return;
+            }
             this.selected = index;
         },
-        deleteImage(i) {
-           // console.log(parseInt(i));
-           // console.log(this.items.splice(parseInt(i), 1));
-            this.items.splice(parseInt(i), 1);
+        deleteImage(image) {
+            const index = this.items.findIndex(element => element.id === image.id);
+            if(index >= 0) {
+                this.items.splice(parseInt(index), 1);
+            }
         },
         imageAction(action){
             this.collapse = true;

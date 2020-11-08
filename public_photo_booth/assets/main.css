@@ -846,11 +846,17 @@ input[data-v-1e322f59]:focus {
 }
 .image.not-selected.collapse[data-v-689058a1] {
     margin: 0 0 0 -170px;
+    opacity: 0;
     transform: translateX(50%);
 }
 .image.selected.collapse[data-v-689058a1] {
     margin: 0 0 0 -270px;
     transform: translateX(50%);
+}
+.image.selected.collapse.large[data-v-689058a1] {
+    margin: 0 0 0 -670px;
+    width: 670px;
+    height: 1000px;
 }
 .image.remove[data-v-689058a1] {
     width: 0;
