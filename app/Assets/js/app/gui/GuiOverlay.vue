@@ -20,8 +20,7 @@
         <!--                      @back="modeStart"-->
         <!--                      @sync="syncImageData"></sharing-view>-->
 
-        <transition-mockup></transition-mockup>
-<!--        <buttons-mockup></buttons-mockup>-->
+        <gallery-collapsible />
     </div>
 </template>
 
@@ -33,7 +32,7 @@ import {FlowState} from "/js/app/gui/Constants";
 import CaptureImageData from "./Structures/CapturedImageData";
 import ImageDataSyncService from "./Services/ImageDataSyncService";
 import MainSceneInstance from '/js/app/scene/MainInstance';
-import TransitionMockup from './TransitionsMockup.vue';
+import GalleryCollapsible from './GalleryCollapsible.vue';
 
 export default {
     name: "app",
@@ -59,7 +58,7 @@ export default {
     components: {
         SharingView,
         CaptureView,
-        TransitionMockup,
+        GalleryCollapsible,
     },
     methods: {
         modeStart() {
@@ -102,13 +101,15 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@import '/css/app/variables.scss';
+
 .gui-frame {
     position: absolute;
     top: 0;
     left: 0;
-    width: 1080px;
-    height: 1920px;
+    width: $screen-width+px;
+    height: $screen-height+px;
     border: solid 1px red;
 /*    pointer-events: none;*/
 }

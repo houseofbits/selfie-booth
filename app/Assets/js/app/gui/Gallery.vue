@@ -1,16 +1,16 @@
 <template>
-        <div class="relative-items" :class="{active:!collapse}">
-            <div class="static-backdrop" :class="{active:collapse}"></div>
-            <gallery-image v-for="(image, index) in items"
-                          :key="image.id"
-                          :image="image"
-                          :selected="selected"
-                          :collapse="collapse"
-                           :collapsed-large="collapsedLarge"
-                          @action="imageAction"
-                          @select="selectImage"
-                          @delete-image="deleteImage"/>
-        </div>
+    <div :class="{active:!collapse}" class="relative-items">
+        <div :class="{active:collapse}" class="static-backdrop"></div>
+        <gallery-image v-for="(image, index) in items"
+                       :key="image.id"
+                       :collapse="isCollapsed"
+                       :collapsed-type="collapsedType"
+                       :image="image"
+                       :selected="selected"
+                       @action="imageAction"
+                       @select="selectImage"
+                       @delete-image="deleteImage"/>
+    </div>
 </template>
 
 <script>
@@ -21,9 +21,12 @@ export default {
     components: {
         GalleryImage
     },
-    props:{
-        images:{
-            type:Array
+    props: {
+        images: {
+            type: Array
+        },
+        collapseImages: {
+            type: Boolean
         }
     },
     data() {
@@ -48,12 +51,24 @@ export default {
             ],
             selected: null,
             collapse: null,
-            collapsedLarge: true
+            collapsedType: 1
         };
+    },
+    computed: {
+        isCollapsed() {
+            return this.collapse || this.collapseImages;
+        }
+    },
+    watch:{
+        collapseImages(val){
+            if(val){
+                this.collapsedType = 2;
+            }
+        }
     },
     methods: {
         selectImage(index) {
-            if(this.selected === index){
+            if (this.selected === index) {
                 this.collapse = false;
                 this.selected = null;
                 return;
@@ -62,11 +77,12 @@ export default {
         },
         deleteImage(image) {
             const index = this.items.findIndex(element => element.id === image.id);
-            if(index >= 0) {
+            if (index >= 0) {
                 this.items.splice(parseInt(index), 1);
             }
         },
-        imageAction(action){
+        imageAction(action) {
+            this.collapsedType = 1;
             this.collapse = true;
         }
     }
@@ -74,36 +90,36 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '/css/app/variables.scss';
+
 .relative-items {
     pointer-events: auto;
     position: absolute;
-    background-color: rgba(0, 0, 0, 0);
-    width: 1080px;
-    height: 550px;
-    top: 1000px;
+//    background-color: rgba(0, 0, 0, 0);
+    width: 100%;
+    height: 100%;
     text-align: center;
-    line-height: 550px;
-    vertical-align: bottom;
+//    vertical-align: bottom;
     transition: all 0.2s linear;
 
-    .static-backdrop{
+    .static-backdrop {
         position: fixed;
         top: 0;
         left: 0;
-        width: 1080px;
-        height: 1920px;
-        background-color: rgba(0,0,0,0.5);
-        opacity:0;
+        width: $screen-width+px;
+        height: $screen-height+px;
+        background-color: rgba(0, 0, 0, 0.5);
+        opacity: 0;
         display: none;
         transition: all 0.2s linear;
 
-        &.active{
+        &.active {
             display: block;
             opacity: 1;
         }
     }
 
-    &.active{
+    &.active {
         background-color: rgba(0, 0, 0, 0.6);
     }
 }

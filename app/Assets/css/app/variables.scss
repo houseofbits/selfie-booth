@@ -1,0 +1,37 @@
+///Common
+$image-aspect: 16/9;
+$screen-width: 1080;
+$screen-height: 1920;
+
+/// GalleryImage.vue
+$image-default-width: 200;
+$image-default-height: $image-default-width * $image-aspect;
+$image-selected-width: 270;
+$image-selected-height: $image-selected-width * $image-aspect;
+$image-not-selected-width: 170;
+$image-not-selected-height: $image-not-selected-width * $image-aspect;
+$image-large-width: 900;
+$image-large-height: $image-large-width * $image-aspect;
+$image-collapsed-width: 160;
+$image-collapsed-height: $image-collapsed-width * $image-aspect;
+
+///GalleryImageActions.vue
+$button-size: 80;
+$button-size-open: 50;
+$vertical-step: 70;
+$start-top: 50;
+$width: 200;
+$duration: 600;
+
+///GalleryCollapsible.vue
+$gallery-icon-pos-top: 1730px;
+$gallery-icon-pos-left: 880px;
+$gallery-icon-size: 160px;
+$gallery-height: 550px;
+$gallery-pos-top: 1000px;
+$theme-icon-pos-top: 1730px;
+$theme-icon-pos-left: 80px;
+$theme-icon-size: 160px;
+$theme-height: 650px;
+$theme-pos-top: 1000px;
+

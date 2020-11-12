@@ -30,8 +30,8 @@ export default {
             type: Boolean,
             default: false
         },
-        collapsedLarge: {
-            type: Boolean,
+        collapsedType: {
+            type: Number,
             default: false
         },
         image: {
@@ -75,7 +75,8 @@ export default {
                 selected: this.isSelected,
                 'not-selected': this.isNotSelected,
                 collapse: this.collapse,
-                large: this.collapsedLarge,
+                large: this.collapsedType === 1,
+                small: this.collapsedType === 2,
             };
         }
     },
@@ -107,12 +108,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$image-default-width: 200;
-$image-default-height: 380;
-$image-selected-width: 270;
-$image-selected-height: 470;
-$image-not-selected-width: 170;
-$image-not-selected-height: 330;
+@import '/css/app/variables.scss';
 
 .image {
     display: inline-block;
@@ -149,26 +145,33 @@ $image-not-selected-height: 330;
     }
 
     &.collapse {
-        margin: 0 0 0 -$image-default-width+px;
+        margin: 0 0 0 (-$image-default-width)+px;
         transform: translateX(50%);
     }
 
     &.not-selected.collapse {
-        margin: 0 0 0 -$image-not-selected-width+px;
+        margin: 0 0 0 (-$image-not-selected-width)+px;
         opacity: 0;
         transform: translateX(50%);
     }
 
     &.selected.collapse {
-        margin: 0 0 0 -$image-selected-width+px;
+        margin: 0 0 0 (-$image-selected-width)+px;
         transform: translateX(50%);
     }
 
     &.selected.collapse.large {
-        margin: -900px 0 0 -900px;
-        width: 900px;
-        height: 1600px;
+        margin: -900px 0 0 (-$image-large-width)+px;
+        width: $image-large-width+px;
+        height: $image-large-height+px;
         box-shadow: 0 3px 44px 5px rgba(0, 0, 0, 0.87);
+    }
+
+    &.collapse.small {
+        margin: -60px 0 0 (-$image-collapsed-width)+px;
+        width: $image-collapsed-width+px;
+        height: $image-collapsed-height+px;
+        box-shadow: none;
     }
 
     &.remove {

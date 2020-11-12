@@ -82,13 +82,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-$button-size: 80;
-$button-size-open: 50;
-$vertical-step: 70;
-$start-top: 50;
-$width: 200;
-$duration: 600;
+@import '/css/app/variables.scss';
 
 @function calc-vert-pos($index) {
     @return -$start-top - ($vertical-step * $index);
