@@ -1,20 +1,19 @@
 <template>
-    <div :class="{active:!collapse}" class="relative-items">
-        <div :class="{active:collapse}" class="static-backdrop"></div>
-        <gallery-image v-for="(image, index) in items"
+    <div :class="frameClass" class="relative-items">
+        <div :class="backDropClass" class="static-backdrop" @click="closeImage"></div>
+        <gallery-image v-for="(image, index) in images"
                        :key="image.id"
-                       :collapse="isCollapsed"
-                       :collapsed-type="collapsedType"
+                       :collapse="collapseImages"
+                       :collapsed-type="imagesSize"
                        :image="image"
                        :selected="selected"
-                       @action="imageAction"
-                       @select="selectImage"
-                       @delete-image="deleteImage"/>
+                       @action="imageAction"/>
     </div>
 </template>
 
 <script>
 import GalleryImage from './GalleryImage.vue';
+import {GalleryActions} from './Constants.js';
 
 export default {
     name: "Gallery",
@@ -27,63 +26,36 @@ export default {
         },
         collapseImages: {
             type: Boolean
+        },
+        imagesSize: {
+            type: Number
+        },
+        selected: {
+            type: Object
         }
     },
     data() {
-        return {
-            items: [
-                {
-                    id: 1,
-                    remove: false
-                },
-                {
-                    id: 2,
-                    remove: false
-                },
-                {
-                    id: 3,
-                    remove: false
-                },
-                {
-                    id: 4,
-                    remove: false
-                }
-            ],
-            selected: null,
-            collapse: null,
-            collapsedType: 1
-        };
+        return {};
     },
     computed: {
-        isCollapsed() {
-            return this.collapse || this.collapseImages;
-        }
-    },
-    watch:{
-        collapseImages(val){
-            if(val){
-                this.collapsedType = 2;
-            }
+        backDropClass() {
+            return {
+                active: this.collapseImages && this.imagesSize === 1
+            };
+        },
+        frameClass() {
+            return {
+                'background-hide-transition': this.collapseImages,
+                'background-show-transition': !this.collapseImages,
+            };
         }
     },
     methods: {
-        selectImage(index) {
-            if (this.selected === index) {
-                this.collapse = false;
-                this.selected = null;
-                return;
-            }
-            this.selected = index;
+        closeImage() {
+            this.imageAction(GalleryActions.MinimizeImage)
         },
-        deleteImage(image) {
-            const index = this.items.findIndex(element => element.id === image.id);
-            if (index >= 0) {
-                this.items.splice(parseInt(index), 1);
-            }
-        },
-        imageAction(action) {
-            this.collapsedType = 1;
-            this.collapse = true;
+        imageAction(action, image) {
+            this.$emit('image-action', action, image);
         }
     }
 }
@@ -95,11 +67,11 @@ export default {
 .relative-items {
     pointer-events: auto;
     position: absolute;
-//    background-color: rgba(0, 0, 0, 0);
+    top: 0;
+    background: linear-gradient(to right, rgba(157, 213, 58, 0) 0%, rgba(92, 145, 55, 0.36) 21%, rgba(93, 148, 53, 0.39) 23%, rgba(112, 191, 22, 0.39) 49%, rgba(72, 156, 10, 0.39) 75%, rgba(69, 153, 9, 0.36) 77%, rgba(69, 153, 9, 0) 100%);
     width: 100%;
     height: 100%;
     text-align: center;
-//    vertical-align: bottom;
     transition: all 0.2s linear;
 
     .static-backdrop {
@@ -112,6 +84,7 @@ export default {
         opacity: 0;
         display: none;
         transition: all 0.2s linear;
+        z-index: 1;
 
         &.active {
             display: block;
@@ -119,8 +92,47 @@ export default {
         }
     }
 
-    &.active {
-        background-color: rgba(0, 0, 0, 0.6);
+    &.background-hide-transition {
+        animation-name: background-hide-transition;
+        animation-duration: 500ms;
+        animation-timing-function: linear;
+        animation-fill-mode: both;
+    }
+
+    &.background-show-transition {
+        animation-name: background-show-transition;
+        animation-duration: 500ms;
+        animation-timing-function: linear;
+        animation-fill-mode: both;
     }
 }
+
+@keyframes background-hide-transition {
+    0% {
+    //    background-color: rgba(0, 0, 0, 0.5);
+    }
+    40% {
+     //   background-color: rgba(0, 0, 0, 0.4);
+    }
+    60% {
+    //    background-color: rgba(0, 0, 0, 0);
+    }
+    100% {
+    //    background-color: rgba(0, 0, 0, 0);
+    }
+}
+
+@keyframes background-show-transition {
+    0% {
+
+    }
+    30% {
+
+    }
+    100% {
+
+    }
+}
+
+
 </style>

@@ -9,3 +9,12 @@ export const SharingViewState = {
     FacebookView: 2,
     DownloadView: 3
 };
+
+export const GalleryActions = {
+    ShareEmail: 1,
+    ShareFacebook: 2,
+    ShareDownload: 3,
+    DeleteImage: 4,
+    SelectImage: 5,
+    MinimizeImage: 6
+};

@@ -1,6 +1,7 @@
 <template>
     <div
         :class="getMainClass"
+        :style="getMainStyle"
         class="image">
         <gallery-image-actions :is-expanded="isButtonsExpanded" :is-visible="isButtonsVisible"
                                class="buttons-block"
@@ -8,14 +9,15 @@
                                @action-download="selectDownload"
                                @action-email="selectEmail"
                                @action-share="selectShare"/>
-        <img :src="'https://picsum.photos/200/300?random=' + image.id" alt="" height="100%"
-             width="100%" @click.self="setSelected"/>
+<!--        <img :src="'https://picsum.photos/200/300?random=' + image.id" alt="" height="100%"-->
+<!--             width="100%" @click.self="setSelected"/>-->
+        <img :src="image.base64data" alt="Thumbnail" height="100%" width="100%" @click.self="setSelected"/>
     </div>
 </template>
 
 <script>
 import GalleryImageActions from './GalleryImageActions.vue';
-import {SharingViewState} from './Constants.js';
+import {GalleryActions} from './Constants.js';
 
 export default {
     name: "GalleryImage",
@@ -24,7 +26,7 @@ export default {
     },
     props: {
         selected: {
-            type: Number
+            type: Object
         },
         collapse: {
             type: Boolean,
@@ -41,9 +43,11 @@ export default {
     data() {
         return {
             isSelected: null,
-            isCollapsed: false,
+            isCollapsed: true,
             markedForRemoval: false,
             isButtonsExpanded: false,
+            transformAngle: 0,
+            transformScale: 0
         };
     },
     watch: {
@@ -56,9 +60,10 @@ export default {
             }
         },
         selected(val) {
-            this.isSelected = (val === this.$vnode.key);
+            this.isSelected = val ? (val.id === this.$vnode.key) : false;
             if (!this.isSelected) {
                 this.isButtonsExpanded = false;
+                this.shuffle();
             }
         }
     },
@@ -67,7 +72,7 @@ export default {
             return !this.markedForRemoval && !this.isCollapsed;
         },
         isNotSelected() {
-            return (this.$vnode.key !== this.selected && this.selected !== null);
+            return (this.selected !== null && this.$vnode.key !== this.selected.id);
         },
         getMainClass() {
             return {
@@ -78,31 +83,46 @@ export default {
                 large: this.collapsedType === 1,
                 small: this.collapsedType === 2,
             };
+        },
+        getMainStyle() {
+            if(!this.markedForRemoval && !this.isCollapsed) {
+                return {
+                    transform: 'rotate('+this.transformAngle+'deg) scale('+this.transformScale+')',
+                };
+            }
+            return null;
         }
     },
     methods: {
         setSelected() {
             this.isButtonsExpanded = true;
             this.isSelected = true;
-            this.$emit('select', this.$vnode.key);
+            this.selectAction(GalleryActions.SelectImage);
         },
         setForRemoval() {
             this.isButtonsExpanded = false;
             setTimeout(() => this.markedForRemoval = true, this.isSelected ? 400 : 0);
-            setTimeout(() => this.$emit('delete-image', this.image), this.isSelected ? 800 : 200);
+            setTimeout(() => this.selectAction(GalleryActions.DeleteImage), this.isSelected ? 800 : 200);
         },
         selectShare() {
-            this.selectAction(SharingViewState.FacebookView);
+            this.selectAction(GalleryActions.ShareFacebook);
         },
         selectEmail() {
-            this.selectAction(SharingViewState.EmailView);
+            this.selectAction(GalleryActions.ShareEmail);
         },
         selectDownload() {
-            this.selectAction(SharingViewState.DownloadView);
+            this.selectAction(GalleryActions.ShareDownload);
         },
         selectAction(action) {
-            this.$emit('action', action);
+            this.$emit('action', action, this.image);
+        },
+        shuffle(){
+            this.transformAngle = 5 - Math.random() * 10;
+            this.transformScale = 1 + (0.1 - Math.random() * 0.2);
         }
+    },
+    mounted() {
+        this.shuffle();
     }
 }
 </script>
@@ -118,9 +138,9 @@ export default {
     background-color: #6c6b6b;
     padding: 0;
     transition: all 0.2s linear;
-    vertical-align: middle;
-    margin: 0 15px;
+    vertical-align: top;
     box-shadow: 0 3px 9px 0 rgba(0, 0, 0, 0.38);
+    margin: 80px 15px;
 
     .buttons-block {
         position: absolute;
@@ -136,6 +156,7 @@ export default {
         transition: all 0.2s linear;
         z-index: 5;
         box-shadow: 0 3px 20px 0 rgba(0, 0, 0, 0.79);
+        margin: 40px 15px 0;
     }
 
     &.not-selected {
@@ -145,7 +166,7 @@ export default {
     }
 
     &.collapse {
-        margin: 0 0 0 (-$image-default-width)+px;
+        margin: 100px 0 0 (-$image-default-width)+px;
         transform: translateX(50%);
     }
 

@@ -1,6 +1,7 @@
 export default class CaptureImageData {
-    constructor(data) {
-        this.id = null;
+    constructor(id, data) {
+        this.id = id;
+        this.hash = null;
         this.base64data = data;
     }
 }

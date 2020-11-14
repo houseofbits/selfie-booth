@@ -1,75 +1,120 @@
 <template>
-    <div>
-        <span @click="langService.setLanguage(0)">LV</span>|<span @click="langService.setLanguage(1)">EN</span>|<span
-        @click="langService.setLanguage(2)">RU</span> => {{ lang('test-key') }}
-
-        <div :class="galleryFrameClass" class="gallery-frame" @click.self="openGallery">
-<!--            <div class="close-button" @click.self="closeGallery"></div>-->
-            <gallery :collapse-images="isImagesCollapsed" />
-            <div v-if="isImagesCollapsed" class="gallery-icon-overlay" @click.self="openGallery"></div>
-        </div>
-
-        <div :class="themesFrameClass" class="themes-frame" @click.self="openThemes">
-            <div class="close-button" @click.self="closeThemes"></div>
-        </div>
-
+    <div :class="galleryFrameClass" class="gallery-frame" @click.self="openGallery">
+        <div class="close-button" @click.self="closeGallery"></div>
+        <gallery :collapse-images="imageData.isImagesCollapsed"
+                 :images="images"
+                 :images-size="imageData.imagesSize"
+                 :selected="imageData.selected"
+                 @image-action="imageAction"
+        />
+        <div v-if="imageData.isImagesCollapsed" class="gallery-icon-overlay" @click.self="openGallery"></div>
     </div>
 </template>
 
 <script>
 import Gallery from './Gallery.vue';
+import {GalleryActions} from './Constants.js';
 
 export default {
     name: "GalleryCollapsible",
     components: {
         Gallery
     },
+    props: {
+        open: {
+            type: Boolean
+        },
+        images: {
+            type: Array
+        },
+    },
     data() {
         return {
-            isGallerySelected: false,
-            isThemesSelected: false,
-            isImagesCollapsed: true,
+            isOpen: false,
+            imageData: {
+                selected: null,
+                isImagesCollapsed: true,
+                imagesSize: 2,
+            },
         };
     },
     inject: ['lang', 'langService'],
+    watch: {
+        open(val) {
+            if (val) {
+                this.openGallery();
+            } else {
+                this.closeGallery();
+            }
+        },
+        // images(val){
+        //     console.log();
+        // }
+    },
     computed: {
         galleryFrameClass() {
             return {
-                'transition-expand': this.isGallerySelected,
-                'transition-collapse': !this.isGallerySelected,
-                'images-collapse': this.isImagesCollapsed
+                'transition-expand': this.isOpen,
+                'transition-collapse': !this.isOpen,
+                'images-collapse': (this.imageData.isImagesCollapsed && this.imageData.imagesSize === 2),
+                'hidden': this.images.length === 0,
             };
-        },
-        themesFrameClass() {
-            if (this.isThemesSelected) {
-                return 'themes-transition-expand';
-            }
-            return 'themes-transition-collapse';
         },
     },
     methods: {
-        openThemes() {
-            this.isThemesSelected = true;
-            this.closeGallery();
-        },
-        closeThemes() {
-            this.isThemesSelected = false;
-        },
         openGallery() {
-            if(!this.isGallerySelected) {
-                this.isGallerySelected = true;
-                setTimeout(() => this.isImagesCollapsed = false, 160);
-            } else{
-                this.closeGallery();
+            if (!this.isOpen) {
+                this.isOpen = true;
+                this.$emit('open');
+                if (this.images.length > 1) {
+                    setTimeout(() => this.imageData.imagesSize = 0, 30);
+                    setTimeout(() => this.imageData.isImagesCollapsed = false, 160);
+                } else {
+                    this.imageData.imagesSize = 0;
+                    this.imageData.isImagesCollapsed = false;
+                }
             }
             this.isThemesSelected = false;
         },
         closeGallery() {
-            if(this.isGallerySelected) {
-                this.isImagesCollapsed = true;
-                setTimeout(() => this.isGallerySelected = false, 250);
+            if (this.isOpen) {
+                this.$emit('close');
+                this.imageData.isImagesCollapsed = true;
+                this.imageData.imagesSize = 0;
+                this.imageData.selected = null;
+                if (this.images.length > 1) {
+                    setTimeout(() => this.imageData.imagesSize = 2, 300);
+                    setTimeout(() => this.isOpen = false, 300);
+                } else {
+                    this.imageData.imagesSize = 2;
+                    this.isOpen = false;
+                }
             }
         },
+        deleteImage(image) {
+            const index = this.images.findIndex(element => element.id === image.id);
+            if (index >= 0) {
+                this.$emit('delete', index);
+            }
+        },
+        imageAction(action, image) {
+            switch (action) {
+                case GalleryActions.SelectImage:
+                    this.imageData.selected = image;
+                    break;
+                case GalleryActions.DeleteImage:
+                    this.deleteImage(image);
+                    break;
+                case GalleryActions.MinimizeImage:
+                    this.imageData.selected = null;
+                    this.imageData.imagesSize = 0;
+                    this.imageData.isImagesCollapsed = false;
+                    break;
+                default:
+                    this.imageData.imagesSize = 1;
+                    this.imageData.isImagesCollapsed = true;
+            }
+        }
     }
 }
 </script>
@@ -77,24 +122,29 @@ export default {
 <style lang="scss" scoped>
 @import '/css/app/variables.scss';
 
-.gallery-icon-overlay{
-    position:absolute;
+.gallery-icon-overlay {
+    position: absolute;
     width: 100%;
-    height:100%;
-    background-color: rgba(255,255,0, 0);
+    height: 100%;
+    background-color: rgba(255, 255, 0, 0);
+    pointer-events: auto;
 }
 
-.gallery-frame, .themes-frame {
-    pointer-events: auto;
+.gallery-frame {
+    pointer-events: none;
     position: absolute;
-    background-color: rgba(0, 0, 0, 0.4);
-//    background: linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,0.23) 8%,rgba(0,0,0,0.4) 14%,rgba(0,0,0,0.4) 83%,rgba(0,0,0,0.38) 84%,rgba(0,0,0,0) 100%);
     transition: all 200ms linear;
+    opacity: 1;
 
-    &.images-collapse{
+    &.hidden {
+        opacity: 0;
+    }
+
+    &.images-collapse {
         overflow: hidden;
         background-color: rgba(0, 0, 0, 0);
     }
+
     &.transition-collapse {
         animation-name: gallery-collapse;
         animation-duration: 300ms;
@@ -123,30 +173,11 @@ export default {
     border-radius: 50%;
 }
 
-
-
-.themes-transition-collapse {
-    animation-name: themes-collapse;
-    animation-duration: 300ms;
-    animation-timing-function: ease-out;
-    animation-fill-mode: both;
-    animation-direction: alternate;
-}
-
-.themes-transition-expand {
-    animation-name: themes-expand;
-    animation-duration: 300ms;
-    animation-timing-function: ease-out;
-    animation-fill-mode: both;
-}
-
-.gallery-transition-collapse .close-button,
-.themes-transition-collapse .close-button {
+.gallery-transition-collapse .close-button {
     display: none;
 }
 
-.gallery-transition-expand .close-button,
-.themes-transition-expand .close-button {
+.gallery-transition-expand .close-button {
     display: block;
 }
 
@@ -163,21 +194,6 @@ export default {
     width: $gallery-icon-size;
     height: $gallery-icon-size;
     border-radius: $gallery-icon-size/2;
-}
-
-@mixin theme-state-0 {
-    top: $theme-pos-top;
-    left: 0;
-    width: 1080px;
-    height: $theme-height;
-}
-
-@mixin theme-state-100 {
-    top: $theme-icon-pos-top;
-    left: $theme-icon-pos-left;
-    width: $theme-icon-size;
-    height: $theme-icon-size;
-    border-radius: $theme-icon-size/2;
 }
 
 @keyframes gallery-collapse {
@@ -198,21 +214,4 @@ export default {
     }
 }
 
-@keyframes themes-collapse {
-    0% {
-        @include theme-state-0;
-    }
-    100% {
-        @include theme-state-100;
-    }
-}
-
-@keyframes themes-expand {
-    0% {
-        @include theme-state-100;
-    }
-    100% {
-        @include theme-state-0;
-    }
-}
 </style>
