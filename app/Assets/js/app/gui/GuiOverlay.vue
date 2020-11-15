@@ -135,6 +135,6 @@ body {
     font-family: "customFont", serif;
     user-select: none;
     background-color: #c7c7c7;
-    overflow: hidden;
+    /*overflow: hidden;*/
 }
 </style>

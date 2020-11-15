@@ -1,4 +1,4 @@
-import '@fortawesome/fontawesome-free/js/all.js';
+import fontawesome from '@fortawesome/fontawesome-free/css/all.css';
 import Vue from 'vue';
 import App from './gui/GuiOverlay.vue';
 import LanguageService from './gui/Services/LanguageService.js';

@@ -2,6 +2,9 @@
     <div>
         <div :class="themesFrameClass" class="themes-frame" @click.self="openThemes">
             <div class="close-button" @click.self="closeThemes"></div>
+
+            <div v-for="(theme, index) in themes" class="theme-icon"></div>
+
         </div>
     </div>
 </template>
@@ -10,21 +13,23 @@
 
 export default {
     name: "ThemesCollapsible",
-    components: {
-
-    },
+    components: {},
     props: {
-        open:{
-            type:Boolean
+        open: {
+            type: Boolean
         }
     },
     data() {
         return {
             isOpen: false,
+            themes: [
+                {a:1}, {a:1}, {a:1}, {a:1},
+                {a:1}, {a:1}, {a:1}, {a:1}
+            ]
         };
     },
-    watch:{
-        open(val){
+    watch: {
+        open(val) {
             this.isOpen = val;
         }
     },
@@ -53,9 +58,36 @@ export default {
 .themes-frame {
     pointer-events: auto;
     position: absolute;
+    text-align: center;
     background-color: rgba(0, 0, 0, 0.4);
     //    background: linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,0.23) 8%,rgba(0,0,0,0.4) 14%,rgba(0,0,0,0.4) 83%,rgba(0,0,0,0.38) 84%,rgba(0,0,0,0) 100%);
-    transition: all 200ms linear;
+    transition: all 800ms linear;
+
+    .theme-icon {
+        display: inline-block;
+        position: relative;
+        width:200px;
+        height:250px;
+        background-color: rgba(0,255,0,0.3);
+        border-radius: 20px;
+        transition: all 800ms linear;
+        vertical-align: top;
+        margin: 20px 20px;
+        padding: 0;
+
+        //&.collapse{
+        //    margin: 200px 0 0 -200px;
+        //    transform: translateX(50%);
+        //}
+    }
+
+    &.themes-transition-collapse{
+        .theme-icon {
+            margin: 200px 0 0 -200px;
+            transform: translateX(50%);
+        }
+    }
+
 }
 
 .close-button {
