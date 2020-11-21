@@ -1,6 +1,6 @@
 <template>
-    <div class="snap" v-if="imageData" :class="transitionClass">
-        <img :src="imageData.base64data" @load="imageLoaded" width="100%" height="100%" alt=""/>
+    <div v-if="imageData" :class="transitionClass" class="snap">
+        <img :src="imageData.base64data" alt="" height="100%" width="100%" @load="imageLoaded"/>
     </div>
 </template>
 
@@ -70,8 +70,9 @@ export default {
 
 .transition {
     animation-name: moving-snap;
-    animation-duration: 1s;
+    animation-duration: 1000ms;
     animation-timing-function: ease-out;
+    animation-fill-mode: forwards;
 }
 
 @keyframes moving-snap {
@@ -87,6 +88,8 @@ export default {
     }
     60% {
         opacity: 1.0;
+        transform: translate(100px, 200px) scale(0.4, 0.23);
+        border-radius: 40%;
     }
     100% {
         transform: translate(470px, 880px) scale(0.07, 0.03);

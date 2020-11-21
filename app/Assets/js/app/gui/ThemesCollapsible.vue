@@ -2,8 +2,14 @@
     <div>
         <div :class="themesFrameClass" class="themes-frame" @click.self="openThemes">
             <div class="close-button" @click.self="closeThemes"></div>
-
-            <div v-for="(theme, index) in themes" class="theme-icon"></div>
+            <div class="theme-icon r1c1"></div>
+            <div class="theme-icon r1c2"></div>
+            <div class="theme-icon r1c3"></div>
+            <div class="theme-icon r1c4"></div>
+            <div class="theme-icon r2c1"></div>
+            <div class="theme-icon r2c2"></div>
+            <div class="theme-icon r2c3"></div>
+            <div class="theme-icon r2c4"></div>
 
         </div>
     </div>
@@ -55,36 +61,67 @@ export default {
 <style lang="scss" scoped>
 @import '/css/app/variables.scss';
 
+$theme-icon-width: 200;
+$theme-icon-margin: 40;
+$theme-icons-per-row: 4;
+
+@function icon-pos-x($nth) {
+    $pos: ($theme-icon-width / 2) + ($theme-icon-width * $nth) + ($theme-icon-margin * $nth);
+    $full: ($theme-icon-width * $theme-icons-per-row) + ($theme-icon-margin * ($theme-icons-per-row - 1));
+    $res: (1080 - $full) / 2 + $pos;
+    @return $res+px;
+}
+
 .themes-frame {
     pointer-events: auto;
     position: absolute;
     text-align: center;
     background-color: rgba(0, 0, 0, 0.4);
-    //    background: linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,0.23) 8%,rgba(0,0,0,0.4) 14%,rgba(0,0,0,0.4) 83%,rgba(0,0,0,0.38) 84%,rgba(0,0,0,0) 100%);
     transition: all 800ms linear;
+    overflow: hidden;
 
     .theme-icon {
-        display: inline-block;
-        position: relative;
+        position: absolute;
+        left:0;
+        top:0;
+        margin-left: -100px;
         width:200px;
         height:250px;
-        background-color: rgba(0,255,0,0.3);
+        background: linear-gradient(to bottom, rgba(206,220,231,0.43) 0%,rgba(89,106,114,0.65) 100%);
         border-radius: 20px;
-        transition: all 800ms linear;
-        vertical-align: top;
-        margin: 20px 20px;
-        padding: 0;
+        transition: all 200ms linear;
+        box-shadow: 0 3px 9px 0 rgba(0, 0, 0, 0.38);
 
-        //&.collapse{
-        //    margin: 200px 0 0 -200px;
-        //    transform: translateX(50%);
-        //}
+        &.r1c1 {
+            transform: translate(icon-pos-x(0),50px);
+        }
+        &.r1c2 {
+            transform: translate(icon-pos-x(1),50px);
+        }
+        &.r1c3 {
+            transform: translate(icon-pos-x(2),50px);
+        }
+        &.r1c4 {
+            transform: translate(icon-pos-x(3),50px);
+        }
+
+        &.r2c1 {
+            transform: translate(icon-pos-x(0),350px);
+        }
+        &.r2c2 {
+            transform: translate(icon-pos-x(1),350px);
+        }
+        &.r2c3 {
+            transform: translate(icon-pos-x(2),350px);
+        }
+        &.r2c4 {
+            transform: translate(icon-pos-x(3),350px);
+        }
     }
-
     &.themes-transition-collapse{
         .theme-icon {
-            margin: 200px 0 0 -200px;
-            transform: translateX(50%);
+            transition: all 200ms linear;
+            transform: translate(50%, 50%);
         }
     }
 

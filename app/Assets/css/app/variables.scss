@@ -16,7 +16,7 @@ $image-collapsed-width: 160;
 $image-collapsed-height: $image-collapsed-width * $image-aspect;
 
 ///GalleryImageActions.vue
-$button-size: 60;
+$button-size: 80;
 $button-size-open: 60;
 $vertical-step: 80;
 $start-top: 50;
@@ -24,8 +24,8 @@ $width: 250;
 $duration: 600;
 
 ///GalleryCollapsible.vue
-$gallery-icon-pos-top: 1730px;
-$gallery-icon-pos-left: 880px;
+$gallery-icon-pos-top: 1730;
+$gallery-icon-pos-left: 880;
 $gallery-icon-size: 160px;
 $gallery-height: 550px;
 $gallery-pos-top: 1000px;

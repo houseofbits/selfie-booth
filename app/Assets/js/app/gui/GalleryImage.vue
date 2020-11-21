@@ -1,7 +1,6 @@
 <template>
     <div
         :class="getMainClass"
-        :style="getMainStyle"
         class="image">
         <gallery-image-actions :is-expanded="isButtonsExpanded" :is-visible="isButtonsVisible"
                                class="buttons-block"
@@ -9,8 +8,6 @@
                                @action-download="selectDownload"
                                @action-email="selectEmail"
                                @action-share="selectShare"/>
-<!--        <img :src="'https://picsum.photos/200/300?random=' + image.id" alt="" height="100%"-->
-<!--             width="100%" @click.self="setSelected"/>-->
         <img :src="image.base64data" alt="Thumbnail" height="100%" width="100%" @click.self="setSelected"/>
     </div>
 </template>
@@ -46,8 +43,7 @@ export default {
             isCollapsed: true,
             markedForRemoval: false,
             isButtonsExpanded: false,
-            transformAngle: 0,
-            transformScale: 0
+            transformIndex: 0,
         };
     },
     watch: {
@@ -75,6 +71,7 @@ export default {
             return (this.selected !== null && this.$vnode.key !== this.selected.id);
         },
         getMainClass() {
+            const transformClass = 'transform-rnd-' + this.transformIndex;
             return {
                 remove: this.markedForRemoval,
                 selected: this.isSelected,
@@ -82,16 +79,9 @@ export default {
                 collapse: this.collapse,
                 large: this.collapsedType === 1,
                 small: this.collapsedType === 2,
+                [transformClass]: true
             };
         },
-        getMainStyle() {
-            if(!this.markedForRemoval && !this.isCollapsed) {
-                return {
-                    transform: 'rotate('+this.transformAngle+'deg) scale('+this.transformScale+')',
-                };
-            }
-            return null;
-        }
     },
     methods: {
         setSelected() {
@@ -116,9 +106,8 @@ export default {
         selectAction(action) {
             this.$emit('action', action, this.image);
         },
-        shuffle(){
-            this.transformAngle = 5 - Math.random() * 10;
-            this.transformScale = 1 + (0.1 - Math.random() * 0.2);
+        shuffle() {
+            this.transformIndex = Math.floor(Math.random() * 10);
         }
     },
     mounted() {
@@ -141,6 +130,46 @@ export default {
     vertical-align: top;
     box-shadow: 0 3px 9px 0 rgba(0, 0, 0, 0.38);
     margin: 80px 15px;
+
+    &.transform-rnd-0 {
+        transform: rotate(3deg) scale(1.2);
+    }
+
+    &.transform-rnd-1 {
+        transform: rotate(-3deg) scale(1.1);
+    }
+
+    &.transform-rnd-2 {
+        transform: rotate(1deg) scale(0.9);
+    }
+
+    &.transform-rnd-3 {
+        transform: rotate(2deg) scale(0.85);
+    }
+
+    &.transform-rnd-4 {
+        transform: rotate(-2deg) scale(0.8);
+    }
+
+    &.transform-rnd-5 {
+        transform: rotate(-1deg) scale(0.9);
+    }
+
+    &.transform-rnd-6 {
+        transform: rotate(-2deg) scale(1.1);
+    }
+
+    &.transform-rnd-7 {
+        transform: rotate(2deg) scale(1.0);
+    }
+
+    &.transform-rnd-8 {
+        transform: rotate(-3deg) scale(1.0);
+    }
+
+    &.transform-rnd-9 {
+        transform: rotate(-1deg) scale(1.0);
+    }
 
     .buttons-block {
         position: absolute;
@@ -167,18 +196,18 @@ export default {
 
     &.collapse {
         margin: 100px 0 0 (-$image-default-width)+px;
-        transform: translateX(50%);
+        transform: translateX(50%) rotate(0) scale(1.0);
     }
 
     &.not-selected.collapse {
         margin: 0 0 0 (-$image-not-selected-width)+px;
         opacity: 0;
-        transform: translateX(50%);
+        transform: translateX(50%) rotate(0) scale(1.0);
     }
 
     &.selected.collapse {
         margin: 0 0 0 (-$image-selected-width)+px;
-        transform: translateX(50%);
+        transform: translateX(50%) rotate(0) scale(1.0);
     }
 
     &.selected.collapse.large {
@@ -202,4 +231,6 @@ export default {
         transition: all 0.2s ease-in;
     }
 }
+
+
 </style>

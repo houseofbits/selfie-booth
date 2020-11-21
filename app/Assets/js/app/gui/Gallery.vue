@@ -84,7 +84,7 @@ export default {
         opacity: 0;
         display: none;
         transition: all 0.2s linear;
-        z-index: 1;
+        z-index: 4;
 
         &.active {
             display: block;

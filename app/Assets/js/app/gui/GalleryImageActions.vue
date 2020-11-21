@@ -1,13 +1,28 @@
 <template>
     <div :class="{active: isExpandedOrProcess, hide: hidden}">
-        <div class="animated-button red" @click="buttonDelete">X</div>
-        <div v-if="!isCollapsed" class="animated-button blue" @click="buttonShare">Share</div>
-        <div v-if="!isCollapsed" class="animated-button green" @click="buttonEmail">Email</div>
-        <div v-if="!isCollapsed" class="animated-button orange" @click="buttonDownload">Download</div>
+        <div class="animated-button red" @click="buttonDelete">
+            <expandable-button :is-expanded="buttonState.redExpanded" class="red" icon-class="fas fa-trash-alt"
+                               title="DZĒST"/>
+        </div>
+        <div v-if="!isCollapsed" class="animated-button blue" @click="buttonShare">
+            <expandable-button :is-expanded="buttonState.blueExpanded" class="blue" icon-class="fab fa-facebook-square"
+                               title="DALĪTIES"/>
+        </div>
+        <div v-if="!isCollapsed" class="animated-button green" @click="buttonEmail">
+            <expandable-button :is-expanded="buttonState.greenExpanded" class="green"
+                               icon-class="fas fa-envelope-open-text" title="SŪTĪT"/>
+        </div>
+        <div v-if="!isCollapsed" class="animated-button orange" @click="buttonDownload">
+            <expandable-button :is-expanded="buttonState.orangeExpanded" class="orange"
+                               icon-class="fas fa-cloud-download-alt" title="LEJUPLĀDĒT"/>
+        </div>
     </div>
 </template>
 
 <script>
+
+import ExpandableButton from './ExpandableButton.vue';
+
 export default {
     name: "GalleryImageActions",
     props: {
@@ -20,6 +35,9 @@ export default {
             default: true
         }
     },
+    components: {
+        ExpandableButton
+    },
     data() {
         return {
             isEnabled: true,
@@ -27,7 +45,17 @@ export default {
             hidden: false,
             isCollapsed: true,
             transitionCollapseTimer: null,
-            transitionInProcessTimer: null
+            transitionInProcessTimer: null,
+            buttonState: {
+                redExpanded: false,
+                blueExpanded: false,
+                greenExpanded: false,
+                orangeExpanded: false,
+                redTimer: null,
+                blueTimer: null,
+                greenTimer: null,
+                orangeTimer: null
+            },
         };
     },
     watch: {
@@ -46,10 +74,22 @@ export default {
             this.isEnabled = false;
             this.isExpandedOrProcess = expand;
             clearTimeout(this.transitionCollapseTimer);
+            clearTimeout(this.buttonState.redTimer);
+            clearTimeout(this.buttonState.blueTimer);
+            clearTimeout(this.buttonState.greenTimer);
+            clearTimeout(this.buttonState.orangeTimer);
             if (!expand) {
                 this.transitionCollapseTimer = setTimeout(() => this.isCollapsed = true, 600);
+                this.buttonState.redExpanded = false;
+                this.buttonState.blueTimer = setTimeout(() => this.buttonState.blueExpanded = false, 200);
+                this.buttonState.greenTimer = setTimeout(() => this.buttonState.greenExpanded = false, 300);
+                this.buttonState.orangeTimer = setTimeout(() => this.buttonState.orangeExpanded = false, 400);
             } else {
                 this.isCollapsed = false;
+                this.buttonState.redTimer = setTimeout(() => this.buttonState.redExpanded = true, 400);
+                this.buttonState.blueTimer = setTimeout(() => this.buttonState.blueExpanded = true, 300);
+                this.buttonState.greenTimer = setTimeout(() => this.buttonState.greenExpanded = true, 200);
+                this.buttonState.orangeTimer = setTimeout(() => this.buttonState.orangeExpanded = true, 100);
             }
             clearTimeout(this.transitionInProcessTimer);
             this.transitionInProcessTimer = setTimeout(() => {
@@ -106,32 +146,24 @@ export default {
     left: 50%;
     width: $button-size+px;
     height: $button-size+px;
-    border-radius: ($button-size/2)+px;
-    overflow: hidden;
-    transition: all 0.2s linear;
     opacity: 1;
-    box-shadow: 0 3px 9px 0 rgba(0, 0, 0, 0.38);
 
     &.red {
-        background-color: red;
         z-index: 5;
         @include animate-active(close-red)
     }
 
     &.blue {
-        background-color: blue;
         z-index: 4;
         @include animate-active(close-blue)
     }
 
     &.green {
-        background-color: green;
         z-index: 3;
         @include animate-active(close-green)
     }
 
     &.orange {
-        background-color: orange;
         z-index: 2;
         @include animate-active(close-orange)
     }

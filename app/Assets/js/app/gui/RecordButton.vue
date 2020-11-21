@@ -10,8 +10,11 @@ export default {
     props: {},
     methods:{
         startCapture(){
-            //TODO: start timer and disable clicks
-            //TODO: Show some cool transition and timer animation
+            this.$emit('capture');
+            //setTimeout(this.capture, 1000);
+            this.capture();
+        },
+        capture(){
             this.$emit('record');
         }
     }
