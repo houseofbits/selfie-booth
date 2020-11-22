@@ -155,7 +155,7 @@ export default {
     align-items: center;
     display: flex;
     justify-content: center;
-    border-radius: 8px;
+    border-radius: 20px;
     text-shadow: 0 2px 3px white;
     background: linear-gradient(to bottom, #e8e8e8 0%,#eeeff1 65%, #eae7e7 100%);
     box-shadow: 0 5px 7px 2px #000000;

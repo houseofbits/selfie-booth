@@ -1,6 +1,6 @@
 <template>
     <div :class="frameClass" class="relative-items">
-        <div :class="backDropClass" class="static-backdrop" @click="closeImage"></div>
+        <div :class="backDropClass" class="static-backdrop"></div>
         <gallery-image v-for="(image, index) in images"
                        :key="image.id"
                        :collapse="collapseImages"

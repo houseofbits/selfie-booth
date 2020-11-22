@@ -1,15 +1,14 @@
 <template>
-    <div class="gallery-collapsible" :class="{visible: images.length}">
+    <div :class="{visible: images.length}" class="gallery-collapsible">
         <div class="icon-backdrop">
             <div class="shadow"></div>
             <div class="border"></div>
         </div>
         <div :class="galleryFrameClass" class="gallery-frame" @click.self="openGallery">
-            <div class="close-button" @click.self="closeGallery"></div>
             <gallery :collapse-images="imageData.isImagesCollapsed"
                      :images="images"
                      :images-size="imageData.imagesSize"
-                     :selected="imageData.selected"
+                     :selected="selectedImage"
                      @image-action="imageAction"
             />
             <div v-if="imageData.isImagesCollapsed" class="gallery-icon-overlay" @click.self="openGallery"></div>
@@ -20,17 +19,20 @@
                 <span>{{ images.length }}/4</span>
             </div>
         </div>
+        <text-button :class="{visible: isOpen}" icon="fas fa-times-circle" class="close-button red" @click="closeGallery">AIZVĒRT</text-button>
     </div>
 </template>
 
 <script>
 import Gallery from './Gallery.vue';
+import TextButton from './TextButton.vue';
 import {GalleryActions} from './Constants.js';
 
 export default {
     name: "GalleryCollapsible",
     components: {
-        Gallery
+        Gallery,
+        TextButton
     },
     props: {
         open: {
@@ -39,6 +41,9 @@ export default {
         images: {
             type: Array
         },
+        selectedImage: {
+            type: Object
+        },
     },
     data() {
         return {
@@ -46,7 +51,6 @@ export default {
             blinkImageCaptured: false,
             blinkImageCapturedTimer: null,
             imageData: {
-                selected: null,
                 isImagesCollapsed: true,
                 imagesSize: 2,
             },
@@ -97,7 +101,7 @@ export default {
                 this.$emit('close');
                 this.imageData.isImagesCollapsed = true;
                 this.imageData.imagesSize = 0;
-                this.imageData.selected = null;
+                this.$emit('image-action', GalleryActions.SelectImage, null);
                 if (this.images.length > 1) {
                     setTimeout(() => this.imageData.imagesSize = 2, 300);
                     setTimeout(() => this.isOpen = false, 300);
@@ -107,32 +111,15 @@ export default {
                 }
             }
         },
-        deleteImage(image) {
-            const index = this.images.findIndex(element => element.id === image.id);
-            if (index >= 0) {
-                this.$emit('delete', index);
-            }
-        },
         imageAction(action, image) {
             switch (action) {
-                case GalleryActions.SelectImage:
-                    this.imageData.selected = image;
-                    break;
-                case GalleryActions.DeleteImage:
-                    this.deleteImage(image);
-                    break;
-                case GalleryActions.MinimizeImage:
-                    this.imageData.selected = null;
-                    this.imageData.imagesSize = 0;
-                    this.imageData.isImagesCollapsed = false;
-                    break;
                 case GalleryActions.ShareFacebook:
                 case GalleryActions.ShareEmail:
                 case GalleryActions.ShareDownload:
                     this.imageData.imagesSize = 1;
                     this.imageData.isImagesCollapsed = true;
-                    this.$emit('share', action, image);
             }
+            this.$emit('image-action', action, image);
         }
     }
 }
@@ -148,6 +135,21 @@ export default {
     &.visible {
         opacity: 1;
         transition: all 700ms linear;
+    }
+
+    .close-button {
+        top: 1550px;
+        left: 440px;
+        z-index: 2;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 100ms linear;
+
+        &.visible {
+            opacity: 1;
+            visibility: visible;
+            transition: all 400ms linear;
+        }
     }
 }
 
@@ -284,7 +286,7 @@ export default {
     position: absolute;
     transition: all 200ms linear;
     opacity: 1;
-    z-index: 2;
+    z-index: 3;
 
     &.hidden {
         opacity: 0;
@@ -309,18 +311,6 @@ export default {
         animation-timing-function: ease-out;
         animation-fill-mode: both;
     }
-}
-
-.close-button {
-    pointer-events: auto;
-    position: absolute;
-    background-color: rgba(255, 0, 0, 0.6);
-    border: 2px solid red;
-    width: 80px;
-    height: 80px;
-    top: -40px;
-    right: 50px;
-    border-radius: 50%;
 }
 
 .gallery-transition-collapse .close-button {

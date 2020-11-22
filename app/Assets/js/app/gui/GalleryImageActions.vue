@@ -1,20 +1,28 @@
 <template>
     <div :class="{active: isExpandedOrProcess, hide: hidden}">
         <div class="animated-button red" @click="buttonDelete">
-            <expandable-button :is-expanded="buttonState.redExpanded" class="red" icon-class="fas fa-trash-alt"
-                               title="DZĒST"/>
+            <expandable-button
+                :is-expanded="buttonState.redExpanded"
+                class="red"
+                icon-class="fas fa-trash-alt">DZĒST
+            </expandable-button>
         </div>
         <div v-if="!isCollapsed" class="animated-button blue" @click="buttonShare">
-            <expandable-button :is-expanded="buttonState.blueExpanded" class="blue" icon-class="fab fa-facebook-square"
-                               title="DALĪTIES"/>
+            <expandable-button
+                :is-expanded="buttonState.blueExpanded"
+                class="blue"
+                icon-class="fab fa-facebook-square">DALĪTIES
+            </expandable-button>
         </div>
         <div v-if="!isCollapsed" class="animated-button green" @click="buttonEmail">
             <expandable-button :is-expanded="buttonState.greenExpanded" class="green"
-                               icon-class="fas fa-envelope-open-text" title="SŪTĪT"/>
+                               icon-class="fas fa-envelope-open-text">SŪTĪT
+            </expandable-button>
         </div>
         <div v-if="!isCollapsed" class="animated-button orange" @click="buttonDownload">
             <expandable-button :is-expanded="buttonState.orangeExpanded" class="orange"
-                               icon-class="fas fa-cloud-download-alt" title="LEJUPLĀDĒT"/>
+                               icon-class="fas fa-cloud-download-alt">LEJUPLĀDĒT
+            </expandable-button>
         </div>
     </div>
 </template>

@@ -1,30 +1,27 @@
 <template>
-    <div :class="{wide: isExpanded}" class="button-with-shadow">
+    <div class="button-with-shadow" @click="click">
         <div class="shadow"></div>
         <div class="button">
             <div class="gradient"></div>
             <div class="highlight"></div>
-            <div class="line"><i :class="iconClass"></i> <span class="text"><slot></slot></span></div>
+            <div class="line"><i :class="icon"></i> <span class="text"><slot></slot></span></div>
         </div>
     </div>
 </template>
 
 <script>
 export default {
-    name: 'ExpandableButton',
-    props: {
-        isExpanded: {
-            type: Boolean
-        },
-        iconClass: {
+    name: 'CloseButton',
+    props:{
+        icon: {
             type: String
         },
     },
-    data() {
-        return {
-            isOpen: false
+    methods:{
+        click(){
+            this.$emit('click');
         }
-    },
+    }
 };
 </script>
 
@@ -83,18 +80,13 @@ export default {
 }
 
 .button-with-shadow {
-    width: 80px;
+    position: absolute;
+    width: 200px;
     height: 80px;
-    transition: all 0.2s linear;
     pointer-events: auto;
 
-    &.wide {
-        width: 250px;
-        height: 60px;
-    }
-
     .button {
-        pointer-events: none;
+        pointer-events: auto;
         display: inline-block;
         position: absolute;
         text-align: center;
@@ -108,6 +100,7 @@ export default {
         background: linear-gradient(to bottom, #fcf0bd 0%, #968a75 100%);
 
         .gradient {
+            pointer-events: none;
             display: block;
             position: absolute;
             top: 2px;
@@ -115,9 +108,11 @@ export default {
             right: 2px;
             left: 2px;
             border-radius: 38px;
+        //    background: linear-gradient(to bottom, #ff6759 0%, #a51010 63%, #d60404 100%);
         }
 
         .highlight {
+            pointer-events: none;
             display: block;
             position: absolute;
             top: 8px;
@@ -125,54 +120,34 @@ export default {
             right: 7px;
             left: 7px;
             border-radius: 40px 40px 50% 50%;
+        //    background: linear-gradient(to bottom, rgba(254, 187, 187, 0.15) 0%, rgba(254, 144, 144, 0.20) 45%, rgba(255, 92, 92, 0.5) 100%);
         }
 
         .line {
-            display: inline;
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             width: auto;
-            line-height: 80px;
-            text-align: center;
             white-space: nowrap;
             font-weight: bold;
             font-size: 45px;
+            //background: linear-gradient(to bottom, #6d0019 0%, #8f0222 56%, #a90329 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             -webkit-text-stroke: 1px rgba(0, 0, 0, 0.3);
+            //filter: drop-shadow(0 1px 3px rgba(255, 92, 92, 1));
 
             .text {
-                line-height: 60px;
-                font-size: 25px;
+                line-height: 80px;
+                font-size: 28px;
                 white-space: pre-wrap;
-
-                &.small {
-                    font-size: 20px;
-                }
+                margin-left: 10px;
             }
         }
     }
-
-    & .line {
-        font-size: 45px;
-        line-height: 80px;
-        transition: all 0.2s linear;
-    }
-
-    &.wide .line {
-        font-size: 35px;
-        line-height: 60px;
-    }
-
-    & .text {
-        display: none;
-        line-height: 60px;
-        transition: all 0.2s linear;
-    }
-
-    &.wide .text {
-        display: inline;
-    }
-
     .shadow {
+        pointer-events: none;
         display: block;
         position: absolute;
         top: 10px;
