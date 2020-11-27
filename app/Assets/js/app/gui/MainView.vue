@@ -1,6 +1,8 @@
 <template>
     <div class="gui-frame">
+        <dynamic-background :is-visible="isDynamicBackgroundVisible" :state="dynamicBackgroundState"/>
         <gallery-collapsible :images="images"
+                             :maximize-selected-image="isExpandedViewOpen"
                              :open="isGalleryOpen"
                              :selected-image="selectedImage"
                              @close="isGalleryOpen=false"
@@ -11,9 +13,11 @@
         <snapshot-image :captured-image-data="images"></snapshot-image>
         <div class="gradient-under"></div>
 
-<!--        <share-facebook :image-id="0" :is-active="true"></share-facebook>-->
-        <share-email class="fade-hidden" :class="{visible: isEmailViewOpen}" :image-id="'sdsdsdsd'" :is-active="true" @close="closeEmailView"></share-email>
-<!--        <share-download :image-id="0" :is-active="true"></share-download>-->
+        <!--        <share-facebook :image-id="0" :is-active="true"></share-facebook>-->
+        <share-email :class="{visible: isEmailViewOpen}" :image-id="'sdsdsdsd'" :is-active="true" class="fade-hidden"
+                     @close="closeEmailView"></share-email>
+        <!--        <share-download :image-id="0" :is-active="true"></share-download>-->
+
 
     </div>
 </template>
@@ -30,6 +34,7 @@ import ShareFacebook from './SharingView/SharingViewFacebook.vue';
 import ShareEmail from './SharingView/SharingViewEmail.vue';
 import ShareDownload from './SharingView/SharingViewDownload.vue';
 import {GalleryActions} from './Constants.js';
+import DynamicBackground from './DynamicBackground/DynamicBackground.vue';
 
 export default {
     name: "MainView",
@@ -42,6 +47,8 @@ export default {
             isEmailViewOpen: false,
             isShareViewOpen: false,
             isDownloadViewOpen: false,
+            isDynamicBackgroundVisible: false,
+            dynamicBackgroundState: 0,
         }
     },
     components: {
@@ -52,6 +59,12 @@ export default {
         ShareFacebook,
         ShareEmail,
         ShareDownload,
+        DynamicBackground
+    },
+    computed: {
+        isExpandedViewOpen() {
+            return this.isEmailViewOpen || this.isShareViewOpen || this.isDownloadViewOpen;
+        }
     },
     methods: {
         openGallery() {
@@ -73,21 +86,22 @@ export default {
         },
         imageCaptureFinished(base64Image) {
             if (this.images.length < 4) {
-                this.images.push(new CaptureImageData(this.images.length, base64Image));
+                this.images.push(new CaptureImageData(1 + this.images.length, base64Image));
                 this.isGalleryOpen = false;
                 this.isThemesOpen = false;
             }
         },
         deleteImage(image) {
+            this.selectedImage = null;
             const index = this.images.findIndex(element => element.id === image.id);
             if (index >= 0) {
-                this.images.splice(parseInt(image), 1);
+                this.images.splice(parseInt(index), 1);
                 if (this.images.length === 0) {
                     this.isGalleryOpen = false;
                 }
             }
         },
-        handleImageAction(action, image){
+        handleImageAction(action, image) {
             switch (action) {
                 case GalleryActions.SelectImage:
                     this.selectedImage = image;
@@ -117,9 +131,9 @@ export default {
 
             //upload to server
         },
-        closeEmailView(){
+        closeEmailView() {
             this.isEmailViewOpen = false;
-        //    this.selectedImage = null;
+            this.selectedImage = null;
         }
     }
 }
@@ -147,10 +161,10 @@ export default {
 
     .fade-hidden {
         opacity: 0;
-        visibility:hidden;
+        visibility: hidden;
         transition: all 0.4s linear;
 
-        &.visible{
+        &.visible {
             opacity: 1;
             visibility: visible;
             transition: all 0.4s linear;

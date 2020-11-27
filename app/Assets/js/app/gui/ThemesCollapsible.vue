@@ -76,17 +76,19 @@ $theme-icons-per-row: 4;
     pointer-events: auto;
     position: absolute;
     text-align: center;
-    background-color: rgba(0, 0, 0, 0.4);
+    //background-color: rgba(0, 0, 0, 0.4);
+    border: dotted 1px black;
     transition: all 800ms linear;
-    overflow: hidden;
+    //overflow: hidden;
 
     .theme-icon {
         position: absolute;
         left:0;
         top:0;
         margin-left: -100px;
+        margin-top: -100px;
         width:200px;
-        height:250px;
+        height:200px;
         background: linear-gradient(to bottom, rgba(206,220,231,0.43) 0%,rgba(89,106,114,0.65) 100%);
         border-radius: 20px;
         transition: all 200ms linear;
@@ -121,7 +123,33 @@ $theme-icons-per-row: 4;
     &.themes-transition-collapse{
         .theme-icon {
             transition: all 200ms linear;
-            transform: translate(50%, 50%);
+            transform: translate(0, 0) scale(0.2);
+
+            &.r1c1 {
+                transform: translate(icon-pos-x(0),50px);
+            }
+            &.r1c2 {
+                transform: translate(icon-pos-x(1),50px);
+            }
+            &.r1c3 {
+                transform: translate(icon-pos-x(2),50px);
+            }
+            &.r1c4 {
+                transform: translate(icon-pos-x(3),50px);
+            }
+
+            &.r2c1 {
+                transform: translate(icon-pos-x(0),100px);
+            }
+            &.r2c2 {
+                transform: translate(icon-pos-x(1),100px);
+            }
+            &.r2c3 {
+                transform: translate(icon-pos-x(2),100px);
+            }
+            &.r2c4 {
+                transform: translate(icon-pos-x(3),100px);
+            }
         }
     }
 

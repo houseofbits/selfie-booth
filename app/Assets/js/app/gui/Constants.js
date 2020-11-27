@@ -18,3 +18,9 @@ export const GalleryActions = {
     SelectImage: 5,
     MinimizeImage: 6
 };
+
+export const GalleryImageSize = {
+    Normal: 0,
+    Expanded: 1,
+    Minimized: 2,
+};

@@ -59,7 +59,6 @@ export default {
             this.isSelected = val ? (val.id === this.$vnode.key) : false;
             if (!this.isSelected) {
                 this.isButtonsExpanded = false;
-                this.shuffle();
             }
         }
     },
@@ -88,6 +87,7 @@ export default {
             this.isButtonsExpanded = true;
             this.isSelected = true;
             this.selectAction(GalleryActions.SelectImage);
+            this.shuffle();
         },
         setForRemoval() {
             this.isButtonsExpanded = false;
@@ -124,7 +124,6 @@ export default {
     position: relative;
     width: $image-default-width+px;
     height: $image-default-height+px;
-    background-color: #6c6b6b;
     padding: 0;
     transition: all 0.2s linear;
     vertical-align: top;

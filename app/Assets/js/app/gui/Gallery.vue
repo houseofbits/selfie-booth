@@ -68,7 +68,7 @@ export default {
     pointer-events: auto;
     position: absolute;
     top: 0;
-    background: linear-gradient(to right, rgba(157, 213, 58, 0) 0%, rgba(92, 145, 55, 0.36) 21%, rgba(93, 148, 53, 0.39) 23%, rgba(112, 191, 22, 0.39) 49%, rgba(72, 156, 10, 0.39) 75%, rgba(69, 153, 9, 0.36) 77%, rgba(69, 153, 9, 0) 100%);
+    //background: linear-gradient(to right, rgba(157, 213, 58, 0) 0%, rgba(92, 145, 55, 0.36) 21%, rgba(93, 148, 53, 0.39) 23%, rgba(112, 191, 22, 0.39) 49%, rgba(72, 156, 10, 0.39) 75%, rgba(69, 153, 9, 0.36) 77%, rgba(69, 153, 9, 0) 100%);
     width: 100%;
     height: 100%;
     text-align: center;
