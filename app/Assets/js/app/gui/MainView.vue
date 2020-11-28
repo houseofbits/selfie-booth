@@ -26,7 +26,7 @@
 
 import MainSceneInstance from '/js/app/scene/MainInstance';
 import CaptureImageData from "./Structures/CapturedImageData";
-import GalleryCollapsible from './GalleryCollapsible.vue';
+import GalleryCollapsible from './Gallery/GalleryCollapsible.vue';
 import ThemesCollapsible from './ThemesCollapsible.vue';
 import SnapshotImage from './SnapshotImage.vue';
 import RecordButton from './RecordButton.vue';
@@ -35,6 +35,7 @@ import ShareEmail from './SharingView/SharingViewEmail.vue';
 import ShareDownload from './SharingView/SharingViewDownload.vue';
 import {GalleryActions} from './Constants.js';
 import DynamicBackground from './DynamicBackground/DynamicBackground.vue';
+import ImageDataSyncService from "./Services/ImageDataSyncService";
 
 export default {
     name: "MainView",
@@ -117,23 +118,33 @@ export default {
                     break;
                 case GalleryActions.ShareFacebook:
                     this.selectedImage = image;
+                    this.syncImageData();
                     this.isShareViewOpen = true;
                     break;
                 case GalleryActions.ShareEmail:
                     this.selectedImage = image;
+                    this.syncImageData();
                     this.isEmailViewOpen = true;
                     break;
                 case GalleryActions.ShareDownload:
                     this.selectedImage = image;
+                    this.syncImageData();
                     this.isDownloadViewOpen = true;
                     break;
             }
-
-            //upload to server
         },
         closeEmailView() {
             this.isEmailViewOpen = false;
             this.selectedImage = null;
+        },
+        syncImageData() {
+            if (this.selectedImage) {
+                const image = this.selectedImage;
+                if (image.hash === null) {
+                    const service = new ImageDataSyncService();
+                    service.sync(image);
+                }
+            }
         }
     }
 }
@@ -172,4 +183,18 @@ export default {
     }
 }
 
+</style>
+
+<style>
+@font-face {
+    font-family: "customFont";
+    src: url("../../../fonts/font.ttf");
+}
+
+body {
+    font-family: "customFont", serif;
+    user-select: none;
+    background-color: #c7c7c7;
+    /*overflow: hidden;*/
+}
 </style>

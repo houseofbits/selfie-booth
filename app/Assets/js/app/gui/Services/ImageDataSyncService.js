@@ -16,7 +16,7 @@ export default class ImageDataSyncService {
                 }
             }).then(response => {
             if (response.status === 200 && typeof response.data.id !== 'undefined') {
-                imageData.id = response.data.id;
+                imageData.hash = response.data.id;
             }
         });
     }

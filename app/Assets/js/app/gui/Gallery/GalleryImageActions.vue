@@ -29,7 +29,7 @@
 
 <script>
 
-import ExpandableButton from './ExpandableButton.vue';
+import ExpandableButton from '../ExpandableButton.vue';
 
 export default {
     name: "GalleryImageActions",

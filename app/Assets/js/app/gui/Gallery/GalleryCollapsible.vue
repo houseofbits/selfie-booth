@@ -25,8 +25,8 @@
 
 <script>
 import Gallery from './Gallery.vue';
-import TextButton from './TextButton.vue';
-import {GalleryActions, GalleryImageSize} from './Constants.js';
+import TextButton from '../TextButton.vue';
+import {GalleryActions, GalleryImageSize} from '../Constants.js';
 
 export default {
     name: "GalleryCollapsible",

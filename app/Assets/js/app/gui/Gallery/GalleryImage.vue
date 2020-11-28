@@ -14,7 +14,7 @@
 
 <script>
 import GalleryImageActions from './GalleryImageActions.vue';
-import {GalleryActions} from './Constants.js';
+import {GalleryActions} from '../Constants.js';
 
 export default {
     name: "GalleryImage",

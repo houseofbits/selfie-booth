@@ -1,5 +1,5 @@
 <template>
-    <div :class="stateClass" :style="cssVars(200,200)" class="fragment">
+    <div :class="stateClass" :style="cssVars" class="fragment">
 
     </div>
 </template>
@@ -16,7 +16,9 @@ export default {
         }
     },
     data() {
-        return {};
+        return {
+            cssVars: this.formatCssVars(),
+        };
     },
     computed: {
         stateClass() {
@@ -24,7 +26,7 @@ export default {
         }
     },
     methods: {
-        cssVars(posx, posy) {
+        formatCssVars() {
             let vars = {};
             for (let i = 0; i < 5; i++) {
                 vars['--ts' + i] = this.formatTranslate(this.fragment[i].x, this.fragment[i].y)

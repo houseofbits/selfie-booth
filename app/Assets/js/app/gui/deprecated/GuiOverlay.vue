@@ -26,13 +26,13 @@
 
 <script>
 
-import CaptureView from "/js/app/gui/CaptureView/CaptureView.vue";
+import CaptureView from "/js/app/gui/deprecated/CaptureView/CaptureView.vue";
 import SharingView from "/js/app/gui/SharingView/SharingView.vue";
 import {FlowState} from "/js/app/gui/Constants";
-import CaptureImageData from "./Structures/CapturedImageData";
-import ImageDataSyncService from "./Services/ImageDataSyncService";
+import CaptureImageData from "../Structures/CapturedImageData";
+import ImageDataSyncService from "../Services/ImageDataSyncService";
 import MainSceneInstance from '/js/app/scene/MainInstance';
-import MainView from './MainView.vue';
+import MainView from '../MainView.vue';
 
 export default {
     name: "app",
@@ -128,7 +128,7 @@ export default {
 <style>
 @font-face {
     font-family: "customFont";
-    src: url("../../../fonts/font.ttf");
+    src: url("../../../../fonts/font.ttf");
 }
 
 body {
