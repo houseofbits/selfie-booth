@@ -1,8 +1,5 @@
 <template>
-    <div>
-        <label for="input-text"></label><input id="input-text" v-model="inputText" spellcheck="false" type="text"/>
-        <the-keyboard :layout="keyboardLayout" @key-press="keyPressEvent"></the-keyboard>
-    </div>
+    <the-keyboard :layout="keyboardLayout" @key-press="keyPressEvent"></the-keyboard>
 </template>
 
 <script>
@@ -12,6 +9,11 @@ import TheKeyboard from "./TheKeyboard.vue";
 
 export default {
     name: "TheKeyboardEmailInput",
+    props: {
+        emailAddress: {
+            type: String,
+        },
+    },
     data: function () {
         return {
             keyboardLayout: KeyLayout,
@@ -19,16 +21,15 @@ export default {
         }
     },
     components: {TheKeyboard},
-    watch:{
-        inputText(){
-            this.$emit('change', this.inputText);
+    watch: {
+        inputText() {
+            this.$emit('update:emailAddress', this.inputText);
         }
     },
     methods: {
         keyPressEvent(key) {
-            let el = document.getElementById('input-text');
-            let start = el.selectionStart;
-            let end = el.selectionEnd;
+            let start = this.inputText.length;
+            let end = start;
             let inputVal = this.inputText;
 
             if (end > start) {
@@ -48,39 +49,12 @@ export default {
             }
 
             this.inputText = inputVal;
-
-            this.$nextTick(() => {
-                el.selectionStart = start;
-                el.selectionEnd = start;
-            });
         }
-    },
-    mounted: function () {
-
-        let el = document.getElementById('input-text');
-
-        //el.focus();
-
-        // el.onblur = function () {
-        //     setTimeout(function () {
-        //         el.focus();
-        //     });
-        // };
-
     }
 }
 </script>
 
 <style scoped>
-#input-text {
-    color: white;
-    font: 50px "customFont";
-    background-color: rgba(255, 255, 255, 0);
-    display: block;
-    width: 100%;
-    text-align: center;
-}
-
 input {
     border: 0;
     outline: 0;

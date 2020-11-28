@@ -27,7 +27,7 @@
 <script>
 
 import CaptureView from "/js/app/gui/deprecated/CaptureView/CaptureView.vue";
-import SharingView from "/js/app/gui/SharingView/SharingView.vue";
+import SharingView from "/js/app/gui/deprecated/SharingView.vue";
 import {FlowState} from "/js/app/gui/Constants";
 import CaptureImageData from "../Structures/CapturedImageData";
 import ImageDataSyncService from "../Services/ImageDataSyncService";

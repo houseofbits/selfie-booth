@@ -13,6 +13,12 @@ function down(){
     docker-compose down;
 }
 
+function restart(){
+    docker-compose down;
+    docker-compose up -d;
+    npm run watch;
+}
+
 function ssh(){
     docker-compose exec php bash;
 }

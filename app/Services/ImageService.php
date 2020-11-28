@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Models\ImageDataStructure;
+use App\Structures\ImageDataStructure;
 use App\Models\ImageModel;
 use CodeIgniter\Files\File;
 use Endroid\QrCode\QrCode;

@@ -13,12 +13,10 @@
         <snapshot-image :captured-image-data="images"></snapshot-image>
         <div class="gradient-under"></div>
 
-        <!--        <share-facebook :image-id="0" :is-active="true"></share-facebook>-->
-        <share-email :class="{visible: isEmailViewOpen}" :image-id="'sdsdsdsd'" :is-active="true" class="fade-hidden"
-                     @close="closeEmailView"></share-email>
-        <!--        <share-download :image-id="0" :is-active="true"></share-download>-->
-
-
+        <sharing-view-redirect :image="selectedImage" :is-active="isShareViewOpen || isDownloadViewOpen"
+                               @close="closeRedirectView"/>
+        <sharing-view-email :is-active="isEmailViewOpen" :is-error.sync="sendEmailError"
+                            @close="closeEmailView" @send="sendEmail"/>
     </div>
 </template>
 
@@ -30,12 +28,12 @@ import GalleryCollapsible from './Gallery/GalleryCollapsible.vue';
 import ThemesCollapsible from './ThemesCollapsible.vue';
 import SnapshotImage from './SnapshotImage.vue';
 import RecordButton from './RecordButton.vue';
-import ShareFacebook from './SharingView/SharingViewFacebook.vue';
-import ShareEmail from './SharingView/SharingViewEmail.vue';
-import ShareDownload from './SharingView/SharingViewDownload.vue';
+import SharingViewRedirect from './SharingView/SharingViewRedirect.vue';
+import SharingViewEmail from './SharingView/SharingViewEmail.vue';
 import {GalleryActions} from './Constants.js';
 import DynamicBackground from './DynamicBackground/DynamicBackground.vue';
 import ImageDataSyncService from "./Services/ImageDataSyncService";
+import EmailService from "./Services/EmailService.js";
 
 export default {
     name: "MainView",
@@ -50,6 +48,7 @@ export default {
             isDownloadViewOpen: false,
             isDynamicBackgroundVisible: false,
             dynamicBackgroundState: 0,
+            sendEmailError: false,
         }
     },
     components: {
@@ -57,9 +56,8 @@ export default {
         ThemesCollapsible,
         RecordButton,
         SnapshotImage,
-        ShareFacebook,
-        ShareEmail,
-        ShareDownload,
+        SharingViewRedirect,
+        SharingViewEmail,
         DynamicBackground
     },
     computed: {
@@ -125,6 +123,7 @@ export default {
                     this.selectedImage = image;
                     this.syncImageData();
                     this.isEmailViewOpen = true;
+                    this.sendEmailError = false;
                     break;
                 case GalleryActions.ShareDownload:
                     this.selectedImage = image;
@@ -137,6 +136,11 @@ export default {
             this.isEmailViewOpen = false;
             this.selectedImage = null;
         },
+        closeRedirectView() {
+            this.isDownloadViewOpen = false;
+            this.isShareViewOpen = false;
+            this.selectedImage = null;
+        },
         syncImageData() {
             if (this.selectedImage) {
                 const image = this.selectedImage;
@@ -144,6 +148,14 @@ export default {
                     const service = new ImageDataSyncService();
                     service.sync(image);
                 }
+            }
+        },
+        sendEmail(emailAddress) {
+            const emailService = new EmailService();
+            if (this.selectedImage && this.selectedImage.hash !== null) {
+                this.sendEmailError = !emailService.send(emailAddress, this.selectedImage.hash);
+            } else {
+                this.sendEmailError = true;
             }
         }
     }
@@ -168,18 +180,6 @@ export default {
         bottom: 0;
         height: 200px;
         background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.65) 100%);
-    }
-
-    .fade-hidden {
-        opacity: 0;
-        visibility: hidden;
-        transition: all 0.4s linear;
-
-        &.visible {
-            opacity: 1;
-            visibility: visible;
-            transition: all 0.4s linear;
-        }
     }
 }
 

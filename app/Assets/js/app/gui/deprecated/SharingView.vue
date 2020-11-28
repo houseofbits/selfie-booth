@@ -18,8 +18,8 @@
 
 <script>
 
-import ShareFacebook from './SharingViewFacebook.vue';
-import ShareEmail from './SharingViewEmail.vue';
+import ShareFacebook from '../SharingView/SharingViewRedirect.vue';
+import ShareEmail from '../SharingView/SharingViewEmail.vue';
 import ShareDownload from './SharingViewDownload.vue';
 import {SharingViewState} from "/js/app/gui/Constants";
 

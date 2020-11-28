@@ -4,15 +4,12 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
-use App\Models\EmailConfigModel;
-use App\Models\ImageDataStructure;
+use App\Structures\ImageDataStructure;
 use App\Models\ImageModel;
 use App\Services\EmailService;
 use App\Services\ImageService;
-use CodeIgniter\Files\File;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\RESTful\ResourceController;
-use Endroid\QrCode\QrCode;
 use Exception;
 
 class ApiController extends ResourceController
@@ -31,38 +28,15 @@ class ApiController extends ResourceController
     public function sendEmail()
     {
         $email = $this->request->getVar('email');
+        $imageId = $this->request->getVar('imageId');
 
-//        $emailModel = new EmailConfigModel();
-//
-//        $emailModel->enabled = true;
-//        $emailModel->host = '0.0.0.0';
-//        $emailModel->username = 'test';
-//
-//        $emailModel->save();
+        try {
+            $this->emailService->sendEmail($email, $imageId);
+        } catch (Exception $e) {
+            return $this->respond("Email error. " . $e->getMessage(), 400);
+        }
 
-        //var_dump($emailModel);
-
-//        $emailModelLoaded = EmailConfigModel::findOne();
-//        if ($emailModelLoaded) {
-//            $emailModelLoaded->delete();
-//        }
-//
-        //var_dump(EmailConfigModel::generateId());
-        //var_dump(EmailConfigModel::findAll());
-
-//        $imageModel = new ImageModel();
-//        $imageModel->imageUrl = "lol";
-//        $imageModel->createdAt = time();
-//
-
-        //$imageModel = ImageModel::findOne('219d43');
-
-        //var_dump($imageModel);
-
-        //$imageModel->delete();
-
-//        $imageModel->save();
-
+        return $this->respond(true);
     }
 
     public function uploadImage()

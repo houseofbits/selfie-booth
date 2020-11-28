@@ -1,5 +1,9 @@
 <template>
     <div>
+        <div class="icon-backdrop" :class="{visible: !isOpen}">
+            <div class="shadow"></div>
+            <div class="border"></div>
+        </div>
         <div :class="themesFrameClass" class="themes-frame" @click.self="openThemes">
             <div class="close-button" @click.self="closeThemes"></div>
             <div class="theme-icon r1c1"></div>
@@ -10,16 +14,25 @@
             <div class="theme-icon r2c2"></div>
             <div class="theme-icon r2c3"></div>
             <div class="theme-icon r2c4"></div>
-
         </div>
+
+        <div :class="{visible: !isOpen}" class="icon-overlay">
+            <div class="highlight"></div>
+        </div>
+
+        <text-button :class="{visible: isOpen}" icon="fas fa-times-circle" class="close-button red" @click="closeThemes">AIZVĒRT</text-button>
     </div>
 </template>
 
 <script>
 
+import TextButton from './TextButton.vue';
+
 export default {
     name: "ThemesCollapsible",
-    components: {},
+    components: {
+        TextButton
+    },
     props: {
         open: {
             type: Boolean
@@ -28,10 +41,6 @@ export default {
     data() {
         return {
             isOpen: false,
-            themes: [
-                {a:1}, {a:1}, {a:1}, {a:1},
-                {a:1}, {a:1}, {a:1}, {a:1}
-            ]
         };
     },
     watch: {
@@ -76,48 +85,49 @@ $theme-icons-per-row: 4;
     pointer-events: auto;
     position: absolute;
     text-align: center;
-    //background-color: rgba(0, 0, 0, 0.4);
-    border: dotted 1px black;
     transition: all 800ms linear;
-    //overflow: hidden;
+    overflow: hidden;
 
     .theme-icon {
         position: absolute;
+        z-index: 2;
         left:0;
         top:0;
         margin-left: -100px;
         margin-top: -100px;
         width:200px;
         height:200px;
-        background: linear-gradient(to bottom, rgba(206,220,231,0.43) 0%,rgba(89,106,114,0.65) 100%);
+//        background: linear-gradient(to bottom, rgba(206,220,231,0.43) 0%,rgba(89,106,114,0.65) 100%);
+        background: linear-gradient(to bottom, #e6f0a3 0%,#d2e638 50%,#c3d825 51%,#dbf043 100%);
         border-radius: 20px;
         transition: all 200ms linear;
-        box-shadow: 0 3px 9px 0 rgba(0, 0, 0, 0.38);
+        transition-delay: 150ms;
+        box-shadow: 0 3px 9px 0 rgba(0, 0, 0, 0.5);
 
         &.r1c1 {
-            transform: translate(icon-pos-x(0),50px);
+            transform: translate(icon-pos-x(0),150px);
         }
         &.r1c2 {
-            transform: translate(icon-pos-x(1),50px);
+            transform: translate(icon-pos-x(1),150px);
         }
         &.r1c3 {
-            transform: translate(icon-pos-x(2),50px);
+            transform: translate(icon-pos-x(2),150px);
         }
         &.r1c4 {
-            transform: translate(icon-pos-x(3),50px);
+            transform: translate(icon-pos-x(3),150px);
         }
 
         &.r2c1 {
-            transform: translate(icon-pos-x(0),350px);
+            transform: translate(icon-pos-x(0),400px);
         }
         &.r2c2 {
-            transform: translate(icon-pos-x(1),350px);
+            transform: translate(icon-pos-x(1),400px);
         }
         &.r2c3 {
-            transform: translate(icon-pos-x(2),350px);
+            transform: translate(icon-pos-x(2),400px);
         }
         &.r2c4 {
-            transform: translate(icon-pos-x(3),350px);
+            transform: translate(icon-pos-x(3),400px);
         }
     }
     &.themes-transition-collapse{
@@ -126,29 +136,29 @@ $theme-icons-per-row: 4;
             transform: translate(0, 0) scale(0.2);
 
             &.r1c1 {
-                transform: translate(icon-pos-x(0),50px);
+                transform: translate(40px,40px) scale(0.3);
             }
             &.r1c2 {
-                transform: translate(icon-pos-x(1),50px);
+                transform: translate(40px,40px) scale(0.3);
             }
             &.r1c3 {
-                transform: translate(icon-pos-x(2),50px);
+                transform: translate(120px,40px) scale(0.3);
             }
             &.r1c4 {
-                transform: translate(icon-pos-x(3),50px);
+                transform: translate(120px,40px) scale(0.3);
             }
 
             &.r2c1 {
-                transform: translate(icon-pos-x(0),100px);
+                transform: translate(40px,120px) scale(0.3);
             }
             &.r2c2 {
-                transform: translate(icon-pos-x(1),100px);
+                transform: translate(40px,120px) scale(0.3);
             }
             &.r2c3 {
-                transform: translate(icon-pos-x(2),100px);
+                transform: translate(120px,120px) scale(0.3);
             }
             &.r2c4 {
-                transform: translate(icon-pos-x(3),100px);
+                transform: translate(120px,120px) scale(0.3);
             }
         }
     }
@@ -156,17 +166,94 @@ $theme-icons-per-row: 4;
 }
 
 .close-button {
-    pointer-events: auto;
-    position: absolute;
-    background-color: rgba(255, 0, 0, 0.6);
-    border: 2px solid red;
-    width: 80px;
-    height: 80px;
-    top: -40px;
-    right: 50px;
-    border-radius: 50%;
+    top: 1550px;
+    left: 440px;
+    z-index: 2;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 100ms linear;
+
+    &.visible {
+        opacity: 1;
+        visibility: visible;
+        transition: all 400ms linear;
+    }
 }
 
+.icon-backdrop {
+    position: absolute;
+    top: $theme-icon-pos-top+px;
+    left: $theme-icon-pos-left+px;
+    width: $theme-icon-size;
+    height: $theme-icon-size;
+    z-index: 1;
+    transition: all 200ms linear;
+    opacity: 0;
+
+    &.visible {
+        opacity: 1;
+        visibility: visible;
+        transition: all 200ms linear;
+    }
+
+    .shadow {
+        display: block;
+        position: absolute;
+        top: 10px;
+        bottom: -10px;
+        right: -25px;
+        left: -25px;
+        border-radius: 50% 50% 100px 100px;
+        background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 45%, rgba(0, 0, 0, 0.48) 100%);
+    }
+
+    .border {
+        position: absolute;
+        top: -5px;
+        bottom: -5px;
+        right: -5px;
+        left: -5px;
+        border-radius: 50%;
+        box-shadow: 0 5px 6px 3px rgba(0, 0, 0, 0.56);
+        background: linear-gradient(to bottom, rgba(184, 225, 252, 1) 0%, rgba(169, 210, 243, 1) 10%, rgba(144, 186, 228, 1) 25%, rgba(144, 188, 234, 1) 37%, rgba(144, 191, 240, 1) 50%, rgba(107, 168, 229, 1) 51%, rgba(52, 201, 189, 1) 100%);
+    }
+}
+
+.icon-overlay {
+    position: absolute;
+    top: $theme-icon-pos-top+px;
+    left: $theme-icon-pos-left+px;
+    width: $theme-icon-size;
+    height: $theme-icon-size;
+    border-radius: $gallery-icon-size/2;
+    background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.5) 100%),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 34%, rgb(70, 107, 127) 100%);
+    transition: all 500ms linear;
+    filter: brightness(1.0);
+    z-index: 3;
+    opacity: 0;
+    visibility: hidden;
+
+    &.visible {
+        opacity: 1;
+        visibility: visible;
+        transition: all 400ms linear;
+    }
+
+    .highlight {
+        display: block;
+        position: absolute;
+        top: 10px;
+        bottom: 55px;
+        right: 7px;
+        left: 7px;
+        border-top-left-radius: 100px;
+        border-top-right-radius: 100px;
+        border-bottom-left-radius: 100px 40px;
+        border-bottom-right-radius: 100px 40px;
+        background: linear-gradient(to bottom, rgba(254, 252, 234, 0.05) 0%, rgba(54, 225, 241, 0.6) 100%);
+    }
+}
 
 .themes-transition-collapse {
     animation-name: themes-collapse;
@@ -199,8 +286,8 @@ $theme-icons-per-row: 4;
 }
 
 @mixin theme-state-100 {
-    top: $theme-icon-pos-top;
-    left: $theme-icon-pos-left;
+    top: $theme-icon-pos-top+px;
+    left: $theme-icon-pos-left+px;
     width: $theme-icon-size;
     height: $theme-icon-size;
     border-radius: $theme-icon-size/2;
