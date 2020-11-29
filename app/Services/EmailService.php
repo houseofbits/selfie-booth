@@ -5,7 +5,6 @@ namespace App\Services;
 use App\Models\EmailConfigModel;
 use App\Models\ImageModel;
 use CodeIgniter\Email\Email;
-use CodeIgniter\Files\File;
 use CodeIgniter\HTTP\Request;
 use CodeIgniter\Model;
 

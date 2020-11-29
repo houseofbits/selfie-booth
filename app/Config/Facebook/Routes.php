@@ -2,4 +2,4 @@
 
 $routes = Services::routes();
 
-$routes->get('/', 'FacebookController::index');
+$routes->get('/share', 'SharingController::index');

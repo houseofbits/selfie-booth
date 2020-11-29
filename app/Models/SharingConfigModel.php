@@ -12,4 +12,8 @@ class SharingConfigModel extends FileStorageModel
 
     public string $publicAppUlr = '';
 
+    public string $fbAppId = '';
+
+    public string $fbAppSecret = '';
+
 }
