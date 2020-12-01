@@ -14,16 +14,21 @@ class SharingController extends Controller
 
 	public function share($imageId)
 	{
-	    //Check if $imageId do exist and it is still valid
-        //Save imageId in session
 
-        try {
-            $accessToken = $this->fbService->getAccessToken();
-        } catch(\Exception $e) {
-            return redirect()->to('/auth');
-        }
-        //If access token is still valid, go directly to Sharing view
-        return redirect()->to('/share');
+        return view('sharing/auth', [
+            'imageId' => $imageId
+        ]);
+
+//	    //Check if $imageId do exist and it is still valid
+//        //Save imageId in session
+//
+//        try {
+//            $accessToken = $this->fbService->getAccessToken();
+//        } catch(\Exception $e) {
+//            return redirect()->to('/auth');
+//        }
+//        //If access token is still valid, go directly to Sharing view
+//        return redirect()->to('/share');
 	}
 
 	public function auth()
@@ -35,6 +40,8 @@ class SharingController extends Controller
     public function authenticated()
     {
 
+
+        return view('sharing/auth');
     }
 
     public function download()

@@ -5,12 +5,16 @@
             <alert-box v-if="message.isActive" :content="message.content" :type="message.type"
                        @close="setMessage"></alert-box>
 
-            <div class="form-group form-check mb-0 d-flex">
-                <div class="justify-content-center align-self-center">
-                    <input id="enabledCheckbox" v-model="formData.enabled" class="form-check-input" type="checkbox">
-                    <label class="form-check-label" for="enabledCheckbox">Feature enabled</label>
+            <div class="card-columns">
+                <div v-for="image in images" class="card">
+                    <img :src="'/api/image/'+image.id" class="card-img-top">
+                    <div class="card-body p-1">
+                        <div class="id-text">{{ image.id }}</div>
+                        <div class="date-text">
+                            {{ image.dateCreated }}
+                        </div>
+                    </div>
                 </div>
-                <button :disabled="saveButtonDisabled" @click="save" class="btn btn-primary ml-auto">Save</button>
             </div>
         </div>
 
@@ -30,31 +34,15 @@ export default {
     },
     data() {
         return {
-            formData: {
-                enabled: false,
-            },
+            images: [],
             message: {
                 isActive: false,
                 type: '',
                 content: ''
             },
-            saveButtonDisabled: true
         };
     },
-    watch: {
-        formData: {
-            deep: true,
-            handler() {
-                this.saveButtonDisabled = false;
-            }
-        }
-    },
     methods: {
-        save() {
-            axios.post('admin/email', this.formData).then(response => {
-
-            });
-        },
         setMessage(type, message) {
             this.message.type = type || '';
             this.message.content = message || '';
@@ -62,8 +50,8 @@ export default {
         },
     },
     mounted() {
-        axios.get('admin/email').then(response => {
-
+        axios.get('conf/images').then(response => {
+            this.images = response.data;
         });
     },
     created() {
@@ -72,6 +60,26 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 
+.card-columns {
+    column-count: 5 !important;
+}
+.card-body {
+    line-height: 14px;
+    .id-text {
+        display: inline-block;
+        font-size: 14px;
+        line-height: 16px;
+        font-weight: bold;
+        margin: 0;
+    }
+
+    .date-text {
+        display: inline-block;
+        font-size: 12px;
+        line-height: 14px;
+        margin: 0;
+    }
+}
 </style>

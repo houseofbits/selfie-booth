@@ -21,7 +21,7 @@ class App extends BaseConfig
 	| environments.
 	|
 	*/
-	public $baseURL = 'http://docker.local/';
+	public $baseURL = 'http://fb.local/';
 
 	/*
 	|--------------------------------------------------------------------------

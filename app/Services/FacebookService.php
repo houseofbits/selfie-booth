@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use Facebook\Authentication\AccessToken;
-use Facebook\Exceptions\FacebookResponseException;
 use Facebook\Exceptions\FacebookSDKException;
 use Facebook\Facebook;
 

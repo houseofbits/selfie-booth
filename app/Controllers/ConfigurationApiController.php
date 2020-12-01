@@ -3,9 +3,11 @@
 namespace App\Controllers;
 
 use App\Models\EmailConfigModel;
+use App\Models\ImageModel;
 use App\Services\EmailService;
 use App\Services\SharingService;
 use App\Services\TranslationsService;
+use App\Structures\ImageInfoStructure;
 use CodeIgniter\Controller;
 use CodeIgniter\RESTful\ResourceController;
 
@@ -137,5 +139,14 @@ class ConfigurationApiController extends ResourceController
         $translations = $translationsService->getTranslations();
         return $this->response->setHeader('Content-Type', 'application/json')
             ->setJSON($translations->translations);
+    }
+
+    public function getAllImages()
+    {
+        $images = ImageModel::findAll();
+        usort($images, fn(ImageModel $a, ImageModel $b) => $a->createdAt > $b->createdAt);
+        $images = array_map(fn(ImageModel $model) => new ImageInfoStructure($model), $images);
+        return $this->response->setHeader('Content-Type', 'application/json')
+            ->setJSON($images);
     }
 }

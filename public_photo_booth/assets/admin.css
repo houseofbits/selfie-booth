@@ -7165,3 +7165,23 @@ a.text-dark:hover, a.text-dark:focus {
     opacity: 0
 }
 
+.card-columns[data-v-1ca8bbd5] {
+  column-count: 5 !important;
+}
+.card-body[data-v-1ca8bbd5] {
+  line-height: 14px;
+}
+.card-body .id-text[data-v-1ca8bbd5] {
+    display: inline-block;
+    font-size: 14px;
+    line-height: 16px;
+    font-weight: bold;
+    margin: 0;
+}
+.card-body .date-text[data-v-1ca8bbd5] {
+    display: inline-block;
+    font-size: 12px;
+    line-height: 14px;
+    margin: 0;
+}
+
