@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\SharingConfigModel;
 use App\Structures\ImageDataStructure;
 use App\Models\ImageModel;
 use CodeIgniter\Files\File;
@@ -10,10 +11,14 @@ use Exception;
 
 class ImageService
 {
-    public string $publicAppUrl = "https://www.kautkaadalapa.lv/atteelushaariite/{TYPE}/{ID}";
+    public string $publicAppUrl = "https://www.kautkaadalapa.lv/atteelushaariite/{TYPE}/{LANGUAGE}/{ID}";
+    public int $sharingAvailabilityMinutes = 1440;
 
     public function __construct()
     {
+        $sharingSettings = SharingConfigModel::findOrCreate();
+        $this->sharingAvailabilityMinutes = $sharingSettings->shareableLinkTTL;
+        $this->publicAppUrl = $sharingSettings->publicAppUlr;
     }
 
     public function createImage(string $path): ?ImageModel
@@ -30,6 +35,18 @@ class ImageService
         return $imageModel;
     }
 
+    /**
+     * @param string $id
+     * @throws Exception
+     */
+    public function deleteImage(string $id)
+    {
+        $imageModel = ImageModel::findOne($id);
+        if ($imageModel instanceof ImageModel) {
+            $imageModel->delete();
+        }
+    }
+
     public function getImageData(string $id): ?ImageDataStructure
     {
         $imageModel = ImageModel::findOne($id);
@@ -42,15 +59,45 @@ class ImageService
         return null;
     }
 
-    public function getQrCodeForPublicApp(string $imageId, string $type): ?ImageDataStructure
+    public function getQrCodeForPublicApp(string $imageId, string $type, string $language = 'lv'): ?ImageDataStructure
     {
         $imageModel = ImageModel::findOne($imageId);
         if ($imageModel instanceof ImageModel) {
-            $qrCode = new QrCode(str_replace(['{TYPE}', '{ID}'], [$type, $imageModel->id], $this->publicAppUrl));
+            $qrCode = new QrCode(str_replace(['{TYPE}', '{ID}', '{LANGUAGE}'], [$type, $imageModel->id, $language], $this->publicAppUrl));
 
             return new ImageDataStructure($qrCode->getContentType(), $qrCode->writeString());
         }
         return null;
+    }
+
+    public function isSharingAvailable(ImageModel $image): bool
+    {
+        $diff = (time() - $image->createdAt) / 60;
+        return $this->sharingAvailabilityMinutes > $diff;
+    }
+
+    public function getSharingTimeLeftFormatted(string $language, ImageModel $image): string
+    {
+        $diffMinutes = $this->sharingAvailabilityMinutes - ((time() - $image->createdAt) / 60.0);
+        $diffHours = $diffMinutes / 60.0;
+        $diffDays = $diffHours / 24.0;
+
+        if ($diffHours < 1.0) {
+            return floor($diffMinutes) . ' ' . transl('sharing.time-minutes', $language);
+        }
+
+        if ($diffDays < 1.0) {
+            return floor($diffHours) . ' ' . transl('sharing.time-hours', $language);
+        }
+
+        $remainingHours = floor(fmod($diffDays, 1) * 24.0);
+
+        $result = floor($diffDays) . ' ' . transl('sharing.time-days', $language);
+        if ($remainingHours > 0) {
+            $result .= ' ' . $remainingHours . ' ' . transl('sharing.time-hours', $language);
+        }
+
+        return $result;
     }
 }
 

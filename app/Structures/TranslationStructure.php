@@ -6,14 +6,24 @@ namespace App\Structures;
 
 class TranslationStructure
 {
-    const LAT = 0;
-    const ENG = 1;
-    const RUS = 2;
+    public const LAT = 0;
+    public const ENG = 1;
+    public const RUS = 2;
 
-    const NAMES = [
-        self::LAT => 'lat',
-        self::ENG => 'eng',
-        self::RUS => 'rus',
+    public const LAT_NAME = 'lv';
+    public const ENG_NAME = 'en';
+    public const RUS_NAME = 'ru';
+
+    public const NAMES = [
+        self::LAT => self::LAT_NAME,
+        self::ENG => self::ENG_NAME,
+        self::RUS => self::RUS_NAME,
+    ];
+
+    public const NAMES_TO_KEYS = [
+        self::LAT_NAME => self::LAT,
+        self::ENG_NAME => self::ENG,
+        self::RUS_NAME => self::RUS,
     ];
 
     public array $translations = [
@@ -25,6 +35,11 @@ class TranslationStructure
     public function getDefault(): string
     {
         return $this->translations[self::ENG];
+    }
+
+    public function getByLanguageName(string $lang)
+    {
+        return $this->translations[self::NAMES_TO_KEYS[$lang] ?? 100] ?? '';
     }
 
     public function updateTranslation(string $text, int $lang)

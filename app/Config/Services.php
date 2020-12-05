@@ -1,5 +1,6 @@
 <?php namespace Config;
 
+use App\Models\TranslationsModel;
 use CodeIgniter\Config\Services as CoreServices;
 
 /**
@@ -17,14 +18,14 @@ use CodeIgniter\Config\Services as CoreServices;
  */
 class Services extends CoreServices
 {
+    public static function translations(bool $getShared = true)
+    {
+        if ($getShared)
+        {
+            return static::getSharedInstance('translations');
+        }
 
-	//    public static function example($getShared = true)
-	//    {
-	//        if ($getShared)
-	//        {
-	//            return static::getSharedInstance('example');
-	//        }
-	//
-	//        return new \CodeIgniter\Example();
-	//    }
+        return TranslationsModel::findOrCreate();
+    }
+
 }

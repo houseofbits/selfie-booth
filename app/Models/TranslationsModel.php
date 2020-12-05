@@ -33,4 +33,16 @@ class TranslationsModel extends FileStorageModel
     {
         $this->translations[$key] = $this->findOrCreateTranslation($key);
     }
+
+    public function getTranslation(string $key, string $lang): string
+    {
+        if (in_array($lang, TranslationStructure::NAMES_TO_KEYS)) {
+            $structure = $this->findOrCreateTranslation($key);
+            $str = $structure->getByLanguageName($lang);
+            if (!empty($str)) {
+                return $str;
+            }
+        }
+        return $key;
+    }
 }

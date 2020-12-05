@@ -1,6 +1,16 @@
+@import "~/bootstrap/bootstrap.scss";
+
+//@import "text-button.scss";
+
+@font-face {
+  font-family: "customFont";
+  src: url("../fonts/font.ttf");
+}
 
 body,html {
   height: 100%;
+  font-family: "customFont", serif;
+  user-select: none;
 }
 
 .fixed-overlay{
@@ -9,7 +19,13 @@ body,html {
   bottom: 0;
   left: 0;
   right: 0;
-  border:solid 1px red;
 }
 
-@import "~/bootstrap/bootstrap.scss";
+.text-shadow-1 {
+  text-shadow: 1px 3px 0 #969696, 1px 13px 5px #aba8a8;
+}
+
+hr.divider {
+  border-top: 2px solid #aba8a8;
+}
+

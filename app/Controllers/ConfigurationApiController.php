@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Models\EmailConfigModel;
 use App\Models\ImageModel;
 use App\Services\EmailService;
+use App\Services\ImageService;
 use App\Services\SharingService;
 use App\Services\TranslationsService;
 use App\Structures\ImageInfoStructure;
@@ -148,5 +149,15 @@ class ConfigurationApiController extends ResourceController
         $images = array_map(fn(ImageModel $model) => new ImageInfoStructure($model), $images);
         return $this->response->setHeader('Content-Type', 'application/json')
             ->setJSON($images);
+    }
+
+    public function deleteImage()
+    {
+        $imageService = new ImageService();
+        $id = $this->request->getVar('id');
+        if($id) {
+            $imageService->deleteImage($id);
+        }
+        return $this->getAllImages();
     }
 }

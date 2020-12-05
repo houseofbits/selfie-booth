@@ -16,6 +16,7 @@ $routes->get('/conf/translation/(:any)', 'ConfigurationApiController::getTransla
 $routes->post('/conf/translation-save', 'ConfigurationApiController::saveTranslation');
 $routes->get('/translations', 'ConfigurationApiController::getTranslationsResource');
 $routes->get('/conf/images', 'ConfigurationApiController::getAllImages');
+$routes->post('/conf/image-delete', 'ConfigurationApiController::deleteImage');
 
 $routes->cli('cli/translate/(:any)', 'ConfigurationApiController::cliCreateTranslationKey/$1');
 

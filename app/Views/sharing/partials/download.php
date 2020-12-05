@@ -1,0 +1,1 @@
+<a href="/download" type="button" class="btn btn-success"><i class="fas fa-cloud-download-alt"></i> <?=transl('sharing.buttons.download')?></a>

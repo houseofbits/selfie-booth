@@ -60,6 +60,10 @@ class TranslationsService
         $translationsModel->save();
     }
 
+    /**
+     * @param string $key
+     * @throws Exception
+     */
     public function createTranslationKey(string $key)
     {
         $translationsModel = TranslationsModel::findOrCreate();

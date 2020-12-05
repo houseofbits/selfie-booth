@@ -10,10 +10,14 @@ class SharingConfigModel extends FileStorageModel
 
     public bool $shareToFbEnabled = false;
 
-    public string $publicAppUlr = '';
+    public string $publicAppDomain = '';
+
+    public string $publicAppUrl = '';
 
     public string $fbAppId = '';
 
     public string $fbAppSecret = '';
+
+    public int $shareableLinkTTL = 1440;
 
 }

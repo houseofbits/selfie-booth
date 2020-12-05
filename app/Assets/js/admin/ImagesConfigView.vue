@@ -14,6 +14,7 @@
                             {{ image.dateCreated }}
                         </div>
                     </div>
+                    <div class="delete-button" @click="deleteImage(image.id)"><i class="fas fa-trash-alt"></i></div>
                 </div>
             </div>
         </div>
@@ -48,6 +49,13 @@ export default {
             this.message.content = message || '';
             this.message.isActive = !!(type && message);
         },
+        deleteImage(id){
+            const formData = new FormData();
+            formData.append('id', id);
+            axios.post('conf/image-delete', formData).then(response => {
+                this.images = response.data;
+            });
+        }
     },
     mounted() {
         axios.get('conf/images').then(response => {
@@ -82,4 +90,31 @@ export default {
         margin: 0;
     }
 }
+
+.delete-button{
+    position:absolute;
+    top:50px;
+    left:50%;
+    margin-left: -25px;
+    width:50px;
+    height: 50px;
+    border: 1px solid red;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    border-radius: 50%;
+    background-color: red;
+    font-size: 26px;
+    visibility: hidden;
+    opacity: 0;
+    transition: all 200ms linear;
+}
+
+.card:hover .delete-button{
+    visibility: visible;
+    transition: all 200ms linear;
+    opacity: 1;
+}
+
 </style>
