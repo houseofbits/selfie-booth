@@ -1,37 +1,44 @@
 <template>
     <div>
-        <div class="icon-backdrop" :class="{visible: !isOpen}">
+        <div :class="{visible: !isOpen}" class="icon-backdrop">
             <div class="shadow"></div>
             <div class="border"></div>
         </div>
-        <div :class="themesFrameClass" class="themes-frame" @click.self="openThemes">
+        <div :class="themesFrameClass" class="themes-frame">
             <div class="close-button" @click.self="closeThemes"></div>
-            <div class="theme-icon r1c1"></div>
-            <div class="theme-icon r1c2"></div>
-            <div class="theme-icon r1c3"></div>
-            <div class="theme-icon r1c4"></div>
-            <div class="theme-icon r2c1"></div>
-            <div class="theme-icon r2c2"></div>
-            <div class="theme-icon r2c3"></div>
-            <div class="theme-icon r2c4"></div>
+            <div class="theme-icon r1c1">Work in progress</div>
+            <div class="theme-icon r1c2">Work in progress</div>
+            <div class="theme-icon r1c3">Work in progress</div>
+            <div class="theme-icon r1c4">Work in progress</div>
+            <div class="theme-icon r2c1">Work in progress</div>
+            <div class="theme-icon r2c2">Work in progress</div>
+            <div class="theme-icon r2c3">Work in progress</div>
+            <div class="theme-icon r2c4">Work in progress</div>
         </div>
 
-        <div :class="{visible: !isOpen}" class="icon-overlay">
+        <static-item :class="{visible: !isOpen}" class="leaf leaf-pos-1" image-id="2"></static-item>
+        <static-item :class="{visible: !isOpen}" class="leaf leaf-pos-inside" image-id="1"></static-item>
+
+        <div :class="{visible: !isOpen}" class="icon-overlay" @click.self="openThemes">
             <div class="highlight"></div>
         </div>
 
-        <text-button :class="{visible: isOpen}" icon="fas fa-times-circle" class="close-button red" @click="closeThemes">AIZVĒRT</text-button>
+
+        <text-button :class="{visible: isOpen}" class="close-button red" icon="fas fa-times-circle"
+                     @click="closeThemes">AIZVĒRT</text-button>
     </div>
 </template>
 
 <script>
 
 import TextButton from './TextButton.vue';
+import StaticItem from './DynamicBackground/StaticItem.vue';
 
 export default {
     name: "ThemesCollapsible",
     components: {
-        TextButton
+        TextButton,
+        StaticItem
     },
     props: {
         open: {
@@ -91,74 +98,92 @@ $theme-icons-per-row: 4;
     .theme-icon {
         position: absolute;
         z-index: 2;
-        left:0;
-        top:0;
+        left: 0;
+        top: 0;
         margin-left: -100px;
         margin-top: -100px;
-        width:200px;
-        height:200px;
-//        background: linear-gradient(to bottom, rgba(206,220,231,0.43) 0%,rgba(89,106,114,0.65) 100%);
-        background: linear-gradient(to bottom, #e6f0a3 0%,#d2e638 50%,#c3d825 51%,#dbf043 100%);
+        width: 200px;
+        height: 200px;
+        //        background: linear-gradient(to bottom, rgba(206,220,231,0.43) 0%,rgba(89,106,114,0.65) 100%);
+        background: linear-gradient(to bottom, #e6f0a3 0%, #d2e638 50%, #c3d825 51%, #dbf043 100%);
         border-radius: 20px;
         transition: all 200ms linear;
         transition-delay: 150ms;
         box-shadow: 0 3px 9px 0 rgba(0, 0, 0, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 26px;
+        color: #747474;
 
         &.r1c1 {
-            transform: translate(icon-pos-x(0),150px);
+            transform: translate(icon-pos-x(0), 150px);
         }
+
         &.r1c2 {
-            transform: translate(icon-pos-x(1),150px);
+            transform: translate(icon-pos-x(1), 150px);
         }
+
         &.r1c3 {
-            transform: translate(icon-pos-x(2),150px);
+            transform: translate(icon-pos-x(2), 150px);
         }
+
         &.r1c4 {
-            transform: translate(icon-pos-x(3),150px);
+            transform: translate(icon-pos-x(3), 150px);
         }
 
         &.r2c1 {
-            transform: translate(icon-pos-x(0),400px);
+            transform: translate(icon-pos-x(0), 400px);
         }
+
         &.r2c2 {
-            transform: translate(icon-pos-x(1),400px);
+            transform: translate(icon-pos-x(1), 400px);
         }
+
         &.r2c3 {
-            transform: translate(icon-pos-x(2),400px);
+            transform: translate(icon-pos-x(2), 400px);
         }
+
         &.r2c4 {
-            transform: translate(icon-pos-x(3),400px);
+            transform: translate(icon-pos-x(3), 400px);
         }
     }
-    &.themes-transition-collapse{
+
+    &.themes-transition-collapse {
         .theme-icon {
             transition: all 200ms linear;
             transform: translate(0, 0) scale(0.2);
 
             &.r1c1 {
-                transform: translate(40px,40px) scale(0.3);
+                transform: translate(40px, 40px) scale(0.3);
             }
+
             &.r1c2 {
-                transform: translate(40px,40px) scale(0.3);
+                transform: translate(40px, 40px) scale(0.3);
             }
+
             &.r1c3 {
-                transform: translate(120px,40px) scale(0.3);
+                transform: translate(120px, 40px) scale(0.3);
             }
+
             &.r1c4 {
-                transform: translate(120px,40px) scale(0.3);
+                transform: translate(120px, 40px) scale(0.3);
             }
 
             &.r2c1 {
-                transform: translate(40px,120px) scale(0.3);
+                transform: translate(40px, 120px) scale(0.3);
             }
+
             &.r2c2 {
-                transform: translate(40px,120px) scale(0.3);
+                transform: translate(40px, 120px) scale(0.3);
             }
+
             &.r2c3 {
-                transform: translate(120px,120px) scale(0.3);
+                transform: translate(120px, 120px) scale(0.3);
             }
+
             &.r2c4 {
-                transform: translate(120px,120px) scale(0.3);
+                transform: translate(120px, 120px) scale(0.3);
             }
         }
     }
@@ -233,6 +258,7 @@ $theme-icons-per-row: 4;
     z-index: 3;
     opacity: 0;
     visibility: hidden;
+    pointer-events: auto;
 
     &.visible {
         opacity: 1;
@@ -247,6 +273,7 @@ $theme-icons-per-row: 4;
         bottom: 55px;
         right: 7px;
         left: 7px;
+        pointer-events: none;
         border-top-left-radius: 100px;
         border-top-right-radius: 100px;
         border-bottom-left-radius: 100px 40px;
@@ -310,4 +337,27 @@ $theme-icons-per-row: 4;
         @include theme-state-0;
     }
 }
+
+.leaf {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+
+    &.visible {
+        opacity: 1;
+        visibility: visible;
+        transition: opacity 200ms linear;
+        pointer-events: none;
+    }
+}
+
+.leaf-pos-1 {
+    transform: translate(120px, 1800px) rotate(-20deg);
+}
+
+.leaf-pos-inside {
+    transform: translate(160px, 1800px) rotate(20deg) scale(0.8);
+    z-index: 1;
+}
+
 </style>

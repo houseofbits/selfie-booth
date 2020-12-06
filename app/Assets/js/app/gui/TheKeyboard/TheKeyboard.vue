@@ -14,10 +14,7 @@
 </template>
 
 <script>
-/*
-    TODO:
-    5) styling
- */
+
 export default {
     name: "TheKeyboard",
     data: function () {

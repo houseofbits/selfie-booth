@@ -7,14 +7,27 @@
 <script>
 export default {
     name: "RecordButton",
-    props: {},
-    methods:{
-        startCapture(){
-            this.$emit('capture');
-            //setTimeout(this.capture, 1000);
-            this.capture();
+    props: {
+        timeout: {
+            type: Number,
+            default: 1000
+        }
+    },
+    data() {
+        return {
+            captureInProgress: false
+        };
+    },
+    methods: {
+        startCapture() {
+            if (!this.captureInProgress) {
+                this.$emit('capture');
+                this.captureInProgress = true;
+                setTimeout(this.capture, this.timeout);
+            }
         },
-        capture(){
+        capture() {
+            this.captureInProgress = false;
             this.$emit('record');
         }
     }
@@ -22,14 +35,15 @@ export default {
 </script>
 
 <style scoped>
-.record-button{
+.record-button {
     pointer-events: auto;
-    position:absolute;
-    top:1700px;
-    left:460px;
+    position: absolute;
+    top: 1700px;
+    left: 460px;
     width: 160px;
     height: 160px;
 }
+
 .button {
     width: 160px;
     height: 160px;

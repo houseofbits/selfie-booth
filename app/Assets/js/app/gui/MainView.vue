@@ -1,14 +1,14 @@
 <template>
     <div class="gui-frame">
-        <dynamic-background :is-visible="isDynamicBackgroundVisible" :state="dynamicBackgroundState"/>
+        <dynamic-background :open="isDynamicBackgroundOpen" :state="dynamicBackgroundState"/>
         <gallery-collapsible :images="images"
                              :maximize-selected-image="isExpandedViewOpen"
                              :open="isGalleryOpen"
                              :selected-image="selectedImage"
-                             @close="isGalleryOpen=false"
+                             @close="closeGallery"
                              @open="openGallery"
                              @image-action="handleImageAction"/>
-        <themes-collapsible :open="isThemesOpen" @close="isThemesOpen=false" @open="openThemes"/>
+        <themes-collapsible :open="isThemesOpen" @close="closeThemes" @open="openThemes"/>
         <record-button @capture="startCapture" @record="captureImage"/>
         <snapshot-image :captured-image-data="images"></snapshot-image>
         <div class="gradient-under"></div>
@@ -46,7 +46,7 @@ export default {
             isEmailViewOpen: false,
             isShareViewOpen: false,
             isDownloadViewOpen: false,
-            isDynamicBackgroundVisible: false,
+            isDynamicBackgroundOpen: false,
             dynamicBackgroundState: 0,
             sendEmailError: false,
         }
@@ -65,18 +65,40 @@ export default {
             return this.isEmailViewOpen || this.isShareViewOpen || this.isDownloadViewOpen;
         }
     },
+    watch: {
+        images() {
+            if (this.isGalleryOpen) {
+                this.dynamicBackgroundState = this.images.length;
+            }
+        }
+    },
     methods: {
         openGallery() {
             this.isGalleryOpen = true;
             this.isThemesOpen = false;
+            this.isDynamicBackgroundOpen = true;
+            this.dynamicBackgroundState = this.images.length;
         },
         openThemes() {
             this.isThemesOpen = true;
             this.isGalleryOpen = false;
+            this.isDynamicBackgroundOpen = true;
+            this.dynamicBackgroundState = 4;
+        },
+        closeGallery() {
+            this.isGalleryOpen = false;
+            if (!this.isThemesOpen) {
+                this.isDynamicBackgroundOpen = false;
+            }
+        },
+        closeThemes() {
+            this.isThemesOpen = false;
+            if (!this.isGalleryOpen) {
+                this.isDynamicBackgroundOpen = false;
+            }
         },
         startCapture() {
-            this.isGalleryOpen = false;
-            this.isThemesOpen = false;
+            this.closeAll();
         },
         captureImage() {
             if (this.images.length < 4) {
@@ -85,9 +107,8 @@ export default {
         },
         imageCaptureFinished(base64Image) {
             if (this.images.length < 4) {
-                this.images.push(new CaptureImageData(1 + this.images.length, base64Image));
-                this.isGalleryOpen = false;
-                this.isThemesOpen = false;
+                this.images.push(new CaptureImageData(this.generateImageId(), base64Image));
+                this.closeAll();
             }
         },
         deleteImage(image) {
@@ -96,9 +117,18 @@ export default {
             if (index >= 0) {
                 this.images.splice(parseInt(index), 1);
                 if (this.images.length === 0) {
-                    this.isGalleryOpen = false;
+                    this.closeAll();
                 }
             }
+        },
+        closeAll(){
+            this.isGalleryOpen = false;
+            this.isThemesOpen = false;
+            this.isDynamicBackgroundOpen = false;
+            this.selectedImage = null;
+            this.isEmailViewOpen = false;
+            this.isShareViewOpen = false;
+            this.isDownloadViewOpen = false;
         },
         handleImageAction(action, image) {
             switch (action) {
@@ -157,6 +187,9 @@ export default {
             } else {
                 this.sendEmailError = true;
             }
+        },
+        generateImageId() {
+            return (Date.now().toString(36) + Math.random().toString(36).substr(2)).substr(4,8);
         }
     }
 }
@@ -172,6 +205,7 @@ export default {
     width: $screen-width+px;
     height: $screen-height+px;
     pointer-events: none;
+    overflow: hidden;
 
     .gradient-under {
         position: absolute;

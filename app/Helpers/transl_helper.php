@@ -1,6 +1,5 @@
 <?php
 
-use App\Structures\TranslationStructure;
 use Config\Services;
 
 if (!function_exists('transl')) {

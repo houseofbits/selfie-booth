@@ -1,7 +1,5 @@
 <template>
-    <div :class="stateClass" :style="cssVars" class="fragment">
-
-    </div>
+    <div :class="stateClass" :style="cssVars" class="fragment"></div>
 </template>
 
 <script>
@@ -18,11 +16,15 @@ export default {
     data() {
         return {
             cssVars: this.formatCssVars(),
+            imgId: 1,
         };
     },
     computed: {
         stateClass() {
-            return 'ts' + this.state;
+            return [
+                'ts' + this.state,
+                'image-' + this.imgId
+            ]
         }
     },
     methods: {
@@ -44,6 +46,9 @@ export default {
         formatRotate(a) {
             return 'rotate(' + a + 'deg) ';
         }
+    },
+    mounted() {
+        this.imgId = (Math.random() > 0.5) ? 1 : 2;
     }
 }
 </script>
@@ -53,39 +58,43 @@ export default {
     position: absolute;
     width: 200px;
     height: 200px;
-    background-color: green;
     transform: var(--ts0);
     transition: all 500ms linear;
     pointer-events: auto;
-    box-shadow: 5px 5px 15px 5px #000000;
     margin-left: -100px;
     margin-top: -100px;
-    opacity: 0.7;
-    border-radius: 50px;
+    background-repeat: round;
+
+    &.image-1 {
+        background-image: url('../../../../images/leaf_1.png');
+    }
+    &.image-2 {
+        background-image: url('../../../../images/leaf_2.png');
+    }
 
     &.ts0 {
         transform: var(--ts0);
-        transition: all 500ms linear;
+        transition: all 200ms linear;
     }
 
     &.ts1 {
         transform: var(--ts1);
-        transition: all 500ms linear;
+        transition: all 200ms linear;
     }
 
     &.ts2 {
         transform: var(--ts2);
-        transition: all 500ms linear;
+        transition: all 200ms linear;
     }
 
     &.ts3 {
         transform: var(--ts3);
-        transition: all 500ms linear;
+        transition: all 200ms linear;
     }
 
     &.ts4 {
         transform: var(--ts4);
-        transition: all 500ms linear;
+        transition: all 200ms linear;
     }
 }
 </style>

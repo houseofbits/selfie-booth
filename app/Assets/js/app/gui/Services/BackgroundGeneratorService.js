@@ -4,19 +4,19 @@ import BackgroundFragmentState from '../Structures/BackgroundFragmentState.js';
 export default class BackgroundGeneratorService {
     constructor() {
         this.fragments = [];
-        this.width = 1000;
-        this.height = 450;
+        this.width = 940;
+        this.height = 410;//450;
     }
 
     generate() {
 
-        const dist = this.generateUniformDistribution(20, 100);
+        const dist = this.generateUniformDistribution(30, 100);
 
         this.fragments = [];
         const centerx = 540;
-        const centery = 1000;
+        const centery = 960;
         const w1 = 300;
-        const w2 = 500;
+        const w2 = 540;
         const w3 = 750;
         const w4 = 1000;
 
@@ -24,12 +24,17 @@ export default class BackgroundGeneratorService {
 
         const h = 600;
         const count = 30;
+
+        const offsetX  = (1080 - this.width) / 2;
+
         for (const v of dist) {
             let obj = [];
 
-            let scale = 1.1 - Math.random() * 0.2;
+            let scale = 1.4 - Math.random() * 0.3;
             let angle = 180 - Math.random() * 360;
             let angleAdv = 0;
+
+            v.x = v.x + offsetX;
 
             obj.push(new BackgroundFragmentState(
                 (-(center.x - v.x) * 0.1) + center.x,

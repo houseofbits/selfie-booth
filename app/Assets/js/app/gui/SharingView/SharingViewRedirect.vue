@@ -43,7 +43,7 @@ export default {
     },
     computed:{
         qrCodeImage(){
-            if(this.image) {
+            if(this.image && this.image.hash) {
                 return '/api/qr/fb/' + this.image.hash;
             }
         }

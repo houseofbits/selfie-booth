@@ -127,7 +127,7 @@ export default {
     padding: 0;
     transition: all 0.2s linear;
     vertical-align: top;
-    box-shadow: 0 3px 9px 0 rgba(0, 0, 0, 0.38);
+    box-shadow: 0 3px 9px 0 rgba(0, 0, 0, 0.78);
     margin: 80px 15px;
 
     &.transform-rnd-0 {

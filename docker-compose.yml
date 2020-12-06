@@ -7,6 +7,9 @@ services:
             - 9000:9000
         volumes:
             - ./:/app
+        networks:
+            - backbone
+
     apache:
         image: bitnami/apache:latest
         ports:
@@ -16,3 +19,9 @@ services:
             - ./:/app
         depends_on:
             - php
+        networks:
+            - backbone
+
+networks:
+    backbone:
+        driver: bridge

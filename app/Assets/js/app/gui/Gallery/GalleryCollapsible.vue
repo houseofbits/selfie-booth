@@ -19,6 +19,10 @@
                 <span>{{ images.length }}/4</span>
             </div>
         </div>
+
+        <static-item image-id="1" class="leaf leaf-pos-1" :class="{visible: !isOpen}"></static-item>
+        <static-item image-id="2" class="leaf leaf-pos-2" :class="{visible: !isOpen}"></static-item>
+
         <text-button :class="{visible: isOpen}" icon="fas fa-times-circle" class="close-button red" @click="closeGallery">AIZVĒRT</text-button>
     </div>
 </template>
@@ -27,12 +31,14 @@
 import Gallery from './Gallery.vue';
 import TextButton from '../TextButton.vue';
 import {GalleryActions, GalleryImageSize} from '../Constants.js';
+import StaticItem from '../DynamicBackground/StaticItem.vue';
 
 export default {
     name: "GalleryCollapsible",
     components: {
         Gallery,
-        TextButton
+        TextButton,
+        StaticItem
     },
     props: {
         open: {
@@ -187,7 +193,7 @@ export default {
 
     &.bounce {
         filter: brightness(3.0);
-        transition: all 200ms linear;
+        transition: filter 200ms linear;
     }
 
     .highlight {
@@ -379,6 +385,23 @@ export default {
     100% {
         @include gallery-state-0;
     }
+}
+
+.leaf{
+    opacity: 0;
+    visibility: hidden;
+
+    &.visible {
+        opacity: 1;
+        visibility: visible;
+        transition: opacity 200ms linear;
+    }
+}
+.leaf-pos-1{
+    transform: translate(990px, 1770px) rotate(15deg);
+}
+.leaf-pos-2{
+    transform: translate(910px, 1820px) rotate(-120deg);
 }
 
 </style>
