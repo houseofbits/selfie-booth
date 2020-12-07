@@ -16,8 +16,11 @@ class ApiController extends ResourceController
 {
     protected $format = 'json';
 
-    protected EmailService $emailService;
-    protected ImageService $imageService;
+    /** @var EmailService  */
+    protected $emailService;
+
+    /** @var ImageService  */
+    protected $imageService;
 
     public function __construct()
     {

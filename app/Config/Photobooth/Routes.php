@@ -6,6 +6,8 @@ $routes->get('/', 'ApplicationController::index');
 
 $routes->get('/admin', 'AdminController::index');
 
+$routes->get('/test', 'AdminController::test');
+
 $routes->get('/conf/email', 'ConfigurationApiController::getEmailConfiguration');
 $routes->post('/conf/email', 'ConfigurationApiController::saveEmailConfiguration');
 $routes->post('/conf/email-test', 'ConfigurationApiController::sendEmailForTest');

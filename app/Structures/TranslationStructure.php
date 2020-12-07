@@ -26,7 +26,8 @@ class TranslationStructure
         self::RUS_NAME => self::RUS,
     ];
 
-    public array $translations = [
+    /** @var array|string[]  */
+    public $translations = [
         self::LAT => '',
         self::ENG => '',
         self::RUS => '',

@@ -9,8 +9,10 @@ use Exception;
 class FileStorageModel
 {
     public $id = null;
-    public bool $GENERATE_ID = false;
-    public int $GENERATED_ID_LENGTH = 8;
+    /** @var bool */
+    public $GENERATE_ID = false;
+    /** @var int  */
+    public $GENERATED_ID_LENGTH = 8;
 
     public function __construct()
     {

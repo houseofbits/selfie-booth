@@ -6,8 +6,11 @@ use App\Models\ImageModel;
 
 class ImageInfoStructure
 {
-    public string $id;
-    public string $dateCreated;
+    /** @var string  */
+    public $id;
+
+    /** @var false|string  */
+    public $dateCreated;
 
     public function __construct(ImageModel $model){
         $this->id = (string)$model->id;

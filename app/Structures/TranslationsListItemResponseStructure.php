@@ -6,10 +6,14 @@ namespace App\Structures;
 
 class TranslationsListItemResponseStructure
 {
+    /** @var string  */
+    public $key;
+
+    /** @var string  */
+    public $defaultText;
+
     public function __construct($key, $value){
         $this->key = $key;
         $this->defaultText = $value;
     }
-    public string $key;
-    public string $defaultText;
 }

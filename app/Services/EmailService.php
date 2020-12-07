@@ -8,14 +8,15 @@ use CodeIgniter\Email\Email;
 use CodeIgniter\HTTP\Request;
 use CodeIgniter\Model;
 
-class EmailService extends Model
+class EmailService
 {
-    protected Email $email;
-    protected EmailConfigModel $emailConfig;
+    /** @var Email|mixed  */
+    protected $email;
+    /** @var EmailConfigModel  */
+    protected $emailConfig;
 
     public function __construct()
     {
-        parent::__construct();
         $this->email = \Config\Services::email();
         $this->emailConfig = $this->getConfiguration();
     }

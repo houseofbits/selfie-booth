@@ -40,6 +40,7 @@ class Autoload extends AutoloadConfig
 	 * @var array
 	 */
 	public $psr4 = [
+        'CodeIgniter' => SYSTEMPATH,
 		APP_NAMESPACE => APPPATH, // For custom app namespace
 		'Config'      => APPPATH . 'Config',
         'Services'      => APPPATH . 'Services',
@@ -63,5 +64,7 @@ class Autoload extends AutoloadConfig
 	 *
 	 * @var array
 	 */
-	public $classmap = [];
+	public $classmap = [
+	//    'Email' => '/vendor/codeigniter4/framework/system/Email/Email.php'
+    ];
 }

@@ -6,18 +6,25 @@ namespace App\Models;
 
 class SharingConfigModel extends FileStorageModel
 {
-    public bool $downloadEnabled = false;
+    /** @var bool  */
+    public $downloadEnabled = false;
 
-    public bool $shareToFbEnabled = false;
+    /** @var bool  */
+    public $shareToFbEnabled = false;
 
-    public string $publicAppDomain = '';
+    /** @var string  */
+    public $publicAppDomain = '';
 
-    public string $publicAppUrl = '';
+    /** @var string  */
+    public $publicAppUrl = '';
 
-    public string $fbAppId = '';
+    /** @var string  */
+    public $fbAppId = '';
 
-    public string $fbAppSecret = '';
+    /** @var string  */
+    public $fbAppSecret = '';
 
-    public int $shareableLinkTTL = 1440;
+    /** @var int  */
+    public $shareableLinkTTL = 1440;
 
 }

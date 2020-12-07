@@ -14,9 +14,14 @@ class SharingController extends Controller
     private const IMAGE_SESSION_KEY = 'imageId';
     private const IMAGE_SESSION_TTL = 600;
 
-    private FacebookService $fbService;
-    private Session $session;
-    private ImageService $imageService;
+    /** @var FacebookService  */
+    private $fbService;
+
+    /** @var Session  */
+    private $session;
+
+    /** @var ImageService  */
+    private $imageService;
 
     public function __construct()
     {

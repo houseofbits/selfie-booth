@@ -11,8 +11,11 @@ use Exception;
 
 class ImageService
 {
-    public string $publicAppUrl = "https://www.kautkaadalapa.lv/atteelushaariite/{TYPE}/{LANGUAGE}/{ID}";
-    public int $sharingAvailabilityMinutes = 1440;
+    /** @var string  */
+    public $publicAppUrl = "https://www.kautkaadalapa.lv/atteelushaariite/{TYPE}/{LANGUAGE}/{ID}";
+
+    /** @var int  */
+    public $sharingAvailabilityMinutes = 1440;
 
     public function __construct()
     {

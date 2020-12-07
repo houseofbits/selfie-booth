@@ -28,10 +28,12 @@ class TranslationsService
         $translations = $this->getTranslations();
         if ($translations) {
             return array_map(
-                fn(TranslationStructure $translation, $key) => new TranslationsListItemResponseStructure(
-                    $key,
-                    $translation->getDefault()
-                ),
+                function (TranslationStructure $translation, $key) {
+                    return new TranslationsListItemResponseStructure(
+                        $key,
+                        $translation->getDefault()
+                    );
+                },
                 $translations->translations,
                 array_keys($translations->translations)
             );

@@ -8,7 +8,8 @@ use Facebook\Facebook;
 
 class FacebookService
 {
-    public Facebook $fb;
+    /** @var Facebook  */
+    public $fb;
 
     public function __construct()
     {

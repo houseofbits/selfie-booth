@@ -11,7 +11,7 @@ class TranslationsModel extends FileStorageModel
     /**
      * @var TranslationStructure[]
      */
-    public array $translations = [];
+    public $translations = [];
 
     public function updateTranslation(
         string $key,

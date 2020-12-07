@@ -8,13 +8,17 @@ use Exception;
 
 class ImageModel extends FileStorageModel
 {
-    public bool $GENERATE_ID = true;
+    /** @var bool  */
+    public $GENERATE_ID = true;
 
-    public int $GENERATED_ID_LENGTH = 6;
+    /** @var int  */
+    public $GENERATED_ID_LENGTH = 6;
 
-    public string $imageUrl;
+    /** @var string  */
+    public $imageUrl;
 
-    public int $createdAt;
+    /** @var int  */
+    public $createdAt;
 
     public function delete()
     {

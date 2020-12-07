@@ -6,16 +6,22 @@ namespace App\Models;
 
 class EmailConfigModel extends FileStorageModel
 {
-    public bool $enabled = false;
+    /** @var bool  */
+    public $enabled = false;
 
-    public string $host = '';
+    /** @var string  */
+    public $host = '';
 
-    public string $port = '';
+    /** @var string  */
+    public $port = '';
 
-    public string $username = '';
+    /** @var string  */
+    public $username = '';
 
-    public string $password = '';
+    /** @var string  */
+    public $password = '';
 
-    public string $senderAddress = '';
+    /** @var string  */
+    public $senderAddress = '';
 
 }

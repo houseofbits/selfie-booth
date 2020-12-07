@@ -5,9 +5,12 @@ declare(strict_types=1);
 namespace App\Structures;
 
 class ImageDataStructure
-{   
-    public string $mimeType;
-    public string $data;
+{
+    /** @var string  */
+    public $mimeType;
+
+    /** @var string  */
+    public $data;
 
     public function __construct(string $mimeType, string $data)
     {

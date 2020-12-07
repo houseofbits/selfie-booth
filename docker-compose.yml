@@ -2,7 +2,7 @@ version: '2'
 
 services:
     php:
-        image: bitnami/php-fpm:latest
+        image: bitnami/php-fpm:7.3.25
         ports:
             - 9000:9000
         volumes:

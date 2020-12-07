@@ -145,8 +145,18 @@ class ConfigurationApiController extends ResourceController
     public function getAllImages()
     {
         $images = ImageModel::findAll();
-        usort($images, fn(ImageModel $a, ImageModel $b) => $a->createdAt > $b->createdAt);
-        $images = array_map(fn(ImageModel $model) => new ImageInfoStructure($model), $images);
+        usort(
+            $images,
+            function (ImageModel $a, ImageModel $b) {
+                return $a->createdAt > $b->createdAt;
+            }
+        );
+        $images = array_map(
+            function (ImageModel $model) {
+                return new ImageInfoStructure($model);
+            },
+            $images
+        );
         return $this->response->setHeader('Content-Type', 'application/json')
             ->setJSON($images);
     }
@@ -155,7 +165,7 @@ class ConfigurationApiController extends ResourceController
     {
         $imageService = new ImageService();
         $id = $this->request->getVar('id');
-        if($id) {
+        if ($id) {
             $imageService->deleteImage($id);
         }
         return $this->getAllImages();
