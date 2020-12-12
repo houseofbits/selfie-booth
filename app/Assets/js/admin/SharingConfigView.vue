@@ -31,10 +31,10 @@
         <div class="card-header p-2 font-weight-bolder">Public application</div>
         <div class="container p-3">
 
-            <div class="form-group">
-                <label for="publicAppDomain">Public Domain (Same as Facebook config):</label>
-                <input id="publicAppDomain" v-model="formData.publicAppDomain" class="form-control" name="publicAppDomain">
-            </div>
+<!--            <div class="form-group">-->
+<!--                <label for="publicAppDomain">Public Domain (Same as Facebook config):</label>-->
+<!--                <input id="publicAppDomain" v-model="formData.publicAppDomain" class="form-control" name="publicAppDomain">-->
+<!--            </div>-->
 
             <div class="form-group">
                 <label for="publicAppUrl">Public Url of sharing service:</label>
@@ -46,10 +46,10 @@
                     <label for="fbAppId">Facebook App ID:</label>
                     <input id="fbAppId" v-model="formData.fbAppId" class="form-control" name="fbAppId">
                 </div>
-                <div class="form-group col-12 col-md-6">
-                    <label for="fbAppSecret">Facebook App Secret:</label>
-                    <input id="fbAppSecret" v-model="formData.fbAppSecret" class="form-control" name="fbAppSecret">
-                </div>
+<!--                <div class="form-group col-12 col-md-6">-->
+<!--                    <label for="fbAppSecret">Facebook App Secret:</label>-->
+<!--                    <input id="fbAppSecret" v-model="formData.fbAppSecret" class="form-control" name="fbAppSecret">-->
+<!--                </div>-->
             </div>
 
             <div class="row">
@@ -128,9 +128,9 @@ export default {
                 this.formData.downloadEnabled = response.data.downloadEnabled;
                 this.formData.shareToFbEnabled = response.data.shareToFbEnabled;
                 this.formData.publicAppUrl = response.data.publicAppUrl;
-                this.formData.publicAppDomain = response.data.publicAppDomain;
+                //this.formData.publicAppDomain = response.data.publicAppDomain;
                 this.formData.fbAppId = response.data.fbAppId;
-                this.formData.fbAppSecret = response.data.fbAppSecret;
+                //this.formData.fbAppSecret = response.data.fbAppSecret;
                 this.formData.linkTTL = response.data.shareableLinkTTL;
             }
         });

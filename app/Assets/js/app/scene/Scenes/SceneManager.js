@@ -13,6 +13,9 @@ export default class SceneManager {
         this.videoTexture = null;
         BABYLON.VideoTexture.CreateFromWebCam(this.scene, (videoTexture) => {
             this.videoTexture = videoTexture;
+            for(const scene of this.scenes){
+                scene.setVideoTexture(this.videoTexture);
+            }
         }, {maxWidth: 256, maxHeight: 256});
 
         this.engine.runRenderLoop(() => this.render());
@@ -30,7 +33,7 @@ export default class SceneManager {
 
         this.deltaTime = this.engine.getDeltaTime() / 1000.0;
 
-        this.scene.activeCamera.alpha += 0.002;
+        //this.scene.activeCamera.alpha += 0.002;
 
         if (this.activeScene) {
             this.activeScene.update(this.deltaTime);

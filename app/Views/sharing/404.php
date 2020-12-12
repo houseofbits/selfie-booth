@@ -14,7 +14,8 @@
         <div class="container h-100">
             <div class="row align-items-center h-100">
                 <div class="col-lg-6 col-sm-10 mx-auto text-center">
-                    <h5 class="text-light text-shadow-1">Nothing to see here!</h5>
+                    <h3 class="text-light text-shadow-1">Nothing to see here!</h3>
+                    <h6 class="text-light text-shadow-1"><?=$message?></h6>
                 </div>
             </div>
         </div>

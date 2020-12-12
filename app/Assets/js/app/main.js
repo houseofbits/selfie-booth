@@ -1,8 +1,7 @@
 import fontawesome from '@fortawesome/fontawesome-free/css/all.css';
 import Vue from 'vue';
-//import App from './gui/GuiOverlay.vue';
 import MainView from './gui/MainView.vue';
-import LanguageService from './gui/Services/LanguageService.js';
+import LanguageService from '@common/LanguageService.js';
 
 if(document.getElementById('gui')) {
     const languageServiceObservable = Vue.observable(new LanguageService());

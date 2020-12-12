@@ -10,6 +10,9 @@ if (!function_exists('transl')) {
         if (!$lang && $result) {
             $lang = $match[1][0];
         }
+        if(!$lang) {
+            return $key;
+        }
         return Services::translations()->getTranslation($key, $lang);
     }
 }

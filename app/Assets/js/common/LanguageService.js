@@ -9,6 +9,11 @@ export default class LanguageService {
             {index: 1, name: 'en'},
             {index: 2, name: 'ru'},
         ];
+        this.languageIndexMapping = {
+            lv: 0,
+            en: 1,
+            ru: 2
+        };
         this.currentLanguage = 0;
         this.loadTranslations();
     }
@@ -20,8 +25,14 @@ export default class LanguageService {
         return key;
     }
 
-    setLanguage(languageIndex) {
+    setLanguageByIndex(languageIndex) {
         this.currentLanguage = languageIndex;
+    }
+
+    setLanguage(language) {
+        if (typeof this.languageIndexMapping[language] !== 'undefined') {
+            this.currentLanguage = this.languageIndexMapping[language];
+        }
     }
 
     getLanguages() {

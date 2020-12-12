@@ -1,7 +1,7 @@
 <template>
     <div :class="{visible:isActive}" class="window">
 
-        <div :class="{hidden: emailInputValid}" class="info-row"><i class="fas fa-info-circle"></i> Ievadi e-pasta adresi uz kuru nosūtīt izvēlēto attēlu</div>
+        <div :class="{hidden: emailInputValid}" class="info-row"><span><i class="fas fa-info-circle"></i> Ievadi e-pasta adresi uz kuru nosūtīt izvēlēto attēlu</span></div>
         <div :class="{visible: emailInputValid && isError}" class="error-row"><i class="fas fa-exclamation-triangle"></i> E-pastu nosūtīt neizdevās</div>
 
         <div v-if="emailAddress.length === 0" class="placeholder-row">email@address.lv</div>
@@ -166,19 +166,24 @@ export default {
 
     .info-row {
         position: absolute;
-        top: 470px;
+        top: 480px;
         width: 100%;
         height: 100px;
-        line-height: 100px;
+        line-height: 40px;
         text-align: center;
         font-size: 35px;
-        background: linear-gradient(to bottom, #fefcea 0%, #f1da36 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
         -webkit-text-stroke: 1px rgba(0, 0, 0, 0.2);
         filter: drop-shadow(0px 5px 3px rgba(0, 0, 0, 0.61));
         opacity: 1;
         transition: opacity 500ms linear;
+
+        span {
+            background: linear-gradient(to bottom, #fefcea 0%, #f1da36 100%);
+            box-decoration-break: clone;
+            -webkit-box-decoration-break: clone;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
 
         &.hidden {
             opacity: 0;

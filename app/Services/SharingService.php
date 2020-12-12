@@ -22,10 +22,10 @@ class SharingService
         $sharingModel->downloadEnabled = $request->getVar('downloadEnabled', FILTER_VALIDATE_BOOLEAN) ?? false;
         $sharingModel->shareToFbEnabled = $request->getVar('shareToFbEnabled', FILTER_VALIDATE_BOOLEAN) ?? false;
 
-        $sharingModel->publicAppDomain = $request->getVar('publicAppDomain') ?? '';
+        //$sharingModel->publicAppDomain = $request->getVar('publicAppDomain') ?? '';
         $sharingModel->publicAppUrl = $request->getVar('publicAppUrl') ?? '';
         $sharingModel->fbAppId = $request->getVar('fbAppId') ?? '';
-        $sharingModel->fbAppSecret = $request->getVar('fbAppSecret') ?? '';
+        //$sharingModel->fbAppSecret = $request->getVar('fbAppSecret') ?? '';
         $sharingModel->shareableLinkTTL = $request->getVar('linkTTL') ?? '';
 
         $sharingModel->save();

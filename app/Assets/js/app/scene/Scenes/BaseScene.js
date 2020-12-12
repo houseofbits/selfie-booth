@@ -21,4 +21,8 @@ export default class BaseScene {
     setVisible(visible) {
 
     }
+
+    setVideoTexture(texture) {
+
+    }
 }

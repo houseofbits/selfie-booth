@@ -21,7 +21,7 @@ class App extends BaseConfig
 	| environments.
 	|
 	*/
-	public $baseURL = 'http://http://houseofbits.webplace.lv/';
+	public $baseURL = 'http://fb.local';
 
 	/*
 	|--------------------------------------------------------------------------
