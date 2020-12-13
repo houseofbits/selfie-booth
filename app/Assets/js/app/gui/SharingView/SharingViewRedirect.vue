@@ -1,31 +1,42 @@
 <template>
     <div :class="{visible:isActive}" class="window">
 
-        <div class="info-row"><span><i class="fas fa-info-circle"></i> Lai dalītos ar savu attēlu Facebook, noskenē savā
-            telefonā QR kodu.</span>
+        <static-item class="leaf leaf-pos-3" image-id="2"></static-item>
+        <static-item class="leaf leaf-pos-1" image-id="1"></static-item>
+        <static-item class="leaf leaf-pos-2" image-id="1"></static-item>
+
+        <div class="info-row">
+            <div class="main-text"><span><i class="fas fa-mobile-alt icon-size"></i> {{ infoText }}</span></div>
+            <div class="secondary-text"><span><i class="fas fa-info-circle"></i> {{ detailInfoText }}</span></div>
         </div>
-        <div :class="{visible: isError}" class="error-row"><i class="fas fa-exclamation-triangle"></i> Neizdevās
-            izveidot QR codu
+        <div :class="{visible: isError}" class="error-row"><i class="fas fa-exclamation-triangle"></i> {{ lang('capture.qr-error') }}
         </div>
 
         <div class="qr-image">
             <img :src="qrCodeImage" @error="onError">
         </div>
 
-        <text-button class="back-button orange" icon="fas fa-arrow-circle-left" @click="closeView">ATPAKAĻ</text-button>
+        <text-button class="back-button orange" icon="fas fa-arrow-circle-left"
+                     @click="closeView">{{ lang('capture.back-button') }}</text-button>
+
     </div>
 </template>
 
 <script>
 
 import TextButton from '../TextButton.vue';
+import StaticItem from '../DynamicBackground/StaticItem.vue';
 
 export default {
     name: "SharingViewRedirect",
+    inject: ['lang', 'langService'],
     props: {
         isActive: {
             type: Boolean,
             required: true,
+        },
+        isDownloadView: {
+            type: Boolean,
         },
         image: {
             type: Object,
@@ -35,7 +46,8 @@ export default {
         },
     },
     components: {
-        TextButton
+        TextButton,
+        StaticItem
     },
     data: function () {
         return {
@@ -50,8 +62,20 @@ export default {
     computed: {
         qrCodeImage() {
             if (this.image && this.image.hash) {
-                return '/api/qr/fb/' + this.image.hash;
+                if (this.isDownloadView) {
+                    return '/api/qr/download/' + this.langService.getLanguage() + '/' + this.image.hash;
+                } else {
+                    return '/api/qr/fb/' + this.langService.getLanguage() + '/' + this.image.hash;
+                }
             }
+        },
+        infoText() {
+            return this.isDownloadView ?
+                this.lang('capture.download-info') : this.lang('capture.share-info');
+        },
+        detailInfoText() {
+            return this.isDownloadView ?
+                this.lang('capture.download-detail') : this.lang('capture.share-detail');
         }
     },
     methods: {
@@ -88,7 +112,6 @@ export default {
         top: 390px;
         width: 100%;
         height: 100px;
-        line-height: 40px;
         text-align: center;
         font-size: 35px;
         -webkit-text-stroke: 1px rgba(0, 0, 0, 0.2);
@@ -96,13 +119,43 @@ export default {
         opacity: 1;
         transition: opacity 500ms linear;
 
-        span {
-            background: linear-gradient(to bottom, #fefcea 0%, #f1da36 100%);
-            box-decoration-break: clone;
-            -webkit-box-decoration-break: clone;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .main-text {
+            display: inline-block;
+            line-height: 38px;
+
+            span {
+                display: inline;
+                font-weight: normal;
+                background: linear-gradient(to bottom, #fefcea 0%, #f1da36 100%);
+                box-decoration-break: clone;
+                -webkit-box-decoration-break: clone;
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                font-size: 35px;
+
+                .icon-size {
+                    font-size: 40px;
+                }
+            }
         }
+
+        .secondary-text {
+            display: inline-block;
+            line-height: 28px;
+            margin-top: 15px;
+
+            span {
+                font-size: 25px;
+                font-weight: normal;
+                display: inline;
+                background: linear-gradient(to bottom, #eeeeee 0%, #cccccc 100%);
+                box-decoration-break: clone;
+                -webkit-box-decoration-break: clone;
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+        }
+
 
         &.hidden {
             opacity: 0;
@@ -154,6 +207,18 @@ export default {
             height: 100%;
         }
     }
+}
+
+.leaf-pos-1 {
+    transform: translate(185px, 350px) rotate(-125deg) scale(1.2);
+}
+
+.leaf-pos-2 {
+    transform: translate(670px, 340px) rotate(125deg);
+}
+
+.leaf-pos-3 {
+    transform: translate(290px, 420px) rotate(155deg) scale(1.4);
 }
 
 </style>

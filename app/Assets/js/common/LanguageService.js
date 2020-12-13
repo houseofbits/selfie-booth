@@ -14,12 +14,17 @@ export default class LanguageService {
             en: 1,
             ru: 2
         };
+        this.languageNameMapping = {
+            0: 'lv',
+            1: 'en',
+            2: 'ru'
+        };
         this.currentLanguage = 0;
         this.loadTranslations();
     }
 
     translate(key) {
-        if (typeof this.translations[key] !== 'undefined') {
+        if (typeof this.translations[key] !== 'undefined' && this.translations[key].translations[this.currentLanguage].length > 0) {
             return this.translations[key].translations[this.currentLanguage];
         }
         return key;
@@ -33,6 +38,13 @@ export default class LanguageService {
         if (typeof this.languageIndexMapping[language] !== 'undefined') {
             this.currentLanguage = this.languageIndexMapping[language];
         }
+    }
+
+    getLanguage() {
+        if(this.languageNameMapping.hasOwnProperty(this.currentLanguage)){
+            return this.languageNameMapping[this.currentLanguage];
+        }
+        return 'lv';
     }
 
     getLanguages() {

@@ -1,8 +1,12 @@
 <template>
     <div :class="{visible:isActive}" class="window">
 
-        <div :class="{hidden: emailInputValid}" class="info-row"><span><i class="fas fa-info-circle"></i> Ievadi e-pasta adresi uz kuru nosūtīt izvēlēto attēlu</span></div>
-        <div :class="{visible: emailInputValid && isError}" class="error-row"><i class="fas fa-exclamation-triangle"></i> E-pastu nosūtīt neizdevās</div>
+        <static-item class="leaf leaf-pos-3" image-id="2"></static-item>
+        <static-item class="leaf leaf-pos-1" image-id="1"></static-item>
+        <static-item class="leaf leaf-pos-2" image-id="1"></static-item>
+
+        <div :class="{hidden: emailInputValid}" class="info-row"><span><i class="fas fa-info-circle"></i> {{ lang('capture.enter-email-address') }}</span></div>
+        <div :class="{visible: emailInputValid && isError}" class="error-row"><i class="fas fa-exclamation-triangle"></i> {{ lang('capture.send-error') }}</div>
 
         <div v-if="emailAddress.length === 0" class="placeholder-row">email@address.lv</div>
         <div :class="{valid:emailInputValid}" class="input-row">{{ emailAddress }}</div>
@@ -10,9 +14,9 @@
 
         <keyboard-email-input :email-address.sync="emailAddress"></keyboard-email-input>
 
-        <text-button class="back-button orange" icon="fas fa-arrow-circle-left" @click="closeView">ATPAKAĻ</text-button>
+        <text-button class="back-button orange" icon="fas fa-arrow-circle-left" @click="closeView">{{ lang('capture.back-button') }}</text-button>
         <text-button :class="{'button-disabled': !emailInputValid}" class="send-button green" icon="fas fa-envelope"
-                     @click="sendEmail">NOSŪTĪT</text-button>
+                     @click="sendEmail">{{ lang('capture.send-mail-button') }}</text-button>
 
     </div>
 </template>
@@ -22,9 +26,11 @@
 import KeyboardEmailInput from "../TheKeyboard/TheKeyboardEmailInput.vue";
 import EmailService from "../Services/EmailService.js";
 import TextButton from '../TextButton.vue';
+import StaticItem from '../DynamicBackground/StaticItem.vue';
 
 export default {
     name: "SharingViewEmail",
+    inject: ['lang'],
     props: {
         isActive: {
             type: Boolean,
@@ -37,7 +43,8 @@ export default {
     },
     components: {
         KeyboardEmailInput,
-        TextButton
+        TextButton,
+        StaticItem
     },
     data: function () {
         return {
@@ -212,6 +219,18 @@ export default {
             transition: opacity 200ms linear;
         }
     }
+}
+
+.leaf-pos-1 {
+    transform: translate(100px, 465px) rotate(-125deg) scale(1.2);
+}
+
+.leaf-pos-2 {
+    transform: translate(790px,480px) rotate(125deg);
+}
+
+.leaf-pos-3 {
+    transform: translate(200px, 480px) rotate(-150deg) scale(1.4);
 }
 
 </style>

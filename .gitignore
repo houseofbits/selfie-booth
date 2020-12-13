@@ -4,7 +4,6 @@
 
 node_modules
 releases
-writable
 
 # OS X
 .DS_Store
@@ -61,10 +60,15 @@ writable/logs/*
 writable/session/*
 !writable/session/index.html
 
-writable/uploads/*
+writable/uploads/images/*
 !writable/uploads/index.html
 
 writable/debugbar/*
+
+writable/models/*
+!writable/models/app_models_translations_model.ser
+!writable/models/app_models_sharing_config_model.ser
+!writable/models/app_models_email_config_model.ser
 
 php_errors.log
 

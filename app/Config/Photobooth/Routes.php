@@ -25,5 +25,5 @@ $routes->cli('cli/translate/(:any)', 'ConfigurationApiController::cliCreateTrans
 $routes->post('/api/upload', 'ApiController::uploadImage');
 $routes->post('/api/mail', 'ApiController::sendEmail');
 $routes->get('/api/image/(:alphanum)', 'ApiController::serveImage/$1');
-$routes->get('/api/qr/(:segment)/(:alphanum)', 'ApiController::getQRCode/$2/$1');
+$routes->get('/api/qr/(:segment)/(:alpha)/(:alphanum)', 'ApiController::getQRCode/$3/$1/$2');
 $routes->post('/api/validate', 'ApiController::validateEmail');

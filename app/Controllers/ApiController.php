@@ -57,9 +57,9 @@ class ApiController extends ResourceController
         return $this->failNotFound("Failed to create image");
     }
 
-    public function getQRCode(string $id, string $type)
+    public function getQRCode(string $id, string $type, string $lang)
     {
-        $imageData = $this->imageService->getQrCodeForPublicApp($id, $type);
+        $imageData = $this->imageService->getQrCodeForPublicApp($id, $type, $lang);
         if ($imageData instanceof ImageDataStructure) {
             return $this->response->setHeader('Content-Type', $imageData->mimeType)
                 ->setBody($imageData->data);

@@ -1,6 +1,6 @@
 <template>
     <div :class="{visible: images.length}" class="gallery-collapsible">
-        <div class="icon-backdrop" :class="{visible: !isOpen}">
+        <div :class="{visible: !isOpen}" class="icon-backdrop">
             <div class="shadow"></div>
             <div class="border"></div>
         </div>
@@ -20,10 +20,11 @@
             </div>
         </div>
 
-        <static-item image-id="1" class="leaf leaf-pos-1" :class="{visible: !isOpen}"></static-item>
-        <static-item image-id="2" class="leaf leaf-pos-2" :class="{visible: !isOpen}"></static-item>
+        <static-item :class="{visible: !isOpen}" class="leaf leaf-pos-1" image-id="1"></static-item>
+        <static-item :class="{visible: !isOpen}" class="leaf leaf-pos-2" image-id="2"></static-item>
 
-        <text-button :class="{visible: isOpen}" icon="fas fa-times-circle" class="close-button red" @click="closeGallery">AIZVĒRT</text-button>
+        <text-button :class="{visible: isOpen}" class="close-button red" icon="fas fa-times-circle"
+                     @click="closeGallery">{{ lang('capture.close-button') }}</text-button>
     </div>
 </template>
 
@@ -35,6 +36,7 @@ import StaticItem from '../DynamicBackground/StaticItem.vue';
 
 export default {
     name: "GalleryCollapsible",
+    inject: ['lang', 'langService'],
     components: {
         Gallery,
         TextButton,
@@ -67,7 +69,6 @@ export default {
             },
         };
     },
-    inject: ['lang', 'langService'],
     watch: {
         open(val) {
             if (val) {
@@ -76,8 +77,8 @@ export default {
                 this.closeGallery();
             }
         },
-        maximizeSelectedImage(val){
-            if(!val && this.imageData.imagesSize === GalleryImageSize.Expanded){
+        maximizeSelectedImage(val) {
+            if (!val && this.imageData.imagesSize === GalleryImageSize.Expanded) {
                 this.imageData.imagesSize = GalleryImageSize.Normal;
                 this.imageData.isImagesCollapsed = false;
             }
@@ -387,7 +388,7 @@ export default {
     }
 }
 
-.leaf{
+.leaf {
     opacity: 0;
     visibility: hidden;
 
@@ -397,10 +398,12 @@ export default {
         transition: opacity 200ms linear;
     }
 }
-.leaf-pos-1{
+
+.leaf-pos-1 {
     transform: translate(990px, 1770px) rotate(15deg);
 }
-.leaf-pos-2{
+
+.leaf-pos-2 {
     transform: translate(910px, 1820px) rotate(-120deg);
 }
 

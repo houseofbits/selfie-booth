@@ -1,0 +1,1 @@
+O:27:"App\Models\EmailConfigModel":9:{s:7:"enabled";b:1;s:4:"host";s:16:"smtp.mailtrap.io";s:4:"port";s:4:"2525";s:8:"username";s:14:"bd78499fa189c7";s:8:"password";s:14:"9bcbc49037fbe4";s:13:"senderAddress";s:12:"asdf@ddd.ddd";s:2:"id";N;s:11:"GENERATE_ID";b:0;s:19:"GENERATED_ID_LENGTH";i:8;}

@@ -11,10 +11,10 @@ use Exception;
 
 class ImageService
 {
-    /** @var string  */
+    /** @var string */
     public $publicAppUrl = "https://www.kautkaadalapa.lv/atteelushaariite/{TYPE}/{LANGUAGE}/{ID}";
 
-    /** @var int  */
+    /** @var int */
     public $sharingAvailabilityMinutes = 1440;
 
     public function __construct()
@@ -66,7 +66,15 @@ class ImageService
     {
         $imageModel = ImageModel::findOne($imageId);
         if ($imageModel instanceof ImageModel) {
-            $qrCode = new QrCode(str_replace(['{TYPE}', '{ID}', '{LANGUAGE}'], [$type, $imageModel->id, $language], $this->publicAppUrl));
+            $link = trim($this->publicAppUrl, '/');
+
+            if ($type === 'fb') {
+                $link .= '/share/' . $language . '/' . $imageModel->id;
+            } else {
+                $link .= '/download/' . $language . '/' . $imageModel->id;
+            }
+
+            $qrCode = new QrCode($link);
 
             return new ImageDataStructure($qrCode->getContentType(), $qrCode->writeString());
         }

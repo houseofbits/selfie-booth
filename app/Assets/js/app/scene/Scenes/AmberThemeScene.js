@@ -10,8 +10,8 @@ const EffectTypes = {
 };
 
 export default class AmberThemeScene extends BaseScene {
-    constructor(mainScene) {
-        super(mainScene);
+    constructor(mainScene, name) {
+        super(mainScene, name);
         this.theme.name = "Amber theme";
         // this.theme.setImage("assets/images/themes/amber/icon.png");
         // this.theme.addEffect(EffectTypes.Bg1, "Background1", "icon1.png");
@@ -47,8 +47,11 @@ export default class AmberThemeScene extends BaseScene {
         // box.position.y = 1.5;
 
         let ground = BABYLON.MeshBuilder.CreateGround("ground", {width: 6, height: 6}, this.getScene());
-        ground.material = this.background1Material.getMaterial();
 
+        ground.material = this.background1Material.getMaterial();
         sphere.material = this.amberMaterial;
+
+        this.setAsChild(sphere);
+        this.setAsChild(ground);
     }
 }

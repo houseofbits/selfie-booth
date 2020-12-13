@@ -1,5 +1,6 @@
 import * as BABYLON from 'babylonjs';
 import AmberThemeScene from "/js/app/scene/Scenes/AmberThemeScene";
+import DemoScene from "/js/app/scene/Scenes/DemoScene";
 
 export default class SceneManager {
     constructor(canvas) {
@@ -13,7 +14,7 @@ export default class SceneManager {
         this.videoTexture = null;
         BABYLON.VideoTexture.CreateFromWebCam(this.scene, (videoTexture) => {
             this.videoTexture = videoTexture;
-            for(const scene of this.scenes){
+            for (const scene of this.scenes) {
                 scene.setVideoTexture(this.videoTexture);
             }
         }, {maxWidth: 256, maxHeight: 256});
@@ -24,9 +25,12 @@ export default class SceneManager {
         this.scenes = [];
         this.activeScene = null;
 
-        this.addScene(new AmberThemeScene(this));
+        this.addScene(new DemoScene(this, 'DemoScene'));
+        this.addScene(new AmberThemeScene(this, 'AmberScene'));
 
-        this.activeScene = this.scenes[0];
+
+
+        this.onThemeSelected('DemoScene');
     }
 
     render() {
@@ -46,8 +50,7 @@ export default class SceneManager {
         this.scene.clearColor = new BABYLON.Color3(0.3, 0.3, 0.4);
 
         let camera = new BABYLON.ArcRotateCamera("Camera", 0, 45, 10, new BABYLON.Vector3(0, 0, 0), this.scene);
-        camera.setTarget(new BABYLON.Vector3(0, 1, 0));
-        camera.attachControl(this.canvas, true);
+        //camera.attachControl(this.canvas, true);
 
         let light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0), this.scene);
         light.intensity = 0.7;
@@ -65,15 +68,14 @@ export default class SceneManager {
         });
     }
 
-    onModeSelected(state) {
-        //Callback from gui state change
+    onThemeSelected(themeName) {
+        const result = this.scenes.find((e) => e.name === themeName);
+        if (result) {
+            this.setSceneActive(result);
+        }
     }
 
-    onThemeSelected(themeObject) {
-        //Callback from gui state change
-    }
-
-    onEffectSelected(effectObject) {
+    onEffectSelected(effectName) {
         //Callback from gui state change
     }
 
@@ -95,7 +97,16 @@ export default class SceneManager {
         return null;
     }
 
+    setSceneActive(s) {
+        for (const scene of this.scenes) {
+            scene.setEnabled(false);
+        }
+        this.activeScene = s;
+        this.activeScene.setEnabled(true);
+    }
+
     addScene(scene) {
+        scene.setEnabled(false);
         this.scenes.push(scene);
     }
 }

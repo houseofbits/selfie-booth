@@ -4,24 +4,24 @@
             <expandable-button
                 :is-expanded="buttonState.redExpanded"
                 class="red"
-                icon-class="fas fa-trash-alt">DZĒST
+                icon-class="fas fa-trash-alt">{{ lang('capture.delete-button') }}
             </expandable-button>
         </div>
         <div v-if="!isCollapsed" class="animated-button blue" @click="buttonShare">
             <expandable-button
                 :is-expanded="buttonState.blueExpanded"
                 class="blue"
-                icon-class="fab fa-facebook-square">DALĪTIES
+                icon-class="fab fa-facebook-square">{{ lang('capture.share-button') }}
             </expandable-button>
         </div>
         <div v-if="!isCollapsed" class="animated-button green" @click="buttonEmail">
             <expandable-button :is-expanded="buttonState.greenExpanded" class="green"
-                               icon-class="fas fa-envelope-open-text">SŪTĪT
+                               icon-class="fas fa-envelope-open-text">{{ lang('capture.send-button') }}
             </expandable-button>
         </div>
         <div v-if="!isCollapsed" class="animated-button orange" @click="buttonDownload">
             <expandable-button :is-expanded="buttonState.orangeExpanded" class="orange"
-                               icon-class="fas fa-cloud-download-alt">LEJUPLĀDĒT
+                               icon-class="fas fa-cloud-download-alt">{{ lang('capture.download-button') }}
             </expandable-button>
         </div>
     </div>
@@ -33,6 +33,7 @@ import ExpandableButton from '../ExpandableButton.vue';
 
 export default {
     name: "GalleryImageActions",
+    inject: ['lang'],
     props: {
         isExpanded: {
             type: Boolean,

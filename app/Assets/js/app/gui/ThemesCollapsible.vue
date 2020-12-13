@@ -6,8 +6,8 @@
         </div>
         <div :class="themesFrameClass" class="themes-frame">
             <div class="close-button" @click.self="closeThemes"></div>
-            <div class="theme-icon r1c1">Work in progress</div>
-            <div class="theme-icon r1c2">Work in progress</div>
+            <div class="theme-icon r1c1" @click="select('DemoScene')">Demo scene</div>
+            <div class="theme-icon r1c2" @click="select('AmberScene')">Amber scene</div>
             <div class="theme-icon r1c3">Work in progress</div>
             <div class="theme-icon r1c4">Work in progress</div>
             <div class="theme-icon r2c1">Work in progress</div>
@@ -25,7 +25,7 @@
 
 
         <text-button :class="{visible: isOpen}" class="close-button red" icon="fas fa-times-circle"
-                     @click="closeThemes">AIZVĒRT</text-button>
+                     @click="closeThemes">{{ lang('capture.close-button') }}</text-button>
     </div>
 </template>
 
@@ -33,9 +33,11 @@
 
 import TextButton from './TextButton.vue';
 import StaticItem from './DynamicBackground/StaticItem.vue';
+import MainSceneInstance from '/js/app/scene/MainInstance';
 
 export default {
     name: "ThemesCollapsible",
+    inject: ['lang'],
     components: {
         TextButton,
         StaticItem
@@ -70,6 +72,10 @@ export default {
         closeThemes() {
             this.$emit('close');
         },
+        select(themeName){
+            MainSceneInstance.onThemeSelected(themeName);
+            this.$emit('close');
+        }
     }
 }
 </script>

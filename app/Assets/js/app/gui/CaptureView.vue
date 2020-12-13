@@ -14,6 +14,7 @@
         <div class="gradient-under"></div>
 
         <sharing-view-redirect :image="selectedImage" :is-active="isShareViewOpen || isDownloadViewOpen"
+                               :is-download-view="isDownloadViewOpen"
                                @close="closeRedirectView"/>
         <sharing-view-email :is-active="isEmailViewOpen" :is-error.sync="sendEmailError"
                             @close="closeEmailView" @send="sendEmail"/>
@@ -36,7 +37,7 @@ import ImageDataSyncService from "./Services/ImageDataSyncService";
 import EmailService from "./Services/EmailService.js";
 
 export default {
-    name: "MainView",
+    name: "CaptureView",
     data() {
         return {
             images: [],
@@ -60,6 +61,11 @@ export default {
         SharingViewEmail,
         DynamicBackground
     },
+    props: {
+        open: {
+            type: Boolean
+        }
+    },
     computed: {
         isExpandedViewOpen() {
             return this.isEmailViewOpen || this.isShareViewOpen || this.isDownloadViewOpen;
@@ -70,9 +76,24 @@ export default {
             if (this.isGalleryOpen) {
                 this.dynamicBackgroundState = this.images.length;
             }
+        },
+        open() {
+            this.resetView();
         }
     },
     methods: {
+        resetView() {
+            this.selectedImage = null;
+            this.isGalleryOpen = false;
+            this.isThemesOpen = false;
+            this.isEmailViewOpen = false;
+            this.isShareViewOpen = false;
+            this.isDownloadViewOpen = false;
+            this.isDynamicBackgroundOpen = false;
+            this.dynamicBackgroundState = 0;
+            this.sendEmailError = false;
+            this.images = [];
+        },
         openGallery() {
             this.isGalleryOpen = true;
             this.isThemesOpen = false;
@@ -121,7 +142,7 @@ export default {
                 }
             }
         },
-        closeAll(){
+        closeAll() {
             this.isGalleryOpen = false;
             this.isThemesOpen = false;
             this.isDynamicBackgroundOpen = false;
@@ -189,7 +210,7 @@ export default {
             }
         },
         generateImageId() {
-            return (Date.now().toString(36) + Math.random().toString(36).substr(2)).substr(4,8);
+            return (Date.now().toString(36) + Math.random().toString(36).substr(2)).substr(4, 8);
         }
     }
 }
