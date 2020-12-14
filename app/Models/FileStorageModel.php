@@ -90,6 +90,29 @@ class FileStorageModel
         return $model;
     }
 
+    public static function findAllIndexes(): array
+    {
+        $objects = [];
+
+        $paths = new \Config\Paths();
+
+        if ($handle = opendir($paths->writeableModelsDirectory)) {
+            while (false !== ($entry = readdir($handle))) {
+                if (preg_match('/' . self::fullClassName() . '/i', $entry)) {
+                    $filePath = $paths->writeableModelsDirectory . '/' . $entry;
+                    if (is_file($filePath)) {
+                        $entry = str_replace(['.ser', self::fullClassName().'_'], ['', ''], $entry);
+                        $objects[] = $entry;
+                    }
+                }
+            }
+
+            closedir($handle);
+        }
+
+        return $objects;
+    }
+
     public static function findAll(): array
     {
         $objects = [];

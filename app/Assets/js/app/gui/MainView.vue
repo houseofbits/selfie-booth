@@ -1,13 +1,13 @@
 <template>
     <div>
 
-        <start-button :is-visible="isStartButtonVisible" @start="start"/>
+<!--        <start-button :is-visible="isStartButtonVisible" @start="start"/>-->
 
-        <confirm-button :is-visible="isConfirmationButtonVisible" @confirm="confirm"/>
+<!--        <confirm-button :is-visible="isConfirmationButtonVisible" @confirm="confirm"/>-->
 
-        <languages :is-visible="!isCaptureViewVisible"/>
+<!--        <languages :is-visible="!isCaptureViewVisible"/>-->
 
-        <capture-view :class="{visible: isCaptureViewVisible}" :open="isCaptureViewVisible" class="capture-view"/>
+<!--        <capture-view :class="{visible: isCaptureViewVisible}" :open="isCaptureViewVisible" class="capture-view"/>-->
     </div>
 </template>
 

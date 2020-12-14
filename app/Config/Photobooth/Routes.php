@@ -6,7 +6,7 @@ $routes->get('/', 'ApplicationController::index');
 
 $routes->get('/admin', 'AdminController::index');
 
-$routes->get('/test', 'AdminController::test');
+//$routes->get('/test', 'AdminController::test');
 
 $routes->get('/conf/email', 'ConfigurationApiController::getEmailConfiguration');
 $routes->post('/conf/email', 'ConfigurationApiController::saveEmailConfiguration');
@@ -27,3 +27,5 @@ $routes->post('/api/mail', 'ApiController::sendEmail');
 $routes->get('/api/image/(:alphanum)', 'ApiController::serveImage/$1');
 $routes->get('/api/qr/(:segment)/(:alpha)/(:alphanum)', 'ApiController::getQRCode/$3/$1/$2');
 $routes->post('/api/validate', 'ApiController::validateEmail');
+
+$routes->get('/api/sync-images', 'ApiController::syncListOfImages');

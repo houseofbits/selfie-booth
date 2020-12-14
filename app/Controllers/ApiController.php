@@ -87,4 +87,11 @@ class ApiController extends ResourceController
         $email = $this->request->getVar('email');
         return $this->respond($this->emailService->validateEmailAddress($email));
     }
+
+    public function syncListOfImages()
+    {
+        $data = $this->imageService->getListOfImages();
+
+        return $this->respond($data);
+    }
 }

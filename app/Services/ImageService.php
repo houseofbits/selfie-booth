@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\SharingConfigModel;
 use App\Structures\ImageDataStructure;
 use App\Models\ImageModel;
+use App\Structures\ImageInfoStructure;
 use CodeIgniter\Files\File;
 use Endroid\QrCode\QrCode;
 use Exception;
@@ -109,6 +110,11 @@ class ImageService
         }
 
         return $result;
+    }
+
+    public function getListOfImages(): array
+    {
+        return ImageModel::findAllIndexes();
     }
 }
 
