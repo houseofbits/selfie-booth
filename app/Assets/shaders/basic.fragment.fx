@@ -6,6 +6,7 @@ varying vec3 vPositionW;
 varying vec3 vNormal;
 varying vec3 vNormalW;
 varying vec2 vUV;
+varying vec2 vCamUV;
 
 // Uniforms
 uniform mat4 world;
@@ -14,29 +15,20 @@ uniform mat4 world;
 uniform vec3 cameraPosition;
 
 uniform sampler2D diffuseMap;
+uniform sampler2D cameraMap;
+uniform sampler2D maskMap;
 
 void main(void) {
 
     //vec3 viewDirectionW = normalize(cameraPosition - vPositionW);
 
-    vec4 map = texture2D(diffuseMap, vUV).xyzw;
+    vec3 map = texture2D(diffuseMap, vUV).xyz;
 
-//    vec3 color = map + map;
+    vec3 cam = texture2D(cameraMap, vCamUV).xyz;
 
-    //float fresnelTerm = dot(viewDirectionW, vNormalW);
-    //float fresnelTermPow = clamp(1.0 - fresnelTerm, 0., 1.);//pow(clamp(1.0 - fresnelTerm, 0., 1.), 1.);
-//
-//    float opacity = 1.;
-//    #ifdef OPACITY
-//        opacity = (map.x + map.y + map.z) * 0.33;
-//        opacity = opacity + opacity + opacity + opacity + opacity;
-//    #endif
-//    #ifdef MILKYWAY
-//        color = texture2D(diffuseMap, vUV).xyz;
-//        opacity = (color.x + color.y + color.z) * 0.33;
-//    #endif
+    vec3 mask = texture2D(maskMap, vUV).xyz;
 
-    //gl_FragColor = vec4(vec3(fresnelTermPow), 1.);
+    vec3 final = (map * (1.0 - mask)) + (cam * mask * map);
 
-    gl_FragColor = map;
+    gl_FragColor = vec4(final, 1.);
 }

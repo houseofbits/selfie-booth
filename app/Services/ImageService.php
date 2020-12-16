@@ -13,7 +13,7 @@ use Exception;
 class ImageService
 {
     /** @var string */
-    public $publicAppUrl = "https://www.kautkaadalapa.lv/atteelushaariite/{TYPE}/{LANGUAGE}/{ID}";
+    public $publicAppUrl = "";
 
     /** @var int */
     public $sharingAvailabilityMinutes = 1440;
@@ -22,7 +22,7 @@ class ImageService
     {
         $sharingSettings = SharingConfigModel::findOrCreate();
         $this->sharingAvailabilityMinutes = $sharingSettings->shareableLinkTTL;
-        $this->publicAppUrl = $sharingSettings->publicAppUlr;
+        $this->publicAppUrl = $sharingSettings->publicAppUrl;
     }
 
     public function createImage(string $path): ?ImageModel

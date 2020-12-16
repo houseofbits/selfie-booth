@@ -1,7 +1,8 @@
 import BaseScene from "/js/app/scene/Scenes/BaseScene";
 import * as BABYLON from 'babylonjs';
-import BackgroundTexture1 from '@images/leaf_1.png';
-import BasicMaterial from "@app/scene/Scenes/Materials/BasicMaterial";
+import BackgroundTexture1 from '@images/test-image.jpg';
+import MaskTexture from '@images/amber/test-mask.jpg';
+import AmberMaterial from "@app/scene/Scenes/Materials/AmberMaterial";
 
 const EffectTypes = {
     Bg1: 1,
@@ -12,26 +13,15 @@ const EffectTypes = {
 export default class AmberThemeScene extends BaseScene {
     constructor(mainScene, name) {
         super(mainScene, name);
-        this.theme.name = "Amber theme";
-        // this.theme.setImage("assets/images/themes/amber/icon.png");
-        // this.theme.addEffect(EffectTypes.Bg1, "Background1", "icon1.png");
-        // this.theme.addEffect(EffectTypes.Bg2, "Background2", "icon2.png");
-        // this.theme.addEffect(EffectTypes.Bg3, "Background3", "icon3.png");
 
-        this.amberMaterial = new BABYLON.StandardMaterial("mat", mainScene.scene);
-        this.amberMaterial.diffuseColor = BABYLON.Color3.White();
+        this.scene.clearColor = new BABYLON.Color3(0.3, 0.3, 0.4);
 
-//        this.background1Material = new BABYLON.StandardMaterial("mat", mainScene.scene);
-//        this.background1Material.emissiveTexture = new BABYLON.Texture(BackgroundTexture1, mainScene.scene);
-
-        this.background1Material = new BasicMaterial(mainScene.scene, 'bg1');
-        this.background1Material.setDiffuseMap(BackgroundTexture1);
+        let camera = new BABYLON.ArcRotateCamera("Camera", 0, BABYLON.Angle.FromDegrees(90).radians(), 2000, new BABYLON.Vector3(0, 0, 0), this.scene);
+        //camera.attachControl(mainScene.canvas, true);
 
         this.createScene();
-    }
 
-    setVideoTexture(texture) {
-        this.amberMaterial.diffuseTexture = texture;
+        this.createVideoTexture();
     }
 
     update(dt) {
@@ -39,19 +29,37 @@ export default class AmberThemeScene extends BaseScene {
     }
 
     createScene() {
-        let sphere = BABYLON.MeshBuilder.CreateSphere("sphere", {diameter: 4, segments: 32}, this.getScene());
-        sphere.position.y = 1;
+
+        // let light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0), this.scene);
+        // light.intensity = 0.7;
+
+        // this.amberMaterial = new BABYLON.StandardMaterial("mat", this.scene);
+        // this.amberMaterial.diffuseColor = BABYLON.Color3.White();
+
+//        this.background1Material = new BABYLON.StandardMaterial("mat", mainScene.scene);
+//        this.background1Material.emissiveTexture = new BABYLON.Texture(BackgroundTexture1, mainScene.scene);
+
+        // this.background1Material = new BasicMaterial(this.scene, 'bg1');
+        // this.background1Material.setDiffuseMap(this.videoTexture);
+
+        // let sphere = BABYLON.MeshBuilder.CreateSphere("sphere", {diameter: 4, segments: 32}, this.scene);
+        // sphere.position.y = 1;
 
         // let box = BABYLON.MeshBuilder.CreateBox("box", {width: 2, height: 3, depth: 1}, this.getScene());
         // box.position.x = 2;
         // box.position.y = 1.5;
 
-        let ground = BABYLON.MeshBuilder.CreateGround("ground", {width: 6, height: 6}, this.getScene());
+        this.amberMaterial = new AmberMaterial(this.scene, 'amber');
+        this.amberMaterial.setCameraTexture(new BABYLON.Texture(BackgroundTexture1, this.scene));
+        this.amberMaterial.setDiffuseMap(BackgroundTexture1);
+        this.amberMaterial.setMaskMap(MaskTexture);
 
-        ground.material = this.background1Material.getMaterial();
-        sphere.material = this.amberMaterial;
+        let plane = BABYLON.MeshBuilder.CreatePlane("backplane", {width: 1000, height: 1770, sideOrientation: BABYLON.Mesh.DOUBLESIDE}, this.scene);
+        plane.material = this.amberMaterial.getMaterial();
+        plane.rotate(BABYLON.Axis.Y, BABYLON.Angle.FromDegrees(90).radians(), BABYLON.Space.WORLD);
+    }
 
-        this.setAsChild(sphere);
-        this.setAsChild(ground);
+    onVideoTextureCreated() {
+        this.amberMaterial.setCameraTexture(this.videoTexture);
     }
 }

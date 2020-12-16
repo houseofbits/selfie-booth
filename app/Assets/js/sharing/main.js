@@ -9,6 +9,7 @@ if (document.getElementById('sharing-app')) {
     const languageServiceObservable = Vue.observable(new LanguageService());
     languageServiceObservable.setLanguage(root_element.dataset.lang);
     const AppRoot = Vue.extend(MainView);
+    console.log(root_element.dataset);
     new AppRoot({
         el: root_element,
         components: {

@@ -12,6 +12,16 @@ class CustomMaterial {
         if(typeof BABYLON.Effect.ShadersStore[this.shaderName + "VertexShader"] == 'undefined')BABYLON.Effect.ShadersStore[this.shaderName + "VertexShader"] = vertex;
         if(typeof BABYLON.Effect.ShadersStore[this.shaderName + "FragmentShader"] == 'undefined')BABYLON.Effect.ShadersStore[this.shaderName + "FragmentShader"] = fragment;
     }
+
+    createDefaultShader(){
+        this.shaderMaterial = new BABYLON.ShaderMaterial(this.name + this.getShaderName(), this.scene,
+            { vertex: this.getShaderName(),fragment: this.getShaderName() },
+            {
+                //needAlphaBlending: true,
+                attributes: ["position", "normal", "uv"],
+                uniforms: ["world", "worldView", "worldViewProjection", "view", "projection"]
+            });
+    }
     getShaderName(){
         return this.shaderName;
     }
@@ -20,12 +30,6 @@ class CustomMaterial {
     }
     setCameraPosition(pos){
         this.shaderMaterial.setVector3("cameraPosition", pos);
-    }
-    setObjectPosition(pos){
-        this.shaderMaterial.setVector3("objectPosition", pos);
-    }
-    setSunPosition(pos){
-        this.shaderMaterial.setVector3("sunPosition", pos);
     }
     setDiffuseMap(map){
         this.shaderMaterial.setTexture("diffuseMap", new BABYLON.Texture(map, this.scene));

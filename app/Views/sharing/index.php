@@ -15,7 +15,6 @@
      data-download="<?=$download?>"
      data-time-left="<?=$timeLeft?>"
 >
-
 </div>
 <script src="/assets/sharing.js"></script>
 </body>

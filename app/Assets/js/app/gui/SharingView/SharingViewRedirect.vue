@@ -13,7 +13,8 @@
         </div>
 
         <div class="qr-image">
-            <img :src="qrCodeImage" @error="onError">
+            <div class="loading"><i class="fas fa-hourglass-half"></i></div>
+            <img :src="qrCodeImage" :class="{loaded:isLoaded}" @error="onError" @load="qrCodeLoaded">
         </div>
 
         <text-button class="back-button orange" icon="fas fa-arrow-circle-left"
@@ -52,6 +53,7 @@ export default {
     data: function () {
         return {
             isError: false,
+            isLoaded: false,
         }
     },
     watch: {
@@ -85,6 +87,9 @@ export default {
         closeView() {
             this.$emit('close');
         },
+        qrCodeLoaded(){
+            this.isLoaded = true;
+        }
     }
 };
 </script>
@@ -200,11 +205,39 @@ export default {
         top: -150px;
         left: 170px;
         box-shadow: 0 5px 15px 5px rgba(0, 0, 0, 0.64);
-        background-color: white;
 
-        img {
+        .loading{
+            position: absolute;
+            top:0;
+            left:0;
             width: 100%;
             height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(255,255,255, 0.5);
+
+            i {
+                display: inline-block;
+                font-size: 100px;
+                animation: rotation 2s infinite linear;
+                color:white;
+            }
+        }
+
+        img {
+            position:absolute;
+            top:0;
+            left:0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 200ms linear;
+
+            &.loaded{
+                opacity:1;
+                transition: opacity 200ms linear;
+            }
         }
     }
 }
@@ -219,6 +252,15 @@ export default {
 
 .leaf-pos-3 {
     transform: translate(290px, 420px) rotate(155deg) scale(1.4);
+}
+
+@keyframes rotation {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(359deg);
+    }
 }
 
 </style>

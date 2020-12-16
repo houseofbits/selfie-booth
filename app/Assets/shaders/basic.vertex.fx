@@ -16,6 +16,7 @@ varying vec3 vPositionW;
 varying vec3 vNormal;
 varying vec3 vNormalW;
 varying vec2 vUV;
+varying vec2 vCamUV;
 
 void main(void) {
 
@@ -27,6 +28,11 @@ void main(void) {
     vNormalW = normalize(normalWorld * normal);
 
     vUV = uv;
+
+    vCamUV = uv;
+    vCamUV.y = uv.x;
+    vCamUV.x = uv.y;
+
     vPosition = position;
     vNormal = normal;
 }

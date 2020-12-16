@@ -1,23 +1,25 @@
 import ThemeStructure from "/js/app/scene/Structures/ThemeStructure";
+import * as BABYLON from 'babylonjs';
 
 export default class BaseScene {
     constructor(mainScene, name) {
         this.name = name;
-        this.theme = new ThemeStructure();
-        this.theme.scene = this;
+        this.scene = new BABYLON.Scene(mainScene.engine);
         this.mainScene = mainScene;
         this.parentNode = new BABYLON.TransformNode(this.name + "Parent");
+        this.videoTexture = null;
     }
 
     update(dt) {
+
+    }
+
+    render() {
+        this.scene.render();
     }
 
     getTheme() {
         return this.theme;
-    }
-
-    getScene() {
-        return this.mainScene.scene;
     }
 
     setEnabled(enabled) {
@@ -28,7 +30,15 @@ export default class BaseScene {
         node.parent = this.parentNode;
     }
 
-    setVideoTexture(texture) {
+    createVideoTexture() {
+        this.videoTexture = null;
+        BABYLON.VideoTexture.CreateFromWebCam(this.scene, (videoTexture) => {
+            this.videoTexture = videoTexture;
+            this.onVideoTextureCreated();
+        }, {maxWidth: 1080, maxHeight: 1920});
+    }
+
+    onVideoTextureCreated() {
 
     }
 }

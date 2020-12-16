@@ -3,8 +3,7 @@ import CustomMaterial from './CustomMaterial.js';
 import BasicVertexShader from '@shaders/basic.vertex.fx';
 import BasicFragmentShader from '@shaders/basic.fragment.fx';
 
-export default
-class BasicMaterial extends CustomMaterial {
+export default class AmberMaterial extends CustomMaterial {
     constructor(scene, name) {
         super(scene, name);
 
@@ -13,5 +12,13 @@ class BasicMaterial extends CustomMaterial {
         this.createDefaultShader();
 
         this.setCameraPosition(this.scene.activeCamera.position);
+    }
+
+    setCameraTexture(texture) {
+        this.shaderMaterial.setTexture("cameraMap", texture);
+    }
+
+    setMaskMap(map) {
+        this.shaderMaterial.setTexture("maskMap", new BABYLON.Texture(map, this.scene));
     }
 }

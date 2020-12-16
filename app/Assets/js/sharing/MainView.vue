@@ -11,9 +11,9 @@
                 <div class="row align-items-center h-100">
                     <div class="col-lg-6 col-sm-10 mx-auto text-center">
 
-                        <log-in/>
+                        <log-in v-if="!download"/>
 
-                        <hr class="divider">
+                        <hr class="divider" v-if="!download">
 
                         <download/>
 
@@ -39,7 +39,7 @@ export default {
             type: String,
         },
         download: {
-            type: Boolean,
+            type: String,
         },
         timeLeft: {
             type: String,
