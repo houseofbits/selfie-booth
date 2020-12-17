@@ -1,13 +1,13 @@
 import * as BABYLON from 'babylonjs';
 import CustomMaterial from './CustomMaterial.js';
-import BasicVertexShader from '@shaders/basic.vertex.fx';
-import BasicFragmentShader from '@shaders/basic.fragment.fx';
+import AmberVertexShader from '@shaders/amber.vertex.fx';
+import AmberFragmentShader from '@shaders/amber.fragment.fx';
 
 export default class AmberMaterial extends CustomMaterial {
     constructor(scene, name) {
         super(scene, name);
 
-        this.loadShaderData(name, BasicVertexShader, BasicFragmentShader);
+        this.loadShaderData(name, AmberVertexShader, AmberFragmentShader);
 
         this.createDefaultShader();
 
