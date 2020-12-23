@@ -13,11 +13,11 @@ class CustomMaterial {
         if(typeof BABYLON.Effect.ShadersStore[this.shaderName + "FragmentShader"] == 'undefined')BABYLON.Effect.ShadersStore[this.shaderName + "FragmentShader"] = fragment;
     }
 
-    createDefaultShader(){
+    createDefaultShader(isAlphaBlended){
         this.shaderMaterial = new BABYLON.ShaderMaterial(this.name + this.getShaderName(), this.scene,
             { vertex: this.getShaderName(),fragment: this.getShaderName() },
             {
-                //needAlphaBlending: true,
+                needAlphaBlending: isAlphaBlended || false,
                 attributes: ["position", "normal", "uv"],
                 uniforms: ["world", "worldView", "worldViewProjection", "view", "projection"]
             });
