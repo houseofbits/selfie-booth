@@ -1,7 +1,7 @@
 import * as BABYLON from 'babylonjs';
 import CustomMaterial from './CustomMaterial.js';
-import ImageShadowVertexShader from '@shaders/imageShadow.vertex.fx';
-import ImageShadowFragmentShader from '@shaders/imageShadow.fragment.fx';
+import ImageShadowVertexShader from '@shaders/imageShadow.vert';
+import ImageShadowFragmentShader from '@shaders/imageShadow.frag';
 
 export default
 class ImageShadowMaterial extends CustomMaterial {

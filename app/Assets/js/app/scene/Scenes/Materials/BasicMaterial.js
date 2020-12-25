@@ -1,7 +1,7 @@
 import * as BABYLON from 'babylonjs';
 import CustomMaterial from './CustomMaterial.js';
-import BasicVertexShader from '@shaders/basic.vertex.fx';
-import BasicFragmentShader from '@shaders/basic.fragment.fx';
+import BasicVertexShader from '@shaders/basic.vert';
+import BasicFragmentShader from '@shaders/basic.frag';
 
 export default
 class BasicMaterial extends CustomMaterial {

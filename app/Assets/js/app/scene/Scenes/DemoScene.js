@@ -2,10 +2,12 @@ import BaseScene from "/js/app/scene/Scenes/BaseScene";
 import * as BABYLON from 'babylonjs';
 import BackdropTexture from '@images/static-bg.jpg';
 import TestTexture from '@images/test-image.jpg';
+import ImageEdgesMaskTexture from '@images/image-thumbnail-edges.jpg';
 import BasicMaterial from "@app/scene/Scenes/Materials/BasicMaterial";
 import DemoModeItem from "@app/scene/Structures/DemoModeItem";
 import axios from "axios";
 import ImageShadowMaterial from "@app/scene/Scenes/Materials/ImageShadowMaterial";
+import ImageShadedMaterial from "@app/scene/Scenes/Materials/ImageShadedMaterial";
 
 export default class AmberThemeScene extends BaseScene {
     constructor(mainScene, name) {
@@ -34,14 +36,14 @@ export default class AmberThemeScene extends BaseScene {
     createScene() {
         this.scene.clearColor = new BABYLON.Color3(0.3, 0.3, 0.4);
 
-        // axios
-        //     .get("/api/sync-images").then(response => {
-        //     if (response.status === 200) {
-        //         this.images = response.data;
-        //         this.createRandom2DPlacement(this.images);
-        //     }
-        // });
-        //
+        axios
+            .get("/api/sync-images").then(response => {
+            if (response.status === 200) {
+                this.images = response.data;
+                this.createRandom2DPlacement(this.images);
+            }
+        });
+
         // const parameters = {
         //     edge_blur: 5.0,
         // };
@@ -56,14 +58,14 @@ export default class AmberThemeScene extends BaseScene {
         this.itemShadowMaterial = new ImageShadowMaterial(this.scene, "itemShadow");
         this.itemShadowMaterial.setDiffuseMap(BackdropTexture);
 
-        //this.createGround();
+        this.createGround();
 
-        const img = [
-            'sasdasda',
-            'sssd',
-            'rrr'
-        ];
-        this.createRandom2DPlacement(img);
+        // const img = [
+        //     'sasdasda',
+        //     // 'sssd',
+        //     // 'rrr'
+        // ];
+        // this.createRandom2DPlacement(img);
     }
 
     randBM() {
@@ -80,17 +82,17 @@ export default class AmberThemeScene extends BaseScene {
         let objects = [];
         const rangeX = 200;
         const rangeY = 300;
-        const count = images.length;
+        const count = Math.min(images.length, 50);
         while (objects.length < count) {
             const x = this.randBM() * rangeX;
             const y = this.randBM() * rangeY;
-            const angle = 30 - (Math.random() * 60.);
+            const angle = 10 - (Math.random() * 20.);
             const scale = 1.2 + (Math.random() * 0.4);
             const z = Math.random() * 5.;
             let place = true;
             for (const o of objects) {
                 let v = new BABYLON.Vector2(o.x - x, o.y - y);
-                if (v.length() < 10) {
+                if (v.length() < 15) {
                     place = false;
                 }
             }
@@ -110,15 +112,17 @@ export default class AmberThemeScene extends BaseScene {
             const element = this.createElement2D("", o.z, o.s);
             element.material = this.createMaterial(o.imageId).getMaterial();
             element.demoMode = new DemoModeItem(o.imageId, element, o.x - (rangeX * 0.5), o.y - (rangeY * 0.5), o.a);
+//            element.demoMode = new DemoModeItem(o.imageId, element, 0, 0, 0);
             element.demoMode.update(0.01);
         }
         return objects;
     }
 
     createMaterial(imageId) {
-        const material = new BasicMaterial(this.scene, 'mat_' + imageId);
-//        material.setDiffuseMap('/api/image/' + imageId);
-        material.setDiffuseMap(TestTexture);
+        const material = new ImageShadedMaterial(this.scene, 'mat_' + imageId);
+        material.setDiffuseMap('/api/image/' + imageId);
+//        material.setDiffuseMap(TestTexture);
+        material.setMaskMap(ImageEdgesMaskTexture);
         return material;
     }
 
@@ -131,13 +135,13 @@ export default class AmberThemeScene extends BaseScene {
         plane.locallyTranslate(new BABYLON.Vector3(0, 0, posZ));
 
         let shadowPlane = BABYLON.MeshBuilder.CreatePlane("shadowPlane" + i, {
-            width: 15 * scale, height: 23 * scale,
+            width: 15 * scale, height: 22 * scale,
             sideOrientation:BABYLON.Mesh.DOUBLESIDE
         }, this.scene);
 
         shadowPlane.parent = plane;
         shadowPlane.isPickable = false;
-        shadowPlane.locallyTranslate(new BABYLON.Vector3(0, 0, 1));
+        shadowPlane.locallyTranslate(new BABYLON.Vector3(0, 0, -0.1));
         shadowPlane.material = this.itemShadowMaterial.getMaterial();
 
         return plane;
@@ -173,10 +177,10 @@ export default class AmberThemeScene extends BaseScene {
     onPointerMove(evt) {
         if (this.selectedMesh) {
             const mesh = this.getNewPosition();
-            if(mesh !== this.selectedMesh) {
-                this.selectedMesh = null;
-                return;
-            }
+            // if(mesh !== this.selectedMesh) {
+            //     this.selectedMesh = null;
+            //     return;
+            // }
 
             const force = this.newPosition.subtract(this.previousPosition);
 

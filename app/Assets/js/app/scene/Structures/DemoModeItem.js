@@ -5,7 +5,7 @@ export default class DemoModeItem {
         this.imageId = imageId;
         this.parentMesh = parentMesh;
         this.position = new BABYLON.Vector2(posx, posy);
-        this.angle = angle;
+        this.angle = BABYLON.Angle.FromDegrees(angle).radians();
         this.velocity = new BABYLON.Vector2(0, 0);
         this.angularVelocity = 0;
         this.grabPosition = null;

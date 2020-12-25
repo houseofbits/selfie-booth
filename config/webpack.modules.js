@@ -26,7 +26,7 @@ module.exports = {
                 }]
             },
             {
-                test: /\.fx$/i,
+                test: /\.(frag|vert)$/i,
                 use: 'raw-loader',
             },
             {
