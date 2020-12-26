@@ -8,6 +8,7 @@ import DemoModeItem from "@app/scene/Structures/DemoModeItem";
 import axios from "axios";
 import ImageShadowMaterial from "@app/scene/Scenes/Materials/ImageShadowMaterial";
 import ImageShadedMaterial from "@app/scene/Scenes/Materials/ImageShadedMaterial";
+import DemoModeItemPosition from "@app/scene/Structures/DemoModeItemPosition";
 
 export default class AmberThemeScene extends BaseScene {
     constructor(mainScene, name) {
@@ -16,33 +17,39 @@ export default class AmberThemeScene extends BaseScene {
         let camera = new BABYLON.ArcRotateCamera("Camera", Math.PI * 0.5, Math.PI * 0.5, 200, new BABYLON.Vector3(0, 0, 0), this.scene);
         //camera.attachControl(mainScene.canvas, true);
 
-        this.images = [];
+        this.itemColumns = [[], [], [], [], []];
+        this.config = {
+            yBaseline: 60,
+            itemMaxWidth: 10,
+            itemMaxHeight: 18,
+            itemMarginX: 5,
+            itemMarginY: 3
+        };
+
         this.createScene();
-
-        mainScene.canvas.addEventListener("pointerdown", this.onPointerDown.bind(this), false);
-        mainScene.canvas.addEventListener("pointerup", this.onPointerUp.bind(this), false);
-        mainScene.canvas.addEventListener("pointermove", this.onPointerMove.bind(this), false);
-
-        this.selectedMesh = null;
-        this.grabPosition = new BABYLON.Vector2(0,0);
-        this.previousPosition = new BABYLON.Vector2(0,0);
-        this.newPosition = new BABYLON.Vector2(0,0);
     }
 
     update(dt) {
         super.update(dt);
+
+        for (const column of this.itemColumns) {
+            for (const item of column) {
+                item.update(dt);
+            }
+        }
     }
 
+    //@clean up
     createScene() {
         this.scene.clearColor = new BABYLON.Color3(0.3, 0.3, 0.4);
 
-        axios
-            .get("/api/sync-images").then(response => {
-            if (response.status === 200) {
-                this.images = response.data;
-                this.createRandom2DPlacement(this.images);
-            }
-        });
+        // axios
+        //     .get("/api/sync-images").then(response => {
+        //     if (response.status === 200) {
+        //         this.images = response.data;
+        //         this.createRandom2DPlacement(this.images);
+        //     }
+        // });
 
         // const parameters = {
         //     edge_blur: 5.0,
@@ -60,91 +67,10 @@ export default class AmberThemeScene extends BaseScene {
 
         this.createGround();
 
-        // const img = [
-        //     'sasdasda',
-        //     // 'sssd',
-        //     // 'rrr'
-        // ];
-        // this.createRandom2DPlacement(img);
-    }
+        this.insertNewItem('d98bdc');
+        this.insertNewItem('d98bdc');
+        this.insertNewItem('d98bdc');
 
-    randBM() {
-        let u = 0, v = 0;
-        while (u === 0) u = Math.random(); //Converting [0,1) to (0,1)
-        while (v === 0) v = Math.random();
-        let num = Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v);
-        num = num / 10.0 + 0.5; // Translate to 0 -> 1
-        if (num > 1 || num < 0) return randn_bm(); // resample between 0 and 1
-        return num;
-    }
-
-    createRandom2DPlacement(images) {
-        let objects = [];
-        const rangeX = 200;
-        const rangeY = 300;
-        const count = Math.min(images.length, 50);
-        while (objects.length < count) {
-            const x = this.randBM() * rangeX;
-            const y = this.randBM() * rangeY;
-            const angle = 10 - (Math.random() * 20.);
-            const scale = 1.2 + (Math.random() * 0.4);
-            const z = Math.random() * 5.;
-            let place = true;
-            for (const o of objects) {
-                let v = new BABYLON.Vector2(o.x - x, o.y - y);
-                if (v.length() < 15) {
-                    place = false;
-                }
-            }
-            if (place) {
-                objects.push({
-                    x: x,
-                    y: y,
-                    z: z,
-                    a: angle,
-                    s: scale,
-                    imageId: images.pop(),
-                });
-            }
-        }
-
-        for (const o of objects) {
-            const element = this.createElement2D("", o.z, o.s);
-            element.material = this.createMaterial(o.imageId).getMaterial();
-            element.demoMode = new DemoModeItem(o.imageId, element, o.x - (rangeX * 0.5), o.y - (rangeY * 0.5), o.a);
-//            element.demoMode = new DemoModeItem(o.imageId, element, 0, 0, 0);
-            element.demoMode.update(0.01);
-        }
-        return objects;
-    }
-
-    createMaterial(imageId) {
-        const material = new ImageShadedMaterial(this.scene, 'mat_' + imageId);
-        material.setDiffuseMap('/api/image/' + imageId);
-//        material.setDiffuseMap(TestTexture);
-        material.setMaskMap(ImageEdgesMaskTexture);
-        return material;
-    }
-
-    createElement2D(i, posZ, scale) {
-
-        let plane = BABYLON.MeshBuilder.CreatePlane("plane" + i, {
-            width: 10 * scale, height: 18 * scale,
-            sideOrientation:BABYLON.Mesh.DOUBLESIDE
-        }, this.scene);
-        plane.locallyTranslate(new BABYLON.Vector3(0, 0, posZ));
-
-        let shadowPlane = BABYLON.MeshBuilder.CreatePlane("shadowPlane" + i, {
-            width: 15 * scale, height: 22 * scale,
-            sideOrientation:BABYLON.Mesh.DOUBLESIDE
-        }, this.scene);
-
-        shadowPlane.parent = plane;
-        shadowPlane.isPickable = false;
-        shadowPlane.locallyTranslate(new BABYLON.Vector3(0, 0, -0.1));
-        shadowPlane.material = this.itemShadowMaterial.getMaterial();
-
-        return plane;
     }
 
     createGround() {
@@ -156,48 +82,105 @@ export default class AmberThemeScene extends BaseScene {
         ground.material = this.backdropMaterial.getMaterial();
     }
 
-    onPointerDown(evt) {
-        if (evt.button !== 0) {
-            return;
-        }
-        const pickInfo = this.scene.pick(this.scene.pointerX, this.scene.pointerY);
+    //Insert new image into one of columns and recalculate other item positions
+    insertNewItem(imageId) {
+        const columnIndex = this.getNewItemColumn();
+        const newItemPosition = this.getNewItemPosition(columnIndex);
+        const item = new DemoModeItem(imageId);
+        item
+            .setPosition(newItemPosition.initial.x, newItemPosition.initial.y)
+            .setTargetPosition(newItemPosition.final.x, newItemPosition.final.y)
+            .setSize(10, 18)
+            .setAngle(0);
+        this.itemColumns[columnIndex].push(item);
 
-        if (pickInfo.hit && pickInfo.pickedMesh && pickInfo.pickedMesh.demoMode) {
-            this.selectedMesh = pickInfo.pickedMesh;
-            this.previousPosition.x = pickInfo.pickedPoint.x;
-            this.previousPosition.y = pickInfo.pickedPoint.y;
-            pickInfo.pickedMesh.demoMode.setGrabPosition(pickInfo.pickedPoint);
+        this.createAsyncItemMaterial(item, (material) => {
+            const mesh = this.createItemMesh(item);
+            this.calculateColumnItemPositions(columnIndex);
+            mesh.material = material.getMaterial();
+            mesh.setEnabled(true);
+            item.setMesh(mesh);
+        });
+    }
+
+    //Get column index for new item
+    //@return column index with least number of items
+    getNewItemColumn() {
+        let index = 0;
+        let num = 1000;
+        for (let i = 0; i < this.itemColumns.length; i++) {
+            if (num > this.itemColumns[i].length) {
+                num = this.itemColumns[i].length;
+                index = i;
+            }
+        }
+        return index;
+    }
+
+    //Get position of new item
+    getNewItemPosition(columnIndex) {
+        const leftStartPos = -(2 * this.config.itemMaxWidth + this.config.itemMaxWidth * 0.5 + this.config.itemMarginX * 2);
+        const left = leftStartPos + columnIndex * this.config.itemMaxWidth + this.config.itemMaxWidth * 0.5 + columnIndex * this.config.itemMarginX;
+        //const initialY = 120.0;   //TODO: Update when transitions are working
+        return new DemoModeItemPosition(left, this.config.yBaseline, left, this.config.yBaseline);
+    }
+
+    //Re-calculate column item positions
+    calculateColumnItemPositions(columnIndex) {
+        if(this.itemColumns[columnIndex].length > 1) {
+            const startY = this.itemColumns[columnIndex][0].targetPosition.y;
+            const startHalfHeight = this.itemColumns[columnIndex][0].size.y * 0.5;
+            for (let i = 1; i < this.itemColumns[columnIndex].length; i++) {
+                //...
+            }
         }
     }
 
-    onPointerUp() {
-        this.selectedMesh = null;
+    // Create scene models from DemoModeItem structure
+    // @return Mesh instance
+    createItemMesh(item) {
+
+        let plane = BABYLON.MeshBuilder.CreatePlane("plane" + item.imageId, {
+            width: item.size.x, height: item.size.y,
+            sideOrientation: BABYLON.Mesh.DOUBLESIDE
+        }, this.scene);
+        plane.locallyTranslate(new BABYLON.Vector3(0, 0, 1));
+
+        // Initially disabled.
+        // Enable after texture is loaded and mesh is ready to be rendered
+        plane.setEnabled(false);
+
+        this.createItemShadow(item, plane);
+
+        return plane;
     }
 
-    onPointerMove(evt) {
-        if (this.selectedMesh) {
-            const mesh = this.getNewPosition();
-            // if(mesh !== this.selectedMesh) {
-            //     this.selectedMesh = null;
-            //     return;
-            // }
+    createItemShadow(item, parentMesh) {
+        let shadowPlane = BABYLON.MeshBuilder.CreatePlane("shadow" + item.imageId, {
+            width: item.size.x * 1.5, height: item.size.y * 1.5,
+            sideOrientation: BABYLON.Mesh.DOUBLESIDE
+        }, this.scene);
 
-            const force = this.newPosition.subtract(this.previousPosition);
-
-            this.selectedMesh.demoMode.dragGrabbed(force);
-            this.selectedMesh.demoMode.update(0.016);
-
-            this.previousPosition = this.newPosition.clone();
-        }
+        shadowPlane.parent = parentMesh;
+        shadowPlane.isPickable = false;
+        shadowPlane.locallyTranslate(new BABYLON.Vector3(0, 0, -0.1));
+        shadowPlane.material = this.itemShadowMaterial.getMaterial();
     }
 
-    getNewPosition() {
-        const pickInfo = this.scene.pick(this.scene.pointerX, this.scene.pointerY);
-        if (pickInfo.hit) {
-            this.newPosition.x = pickInfo.pickedPoint.x;
-            this.newPosition.y = pickInfo.pickedPoint.y;
-            return pickInfo.pickedMesh;
-        }
-        return null;
+    //Create new item material
+    createAsyncItemMaterial(item, onLoad) {
+        const material = new ImageShadedMaterial(this.scene, 'mat_' + item.imageId);
+        material.setMaskMap(ImageEdgesMaskTexture);
+
+        const texture = new BABYLON.Texture('/api/image/' + item.imageId,
+            this.scene,
+            false,
+            true,
+            BABYLON.Texture.NEAREST_SAMPLINGMODE,
+            () => onLoad(material)
+        );
+
+        material.shaderMaterial.setTexture("diffuseMap", texture);
+        return material;
     }
 }

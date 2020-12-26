@@ -1,77 +1,53 @@
 import * as BABYLON from 'babylonjs';
 
 export default class DemoModeItem {
-    constructor(imageId, parentMesh, posx, posy, angle) {
+
+    constructor(imageId) {
         this.imageId = imageId;
-        this.parentMesh = parentMesh;
-        this.position = new BABYLON.Vector2(posx, posy);
-        this.angle = BABYLON.Angle.FromDegrees(angle).radians();
-        this.velocity = new BABYLON.Vector2(0, 0);
-        this.angularVelocity = 0;
-        this.grabPosition = null;
+        this.parentMesh = null;
+        this.position = new BABYLON.Vector2(0, 0);
+        this.size = new BABYLON.Vector2(0, 0);
+        this.angle = 0;
+
+        this.targetPosition = new BABYLON.Vector2(0, 0);
+        //this.targetSize = new BABYLON.Vector2(0, 0);
+
     }
 
     update(dt) {
-
-        this.position.addInPlace(this.velocity);
-        this.angle = this.angle + this.angularVelocity;
-
+        if (!this.parentMesh) {
+            return;
+        }
         this.parentMesh.position.x = this.position.x;
         this.parentMesh.position.y = this.position.y;
-
         this.parentMesh.rotation.z = this.angle;
-
-        this.angularVelocity = this.angularVelocity * dt;
-        this.velocity.scaleInPlace(dt);
     }
 
-    setGrabPosition(worldPosition) {
-        this.grabPosition = this.toLocalSpace(worldPosition);
+    setMesh(mesh) {
+        this.parentMesh = mesh;
+        return this;
     }
 
-    dragGrabbed(worldDirection) {
-
-        this.position.x = this.parentMesh.position.x;
-        this.position.y = this.parentMesh.position.y;
-
-        const worldGrabPos = this.toWorldSpace(this.grabPosition);
-        const shoulder = this.position.subtract(worldGrabPos);
-
-        const dc = Math.min(shoulder.length(), 10.0) / 10.0;
-
-        const FN = worldDirection.clone();
-        FN.normalize();
-
-        const shoulderN = shoulder.clone();
-        shoulderN.normalize();
-
-        const dot = BABYLON.Vector2.Dot(shoulderN, FN);
-
-        const pdot = this.perpDotProduct(shoulderN, FN);
-
-        worldDirection.scaleInPlace(Math.abs(dot));
-
-        this.angularVelocity += pdot * 0.05 * dc;
-        this.velocity.addInPlace(worldDirection);
-
+    setSize(width, height) {
+        this.size.x = width;
+        this.size.y = height;
+        return this;
     }
 
-    perpDotProduct(v1, v2) {
-        return v1.y * v2.x - v1.x * v2.y;
+    setPosition(x, y) {
+        this.position.x = x;
+        this.position.y = y;
+        return this;
     }
 
-    toLocalSpace(worldPosition) {
-        const m = this.parentMesh.getWorldMatrix().clone();
-        m.invert();
-        return BABYLON.Vector2.Transform(worldPosition, m);
+    setTargetPosition(x, y) {
+        this.targetPosition.x = x;
+        this.targetPosition.y = y;
+        return this;
     }
 
-    toLocalSpaceRotation(worldVector) {
-        const m = this.parentMesh.getWorldMatrix().clone();
-        return BABYLON.Vector2.Transform(worldVector, m.invert().getRotationMatrix());
-    }
-
-    toWorldSpace(localVector) {
-        return BABYLON.Vector2.Transform(localVector, this.parentMesh.getWorldMatrix());
+    setAngle(angle) {
+        this.angle = angle;
+        return this;
     }
 };
