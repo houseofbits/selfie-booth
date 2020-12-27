@@ -8,9 +8,9 @@ import DemoModeItem from "@app/scene/Structures/DemoModeItem";
 import axios from "axios";
 import ImageShadowMaterial from "@app/scene/Scenes/Materials/ImageShadowMaterial";
 import ImageShadedMaterial from "@app/scene/Scenes/Materials/ImageShadedMaterial";
-import DemoModeItemPosition from "@app/scene/Structures/DemoModeItemPosition";
+import DemoModeItemStructure from "@app/scene/Structures/DemoModeItemStructure";
 
-export default class AmberThemeScene extends BaseScene {
+export default class DemoScene extends BaseScene {
     constructor(mainScene, name) {
         super(mainScene, name);
 
@@ -20,10 +20,12 @@ export default class AmberThemeScene extends BaseScene {
         this.itemColumns = [[], [], [], [], []];
         this.config = {
             yBaseline: 60,
-            itemMaxWidth: 10,
-            itemMaxHeight: 18,
-            itemMarginX: 5,
-            itemMarginY: 3
+            itemMaxWidth: 16,
+            itemAspect: 177/100,
+            itemMaxAngle: 5,
+            itemMarginX: 1,
+            itemMarginY: 3,
+            baselineMaxJitter: 20
         };
 
         this.createScene();
@@ -43,18 +45,22 @@ export default class AmberThemeScene extends BaseScene {
     createScene() {
         this.scene.clearColor = new BABYLON.Color3(0.3, 0.3, 0.4);
 
-        // axios
-        //     .get("/api/sync-images").then(response => {
-        //     if (response.status === 200) {
-        //         this.images = response.data;
-        //         this.createRandom2DPlacement(this.images);
-        //     }
-        // });
+        axios
+            .get("/api/sync-images").then(response => {
+            if (response.status === 200) {
+                for (const image of response.data) {
+                    this.insertNewItem(image);
+                }
+            }
+        });
 
         // const parameters = {
         //     edge_blur: 5.0,
         // };
         // const lensEffect = new BABYLON.LensRenderingPipeline('lensEffects', parameters, this.scene, 1.0, this.scene.activeCamera);
+
+        // const kernel = 32.0;
+        // const postProcess = new BABYLON.BlurPostProcess("Horizontal blur", new BABYLON.Vector2(1.0, 0), kernel, 0.25, this.scene.activeCamera);
 
         this.backdropMaterial = new BasicMaterial(this.scene, "ground");
         this.backdropMaterial.setDiffuseMap(BackdropTexture);
@@ -67,9 +73,18 @@ export default class AmberThemeScene extends BaseScene {
 
         this.createGround();
 
-        this.insertNewItem('d98bdc');
-        this.insertNewItem('d98bdc');
-        this.insertNewItem('d98bdc');
+        //this.insertNewItem('d98bdc');
+        // this.insertNewItem('d98bdc');
+        // this.insertNewItem('d98bdc');
+        // this.insertNewItem('d98bdc');
+        // this.insertNewItem('d98bdc');
+        // this.insertNewItem('d98bdc');
+        // this.insertNewItem('d98bdc');
+        // this.insertNewItem('d98bdc');
+        // this.insertNewItem('d98bdc');
+        // this.insertNewItem('d98bdc');
+        // this.insertNewItem('d98bdc');
+        // this.insertNewItem('d98bdc');
 
     }
 
@@ -85,13 +100,13 @@ export default class AmberThemeScene extends BaseScene {
     //Insert new image into one of columns and recalculate other item positions
     insertNewItem(imageId) {
         const columnIndex = this.getNewItemColumn();
-        const newItemPosition = this.getNewItemPosition(columnIndex);
+        const itemStructure = this.createNewItem(columnIndex);
         const item = new DemoModeItem(imageId);
         item
-            .setPosition(newItemPosition.initial.x, newItemPosition.initial.y)
-            .setTargetPosition(newItemPosition.final.x, newItemPosition.final.y)
-            .setSize(10, 18)
-            .setAngle(0);
+            .setPosition(itemStructure.xInitial, itemStructure.yInitial)
+            .setTargetPosition(itemStructure.xFinal, itemStructure.yFinal)
+            .setSize(itemStructure.width, itemStructure.height)
+            .setAngle(itemStructure.angle);
         this.itemColumns[columnIndex].push(item);
 
         this.createAsyncItemMaterial(item, (material) => {
@@ -118,20 +133,38 @@ export default class AmberThemeScene extends BaseScene {
     }
 
     //Get position of new item
-    getNewItemPosition(columnIndex) {
+    createNewItem(columnIndex) {
         const leftStartPos = -(2 * this.config.itemMaxWidth + this.config.itemMaxWidth * 0.5 + this.config.itemMarginX * 2);
         const left = leftStartPos + columnIndex * this.config.itemMaxWidth + this.config.itemMaxWidth * 0.5 + columnIndex * this.config.itemMarginX;
-        //const initialY = 120.0;   //TODO: Update when transitions are working
-        return new DemoModeItemPosition(left, this.config.yBaseline, left, this.config.yBaseline);
+        const baselineJitter = this.config.yBaseline + ((this.config.baselineMaxJitter * 0.5) - Math.random() * this.config.baselineMaxJitter);
+        const initialY = 120.0;   //TODO: Update when transitions are working
+
+        const item = new DemoModeItemStructure();
+        item.xInitial = left;
+        item.yInitial = baselineJitter;
+        item.xFinal = left;
+        item.yFinal = baselineJitter;
+
+        const scale = 1.0 - Math.random() * 0.3;
+        item.width = this.config.itemMaxWidth * scale;
+        item.height = this.config.itemAspect * item.width;
+
+        item.angle = this.config.itemMaxAngle - Math.random() * (this.config.itemMaxAngle * 2);
+
+        return item;
     }
 
     //Re-calculate column item positions
     calculateColumnItemPositions(columnIndex) {
-        if(this.itemColumns[columnIndex].length > 1) {
-            const startY = this.itemColumns[columnIndex][0].targetPosition.y;
-            const startHalfHeight = this.itemColumns[columnIndex][0].size.y * 0.5;
+        if (this.itemColumns[columnIndex].length > 1) {
+            let startY = this.itemColumns[columnIndex][0].targetPosition.y;
+            let startHalfHeight = this.itemColumns[columnIndex][0].size.y * 0.5;
             for (let i = 1; i < this.itemColumns[columnIndex].length; i++) {
-                //...
+                const halfHeight = this.itemColumns[columnIndex][i].size.y * 0.5;
+                const posY = startY - (halfHeight + startHalfHeight + this.config.itemMarginY);
+                this.itemColumns[columnIndex][i].position.y = posY; //TODO: Replace with target when transition are working
+                startY = posY;
+                startHalfHeight = halfHeight;
             }
         }
     }
@@ -139,28 +172,23 @@ export default class AmberThemeScene extends BaseScene {
     // Create scene models from DemoModeItem structure
     // @return Mesh instance
     createItemMesh(item) {
-
         let plane = BABYLON.MeshBuilder.CreatePlane("plane" + item.imageId, {
             width: item.size.x, height: item.size.y,
             sideOrientation: BABYLON.Mesh.DOUBLESIDE
         }, this.scene);
         plane.locallyTranslate(new BABYLON.Vector3(0, 0, 1));
-
         // Initially disabled.
         // Enable after texture is loaded and mesh is ready to be rendered
         plane.setEnabled(false);
-
         this.createItemShadow(item, plane);
-
         return plane;
     }
 
     createItemShadow(item, parentMesh) {
         let shadowPlane = BABYLON.MeshBuilder.CreatePlane("shadow" + item.imageId, {
-            width: item.size.x * 1.5, height: item.size.y * 1.5,
+            width: item.size.x * 1.4, height: item.size.y * 1.2,
             sideOrientation: BABYLON.Mesh.DOUBLESIDE
         }, this.scene);
-
         shadowPlane.parent = parentMesh;
         shadowPlane.isPickable = false;
         shadowPlane.locallyTranslate(new BABYLON.Vector3(0, 0, -0.1));
@@ -171,7 +199,6 @@ export default class AmberThemeScene extends BaseScene {
     createAsyncItemMaterial(item, onLoad) {
         const material = new ImageShadedMaterial(this.scene, 'mat_' + item.imageId);
         material.setMaskMap(ImageEdgesMaskTexture);
-
         const texture = new BABYLON.Texture('/api/image/' + item.imageId,
             this.scene,
             false,
@@ -179,7 +206,6 @@ export default class AmberThemeScene extends BaseScene {
             BABYLON.Texture.NEAREST_SAMPLINGMODE,
             () => onLoad(material)
         );
-
         material.shaderMaterial.setTexture("diffuseMap", texture);
         return material;
     }

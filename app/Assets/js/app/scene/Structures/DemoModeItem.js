@@ -47,7 +47,7 @@ export default class DemoModeItem {
     }
 
     setAngle(angle) {
-        this.angle = angle;
+        this.angle = BABYLON.Angle.FromDegrees(angle).radians();
         return this;
     }
 };
