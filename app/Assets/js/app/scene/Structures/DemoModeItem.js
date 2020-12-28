@@ -10,14 +10,26 @@ export default class DemoModeItem {
         this.angle = 0;
 
         this.targetPosition = new BABYLON.Vector2(0, 0);
-        //this.targetSize = new BABYLON.Vector2(0, 0);
-
     }
 
     update(dt) {
         if (!this.parentMesh) {
             return;
         }
+
+        let posv = this.targetPosition.subtract(this.position);
+        let posl = posv.length();
+
+        let velocity = dt * 100.0;
+        let stepsCount = posl / velocity;
+
+        if(posl > 1.0){
+            posv.normalize();
+            let posStep = posl / stepsCount;
+            posv.scaleInPlace(posStep);
+            this.position.addInPlace(posv);
+        }
+
         this.parentMesh.position.x = this.position.x;
         this.parentMesh.position.y = this.position.y;
         this.parentMesh.rotation.z = this.angle;

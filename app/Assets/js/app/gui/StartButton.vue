@@ -23,7 +23,7 @@ export default {
 .start-button {
     pointer-events: auto;
     position: absolute;
-    top: 1200px;
+    top: 1400px;
     left: 460px;
     width: 160px;
     height: 160px;

@@ -9,6 +9,7 @@ import axios from "axios";
 import ImageShadowMaterial from "@app/scene/Scenes/Materials/ImageShadowMaterial";
 import ImageShadedMaterial from "@app/scene/Scenes/Materials/ImageShadedMaterial";
 import DemoModeItemStructure from "@app/scene/Structures/DemoModeItemStructure";
+import DemoScenePostProcess from '@shaders/demoScenePostProcess.frag';
 
 export default class DemoScene extends BaseScene {
     constructor(mainScene, name) {
@@ -21,7 +22,7 @@ export default class DemoScene extends BaseScene {
         this.config = {
             yBaseline: 60,
             itemMaxWidth: 16,
-            itemAspect: 177/100,
+            itemAspect: 177 / 100,
             itemMaxAngle: 5,
             itemMarginX: 1,
             itemMarginY: 3,
@@ -45,47 +46,40 @@ export default class DemoScene extends BaseScene {
     createScene() {
         this.scene.clearColor = new BABYLON.Color3(0.3, 0.3, 0.4);
 
-        axios
-            .get("/api/sync-images").then(response => {
-            if (response.status === 200) {
-                for (const image of response.data) {
-                    this.insertNewItem(image);
-                }
-            }
-        });
+        // axios
+        //     .get("/api/sync-images").then(response => {
+        //     if (response.status === 200) {
+        //         for (const image of response.data) {
+        //             this.insertNewItem(image);
+        //         }
+        //     }
+        // });
 
-        // const parameters = {
-        //     edge_blur: 5.0,
-        // };
-        // const lensEffect = new BABYLON.LensRenderingPipeline('lensEffects', parameters, this.scene, 1.0, this.scene.activeCamera);
-
-        // const kernel = 32.0;
-        // const postProcess = new BABYLON.BlurPostProcess("Horizontal blur", new BABYLON.Vector2(1.0, 0), kernel, 0.25, this.scene.activeCamera);
+        this.createPostProcessEffect();
 
         this.backdropMaterial = new BasicMaterial(this.scene, "ground");
         this.backdropMaterial.setDiffuseMap(BackdropTexture);
-
-        this.planeMaterial = new BasicMaterial(this.scene, "pictureElement");
-        this.planeMaterial.setDiffuseMap(TestTexture);
 
         this.itemShadowMaterial = new ImageShadowMaterial(this.scene, "itemShadow");
         this.itemShadowMaterial.setDiffuseMap(BackdropTexture);
 
         this.createGround();
 
-        //this.insertNewItem('d98bdc');
+        this.insertNewItem('d98bdc');
+        this.insertNewItem('d98bdc');
+        this.insertNewItem('d98bdc');
+        this.insertNewItem('d98bdc');
+        this.insertNewItem('d98bdc');
+        this.insertNewItem('d98bdc');
+        this.insertNewItem('d98bdc');
         // this.insertNewItem('d98bdc');
         // this.insertNewItem('d98bdc');
         // this.insertNewItem('d98bdc');
         // this.insertNewItem('d98bdc');
         // this.insertNewItem('d98bdc');
-        // this.insertNewItem('d98bdc');
-        // this.insertNewItem('d98bdc');
-        // this.insertNewItem('d98bdc');
-        // this.insertNewItem('d98bdc');
-        // this.insertNewItem('d98bdc');
-        // this.insertNewItem('d98bdc');
-
+        window.onclick = function(){
+            this.insertNewItem('d98bdc');
+        }.bind(this);
     }
 
     createGround() {
@@ -137,11 +131,10 @@ export default class DemoScene extends BaseScene {
         const leftStartPos = -(2 * this.config.itemMaxWidth + this.config.itemMaxWidth * 0.5 + this.config.itemMarginX * 2);
         const left = leftStartPos + columnIndex * this.config.itemMaxWidth + this.config.itemMaxWidth * 0.5 + columnIndex * this.config.itemMarginX;
         const baselineJitter = this.config.yBaseline + ((this.config.baselineMaxJitter * 0.5) - Math.random() * this.config.baselineMaxJitter);
-        const initialY = 120.0;   //TODO: Update when transitions are working
 
         const item = new DemoModeItemStructure();
         item.xInitial = left;
-        item.yInitial = baselineJitter;
+        item.yInitial = 120.0;
         item.xFinal = left;
         item.yFinal = baselineJitter;
 
@@ -162,7 +155,7 @@ export default class DemoScene extends BaseScene {
             for (let i = 1; i < this.itemColumns[columnIndex].length; i++) {
                 const halfHeight = this.itemColumns[columnIndex][i].size.y * 0.5;
                 const posY = startY - (halfHeight + startHalfHeight + this.config.itemMarginY);
-                this.itemColumns[columnIndex][i].position.y = posY; //TODO: Replace with target when transition are working
+                this.itemColumns[columnIndex][i].targetPosition.y = posY;
                 startY = posY;
                 startHalfHeight = halfHeight;
             }
@@ -209,4 +202,14 @@ export default class DemoScene extends BaseScene {
         material.shaderMaterial.setTexture("diffuseMap", texture);
         return material;
     }
+
+    createPostProcessEffect() {
+        BABYLON.Effect.ShadersStore["demoSceneBlurFragmentShader"] = DemoScenePostProcess;
+        const postProcess = new BABYLON.PostProcess("My custom post process", "demoSceneBlur", ["screenSize", "radius"], null, 1.0, this.scene.activeCamera);
+        postProcess.onApply = function (effect) {
+            effect.setFloat2("screenSize", postProcess.width, postProcess.height);
+            effect.setFloat("radius", 1.0);
+        };
+    }
+
 }
