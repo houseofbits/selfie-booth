@@ -5,11 +5,18 @@ export default class DemoModeItem {
     constructor(imageId) {
         this.imageId = imageId;
         this.parentMesh = null;
+        this.parentShadowMesh = null;
         this.position = new BABYLON.Vector2(0, 0);
         this.size = new BABYLON.Vector2(0, 0);
         this.angle = 0;
 
         this.targetPosition = new BABYLON.Vector2(0, 0);
+
+        this.flip = false;
+        this.flipPos = 0.0;
+        this.flipSpeed = 1.0;
+
+        this.removed = false;
     }
 
     update(dt) {
@@ -33,6 +40,23 @@ export default class DemoModeItem {
         this.parentMesh.position.x = this.position.x;
         this.parentMesh.position.y = this.position.y;
         this.parentMesh.rotation.z = this.angle;
+
+        if(this.flip) {
+            this.flipPos += (dt * this.flipSpeed);
+            if (this.flipPos > (Math.PI * 2)) {
+                this.flipPos = 0;
+                this.flip = false;
+            }
+            this.parentMesh.rotation.x = this.flipPos;
+        } else {
+            this.parentMesh.rotation.x = 0;
+        }
+    }
+
+    setFlip(speed) {
+        this.flipSpeed = speed;
+        this.flipPos = 0;
+        this.flip = true;
     }
 
     setMesh(mesh) {

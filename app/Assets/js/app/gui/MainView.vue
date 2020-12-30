@@ -1,13 +1,13 @@
 <template>
     <div>
 
-<!--        <start-button :is-visible="isStartButtonVisible" @start="start"/>-->
+        <start-button :is-visible="isStartButtonVisible" @start="start"/>
 
-<!--        <confirm-button :is-visible="isConfirmationButtonVisible" @confirm="confirm"/>-->
+        <confirm-button :is-visible="isConfirmationButtonVisible" @confirm="confirm"/>
 
-<!--        <languages :is-visible="!isCaptureViewVisible"/>-->
+        <languages :is-visible="!isCaptureViewVisible"/>
 
-<!--        <capture-view :class="{visible: isCaptureViewVisible}" :open="isCaptureViewVisible" class="capture-view"/>-->
+        <capture-view :class="{visible: isCaptureViewVisible}" :open="isCaptureViewVisible" @captureViewClose="reset" class="capture-view"/>
 
     </div>
 </template>
@@ -39,7 +39,7 @@ export default {
         },
         isConfirmationButtonVisible() {
             return !this.isCaptureViewVisible && this.isConfirmationVisible;
-        },
+        }
     },
     methods: {
         start() {
@@ -49,6 +49,11 @@ export default {
             this.isConfirmationVisible = false;
             this.isCaptureViewVisible = true;
             MainSceneInstance.onThemeSelected('AmberScene');
+        },
+        reset() {
+            this.isCaptureViewVisible = false;
+            this.isConfirmationVisible = false;
+            MainSceneInstance.onThemeSelected('DemoScene');
         }
     }
 }

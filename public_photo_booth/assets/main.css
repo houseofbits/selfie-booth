@@ -6336,6 +6336,10 @@ body {
     background-color: #c7c7c7;
     /*overflow: hidden;*/
 }
+.finish-button {
+    top: 30px;
+    left: 30px;
+}
 
 .languages[data-v-f668b85a] {
   width: 1080px;
@@ -6358,7 +6362,7 @@ body {
     margin: 20px;
     border-radius: 15px;
     box-shadow: 0 10px 13px -7px #000000, 0px 5px 15px 5px rgba(0, 0, 0, 0.32);
-    opacity: 0.8;
+    opacity: 0.6;
     transition: all 200ms linear;
 }
 .languages div.lv[data-v-f668b85a] {

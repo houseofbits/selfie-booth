@@ -29,3 +29,4 @@ $routes->get('/api/qr/(:segment)/(:alpha)/(:alphanum)', 'ApiController::getQRCod
 $routes->post('/api/validate', 'ApiController::validateEmail');
 
 $routes->get('/api/sync-images', 'ApiController::syncListOfImages');
+$routes->post('/api/sync-images', 'ApiController::syncListOfImages');

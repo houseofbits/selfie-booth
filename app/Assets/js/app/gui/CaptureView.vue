@@ -1,5 +1,8 @@
 <template>
     <div class="gui-frame">
+        <text-button class="finish-button green" icon="fas fa-backspace"
+                     @click="finishCapture">{{ lang('capture.finish-button') }}</text-button>
+
         <dynamic-background :open="isDynamicBackgroundOpen" :state="dynamicBackgroundState"/>
         <gallery-collapsible :images="images"
                              :maximize-selected-image="isExpandedViewOpen"
@@ -35,9 +38,11 @@ import {GalleryActions} from './Constants.js';
 import DynamicBackground from './DynamicBackground/DynamicBackground.vue';
 import ImageDataSyncService from "./Services/ImageDataSyncService";
 import EmailService from "./Services/EmailService.js";
+import TextButton from './TextButton.vue';
 
 export default {
     name: "CaptureView",
+    inject: ['lang'],
     data() {
         return {
             images: [],
@@ -59,7 +64,8 @@ export default {
         SnapshotImage,
         SharingViewRedirect,
         SharingViewEmail,
-        DynamicBackground
+        DynamicBackground,
+        TextButton
     },
     props: {
         open: {
@@ -82,6 +88,9 @@ export default {
         }
     },
     methods: {
+        finishCapture() {
+            this.$emit('captureViewClose');
+        },
         resetView() {
             this.selectedImage = null;
             this.isGalleryOpen = false;
@@ -251,5 +260,10 @@ body {
     user-select: none;
     background-color: #c7c7c7;
     /*overflow: hidden;*/
+}
+
+.finish-button {
+    top: 30px;
+    left: 30px;
 }
 </style>

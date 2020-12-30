@@ -65,7 +65,7 @@ export default {
         margin: 20px;
         border-radius: 15px;
         box-shadow: 0 10px 13px -7px #000000, 0px 5px 15px 5px rgba(0, 0, 0, 0.32);
-        opacity: 0.8;
+        opacity: 0.6;
         transition: all 200ms linear;
 
         &.lv {

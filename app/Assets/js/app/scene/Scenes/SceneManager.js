@@ -52,15 +52,11 @@ export default class SceneManager {
     }
 
     setSceneActive(s) {
-        for (const scene of this.scenes) {
-            scene.setEnabled(false);
-        }
         this.activeScene = s;
-        this.activeScene.setEnabled(true);
+        this.activeScene.onSceneActivated();
     }
 
     addScene(scene) {
-        scene.setEnabled(false);
         this.scenes.push(scene);
     }
 }

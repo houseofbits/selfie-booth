@@ -63,10 +63,7 @@ void main(void) {
 
     float level = 1.0;
 
-
     vec2 skewedUV = vUV - (lightVecProj * 0.02);
-
-
 
     if (skewedUV.x > boxMin.x && skewedUV.y > boxMin.y &&
     skewedUV.x < boxMax.x && skewedUV.y < boxMax.y) {
@@ -103,6 +100,11 @@ void main(void) {
 
     vec3 map = texture2D(diffuseMap, vUV).xyz;
 
-    gl_FragColor = vec4(vec3(0.0), hardness * level);
+    float opacity = 1.0;
+    if (dot(lightVec, vNormalW) < 0.0) {
+        opacity = 0.0;
+    }
+
+    gl_FragColor = vec4(vec3(0.0), hardness * level * opacity);
     //gl_FragColor = vec4(vec3(hardness * level), 1.0);
 }

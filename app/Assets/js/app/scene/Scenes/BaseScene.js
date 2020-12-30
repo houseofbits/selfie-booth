@@ -22,8 +22,8 @@ export default class BaseScene {
         return this.theme;
     }
 
-    setEnabled(enabled) {
-        this.parentNode.setEnabled(enabled);
+    onSceneActivated() {
+
     }
 
     setAsChild(node) {

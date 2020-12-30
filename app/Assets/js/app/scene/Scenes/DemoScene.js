@@ -1,7 +1,6 @@
 import BaseScene from "/js/app/scene/Scenes/BaseScene";
 import * as BABYLON from 'babylonjs';
 import BackdropTexture from '@images/static-bg.jpg';
-import TestTexture from '@images/test-image.jpg';
 import ImageEdgesMaskTexture from '@images/image-thumbnail-edges.jpg';
 import BasicMaterial from "@app/scene/Scenes/Materials/BasicMaterial";
 import DemoModeItem from "@app/scene/Structures/DemoModeItem";
@@ -15,10 +14,19 @@ export default class DemoScene extends BaseScene {
     constructor(mainScene, name) {
         super(mainScene, name);
 
-        let camera = new BABYLON.ArcRotateCamera("Camera", Math.PI * 0.5, Math.PI * 0.5, 200, new BABYLON.Vector3(0, 0, 0), this.scene);
+        let camera = new BABYLON.ArcRotateCamera("Camera",
+            1.562905159080936,
+            1.8292730096422125,
+            189.99967542243158,
+            new BABYLON.Vector3(-0.11030575385577211, -8.87722000153747, -2.048547710987432),
+            this.scene);
         //camera.attachControl(mainScene.canvas, true);
 
         this.itemColumns = [[], [], [], [], []];
+        this.itemsForRemoval = [];
+        this.lastInsertColumnIndex = 0;
+        this.imageSyncData = [];
+
         this.config = {
             yBaseline: 60,
             itemMaxWidth: 16,
@@ -42,18 +50,13 @@ export default class DemoScene extends BaseScene {
         }
     }
 
+    onSceneActivated() {
+        this.syncItems();
+    }
+
     //@clean up
     createScene() {
         this.scene.clearColor = new BABYLON.Color3(0.3, 0.3, 0.4);
-
-        // axios
-        //     .get("/api/sync-images").then(response => {
-        //     if (response.status === 200) {
-        //         for (const image of response.data) {
-        //             this.insertNewItem(image);
-        //         }
-        //     }
-        // });
 
         this.createPostProcessEffect();
 
@@ -65,21 +68,9 @@ export default class DemoScene extends BaseScene {
 
         this.createGround();
 
-        this.insertNewItem('d98bdc');
-        this.insertNewItem('d98bdc');
-        this.insertNewItem('d98bdc');
-        this.insertNewItem('d98bdc');
-        this.insertNewItem('d98bdc');
-        this.insertNewItem('d98bdc');
-        this.insertNewItem('d98bdc');
-        // this.insertNewItem('d98bdc');
-        // this.insertNewItem('d98bdc');
-        // this.insertNewItem('d98bdc');
-        // this.insertNewItem('d98bdc');
-        // this.insertNewItem('d98bdc');
-        window.onclick = function(){
-            this.insertNewItem('d98bdc');
-        }.bind(this);
+        // window.onclick = function () {
+        //     this.insertNewItem('d98bdc');
+        // }.bind(this);
     }
 
     createGround() {
@@ -89,6 +80,23 @@ export default class DemoScene extends BaseScene {
             sideOrientation: BABYLON.Mesh.DOUBLESIDE
         }, this.scene);
         ground.material = this.backdropMaterial.getMaterial();
+    }
+
+    syncItems() {
+        const data = JSON.stringify({data: this.imageSyncData});
+        axios
+            .post("/api/sync-images", data, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(response => {
+            if (response.status === 200) {
+                this.imageSyncData = this.imageSyncData.concat(response.data);
+                for (const image of response.data) {
+                    this.insertNewItem(image);
+                }
+            }
+        });
     }
 
     //Insert new image into one of columns and recalculate other item positions
@@ -101,29 +109,23 @@ export default class DemoScene extends BaseScene {
             .setTargetPosition(itemStructure.xFinal, itemStructure.yFinal)
             .setSize(itemStructure.width, itemStructure.height)
             .setAngle(itemStructure.angle);
-        this.itemColumns[columnIndex].push(item);
-
+        this.itemColumns[columnIndex].unshift(item);
         this.createAsyncItemMaterial(item, (material) => {
             const mesh = this.createItemMesh(item);
             this.calculateColumnItemPositions(columnIndex);
+            this.calculateColumnItemTransforms(columnIndex);
             mesh.material = material.getMaterial();
             mesh.setEnabled(true);
             item.setMesh(mesh);
+            this.cleanUpItems();
         });
     }
 
     //Get column index for new item
     //@return column index with least number of items
     getNewItemColumn() {
-        let index = 0;
-        let num = 1000;
-        for (let i = 0; i < this.itemColumns.length; i++) {
-            if (num > this.itemColumns[i].length) {
-                num = this.itemColumns[i].length;
-                index = i;
-            }
-        }
-        return index;
+        this.lastInsertColumnIndex = (this.lastInsertColumnIndex + Math.ceil(Math.random() * 2.0)) % 5;
+        return this.lastInsertColumnIndex;
     }
 
     //Get position of new item
@@ -158,6 +160,18 @@ export default class DemoScene extends BaseScene {
                 this.itemColumns[columnIndex][i].targetPosition.y = posY;
                 startY = posY;
                 startHalfHeight = halfHeight;
+
+                if (Math.random() > 0.7) {
+                    this.itemColumns[columnIndex][i].setFlip(Math.max(5.0, Math.random() * 20.0));
+                }
+            }
+        }
+    }
+
+    calculateColumnItemTransforms(columnIndex) {
+        if (this.itemColumns[columnIndex].length > 1) {
+            for (let i = 1; i < this.itemColumns[columnIndex].length; i++) {
+                this.itemColumns[columnIndex][i].setAngle(this.config.itemMaxAngle - Math.random() * (this.config.itemMaxAngle * 2));
             }
         }
     }
@@ -169,7 +183,7 @@ export default class DemoScene extends BaseScene {
             width: item.size.x, height: item.size.y,
             sideOrientation: BABYLON.Mesh.DOUBLESIDE
         }, this.scene);
-        plane.locallyTranslate(new BABYLON.Vector3(0, 0, 1));
+        plane.locallyTranslate(new BABYLON.Vector3(0, 0, 10));
         // Initially disabled.
         // Enable after texture is loaded and mesh is ready to be rendered
         plane.setEnabled(false);
@@ -186,6 +200,8 @@ export default class DemoScene extends BaseScene {
         shadowPlane.isPickable = false;
         shadowPlane.locallyTranslate(new BABYLON.Vector3(0, 0, -0.1));
         shadowPlane.material = this.itemShadowMaterial.getMaterial();
+        item.parentShadowMesh = shadowPlane;
+        return shadowPlane;
     }
 
     //Create new item material
@@ -205,11 +221,43 @@ export default class DemoScene extends BaseScene {
 
     createPostProcessEffect() {
         BABYLON.Effect.ShadersStore["demoSceneBlurFragmentShader"] = DemoScenePostProcess;
-        const postProcess = new BABYLON.PostProcess("My custom post process", "demoSceneBlur", ["screenSize", "radius"], null, 1.0, this.scene.activeCamera);
+        const postProcess = new BABYLON.PostProcess("My custom post process",
+            "demoSceneBlur",
+            ["screenSize", "radius"],
+            null,
+            1.0,
+            this.scene.activeCamera);
         postProcess.onApply = function (effect) {
             effect.setFloat2("screenSize", postProcess.width, postProcess.height);
             effect.setFloat("radius", 1.0);
         };
     }
 
+    cleanUpItems() {
+        for (const column of this.itemColumns) {
+            while (column.length > 10) {
+                let item = column.pop();
+                if (item.parentMesh) {
+                    item.parentMesh.material.dispose();
+                    item.parentMesh.dispose();
+                    item.parentMesh = null;
+                } else {
+                    this.itemsForRemoval.push(item);
+                }
+            }
+        }
+        for (const removalItem of this.itemsForRemoval) {
+            if (removalItem.parentMesh !== null) {
+                if (removalItem.parentShadowMesh !== null) {
+                    removalItem.parentShadowMesh.dispose();
+                    removalItem.parentShadowMesh = null;
+                }
+                removalItem.parentMesh.material.dispose();
+                removalItem.parentMesh.dispose();
+                removalItem.parentMesh = null;
+                removalItem.removed = true;
+            }
+        }
+        this.itemsForRemoval = this.itemsForRemoval.filter(item => !item.removed);
+    }
 }

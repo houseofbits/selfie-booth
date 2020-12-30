@@ -16,19 +16,25 @@ uniform sampler2D maskMap;
 
 void main(void) {
 
-    vec3 lightPosition = vec3(0., 30., 50.);
+    vec3 lightPosition = vec3(0., 30., 70.);
 
     vec3 lightVec = normalize(lightPosition - vPositionW);
 
-    float ndotl = clamp(dot(lightVec, vNormalW), 0.0, 1.0);
+    vec3 n = vNormalW;
+
+    float ndotl = clamp(dot(lightVec, n), 0.0, 1.0);
 
     vec4 map = texture2D(diffuseMap, vUV).xyzw;
 
     vec3 maskMap = texture2D(maskMap, vUV).xyz;
         
-    float fakeSpecular = pow(ndotl, 20.0);
+    float fakeSpecular = pow(ndotl, 10.0);
 
-    vec3 color = (map.xyz * ndotl) + (fakeSpecular * 0.2);
+    vec3 color = (map.xyz * ndotl) + (fakeSpecular * 0.3);
+
+    if(dot(lightVec, n) < 0.0) {
+        color = map.xyz;
+    }
 
     gl_FragColor = vec4(color, maskMap.x);
 }

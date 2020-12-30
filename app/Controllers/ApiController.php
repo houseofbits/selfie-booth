@@ -16,10 +16,10 @@ class ApiController extends ResourceController
 {
     protected $format = 'json';
 
-    /** @var EmailService  */
+    /** @var EmailService */
     protected $emailService;
 
-    /** @var ImageService  */
+    /** @var ImageService */
     protected $imageService;
 
     public function __construct()
@@ -90,8 +90,9 @@ class ApiController extends ResourceController
 
     public function syncListOfImages()
     {
-        $data = $this->imageService->getListOfImages();
-
-        return $this->respond($data);
+        $images = $this->imageService->getListOfImages();
+        $inputData = $this->request->getJSON();
+        $result = $this->imageService->getDiffListOfImages($inputData->data ?? [], $images);
+        return $this->respond($result);
     }
 }

@@ -116,6 +116,16 @@ class ImageService
     {
         return ImageModel::findAllIndexes();
     }
+
+    /**
+     * @param string[] $source
+     * @param string[] $destination
+     * @return array
+     */
+    public function getDiffListOfImages(array $source, array $destination): array
+    {
+        return array_values(array_diff($destination, $source));
+    }
 }
 
 
