@@ -52,6 +52,9 @@ export default class SceneManager {
     }
 
     setSceneActive(s) {
+        if(this.activeScene && this.activeScene !== s) {
+            this.activeScene.onSceneDeactivated();
+        }
         this.activeScene = s;
         this.activeScene.onSceneActivated();
     }

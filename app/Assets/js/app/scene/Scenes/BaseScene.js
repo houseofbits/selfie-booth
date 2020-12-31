@@ -26,6 +26,10 @@ export default class BaseScene {
 
     }
 
+    onSceneDeactivated() {
+
+    }
+
     setAsChild(node) {
         node.parent = this.parentNode;
     }

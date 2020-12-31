@@ -13,8 +13,8 @@ uniform mat4 world;
 
 // Refs
 uniform vec3 cameraPosition;
-
 uniform sampler2D diffuseMap;
+uniform sampler2D maskMap;
 
 const vec2 boxMin = vec2(0.17, 0.1);
 const vec2 boxMax = vec2(0.83, 0.9);
@@ -49,7 +49,7 @@ void main(void) {
 
     mat3 invTBN = inverse(TBN);
 
-    vec3 lightPosition = vec3(0., 30., 50.);
+    vec3 lightPosition = vec3(0., 30., 60.);
 
     vec3 lightVec = normalize(lightPosition - vPositionW);
 
@@ -93,18 +93,27 @@ void main(void) {
                 val = length(skewedUV - vec2(boxMax.x, boxMax.y));
             }
         }
-
         level = 1.0 - (val / spread);
-
     }
 
-    vec3 map = texture2D(diffuseMap, vUV).xyz;
+    float vdotn = dot(normalW, normalize(cameraPosition - vPositionW));
+    float shading = clamp(ndotl + pow(1.0 - vdotn, 1.0), 0.0, 1.0);
 
-    float opacity = 1.0;
-    if (dot(lightVec, vNormalW) < 0.0) {
-        opacity = 0.0;
+    vec2 scaledUV = vec2(vUV.x * 1.4, vUV.y * 1.2) - vec2(0.2, 0.1);
+    vec3 maskMap = texture2D(maskMap, scaledUV).xyz;
+    vec3 map = texture2D(diffuseMap, scaledUV).xyz;
+
+    float primarySpecular = pow(ndotl, 10.0);
+    float secondarySpecular = pow(1.0 - vdotn, 1.0);
+    vec3 colorMap = (map.xyz * shading) + (primarySpecular * 0.3) + (secondarySpecular * 0.5);
+
+    if(scaledUV.x < 0.0 || scaledUV.y < 0.0 || scaledUV.x > 1.0 || scaledUV.y > 1.0) {
+        maskMap = vec3(0.0);
     }
 
-    gl_FragColor = vec4(vec3(0.0), hardness * level * opacity);
-    //gl_FragColor = vec4(vec3(hardness * level), 1.0);
+    float opacity = level * ndotl + maskMap.x;
+
+    vec3 color = mix(vec3(0.0), colorMap, maskMap.x);
+
+    gl_FragColor = vec4(color, opacity);
 }

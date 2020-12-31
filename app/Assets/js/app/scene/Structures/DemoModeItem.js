@@ -13,6 +13,7 @@ export default class DemoModeItem {
         this.targetPosition = new BABYLON.Vector2(0, 0);
 
         this.flip = false;
+        this.flipDirection = true;
         this.flipPos = 0.0;
         this.flipSpeed = 1.0;
 
@@ -42,21 +43,31 @@ export default class DemoModeItem {
         this.parentMesh.rotation.z = this.angle;
 
         if(this.flip) {
-            this.flipPos += (dt * this.flipSpeed);
-            if (this.flipPos > (Math.PI * 2)) {
-                this.flipPos = 0;
-                this.flip = false;
+
+            if(this.flipDirection) {
+                this.flipPos += (dt * this.flipSpeed);
+                if (this.flipPos > (Math.PI * 2)) {
+                    this.flipPos = 0;
+                    this.flip = false;
+                }
+            } else {
+                this.flipPos -= (dt * this.flipSpeed);
+                if (this.flipPos < -(Math.PI * 2)) {
+                    this.flipPos = 0;
+                    this.flip = false;
+                }
             }
-            this.parentMesh.rotation.x = this.flipPos;
+            this.parentMesh.rotation.y = this.flipPos;
         } else {
-            this.parentMesh.rotation.x = 0;
+            this.parentMesh.rotation.y = 0;
         }
     }
 
-    setFlip(speed) {
+    setFlip(speed, direction) {
         this.flipSpeed = speed;
         this.flipPos = 0;
         this.flip = true;
+        this.flipDirection = direction;
     }
 
     setMesh(mesh) {

@@ -5,7 +5,6 @@ import ImageEdgesMaskTexture from '@images/image-thumbnail-edges.jpg';
 import BasicMaterial from "@app/scene/Scenes/Materials/BasicMaterial";
 import DemoModeItem from "@app/scene/Structures/DemoModeItem";
 import axios from "axios";
-import ImageShadowMaterial from "@app/scene/Scenes/Materials/ImageShadowMaterial";
 import ImageShadedMaterial from "@app/scene/Scenes/Materials/ImageShadedMaterial";
 import DemoModeItemStructure from "@app/scene/Structures/DemoModeItemStructure";
 import DemoScenePostProcess from '@shaders/demoScenePostProcess.frag';
@@ -26,6 +25,7 @@ export default class DemoScene extends BaseScene {
         this.itemsForRemoval = [];
         this.lastInsertColumnIndex = 0;
         this.imageSyncData = [];
+        this.shuffleTimer = null;
 
         this.config = {
             yBaseline: 60,
@@ -52,6 +52,11 @@ export default class DemoScene extends BaseScene {
 
     onSceneActivated() {
         this.syncItems();
+        this.createShuffleTimer();
+    }
+
+    onSceneDeactivated() {
+        clearTimeout(this.shuffle());
     }
 
     //@clean up
@@ -63,13 +68,11 @@ export default class DemoScene extends BaseScene {
         this.backdropMaterial = new BasicMaterial(this.scene, "ground");
         this.backdropMaterial.setDiffuseMap(BackdropTexture);
 
-        this.itemShadowMaterial = new ImageShadowMaterial(this.scene, "itemShadow");
-        this.itemShadowMaterial.setDiffuseMap(BackdropTexture);
-
         this.createGround();
 
         // window.onclick = function () {
-        //     this.insertNewItem('d98bdc');
+        //     //this.insertNewItem('d98bdc');
+        //     //this.shuffle();
         // }.bind(this);
     }
 
@@ -161,8 +164,10 @@ export default class DemoScene extends BaseScene {
                 startY = posY;
                 startHalfHeight = halfHeight;
 
-                if (Math.random() > 0.7) {
-                    this.itemColumns[columnIndex][i].setFlip(Math.max(5.0, Math.random() * 20.0));
+                if (Math.random() > 0.5) {
+                    const flipSpeed = Math.max(5.0, Math.random() * 10.0);
+                    const flipDirection = (Math.random() > 0.5);
+                    this.itemColumns[columnIndex][i].setFlip(flipSpeed, flipDirection);
                 }
             }
         }
@@ -180,28 +185,15 @@ export default class DemoScene extends BaseScene {
     // @return Mesh instance
     createItemMesh(item) {
         let plane = BABYLON.MeshBuilder.CreatePlane("plane" + item.imageId, {
-            width: item.size.x, height: item.size.y,
+//            width: item.size.x, height: item.size.y,
+            width: item.size.x * 1.4, height: item.size.y * 1.2,
             sideOrientation: BABYLON.Mesh.DOUBLESIDE
         }, this.scene);
         plane.locallyTranslate(new BABYLON.Vector3(0, 0, 10));
         // Initially disabled.
         // Enable after texture is loaded and mesh is ready to be rendered
         plane.setEnabled(false);
-        this.createItemShadow(item, plane);
         return plane;
-    }
-
-    createItemShadow(item, parentMesh) {
-        let shadowPlane = BABYLON.MeshBuilder.CreatePlane("shadow" + item.imageId, {
-            width: item.size.x * 1.4, height: item.size.y * 1.2,
-            sideOrientation: BABYLON.Mesh.DOUBLESIDE
-        }, this.scene);
-        shadowPlane.parent = parentMesh;
-        shadowPlane.isPickable = false;
-        shadowPlane.locallyTranslate(new BABYLON.Vector3(0, 0, -0.1));
-        shadowPlane.material = this.itemShadowMaterial.getMaterial();
-        item.parentShadowMesh = shadowPlane;
-        return shadowPlane;
     }
 
     //Create new item material
@@ -259,5 +251,33 @@ export default class DemoScene extends BaseScene {
             }
         }
         this.itemsForRemoval = this.itemsForRemoval.filter(item => !item.removed);
+    }
+
+    shuffle() {
+        const columnIndex = Math.floor(Math.random() * 5.0);
+
+        if(this.itemColumns[columnIndex].length < 4) {
+            return;
+        }
+
+        const item = this.itemColumns[columnIndex].pop();
+        const baselineJitter = this.config.yBaseline + ((this.config.baselineMaxJitter * 0.5) - Math.random() * this.config.baselineMaxJitter);
+
+        item.setPosition(item.position.x, 120.0);
+        item.setTargetPosition(item.position.x, baselineJitter);
+
+        this.itemColumns[columnIndex].unshift(item);
+
+        this.calculateColumnItemPositions(columnIndex);
+        this.calculateColumnItemTransforms(columnIndex);
+    }
+
+    createShuffleTimer() {
+        this.shuffle();
+        if (this.shuffleTimer !== null) {
+            clearTimeout(this.shuffleTimer);
+        }
+        const time = 1000 + Math.random() * 2000;
+        this.shuffleTimer = setTimeout(this.createShuffleTimer.bind(this), time);
     }
 }
