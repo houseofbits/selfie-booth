@@ -17,10 +17,5 @@ uniform vec3 cameraPosition;
 uniform sampler2D diffuseMap;
 
 void main(void) {
-
-    //vec3 viewDirectionW = normalize(cameraPosition - vPositionW);
-
-    vec3 map = texture2D(diffuseMap, vUV).xyz;
-
-    gl_FragColor = vec4(map, 1.);
+    gl_FragColor =  texture2D(diffuseMap, vUV).xyzw;
 }

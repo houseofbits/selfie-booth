@@ -2,12 +2,15 @@ import BaseScene from "/js/app/scene/Scenes/BaseScene";
 import * as BABYLON from 'babylonjs';
 import BackdropTexture from '@images/static-bg.jpg';
 import ImageEdgesMaskTexture from '@images/image-thumbnail-edges.jpg';
+import LeafTexture from '@images/leaf_1.png';
 import BasicMaterial from "@app/scene/Scenes/Materials/BasicMaterial";
 import DemoModeItem from "@app/scene/Structures/DemoModeItem";
 import axios from "axios";
 import ImageShadedMaterial from "@app/scene/Scenes/Materials/ImageShadedMaterial";
 import DemoModeItemStructure from "@app/scene/Structures/DemoModeItemStructure";
 import DemoScenePostProcess from '@shaders/demoScenePostProcess.frag';
+import DemoModeLeafItem from "@app/scene/Structures/DemoModeLeafItem";
+import BasicAlphaMaterial from "@app/scene/Scenes/Materials/BasicAlphaMaterial";
 
 export default class DemoScene extends BaseScene {
     constructor(mainScene, name) {
@@ -26,6 +29,7 @@ export default class DemoScene extends BaseScene {
         this.lastInsertColumnIndex = 0;
         this.imageSyncData = [];
         this.shuffleTimer = null;
+        this.leafItems = [];
 
         this.config = {
             yBaseline: 60,
@@ -42,11 +46,13 @@ export default class DemoScene extends BaseScene {
 
     update(dt) {
         super.update(dt);
-
         for (const column of this.itemColumns) {
             for (const item of column) {
                 item.update(dt);
             }
+        }
+        for (const leaf of this.leafItems) {
+            leaf.update(dt);
         }
     }
 
@@ -61,10 +67,25 @@ export default class DemoScene extends BaseScene {
 
     //@clean up
     createScene() {
+
+        this.leafMaterial = new BasicAlphaMaterial(this.scene, "leaf");
+        this.leafMaterial.setDiffuseMap(LeafTexture);
+
+        this.createLeaf(0, 1);
+        this.createLeaf(-15, 1);
+        this.createLeaf(-10, 1);
+        this.createLeaf(-20, 1);
+        this.createLeaf(-30, 1);
+        this.createLeaf(10, 1);
+        this.createLeaf(15, 1);
+        this.createLeaf(20, 1);
+        this.createLeaf(30, 1);
+        this.createLeaf(35, 1);
+        this.createLeaf(-35, 1);
+
         this.scene.clearColor = new BABYLON.Color3(0.3, 0.3, 0.4);
 
         this.createPostProcessEffect();
-
         this.backdropMaterial = new BasicMaterial(this.scene, "ground");
         this.backdropMaterial.setDiffuseMap(BackdropTexture);
 
@@ -279,5 +300,24 @@ export default class DemoScene extends BaseScene {
         }
         const time = 1000 + Math.random() * 2000;
         this.shuffleTimer = setTimeout(this.createShuffleTimer.bind(this), time);
+    }
+
+    createLeaf(positionX, positionZ) {
+
+        let plane = BABYLON.MeshBuilder.CreatePlane("leaf", {
+            width: 12, height: 15,
+            sideOrientation: BABYLON.Mesh.DOUBLESIDE
+        }, this.scene);
+        plane.locallyTranslate(new BABYLON.Vector3(0, 0, positionZ));
+        plane.material = this.leafMaterial.getMaterial();
+
+        const leaf = new DemoModeLeafItem(positionX);
+
+        leaf.setMesh(plane)
+            .setSeed(0.5 + Math.random() * 2.0)
+            .setSpeed(10.0 + Math.random() * 20.0)
+            .setRotationSpeed(1.0 + Math.random());
+
+        this.leafItems.push(leaf);
     }
 }

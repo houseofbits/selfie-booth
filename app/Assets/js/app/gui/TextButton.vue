@@ -28,11 +28,14 @@ export default {
 <style lang="scss" scoped>
 
 .red .button .gradient {
-    background: linear-gradient(to bottom, #ff6759 0%, #a51010 63%, #d60404 100%);
+//    background: linear-gradient(to bottom, #ff6759 0%, #a51010 63%, #d60404 100%);
+    background-image: url('@images/red-button-bg.png');
 }
 
 .red .button .highlight {
-    background: linear-gradient(to bottom, rgba(254, 187, 187, 0.15) 0%, rgba(254, 144, 144, 0.20) 45%, rgba(255, 92, 92, 0.5) 100%);
+//    background: linear-gradient(to bottom, rgba(254, 187, 187, 0.15) 0%, rgba(254, 144, 144, 0.20) 45%, rgba(255, 92, 92, 0.5) 100%);
+    background-image: url('@images/red-button-hilight.png');
+    background-position: -5px -5px;
 }
 
 .red .button .line {
@@ -97,7 +100,8 @@ export default {
         height: 100%;
         border-radius: 40px;
         box-shadow: 0 5px 6px 3px rgba(0, 0, 0, 0.56);
-        background: linear-gradient(to bottom, #fcf0bd 0%, #968a75 100%);
+        //background: linear-gradient(to bottom, #fcf0bd 0%, #968a75 100%);
+        background: linear-gradient(to bottom, #fcf0bd 0%,#649686 46%,#649686 46%,#44665d 59%,#968a75 100%);
 
         .gradient {
             pointer-events: none;
@@ -115,11 +119,11 @@ export default {
             pointer-events: none;
             display: block;
             position: absolute;
-            top: 8px;
-            bottom: 25px;
-            right: 7px;
-            left: 7px;
-            border-radius: 40px 40px 50% 50%;
+            top: 7px;
+            bottom: 26px;
+            right: 9px;
+            left: 9px;
+            border-radius: 55px 55px 50% 50%;
         //    background: linear-gradient(to bottom, rgba(254, 187, 187, 0.15) 0%, rgba(254, 144, 144, 0.20) 45%, rgba(255, 92, 92, 0.5) 100%);
         }
 

@@ -4586,14 +4586,15 @@ readers do not read off random characters that represent icons */
   font-weight: 900; }
 
 .red .button .gradient[data-v-1f51f03e] {
-  background: linear-gradient(to bottom, #ff6759 0%, #a51010 63%, #d60404 100%);
+  background-image: url(/assets/images/red-button-bg.png);
 }
 .red .button .highlight[data-v-1f51f03e] {
-  background: linear-gradient(to bottom, rgba(254, 187, 187, 0.15) 0%, rgba(254, 144, 144, 0.2) 45%, rgba(255, 92, 92, 0.5) 100%);
+  background-image: url(/assets/images/red-button-hilight.png);
+  background-position: -5px -5px;
 }
 .red .button .line[data-v-1f51f03e] {
   background: linear-gradient(to bottom, #6d0019 0%, #8f0222 56%, #a90329 100%);
-  filter: drop-shadow(0 1px 3px #ff5c5c);
+  filter: drop-shadow(0 2px 4px #ff5c5c);
 }
 .blue .button .gradient[data-v-1f51f03e] {
   background: linear-gradient(to bottom, #ff59a6 0%, #2148f2 36%, #09448d 63%, #03689b 85%, #03689b 85%, #02917e 100%);
@@ -4603,7 +4604,7 @@ readers do not read off random characters that represent icons */
 }
 .blue .button .line[data-v-1f51f03e] {
   background: linear-gradient(to bottom, #332582 0%, #003ac4 100%);
-  filter: drop-shadow(0 1px 3px #5cfaff);
+  filter: drop-shadow(0 2px 4px #5cfaff);
 }
 .green .button .gradient[data-v-1f51f03e] {
   background: linear-gradient(to bottom, #55d2ce 0%, #5cad00 30%, #3f6d00 63%, #499900 100%);
@@ -4613,7 +4614,7 @@ readers do not read off random characters that represent icons */
 }
 .green .button .line[data-v-1f51f03e] {
   background: linear-gradient(to bottom, #003f06 0%, #0c5b00 100%);
-  filter: drop-shadow(0 1px 3px #5cfaff);
+  filter: drop-shadow(0 2px 4px #5cfaff);
 }
 .orange .button .gradient[data-v-1f51f03e] {
   background: linear-gradient(to bottom, #fc8e53 0%, #ea5507 28%, #935004 66%, #f95700 100%);
@@ -4623,7 +4624,7 @@ readers do not read off random characters that represent icons */
 }
 .orange .button .line[data-v-1f51f03e] {
   background: linear-gradient(to bottom, #841e1e 0%, #a33030 100%);
-  filter: drop-shadow(0 1px 3px #5cfaff);
+  filter: drop-shadow(0 2px 4px #5cfaff);
 }
 .button-with-shadow[data-v-1f51f03e] {
   width: 80px;
@@ -4661,11 +4662,11 @@ readers do not read off random characters that represent icons */
 .button-with-shadow .button .highlight[data-v-1f51f03e] {
       display: block;
       position: absolute;
-      top: 8px;
+      top: 6px;
       bottom: 25px;
       right: 7px;
       left: 7px;
-      border-radius: 40px 40px 50% 50%;
+      border-radius: 65px 65px 50% 50%;
 }
 .button-with-shadow .button .line[data-v-1f51f03e] {
       display: inline;
@@ -5175,10 +5176,11 @@ readers do not read off random characters that represent icons */
 }
 
 .red .button .gradient[data-v-01667337] {
-  background: linear-gradient(to bottom, #ff6759 0%, #a51010 63%, #d60404 100%);
+  background-image: url(/assets/images/red-button-bg.png);
 }
 .red .button .highlight[data-v-01667337] {
-  background: linear-gradient(to bottom, rgba(254, 187, 187, 0.15) 0%, rgba(254, 144, 144, 0.2) 45%, rgba(255, 92, 92, 0.5) 100%);
+  background-image: url(/assets/images/red-button-hilight.png);
+  background-position: -5px -5px;
 }
 .red .button .line[data-v-01667337] {
   background: linear-gradient(to bottom, #6d0019 0%, #8f0222 56%, #a90329 100%);
@@ -5232,7 +5234,7 @@ readers do not read off random characters that represent icons */
     height: 100%;
     border-radius: 40px;
     box-shadow: 0 5px 6px 3px rgba(0, 0, 0, 0.56);
-    background: linear-gradient(to bottom, #fcf0bd 0%, #968a75 100%);
+    background: linear-gradient(to bottom, #fcf0bd 0%, #649686 46%, #649686 46%, #44665d 59%, #968a75 100%);
 }
 .button-with-shadow .button .gradient[data-v-01667337] {
       pointer-events: none;
@@ -5248,11 +5250,11 @@ readers do not read off random characters that represent icons */
       pointer-events: none;
       display: block;
       position: absolute;
-      top: 8px;
-      bottom: 25px;
-      right: 7px;
-      left: 7px;
-      border-radius: 40px 40px 50% 50%;
+      top: 7px;
+      bottom: 26px;
+      right: 9px;
+      left: 9px;
+      border-radius: 55px 55px 50% 50%;
 }
 .button-with-shadow .button .line[data-v-01667337] {
       pointer-events: none;
@@ -6447,7 +6449,7 @@ body {
   height: 100px;
   text-align: center;
   -webkit-text-stroke: 1px rgba(0, 0, 0, 0.2);
-  filter: drop-shadow(0px 5px 3px rgba(0, 0, 0, 0.9));
+  filter: drop-shadow(0px 5px 3px black);
   opacity: 1;
   transition: opacity 500ms linear;
 }

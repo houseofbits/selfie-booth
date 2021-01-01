@@ -31,16 +31,19 @@ export default {
 <style lang="scss" scoped>
 
 .red .button .gradient {
-    background: linear-gradient(to bottom, #ff6759 0%, #a51010 63%, #d60404 100%);
+//    background: linear-gradient(to bottom, #ff6759 0%, #a51010 63%, #d60404 100%);
+    background-image: url('@images/red-button-bg.png');
 }
 
 .red .button .highlight {
-    background: linear-gradient(to bottom, rgba(254, 187, 187, 0.15) 0%, rgba(254, 144, 144, 0.20) 45%, rgba(255, 92, 92, 0.5) 100%);
+//    background: linear-gradient(to bottom, rgba(254, 187, 187, 0.15) 0%, rgba(254, 144, 144, 0.20) 45%, rgba(255, 92, 92, 0.5) 100%);
+    background-image: url('@images/red-button-hilight.png');
+    background-position: -5px -5px;
 }
 
 .red .button .line {
     background: linear-gradient(to bottom, #6d0019 0%, #8f0222 56%, #a90329 100%);
-    filter: drop-shadow(0 1px 3px rgba(255, 92, 92, 1));
+    filter: drop-shadow(0 2px 4px rgba(255, 92, 92, 1));
 }
 
 .blue .button .gradient {
@@ -53,7 +56,7 @@ export default {
 
 .blue .button .line {
     background: linear-gradient(to bottom, #332582 0%, #003ac4 100%);
-    filter: drop-shadow(0 1px 3px rgb(92, 250, 255));
+    filter: drop-shadow(0 2px 4px rgb(92, 250, 255));
 }
 
 .green .button .gradient {
@@ -66,7 +69,7 @@ export default {
 
 .green .button .line {
     background: linear-gradient(to bottom, rgba(0, 63, 6, 1) 0%, rgba(12, 91, 0, 1) 100%);
-    filter: drop-shadow(0 1px 3px rgb(92, 250, 255));
+    filter: drop-shadow(0 2px 4px rgb(92, 250, 255));
 }
 
 .orange .button .gradient {
@@ -79,7 +82,7 @@ export default {
 
 .orange .button .line {
     background: linear-gradient(to bottom, rgba(132, 30, 30, 1) 0%, rgba(163, 48, 48, 1) 100%);
-    filter: drop-shadow(0 1px 3px rgb(92, 250, 255));
+    filter: drop-shadow(0 2px 4px rgb(92, 250, 255));
 }
 
 .button-with-shadow {
@@ -120,11 +123,12 @@ export default {
         .highlight {
             display: block;
             position: absolute;
-            top: 8px;
+            top: 6px;
             bottom: 25px;
             right: 7px;
             left: 7px;
-            border-radius: 40px 40px 50% 50%;
+            //border-radius: 40px 40px 50% 50%;
+            border-radius: 65px 65px 50% 50%;
         }
 
         .line {
