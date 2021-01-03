@@ -40,7 +40,9 @@ export default class DemoModeItem {
 
         this.parentMesh.position.x = this.position.x;
         this.parentMesh.position.y = this.position.y;
-        this.parentMesh.rotation.z = this.angle;
+
+        this.parentMesh.rotationQuaternion = BABYLON.Quaternion.Identity();
+        this.parentMesh.rotate(BABYLON.Axis.Z, this.angle);
 
         if(this.flip) {
 
@@ -57,9 +59,7 @@ export default class DemoModeItem {
                     this.flip = false;
                 }
             }
-            this.parentMesh.rotation.y = this.flipPos;
-        } else {
-            this.parentMesh.rotation.y = 0;
+            this.parentMesh.rotate(BABYLON.Axis.Y, this.flipPos);
         }
     }
 

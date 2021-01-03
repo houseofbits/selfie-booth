@@ -47,11 +47,14 @@ export default {
 }
 
 .blue .button .gradient {
-    background: linear-gradient(to bottom, rgba(255, 89, 166, 1) 0%, rgba(33, 72, 242, 1) 36%, rgba(9, 68, 141, 1) 63%, rgba(3, 104, 155, 1) 85%, rgba(3, 104, 155, 1) 85%, rgba(2, 145, 126, 1) 100%);
+    //background: linear-gradient(to bottom, rgba(255, 89, 166, 1) 0%, rgba(33, 72, 242, 1) 36%, rgba(9, 68, 141, 1) 63%, rgba(3, 104, 155, 1) 85%, rgba(3, 104, 155, 1) 85%, rgba(2, 145, 126, 1) 100%);
+    background-image: url('@images/blue-button-bg.png');
 }
 
 .blue .button .highlight {
-    background: linear-gradient(to bottom, rgba(252, 156, 156, 0.15) 0%, rgba(253, 128, 174, 0.2) 45%, rgba(255, 94, 196, 0.5) 100%);
+    //background: linear-gradient(to bottom, rgba(252, 156, 156, 0.15) 0%, rgba(253, 128, 174, 0.2) 45%, rgba(255, 94, 196, 0.5) 100%);
+    background-image: url('@images/blue-button-hilight.png');
+    background-position: -5px -5px;
 }
 
 .blue .button .line {
@@ -60,29 +63,35 @@ export default {
 }
 
 .green .button .gradient {
-    background: linear-gradient(to bottom, rgba(85, 210, 206, 1) 0%, rgba(92, 173, 0, 1) 30%, rgba(63, 109, 0, 1) 63%, rgba(73, 153, 0, 1) 100%);
+    //background: linear-gradient(to bottom, rgba(85, 210, 206, 1) 0%, rgba(92, 173, 0, 1) 30%, rgba(63, 109, 0, 1) 63%, rgba(73, 153, 0, 1) 100%);
+    background-image: url('@images/green-button-bg.png');
 }
 
 .green .button .highlight {
-    background: linear-gradient(to bottom, rgba(254, 187, 187, 0.15) 0%, rgba(254, 144, 144, 0.20) 45%, rgba(255, 92, 92, 0.5) 100%);
+    //background: linear-gradient(to bottom, rgba(254, 187, 187, 0.15) 0%, rgba(254, 144, 144, 0.20) 45%, rgba(255, 92, 92, 0.5) 100%);
+    background-image: url('@images/green-button-hilight.png');
+    background-position: -5px -5px;
 }
 
 .green .button .line {
     background: linear-gradient(to bottom, rgba(0, 63, 6, 1) 0%, rgba(12, 91, 0, 1) 100%);
-    filter: drop-shadow(0 2px 4px rgb(92, 250, 255));
+    filter: drop-shadow(0 2px 4px rgb(193, 255, 92));
 }
 
 .orange .button .gradient {
-    background: linear-gradient(to bottom, rgba(252, 142, 83, 1) 0%, rgba(234, 85, 7, 1) 28%, rgba(147, 80, 4, 1) 66%, rgba(249, 87, 0, 1) 100%);
+    //background: linear-gradient(to bottom, rgba(252, 142, 83, 1) 0%, rgba(234, 85, 7, 1) 28%, rgba(147, 80, 4, 1) 66%, rgba(249, 87, 0, 1) 100%);
+    background-image: url('@images/orange-button-bg.png');
 }
 
 .orange .button .highlight {
-    background: linear-gradient(to bottom, rgba(254, 187, 187, 0.15) 0%, rgba(254, 144, 144, 0.20) 45%, rgba(255, 92, 92, 0.5) 100%);
+    //background: linear-gradient(to bottom, rgba(254, 187, 187, 0.15) 0%, rgba(254, 144, 144, 0.20) 45%, rgba(255, 92, 92, 0.5) 100%);
+    background-image: url('@images/orange-button-hilight.png');
+    background-position: -5px -5px;
 }
 
 .orange .button .line {
     background: linear-gradient(to bottom, rgba(132, 30, 30, 1) 0%, rgba(163, 48, 48, 1) 100%);
-    filter: drop-shadow(0 2px 4px rgb(92, 250, 255));
+    filter: drop-shadow(0 2px 4px rgb(255, 201, 92));
 }
 
 .button-with-shadow {

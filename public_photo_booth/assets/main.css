@@ -4597,34 +4597,37 @@ readers do not read off random characters that represent icons */
   filter: drop-shadow(0 2px 4px #ff5c5c);
 }
 .blue .button .gradient[data-v-1f51f03e] {
-  background: linear-gradient(to bottom, #ff59a6 0%, #2148f2 36%, #09448d 63%, #03689b 85%, #03689b 85%, #02917e 100%);
+  background-image: url(/assets/images/blue-button-bg.png);
 }
 .blue .button .highlight[data-v-1f51f03e] {
-  background: linear-gradient(to bottom, rgba(252, 156, 156, 0.15) 0%, rgba(253, 128, 174, 0.2) 45%, rgba(255, 94, 196, 0.5) 100%);
+  background-image: url(/assets/images/blue-button-hilight.png);
+  background-position: -5px -5px;
 }
 .blue .button .line[data-v-1f51f03e] {
   background: linear-gradient(to bottom, #332582 0%, #003ac4 100%);
   filter: drop-shadow(0 2px 4px #5cfaff);
 }
 .green .button .gradient[data-v-1f51f03e] {
-  background: linear-gradient(to bottom, #55d2ce 0%, #5cad00 30%, #3f6d00 63%, #499900 100%);
+  background-image: url(/assets/images/green-button-bg.png);
 }
 .green .button .highlight[data-v-1f51f03e] {
-  background: linear-gradient(to bottom, rgba(254, 187, 187, 0.15) 0%, rgba(254, 144, 144, 0.2) 45%, rgba(255, 92, 92, 0.5) 100%);
+  background-image: url(/assets/images/green-button-hilight.png);
+  background-position: -5px -5px;
 }
 .green .button .line[data-v-1f51f03e] {
   background: linear-gradient(to bottom, #003f06 0%, #0c5b00 100%);
-  filter: drop-shadow(0 2px 4px #5cfaff);
+  filter: drop-shadow(0 2px 4px #c1ff5c);
 }
 .orange .button .gradient[data-v-1f51f03e] {
-  background: linear-gradient(to bottom, #fc8e53 0%, #ea5507 28%, #935004 66%, #f95700 100%);
+  background-image: url(/assets/images/orange-button-bg.png);
 }
 .orange .button .highlight[data-v-1f51f03e] {
-  background: linear-gradient(to bottom, rgba(254, 187, 187, 0.15) 0%, rgba(254, 144, 144, 0.2) 45%, rgba(255, 92, 92, 0.5) 100%);
+  background-image: url(/assets/images/orange-button-hilight.png);
+  background-position: -5px -5px;
 }
 .orange .button .line[data-v-1f51f03e] {
   background: linear-gradient(to bottom, #841e1e 0%, #a33030 100%);
-  filter: drop-shadow(0 2px 4px #5cfaff);
+  filter: drop-shadow(0 2px 4px #ffc95c);
 }
 .button-with-shadow[data-v-1f51f03e] {
   width: 80px;
@@ -5187,34 +5190,37 @@ readers do not read off random characters that represent icons */
   filter: drop-shadow(0 1px 3px #ff5c5c);
 }
 .blue .button .gradient[data-v-01667337] {
-  background: linear-gradient(to bottom, #ff59a6 0%, #2148f2 36%, #09448d 63%, #03689b 85%, #03689b 85%, #02917e 100%);
+  background-image: url(/assets/images/blue-button-bg.png);
 }
 .blue .button .highlight[data-v-01667337] {
-  background: linear-gradient(to bottom, rgba(252, 156, 156, 0.15) 0%, rgba(253, 128, 174, 0.2) 45%, rgba(255, 94, 196, 0.5) 100%);
+  background-image: url(/assets/images/blue-button-hilight.png);
+  background-position: -5px -5px;
 }
 .blue .button .line[data-v-01667337] {
   background: linear-gradient(to bottom, #332582 0%, #003ac4 100%);
   filter: drop-shadow(0 1px 3px #5cfaff);
 }
 .green .button .gradient[data-v-01667337] {
-  background: linear-gradient(to bottom, #55d2ce 0%, #5cad00 30%, #3f6d00 63%, #499900 100%);
+  background-image: url(/assets/images/green-button-bg.png);
 }
 .green .button .highlight[data-v-01667337] {
-  background: linear-gradient(to bottom, rgba(254, 187, 187, 0.15) 0%, rgba(254, 144, 144, 0.2) 45%, rgba(255, 92, 92, 0.5) 100%);
+  background-image: url(/assets/images/green-button-hilight.png);
+  background-position: -5px -5px;
 }
 .green .button .line[data-v-01667337] {
   background: linear-gradient(to bottom, #003f06 0%, #0c5b00 100%);
-  filter: drop-shadow(0 1px 3px #5cfaff);
+  filter: drop-shadow(0 1px 3px #5cff72);
 }
 .orange .button .gradient[data-v-01667337] {
-  background: linear-gradient(to bottom, #fc8e53 0%, #ea5507 28%, #935004 66%, #f95700 100%);
+  background-image: url(/assets/images/orange-button-bg.png);
 }
 .orange .button .highlight[data-v-01667337] {
-  background: linear-gradient(to bottom, rgba(254, 187, 187, 0.15) 0%, rgba(254, 144, 144, 0.2) 45%, rgba(255, 92, 92, 0.5) 100%);
+  background-image: url(/assets/images/orange-button-hilight.png);
+  background-position: -5px -5px;
 }
 .orange .button .line[data-v-01667337] {
   background: linear-gradient(to bottom, #841e1e 0%, #a33030 100%);
-  filter: drop-shadow(0 1px 3px #5cfaff);
+  filter: drop-shadow(0 1px 3px #ffbe5c);
 }
 .button-with-shadow[data-v-01667337] {
   position: absolute;
@@ -5360,7 +5366,7 @@ readers do not read off random characters that represent icons */
     border-top-right-radius: 100px;
     border-bottom-left-radius: 100px 40px;
     border-bottom-right-radius: 100px 40px;
-    background: linear-gradient(to bottom, rgba(254, 252, 234, 0.05) 0%, rgba(54, 225, 241, 0.6) 100%);
+    background-image: url(/assets/images/right-icon-hilight.png);
 }
 .icon-overlay .info-box[data-v-c5a09e66] {
     position: absolute;
@@ -5447,7 +5453,7 @@ readers do not read off random characters that represent icons */
     left: -5px;
     border-radius: 50%;
     box-shadow: 0 5px 6px 3px rgba(0, 0, 0, 0.56);
-    background: linear-gradient(to bottom, #b8e1fc 0%, #a9d2f3 10%, #90bae4 25%, #90bcea 37%, #90bff0 50%, #6ba8e5 51%, #34c9bd 100%);
+    background: linear-gradient(to bottom, #ffffff 0%, #a9d2f3 10%, #90bae4 25%, #90bcea 37%, #91d271 50%, #57b975 56%, #34c9bd 100%);
 }
 .gallery-icon-overlay[data-v-c5a09e66] {
   position: absolute;
@@ -5630,7 +5636,7 @@ readers do not read off random characters that represent icons */
 .icon-backdrop[data-v-7d61b318] {
   position: absolute;
   top: 1730px;
-  left: 80px;
+  left: 50px;
   width: 160px;
   height: 160px;
   z-index: 1;
@@ -5660,12 +5666,12 @@ readers do not read off random characters that represent icons */
     left: -5px;
     border-radius: 50%;
     box-shadow: 0 5px 6px 3px rgba(0, 0, 0, 0.56);
-    background: linear-gradient(to bottom, #b8e1fc 0%, #a9d2f3 10%, #90bae4 25%, #90bcea 37%, #90bff0 50%, #6ba8e5 51%, #34c9bd 100%);
+    background: linear-gradient(to bottom, #ffffff 0%, #a9d2f3 10%, #90bae4 25%, #90bcea 37%, #91d271 50%, #57b975 56%, #34c9bd 100%);
 }
 .icon-overlay[data-v-7d61b318] {
   position: absolute;
   top: 1730px;
-  left: 80px;
+  left: 50px;
   width: 160px;
   height: 160px;
   border-radius: 80px;
@@ -5694,7 +5700,7 @@ readers do not read off random characters that represent icons */
     border-top-right-radius: 100px;
     border-bottom-left-radius: 100px 40px;
     border-bottom-right-radius: 100px 40px;
-    background: linear-gradient(to bottom, rgba(254, 252, 234, 0.05) 0%, rgba(54, 225, 241, 0.6) 100%);
+    background-image: url(/assets/images/left-icon-hilight.png);
 }
 .themes-transition-collapse[data-v-7d61b318] {
   animation-name: themes-collapse-data-v-7d61b318;
@@ -5724,7 +5730,7 @@ readers do not read off random characters that represent icons */
 }
 100% {
     top: 1730px;
-    left: 80px;
+    left: 50px;
     width: 160px;
     height: 160px;
     border-radius: 80px;
@@ -5733,7 +5739,7 @@ readers do not read off random characters that represent icons */
 @keyframes themes-expand-data-v-7d61b318 {
 0% {
     top: 1730px;
-    left: 80px;
+    left: 50px;
     width: 160px;
     height: 160px;
     border-radius: 80px;
@@ -5757,10 +5763,10 @@ readers do not read off random characters that represent icons */
     pointer-events: none;
 }
 .leaf-pos-1[data-v-7d61b318] {
-  transform: translate(120px, 1800px) rotate(-20deg);
+  transform: translate(90px, 1800px) rotate(-20deg);
 }
 .leaf-pos-inside[data-v-7d61b318] {
-  transform: translate(160px, 1800px) rotate(20deg) scale(0.8);
+  transform: translate(130px, 1800px) rotate(20deg) scale(0.8);
   z-index: 1;
 }
 
@@ -6416,34 +6422,21 @@ body {
 }
 
 .confirm-button[data-v-52a3924a] {
-  pointer-events: auto;
-  position: absolute;
-  top: 1200px;
-  left: 380px;
-  width: 350px;
-  height: 160px;
-  border-radius: 80px;
-  background-color: greenyellow;
-  text-align: center;
-  font-size: 50px;
-  font-weight: bold;
-  line-height: 160px;
-  vertical-align: middle;
-  opacity: 1;
-  visibility: visible;
-  transition: all 500ms linear;
+  width: 300px;
+  top: 1450px;
+  left: 390px;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 100ms linear;
 }
-.confirm-button i[data-v-52a3924a] {
-    font-size: 80px;
-}
-.confirm-button.hidden[data-v-52a3924a] {
-    opacity: 0;
-    visibility: hidden;
-    transition: all 500ms linear;
+.confirm-button.visible[data-v-52a3924a] {
+    opacity: 1;
+    visibility: visible;
+    transition: all 400ms linear;
 }
 .info-row[data-v-52a3924a] {
   position: absolute;
-  top: 710px;
+  top: 1000px;
   left: 80px;
   width: 900px;
   height: 100px;

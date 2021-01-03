@@ -8,16 +8,26 @@
                 <span>{{ lang('demo.gdpr-message') }}</span>
             </div>
         </div>
-        <div :class="{hidden: !isVisible}" class="confirm-button" @click="confirm"><i
-            class="fas fa-clipboard-check"></i> {{ lang('demo.confirm-button') }}
-        </div>
+<!--        <div :class="{hidden: !isVisible}" class="confirm-button" @click="confirm"><i-->
+<!--            class="fas fa-clipboard-check"></i> {{ lang('demo.confirm-button') }}-->
+<!--        </div>-->
+
+        <text-button :class="{visible: isVisible}" class="confirm-button green" icon="fas fa-clipboard-check"
+                     @click="confirm">{{ lang('demo.confirm-button') }}</text-button>
+
     </div>
 </template>
 
 <script>
+
+import TextButton from './TextButton.vue';
+
 export default {
     name: "ConfirmButton",
     inject: ['lang'],
+    components: {
+        TextButton
+    },
     props: {
         isVisible: {
             type: Boolean
@@ -33,37 +43,23 @@ export default {
 
 <style lang="scss" scoped>
 .confirm-button {
-    pointer-events: auto;
-    position: absolute;
-    top: 1200px;
-    left: 380px;
-    width: 350px;
-    height: 160px;
-    border-radius: 80px;
-    background-color: greenyellow;
-    text-align: center;
-    font-size: 50px;
-    font-weight: bold;
-    line-height: 160px;
-    vertical-align: middle;
-    opacity: 1;
-    visibility: visible;
-    transition: all 500ms linear;
+    width: 300px;
+    top: 1450px;
+    left: 390px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 100ms linear;
 
-    i {
-        font-size: 80px;
-    }
-
-    &.hidden {
-        opacity: 0;
-        visibility: hidden;
-        transition: all 500ms linear;
+    &.visible {
+        opacity: 1;
+        visibility: visible;
+        transition: all 400ms linear;
     }
 }
 
 .info-row {
     position: absolute;
-    top: 710px;
+    top: 1000px;
     left: 80px;
     width: 900px;
     height: 100px;

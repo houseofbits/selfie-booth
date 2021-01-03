@@ -14,6 +14,7 @@ uniform mat4 world;
 // Refs
 uniform vec3 cameraPosition;
 uniform sampler2D diffuseMap;
+//uniform sampler2D normalMap;
 uniform sampler2D maskMap;
 
 const vec2 boxMin = vec2(0.17, 0.1);
@@ -114,6 +115,15 @@ void main(void) {
     float opacity = level * ndotl + maskMap.x;
 
     vec3 color = mix(vec3(0.0), colorMap, maskMap.x);
+
+//    //Normal map normal
+//    vec3 bumpNormal = texture2D(normalMap, scaledUV).xyz * 2.0 - 1.0;
+//    //World space normal
+//    normalW = TBN * bumpNormal;
+//    vec3 lightPosition2 = vec3(0., 30., 60.);
+//
+//    vec3 lightVec2 = normalize(lightPosition2 - vPositionW);
+//    float ndl = max(0., dot(normalW, lightVec2));
 
     gl_FragColor = vec4(color, opacity);
 }

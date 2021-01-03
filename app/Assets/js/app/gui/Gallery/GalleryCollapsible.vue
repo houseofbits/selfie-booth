@@ -208,7 +208,8 @@ export default {
         border-top-right-radius: 100px;
         border-bottom-left-radius: 100px 40px;
         border-bottom-right-radius: 100px 40px;
-        background: linear-gradient(to bottom, rgba(254, 252, 234, 0.05) 0%, rgba(54, 225, 241, 0.6) 100%);
+        //background: linear-gradient(to bottom, rgba(254, 252, 234, 0.05) 0%, rgba(54, 225, 241, 0.6) 100%);
+        background-image: url('@images/right-icon-hilight.png');
     }
 
     .info-box {
@@ -303,7 +304,14 @@ export default {
         left: -5px;
         border-radius: 50%;
         box-shadow: 0 5px 6px 3px rgba(0, 0, 0, 0.56);
-        background: linear-gradient(to bottom, rgba(184, 225, 252, 1) 0%, rgba(169, 210, 243, 1) 10%, rgba(144, 186, 228, 1) 25%, rgba(144, 188, 234, 1) 37%, rgba(144, 191, 240, 1) 50%, rgba(107, 168, 229, 1) 51%, rgba(52, 201, 189, 1) 100%);
+        background: linear-gradient(to bottom,
+            #ffffff 0%,
+            rgba(169, 210, 243, 1) 10%,
+            rgba(144, 186, 228, 1) 25%,
+            rgba(144, 188, 234, 1) 37%,
+            #91d271 50%,
+            #57b975 56%,
+            rgba(52, 201, 189, 1) 100%);
     }
 }
 

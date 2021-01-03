@@ -2,6 +2,7 @@ import BaseScene from "/js/app/scene/Scenes/BaseScene";
 import * as BABYLON from 'babylonjs';
 import BackdropTexture from '@images/static-bg.jpg';
 import ImageEdgesMaskTexture from '@images/image-thumbnail-edges.jpg';
+//import ImageEdgesNormalTexture from '@images/image-thumbnail-edges-normal.png';
 import LeafTexture from '@images/leaf_1.png';
 import BasicMaterial from "@app/scene/Scenes/Materials/BasicMaterial";
 import DemoModeItem from "@app/scene/Structures/DemoModeItem";
@@ -62,7 +63,7 @@ export default class DemoScene extends BaseScene {
     }
 
     onSceneDeactivated() {
-        clearTimeout(this.shuffle());
+        clearTimeout(this.shuffleTimer);
     }
 
     //@clean up
@@ -135,11 +136,19 @@ export default class DemoScene extends BaseScene {
             .setAngle(itemStructure.angle);
         this.itemColumns[columnIndex].unshift(item);
         this.createAsyncItemMaterial(item, (material) => {
-            const mesh = this.createItemMesh(item);
+            const mesh = this.createItemMesh(item, 10);
+            // const meshZ = this.createItemMesh(item, 0.5);
+            // meshZ.parent = mesh;
+
             this.calculateColumnItemPositions(columnIndex);
             this.calculateColumnItemTransforms(columnIndex);
+
             mesh.material = material.getMaterial();
+            // meshZ.material = material.getMaterial();
+
             mesh.setEnabled(true);
+            // meshZ.setEnabled(true);
+
             item.setMesh(mesh);
             this.cleanUpItems();
         });
@@ -204,13 +213,14 @@ export default class DemoScene extends BaseScene {
 
     // Create scene models from DemoModeItem structure
     // @return Mesh instance
-    createItemMesh(item) {
+    createItemMesh(item, posZ) {
         let plane = BABYLON.MeshBuilder.CreatePlane("plane" + item.imageId, {
 //            width: item.size.x, height: item.size.y,
             width: item.size.x * 1.4, height: item.size.y * 1.2,
             sideOrientation: BABYLON.Mesh.DOUBLESIDE
         }, this.scene);
-        plane.locallyTranslate(new BABYLON.Vector3(0, 0, 10));
+
+        plane.locallyTranslate(new BABYLON.Vector3(0, 0, posZ));
         // Initially disabled.
         // Enable after texture is loaded and mesh is ready to be rendered
         plane.setEnabled(false);
@@ -221,6 +231,7 @@ export default class DemoScene extends BaseScene {
     createAsyncItemMaterial(item, onLoad) {
         const material = new ImageShadedMaterial(this.scene, 'mat_' + item.imageId);
         material.setMaskMap(ImageEdgesMaskTexture);
+        //material.setNormalMap(ImageEdgesNormalTexture);
         const texture = new BABYLON.Texture('/api/image/' + item.imageId,
             this.scene,
             false,

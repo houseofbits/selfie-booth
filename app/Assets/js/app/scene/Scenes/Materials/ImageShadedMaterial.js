@@ -20,4 +20,8 @@ class ImageShadedMaterial extends CustomMaterial {
     setMaskMap(map){
         this.shaderMaterial.setTexture("maskMap", new BABYLON.Texture(map, this.scene));
     }
+
+    setNormalMap(map){
+        this.shaderMaterial.setTexture("normalMap", new BABYLON.Texture(map, this.scene));
+    }
 }
