@@ -101,7 +101,7 @@ void main(void) {
     float shading = clamp(ndotl + pow(1.0 - vdotn, 1.0), 0.0, 1.0);
 
     vec2 scaledUV = vec2(vUV.x * 1.4, vUV.y * 1.2) - vec2(0.2, 0.1);
-    vec3 maskMap = texture2D(maskMap, scaledUV).xyz;
+    vec3 mask = texture2D(maskMap, scaledUV).xyz;
     vec3 map = texture2D(diffuseMap, scaledUV).xyz;
 
     float primarySpecular = pow(ndotl, 10.0);
@@ -109,21 +109,16 @@ void main(void) {
     vec3 colorMap = (map.xyz * shading) + (primarySpecular * 0.3) + (secondarySpecular * 0.5);
 
     if(scaledUV.x < 0.0 || scaledUV.y < 0.0 || scaledUV.x > 1.0 || scaledUV.y > 1.0) {
-        maskMap = vec3(0.0);
+        mask = vec3(0.0);
     }
 
-    float opacity = level * ndotl + maskMap.x;
+    float opacity = level * ndotl + mask.x;
 
-    vec3 color = mix(vec3(0.0), colorMap, maskMap.x);
+    vec3 color = mix(vec3(0.0), colorMap, mask.x);
 
-//    //Normal map normal
-//    vec3 bumpNormal = texture2D(normalMap, scaledUV).xyz * 2.0 - 1.0;
-//    //World space normal
-//    normalW = TBN * bumpNormal;
-//    vec3 lightPosition2 = vec3(0., 30., 60.);
-//
-//    vec3 lightVec2 = normalize(lightPosition2 - vPositionW);
-//    float ndl = max(0., dot(normalW, lightVec2));
+    vec2 displaceUV = clamp(scaledUV + vec2(0.0, 0.01), vec2(0.0), vec2(1.0));
+    float maskDisplaced = texture2D(maskMap, displaceUV).x;
+    float border = 0.5 * ((1.0 - maskDisplaced) * mask.x);
 
-    gl_FragColor = vec4(color, opacity);
+    gl_FragColor = vec4(color + vec3(border), opacity);
 }

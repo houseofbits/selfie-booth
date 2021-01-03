@@ -34,7 +34,7 @@ export default class DemoModeItem {
         if(posl > 1.0){
             posv.normalize();
             let posStep = posl / stepsCount;
-            posv.scaleInPlace(posStep);
+            posv.scaleInPlace(Math.min(posStep, posl));
             this.position.addInPlace(posv);
         }
 

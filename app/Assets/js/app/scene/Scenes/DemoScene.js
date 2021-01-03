@@ -136,18 +136,12 @@ export default class DemoScene extends BaseScene {
             .setAngle(itemStructure.angle);
         this.itemColumns[columnIndex].unshift(item);
         this.createAsyncItemMaterial(item, (material) => {
-            const mesh = this.createItemMesh(item, 10);
-            // const meshZ = this.createItemMesh(item, 0.5);
-            // meshZ.parent = mesh;
-
             this.calculateColumnItemPositions(columnIndex);
             this.calculateColumnItemTransforms(columnIndex);
 
+            const mesh = this.createItemMesh(item, 10);
             mesh.material = material.getMaterial();
-            // meshZ.material = material.getMaterial();
-
             mesh.setEnabled(true);
-            // meshZ.setEnabled(true);
 
             item.setMesh(mesh);
             this.cleanUpItems();
@@ -215,7 +209,6 @@ export default class DemoScene extends BaseScene {
     // @return Mesh instance
     createItemMesh(item, posZ) {
         let plane = BABYLON.MeshBuilder.CreatePlane("plane" + item.imageId, {
-//            width: item.size.x, height: item.size.y,
             width: item.size.x * 1.4, height: item.size.y * 1.2,
             sideOrientation: BABYLON.Mesh.DOUBLESIDE
         }, this.scene);
