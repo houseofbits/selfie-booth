@@ -62,14 +62,16 @@ export default {
 <style lang="scss" scoped>
 
 .capture-view {
-    opacity: 0;
+    //opacity: 0;
     visibility: hidden;
-    transition: all 300ms linear;
+    //transition: all 300ms linear;
+    z-index: -10;
 
     &.visible {
-        opacity: 1;
+        //opacity: 1;
         visibility: visible;
-        transition: all 300ms linear;
+        //transition: all 300ms linear;
+        z-index: 0;
     }
 }
 </style>
@@ -85,6 +87,6 @@ body {
     font-family: "customFont", serif;
     user-select: none;
     background-color: #c7c7c7;
-    overflow: hidden;
+    /*overflow: hidden;*/
 }
 </style>

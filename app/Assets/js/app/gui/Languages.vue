@@ -68,6 +68,10 @@ export default {
         opacity: 0.6;
         transition: all 200ms linear;
 
+        &:hover {
+            filter: brightness(1.5);
+        }
+
         &.lv {
             background-image: url('../../../images/lv_flag.png');
             background-size: cover;

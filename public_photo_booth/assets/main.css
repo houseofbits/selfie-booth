@@ -4635,6 +4635,9 @@ readers do not read off random characters that represent icons */
   transition: all 0.2s linear;
   pointer-events: auto;
 }
+.button-with-shadow[data-v-1f51f03e]:hover {
+    filter: brightness(1.5);
+}
 .button-with-shadow.wide[data-v-1f51f03e] {
     width: 250px;
     height: 60px;
@@ -5227,6 +5230,10 @@ readers do not read off random characters that represent icons */
   width: 200px;
   height: 80px;
   pointer-events: auto;
+  transition: all 50ms linear;
+}
+.button-with-shadow[data-v-01667337]:hover {
+    filter: brightness(1.5);
 }
 .button-with-shadow .button[data-v-01667337] {
     pointer-events: auto;
@@ -5822,6 +5829,9 @@ readers do not read off random characters that represent icons */
   opacity: 0;
   visibility: hidden;
   transition: all 300ms linear;
+}
+.record-button.animate[data-v-6de3255b] {
+    filter: brightness(1.5);
 }
 .record-button.visible[data-v-6de3255b] {
     opacity: 1;
@@ -6464,6 +6474,9 @@ input[data-v-0e538532]:focus {
     opacity: 0.6;
     transition: all 200ms linear;
 }
+.languages div[data-v-f668b85a]:hover {
+      filter: brightness(1.5);
+}
 .languages div.lv[data-v-f668b85a] {
       background-image: url(/assets/images/lv_flag.png);
       background-size: cover;
@@ -6497,13 +6510,16 @@ input[data-v-0e538532]:focus {
   height: 230px;
   opacity: 1;
   visibility: visible;
-  transition: all 300ms linear;
+  transition: all 100ms linear;
   background-image: url(/assets/images/record-button-main.png);
+}
+.start-button[data-v-c76d1528]:hover {
+    filter: brightness(1.75);
 }
 .start-button.hidden[data-v-c76d1528] {
     opacity: 0;
     visibility: hidden;
-    transition: all 300ms linear;
+    transition: opacity, visibility 300ms linear;
 }
 .start-button .ring-layer[data-v-c76d1528] {
     pointer-events: none;
@@ -6761,7 +6777,8 @@ input[data-v-0e538532]:focus {
   -webkit-text-stroke: 1px rgba(0, 0, 0, 0.2);
   filter: drop-shadow(0px 5px 3px black);
   opacity: 1;
-  transition: opacity 500ms linear;
+  visibility: visible;
+  transition: opacity, visibility 500ms linear;
 }
 .info-row .icon[data-v-52a3924a] {
     display: inline-block;
@@ -6793,18 +6810,17 @@ input[data-v-0e538532]:focus {
 }
 .info-row.hidden[data-v-52a3924a] {
     opacity: 0;
-    transition: opacity 500ms linear;
+    visibility: hidden;
+    transition: opacity, visibility 500ms linear;
 }
 
 .capture-view[data-v-a1c07e14] {
-  opacity: 0;
   visibility: hidden;
-  transition: all 300ms linear;
+  z-index: -10;
 }
 .capture-view.visible[data-v-a1c07e14] {
-    opacity: 1;
     visibility: visible;
-    transition: all 300ms linear;
+    z-index: 0;
 }
 
 
@@ -6816,6 +6832,6 @@ body {
     font-family: "customFont", serif;
     user-select: none;
     background-color: #c7c7c7;
-    overflow: hidden;
+    /*overflow: hidden;*/
 }
 

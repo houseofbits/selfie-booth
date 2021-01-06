@@ -100,13 +100,17 @@ export default {
     height: 230px;
     opacity: 1;
     visibility: visible;
-    transition: all 300ms linear;
+    transition: all 100ms linear;
     background-image: url('@images/record_button/record-button-main.png');
+
+    &:hover {
+        filter: brightness(1.75);
+    }
 
     &.hidden {
         opacity: 0;
         visibility: hidden;
-        transition: all 300ms linear;
+        transition: opacity, visibility 300ms linear;
     }
 
     .ring-layer {

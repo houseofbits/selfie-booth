@@ -1,5 +1,5 @@
 <template>
-    <div class="record-button" :class="{visible: enabled}">
+    <div class="record-button" :class="{visible: enabled, animate:captureInProgress}">
         <div class="main-layer" @click="startCapture"></div>
         <div class="ring-layer" :class="{animate:captureInProgress}"></div>
         <div class="camera-layer" :class="{animate:captureInProgress}"></div>
@@ -53,6 +53,10 @@ export default {
     opacity:0;
     visibility: hidden;
     transition: all 300ms linear;
+
+    &.animate {
+        filter: brightness(1.5);
+    }
 
     &.visible {
         opacity: 1;

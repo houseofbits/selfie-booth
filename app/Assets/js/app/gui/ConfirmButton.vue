@@ -67,7 +67,8 @@ export default {
     -webkit-text-stroke: 1px rgba(0, 0, 0, 0.2);
     filter: drop-shadow(0px 5px 3px rgba(0, 0, 0, 1.0));
     opacity: 1;
-    transition: opacity 500ms linear;
+    visibility: visible;
+    transition: opacity, visibility 500ms linear;
 
     .icon {
         display: inline-block;
@@ -103,7 +104,8 @@ export default {
 
     &.hidden {
         opacity: 0;
-        transition: opacity 500ms linear;
+        visibility: hidden;
+        transition: opacity, visibility 500ms linear;
     }
 }
 </style>

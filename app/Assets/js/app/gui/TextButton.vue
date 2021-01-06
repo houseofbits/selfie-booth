@@ -96,6 +96,11 @@ export default {
     width: 200px;
     height: 80px;
     pointer-events: auto;
+    transition: all 50ms linear;
+
+    &:hover {
+        filter: brightness(1.5);
+    }
 
     .button {
         pointer-events: auto;

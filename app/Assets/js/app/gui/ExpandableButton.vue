@@ -100,6 +100,10 @@ export default {
     transition: all 0.2s linear;
     pointer-events: auto;
 
+    &:hover {
+        filter: brightness(1.5);
+    }
+
     &.wide {
         width: 250px;
         height: 60px;
