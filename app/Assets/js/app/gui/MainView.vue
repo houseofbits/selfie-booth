@@ -72,9 +72,19 @@ export default {
         transition: all 300ms linear;
     }
 }
+</style>
 
 
+<style>
+@font-face {
+    font-family: "customFont";
+    src: url("../../../fonts/font.ttf");
+}
 
-
-
+body {
+    font-family: "customFont", serif;
+    user-select: none;
+    background-color: #c7c7c7;
+    overflow: hidden;
+}
 </style>

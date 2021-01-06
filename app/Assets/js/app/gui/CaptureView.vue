@@ -12,7 +12,7 @@
                              @open="openGallery"
                              @image-action="handleImageAction"/>
         <themes-collapsible :open="isThemesOpen" @close="closeThemes" @open="openThemes"/>
-        <record-button @capture="startCapture" @record="captureImage"/>
+        <record-button :enabled="isCaptureAvailable" @capture="startCapture" @record="captureImage"/>
         <snapshot-image :captured-image-data="images"></snapshot-image>
         <div class="gradient-under"></div>
 
@@ -75,6 +75,9 @@ export default {
     computed: {
         isExpandedViewOpen() {
             return this.isEmailViewOpen || this.isShareViewOpen || this.isDownloadViewOpen;
+        },
+        isCaptureAvailable() {
+            return (this.images.length < 4);
         }
     },
     watch: {
@@ -139,6 +142,12 @@ export default {
             if (this.images.length < 4) {
                 this.images.push(new CaptureImageData(this.generateImageId(), base64Image));
                 this.closeAll();
+                this.openGalleryOnCaptureLimit();
+            }
+        },
+        openGalleryOnCaptureLimit() {
+            if (!this.isCaptureAvailable) {
+                setTimeout(this.openGallery, 1000);
             }
         },
         deleteImage(image) {
@@ -246,22 +255,6 @@ export default {
         background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.65) 100%);
     }
 }
-
-</style>
-
-<style>
-@font-face {
-    font-family: "customFont";
-    src: url("../../../fonts/font.ttf");
-}
-
-body {
-    font-family: "customFont", serif;
-    user-select: none;
-    background-color: #c7c7c7;
-    /*overflow: hidden;*/
-}
-
 .finish-button {
     top: 30px;
     left: 30px;

@@ -1,7 +1,7 @@
 <template>
     <div class="languages" :class="{visible: isVisible}">
-        <div :class="{selected: isLanguageLv}" class="lv" @click="setLanguage('lv')"></div>
         <div :class="{selected: isLanguageEn}" class="en" @click="setLanguage('en')"></div>
+        <div :class="{selected: isLanguageLv}" class="lv" @click="setLanguage('lv')"></div>
         <div :class="{selected: isLanguageRu}" class="ru" @click="setLanguage('ru')"></div>
     </div>
 </template>
