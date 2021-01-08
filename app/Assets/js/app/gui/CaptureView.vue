@@ -86,8 +86,11 @@ export default {
                 this.dynamicBackgroundState = this.images.length;
             }
         },
-        open() {
+        open(val) {
             this.resetView();
+            if (val) {
+                this.openThemes();
+            }
         }
     },
     methods: {
