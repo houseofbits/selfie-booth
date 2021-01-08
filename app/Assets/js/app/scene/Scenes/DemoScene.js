@@ -58,15 +58,14 @@ export default class DemoScene extends BaseScene {
     }
 
     onSceneActivated() {
-        // this.syncItems();
-        // this.createShuffleTimer();
+        this.syncItems();
+        this.createShuffleTimer();
     }
 
     onSceneDeactivated() {
         clearTimeout(this.shuffleTimer);
     }
 
-    //@clean up
     createScene() {
 
         this.leafMaterial = new BasicAlphaMaterial(this.scene, "leaf");
