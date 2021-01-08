@@ -258,5 +258,6 @@ export default {
 .finish-button {
     top: 30px;
     left: 30px;
+    width:220px;
 }
 </style>

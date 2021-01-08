@@ -198,7 +198,8 @@ $theme-icons-per-row: 4;
 
 .close-button {
     top: 1550px;
-    left: 440px;
+    left: 430px;
+    width:220px;
     z-index: 2;
     opacity: 0;
     visibility: hidden;
@@ -268,7 +269,7 @@ $theme-icons-per-row: 4;
     linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 34%, rgb(70, 107, 127) 100%);
     transition: all 500ms linear;
     filter: brightness(1.0);
-    z-index: 3;
+    z-index: 2;
     opacity: 0;
     visibility: hidden;
     pointer-events: auto;

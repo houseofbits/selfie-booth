@@ -107,7 +107,7 @@ export default {
         position: absolute;
         top: 580px;
         left: 480px;
-        width: 250px;
+        width: 280px;
         opacity: 1;
         transition: opacity 300ms linear;
     }

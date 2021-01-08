@@ -1,9 +1,9 @@
 <template>
-    <div>
-        <div :class="{hidden: !isVisible}" class="start-button" @click="start">
+    <div :class="{hidden: !isVisible}">
+        <div class="start-button" @click="start">
             <div class="ring-layer"></div>
         </div>
-        <span>{{ lang('demo.start-button') }}</span>
+        <div class="start-text" @click="start"><span :data-text="lang('demo.start-button')">{{ lang('demo.start-button') }}</span></div>
     </div>
 </template>
 
@@ -107,19 +107,61 @@ export default {
         filter: brightness(1.75);
     }
 
-    &.hidden {
-        opacity: 0;
-        visibility: hidden;
-        transition: opacity, visibility 300ms linear;
-    }
-
-    .ring-layer {
+   .ring-layer {
         pointer-events: none;
         width: 265px;
         height: 230px;
         background-image: url('@images/record_button/record-button-ring.png');
         animation: spin 5s infinite;
         animation-timing-function: linear;
+    }
+}
+
+.hidden {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity, visibility 300ms linear;
+}
+
+.start-text {
+    position: absolute;
+    top: 1240px;
+    left:390px;
+    width:300px;
+    text-align: center;
+    font-size: 50px;
+
+    &:hover {
+        filter: brightness(1.75);
+    }
+
+    span {
+        text-align: center;
+        background: linear-gradient(to bottom, #f9f9f9 0%,#fccd4d 43%,#f49f00 57%,#ffa035 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        position:relative;
+        -webkit-text-stroke: 1px rgba(0, 0, 0, 0.2);
+    }
+    span:after {
+        text-align: center;
+        background: none;
+        content: attr(data-text);
+        left: 0;
+        position: absolute;
+        top: 0;
+        z-index: -1;
+        text-shadow:
+            0 2px 0 rgba(0,0,0, 0.1),
+            0 4px 0 rgba(0,0,0, 0.1),
+            0 6px 0 rgba(0,0,0, 0.1),
+            -2px 2px 0 rgba(0,0,0, 0.1),
+            -4px 4px 0 rgba(0,0,0, 0.1),
+            -4px 6px 0 rgba(0,0,0, 0.1),
+            2px 2px 0 rgba(0,0,0, 0.1),
+            4px 4px 0 rgba(0,0,0, 0.1),
+            4px 6px 0 rgba(0,0,0, 0.1),
+            1px 13px 8px rgba(0,0,0, 1);
     }
 }
 

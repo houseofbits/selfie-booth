@@ -1,9 +1,9 @@
 <template>
     <div>
         <div :class="{hidden: !isVisible}" class="info-row">
-            <div class="icon">
-                <span><i class="fas fa-question icon-size"></i></span>
-            </div>
+<!--            <div class="icon">-->
+<!--                <span><i class="fas fa-question icon-size"></i></span>-->
+<!--            </div>-->
             <div class="main-text">
                 <span>{{ lang('demo.gdpr-message') }}</span>
             </div>
@@ -59,16 +59,17 @@ export default {
 
 .info-row {
     position: absolute;
-    top: 1000px;
+    top: 900px;
     left: 80px;
     width: 900px;
-    height: 100px;
+    height: 500px;
     text-align: center;
     -webkit-text-stroke: 1px rgba(0, 0, 0, 0.2);
     filter: drop-shadow(0px 5px 3px rgba(0, 0, 0, 1.0));
     opacity: 1;
     visibility: visible;
     transition: opacity, visibility 500ms linear;
+    display: flex;
 
     .icon {
         display: inline-block;
@@ -89,6 +90,7 @@ export default {
     .main-text {
         display: inline-block;
         line-height: 40px;
+        align-self: flex-end;
 
         span {
             display: inline;

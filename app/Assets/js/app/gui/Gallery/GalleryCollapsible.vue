@@ -20,6 +20,9 @@
             </div>
         </div>
 
+        <div :class="{visible:isInfoMessageVisible}" class="info-text"><span><i
+            class="fas fa-info-circle"></i> {{ lang('capture.gallery-info') }}</span></div>
+
         <static-item :class="{visible: !isOpen}" class="leaf leaf-pos-1" image-id="1"></static-item>
         <static-item :class="{visible: !isOpen}" class="leaf leaf-pos-2" image-id="2"></static-item>
 
@@ -98,6 +101,9 @@ export default {
                 'hidden': this.images.length === 0,
             };
         },
+        isInfoMessageVisible() {
+            return !this.selectedImage && this.open;
+        }
     },
     methods: {
         openGallery() {
@@ -157,7 +163,8 @@ export default {
 
     .close-button {
         top: 1550px;
-        left: 440px;
+        left: 430px;
+        width: 220px;
         z-index: 2;
         opacity: 0;
         visibility: hidden;
@@ -413,6 +420,37 @@ export default {
 
 .leaf-pos-2 {
     transform: translate(910px, 1820px) rotate(-120deg);
+}
+
+.info-text {
+    position: absolute;
+    top: 990px;
+    width: 1080px;
+    left: 0;
+    display: inline-block;
+    line-height: 28px;
+    margin-top: 15px;
+    -webkit-text-stroke: 1px rgba(0, 0, 0, 0.2);
+    filter: drop-shadow(0px 5px 3px rgba(0, 0, 0, 0.61));
+    text-align: center;
+    transition: all 300ms linear;
+    opacity: 0;
+
+    span {
+        display: inline;
+        font-weight: normal;
+        background: linear-gradient(to bottom, #fefcea 0%, #f1da36 100%);
+        box-decoration-break: clone;
+        -webkit-box-decoration-break: clone;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-size: 35px;
+    }
+
+    &.visible {
+        opacity: 1;
+        visibility: visible;
+    }
 }
 
 </style>

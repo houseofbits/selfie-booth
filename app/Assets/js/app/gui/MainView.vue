@@ -1,14 +1,9 @@
 <template>
     <div>
-
         <start-button :is-visible="isStartButtonVisible" @start="start"/>
-
         <confirm-button :is-visible="isConfirmationButtonVisible" @confirm="confirm"/>
-
         <languages :is-visible="!isCaptureViewVisible"/>
-
         <capture-view :class="{visible: isCaptureViewVisible}" :open="isCaptureViewVisible" @captureViewClose="reset" class="capture-view"/>
-
     </div>
 </template>
 
@@ -31,6 +26,7 @@ export default {
         return {
             isCaptureViewVisible: false,
             isConfirmationVisible: false,
+            confirmTimer: null,
         };
     },
     computed: {
@@ -44,8 +40,13 @@ export default {
     methods: {
         start() {
             this.isConfirmationVisible = true;
+            clearTimeout(this.confirmTimer);
+            this.confirmTimer = setTimeout(() => {
+                this.isConfirmationVisible = false;
+            }, 10000);
         },
         confirm() {
+            clearTimeout(this.confirmTimer);
             this.isConfirmationVisible = false;
             this.isCaptureViewVisible = true;
             MainSceneInstance.onThemeSelected('AmberScene');
