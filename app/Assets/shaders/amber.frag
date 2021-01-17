@@ -17,7 +17,7 @@ uniform vec3 cameraPosition;
 uniform sampler2D diffuseMap;
 uniform sampler2D diffuseSecMap;
 uniform sampler2D cameraMap;
-uniform sampler2D maskMap;
+//uniform sampler2D maskMap;
 uniform sampler2D normalsMap;
 
 vec3 reflection(sampler2D map, vec2 uv, vec3 normal, vec3 view)
@@ -67,7 +67,7 @@ vec2 innerRefractionUv(vec2 uv, vec3 normal, vec3 view)
 {
     vec3 refl = reflect(normal, view);
     vec2 displace = vec2(refl.x, refl.y);
-    vec2 displacedUv = uv + displace * 0.1;
+    vec2 displacedUv = uv + displace * 0.2;
 
     if (displacedUv.x > 1.0) {
         displacedUv.x = 2.0 - displacedUv.x;
@@ -182,11 +182,10 @@ void main(void) {
     vec3 refl = normalize(reflect(-lightDir, normals));
     float specular = pow(max(0.0, dot(refl, viewDirectionW)), 6.0);
 
-    vec3 bg = texture2D(diffuseMap, uv).xyz;
-    vec3 diff = texture2D(diffuseSecMap, uv).xyz;
+    vec4 diff = texture2D(diffuseSecMap, uv).xyzw;
 
     vec3 reflection = reflection(diffuseMap, uv, normals, viewDirectionW) * vec3(1.0, 1.0, 0.7);
-    float reflFren = pow(1.0 - dotn, 1.0);
+    float reflFren = clamp(1.0 - dotn, 0.0, 1.0);
     float reflFrenGlow = pow(1.0 - dotn, 3.0);
 
     //non blurred refraction
@@ -194,16 +193,17 @@ void main(void) {
     //blurred refraction
     vec2 refractionUv = innerRefractionUv(uv, normals, viewDirectionW);
     vec3 refraction = boxBlur(diffuseMap, refractionUv, 0.003);
-    float refrFren = pow(dotn, 8.0);
+    float refrFren = clamp(pow(dotn, 8.0), 0.0, 1.0);
 
-    vec3 mask = texture2D(maskMap, uv).xyz;
+    float mask = diff.w;
 
     vec2 innerRefractionUv = vCamUV;    //innerRefractionUv(vCamUV, normals, viewDirectionW);
     vec3 cam = boxBlur(cameraMap, innerRefractionUv, blurFactor(uv, vec2(0.5, 0.5)));
 
-    vec3 amber = mix(diff, reflection, reflFren) + (reflection * reflFrenGlow);
+    vec3 amber = mix(diff.xyz, reflection, reflFren) + (reflection * reflFrenGlow);
 
-    amber = mix(amber, amber * refraction, refrFren);
+    //Add faked refraction
+    amber = clamp(mix(amber, clamp(amber * refraction, vec3(0.0), vec3(1.0)), refrFren), vec3(0.0), vec3(1.0));
 
     float innerFren = pow(dotn, 1.0);
 
@@ -212,9 +212,22 @@ void main(void) {
 
     float camMask = opacityFactor(uv, vec2(0.5, 0.5));
 
-    amber = mix(amber, (amber * density) + (amber * density), innerFren * camMask) + specular;
+    //Mix in camera feed using camera brightness and mask
+    amber = mix(amber, (amber * density) + (amber * density), innerFren * camMask);
 
-    vec3 final = mix(bg, amber, mask.x);
+    //Add specular
+    amber = amber + specular;
+
+    vec3 bg = vec3(1.0);    //boxBlur(diffuseMap, uv, 0.003);
+    float blurMargin = 0.35;
+    if (uv.y < blurMargin) {
+        float fv = (uv.y - blurMargin) * 0.01;
+        bg = boxBlur(diffuseMap, uv, fv);
+    } else {
+        bg = texture2D(diffuseMap, uv).xyz;
+    }
+
+    vec3 final = mix(bg, amber, mask);
 
     gl_FragColor = vec4(final, 1.);
 }
