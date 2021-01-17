@@ -1,7 +1,9 @@
 import BaseScene from "/js/app/scene/Scenes/BaseScene";
 import * as BABYLON from 'babylonjs';
-import BackgroundTexture1 from '@images/test-image.jpg';
-import MaskTexture from '@images/amber/test-mask.jpg';
+import BgMap from '@images/amber/background.png';
+import MaskTexture from '@images/amber/mask-map.png';
+import AmberTexture from '@images/amber/diffuse-map.png';
+import NormalsTexture from '@images/amber/normal-map.png';
 import AmberMaterial from "@app/scene/Scenes/Materials/AmberMaterial";
 
 const EffectTypes = {
@@ -50,9 +52,11 @@ export default class AmberThemeScene extends BaseScene {
         // box.position.y = 1.5;
 
         this.amberMaterial = new AmberMaterial(this.scene, 'amber');
-        this.amberMaterial.setCameraTexture(new BABYLON.Texture(BackgroundTexture1, this.scene));
-        this.amberMaterial.setDiffuseMap(BackgroundTexture1);
+        this.amberMaterial.setCameraTexture(new BABYLON.Texture(BgMap, this.scene));
+        this.amberMaterial.setDiffuseMap(BgMap);
         this.amberMaterial.setMaskMap(MaskTexture);
+        this.amberMaterial.setDiffuseSecondaryMap(AmberTexture);
+        this.amberMaterial.setNormalsMap(NormalsTexture);
 
         let plane = BABYLON.MeshBuilder.CreatePlane("backplane", {width: 1000, height: 1770, sideOrientation: BABYLON.Mesh.DOUBLESIDE}, this.scene);
         plane.material = this.amberMaterial.getMaterial();

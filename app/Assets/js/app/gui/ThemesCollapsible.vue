@@ -6,8 +6,10 @@
         </div>
         <div :class="themesFrameClass" class="themes-frame">
             <div class="close-button" @click.self="closeThemes"></div>
-            <div class="theme-icon r1c1" @click="select('DemoScene')">Demo scene</div>
-            <div class="theme-icon r1c2" @click="select('AmberScene')">Amber scene</div>
+            <div class="theme-icon r1c1" @click="select('AmberScene')">
+                <div class="icon-background amber-icon"></div>
+            </div>
+            <div class="theme-icon r1c2">Work in progress</div>
             <div class="theme-icon r1c3">Work in progress</div>
             <div class="theme-icon r1c4">Work in progress</div>
             <div class="theme-icon r2c1">Work in progress</div>
@@ -152,6 +154,19 @@ $theme-icons-per-row: 4;
 
         &.r2c4 {
             transform: translate(icon-pos-x(3), 400px);
+        }
+
+        .icon-background {
+            position: absolute;
+            left:3px;
+            right: 3px;
+            top: 3px;
+            bottom: 3px;
+            border-radius: 18px;
+
+            &.amber-icon {
+                background-image: url('@images/amber/icon.png');
+            }
         }
     }
 

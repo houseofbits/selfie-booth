@@ -21,4 +21,12 @@ export default class AmberMaterial extends CustomMaterial {
     setMaskMap(map) {
         this.shaderMaterial.setTexture("maskMap", new BABYLON.Texture(map, this.scene));
     }
+
+    setDiffuseSecondaryMap(map) {
+        this.shaderMaterial.setTexture("diffuseSecMap", new BABYLON.Texture(map, this.scene));
+    }
+
+    setNormalsMap(map) {
+        this.shaderMaterial.setTexture("normalsMap", new BABYLON.Texture(map, this.scene));
+    }
 }

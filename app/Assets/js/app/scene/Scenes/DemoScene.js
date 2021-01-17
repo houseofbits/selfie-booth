@@ -1,6 +1,6 @@
 import BaseScene from "/js/app/scene/Scenes/BaseScene";
 import * as BABYLON from 'babylonjs';
-import BackdropTexture from '@images/static-bg.jpg';
+import BackdropTexture from '@images/demo/background.png';
 import ImageEdgesMaskTexture from '@images/image-thumbnail-edges.jpg';
 //import ImageEdgesNormalTexture from '@images/image-thumbnail-edges-normal.png';
 import LeafTexture from '@images/leaf_1.png';

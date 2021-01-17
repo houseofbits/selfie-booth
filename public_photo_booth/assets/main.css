@@ -4556,7 +4556,7 @@ readers do not read off random characters that represent icons */
   font-weight: 400;
   font-display: block;
   src: url(fonts/fa-brands-400.eot);
-  src: url(fonts/fa-brands-400.eot?#iefix) format("embedded-opentype"), url(fonts/fa-brands-400.woff2) format("woff2"), url(fonts/fa-brands-400.woff) format("woff"), url(fonts/fa-brands-400.ttf) format("truetype"), url(/assets/images/fa-brands-400.svg#fontawesome) format("svg"); }
+  src: url(fonts/fa-brands-400.eot?#iefix) format("embedded-opentype"), url(fonts/fa-brands-400.woff2) format("woff2"), url(fonts/fa-brands-400.woff) format("woff"), url(fonts/fa-brands-400.ttf) format("truetype"), url(/assets/images/2d42c652a4c949365cecd4b26e300ce9.svg#fontawesome) format("svg"); }
 
 .fab {
   font-family: 'Font Awesome 5 Brands';
@@ -4567,7 +4567,7 @@ readers do not read off random characters that represent icons */
   font-weight: 400;
   font-display: block;
   src: url(fonts/fa-regular-400.eot);
-  src: url(fonts/fa-regular-400.eot?#iefix) format("embedded-opentype"), url(fonts/fa-regular-400.woff2) format("woff2"), url(fonts/fa-regular-400.woff) format("woff"), url(fonts/fa-regular-400.ttf) format("truetype"), url(/assets/images/fa-regular-400.svg#fontawesome) format("svg"); }
+  src: url(fonts/fa-regular-400.eot?#iefix) format("embedded-opentype"), url(fonts/fa-regular-400.woff2) format("woff2"), url(fonts/fa-regular-400.woff) format("woff"), url(fonts/fa-regular-400.ttf) format("truetype"), url(/assets/images/bb86ab116cc2fb0f01f2e2988d8ca2c2.svg#fontawesome) format("svg"); }
 
 .far {
   font-family: 'Font Awesome 5 Free';
@@ -4578,7 +4578,7 @@ readers do not read off random characters that represent icons */
   font-weight: 900;
   font-display: block;
   src: url(fonts/fa-solid-900.eot);
-  src: url(fonts/fa-solid-900.eot?#iefix) format("embedded-opentype"), url(fonts/fa-solid-900.woff2) format("woff2"), url(fonts/fa-solid-900.woff) format("woff"), url(fonts/fa-solid-900.ttf) format("truetype"), url(/assets/images/fa-solid-900.svg#fontawesome) format("svg"); }
+  src: url(fonts/fa-solid-900.eot?#iefix) format("embedded-opentype"), url(fonts/fa-solid-900.woff2) format("woff2"), url(fonts/fa-solid-900.woff) format("woff"), url(fonts/fa-solid-900.ttf) format("truetype"), url(/assets/images/a0ceb47e5d53599ba8ac8e9a42e93db3.svg#fontawesome) format("svg"); }
 
 .fa,
 .fas {
@@ -4586,10 +4586,10 @@ readers do not read off random characters that represent icons */
   font-weight: 900; }
 
 .red .button .gradient[data-v-1f51f03e] {
-  background-image: url(/assets/images/red-button-bg.png);
+  background-image: url(/assets/images/a606e4f6c825391d69f4f1697c129699.png);
 }
 .red .button .highlight[data-v-1f51f03e] {
-  background-image: url(/assets/images/red-button-hilight.png);
+  background-image: url(/assets/images/4f932bef8e52ebca3b1322f178c06dda.png);
   background-position: -5px -5px;
 }
 .red .button .line[data-v-1f51f03e] {
@@ -4597,10 +4597,10 @@ readers do not read off random characters that represent icons */
   filter: drop-shadow(0 2px 4px #ff5c5c);
 }
 .blue .button .gradient[data-v-1f51f03e] {
-  background-image: url(/assets/images/blue-button-bg.png);
+  background-image: url(/assets/images/f3383725b99902f60654a8ee940d4f45.png);
 }
 .blue .button .highlight[data-v-1f51f03e] {
-  background-image: url(/assets/images/blue-button-hilight.png);
+  background-image: url(/assets/images/95456e42b7c8dcd0b9b4c43a48136c7d.png);
   background-position: -5px -5px;
 }
 .blue .button .line[data-v-1f51f03e] {
@@ -4608,10 +4608,10 @@ readers do not read off random characters that represent icons */
   filter: drop-shadow(0 2px 4px #5cfaff);
 }
 .green .button .gradient[data-v-1f51f03e] {
-  background-image: url(/assets/images/green-button-bg.png);
+  background-image: url(/assets/images/3b5fa7ff36333f9567725612cd97ef17.png);
 }
 .green .button .highlight[data-v-1f51f03e] {
-  background-image: url(/assets/images/green-button-hilight.png);
+  background-image: url(/assets/images/d7b6cc9db6603625514af611a4ecc037.png);
   background-position: -5px -5px;
 }
 .green .button .line[data-v-1f51f03e] {
@@ -4619,10 +4619,10 @@ readers do not read off random characters that represent icons */
   filter: drop-shadow(0 2px 4px #c1ff5c);
 }
 .orange .button .gradient[data-v-1f51f03e] {
-  background-image: url(/assets/images/orange-button-bg.png);
+  background-image: url(/assets/images/a851dc80436d17901886df4e213a5cf3.png);
 }
 .orange .button .highlight[data-v-1f51f03e] {
-  background-image: url(/assets/images/orange-button-hilight.png);
+  background-image: url(/assets/images/7310c494be6b467672457937c6d686e0.png);
   background-position: -5px -5px;
 }
 .orange .button .line[data-v-1f51f03e] {
@@ -5182,10 +5182,10 @@ readers do not read off random characters that represent icons */
 }
 
 .red .button .gradient[data-v-01667337] {
-  background-image: url(/assets/images/red-button-bg.png);
+  background-image: url(/assets/images/a606e4f6c825391d69f4f1697c129699.png);
 }
 .red .button .highlight[data-v-01667337] {
-  background-image: url(/assets/images/red-button-hilight.png);
+  background-image: url(/assets/images/4f932bef8e52ebca3b1322f178c06dda.png);
   background-position: -5px -5px;
 }
 .red .button .line[data-v-01667337] {
@@ -5193,10 +5193,10 @@ readers do not read off random characters that represent icons */
   filter: drop-shadow(0 1px 3px #ff5c5c);
 }
 .blue .button .gradient[data-v-01667337] {
-  background-image: url(/assets/images/blue-button-bg.png);
+  background-image: url(/assets/images/f3383725b99902f60654a8ee940d4f45.png);
 }
 .blue .button .highlight[data-v-01667337] {
-  background-image: url(/assets/images/blue-button-hilight.png);
+  background-image: url(/assets/images/95456e42b7c8dcd0b9b4c43a48136c7d.png);
   background-position: -5px -5px;
 }
 .blue .button .line[data-v-01667337] {
@@ -5204,10 +5204,10 @@ readers do not read off random characters that represent icons */
   filter: drop-shadow(0 1px 3px #5cfaff);
 }
 .green .button .gradient[data-v-01667337] {
-  background-image: url(/assets/images/green-button-bg.png);
+  background-image: url(/assets/images/3b5fa7ff36333f9567725612cd97ef17.png);
 }
 .green .button .highlight[data-v-01667337] {
-  background-image: url(/assets/images/green-button-hilight.png);
+  background-image: url(/assets/images/d7b6cc9db6603625514af611a4ecc037.png);
   background-position: -5px -5px;
 }
 .green .button .line[data-v-01667337] {
@@ -5215,10 +5215,10 @@ readers do not read off random characters that represent icons */
   filter: drop-shadow(0 1px 3px #5cff72);
 }
 .orange .button .gradient[data-v-01667337] {
-  background-image: url(/assets/images/orange-button-bg.png);
+  background-image: url(/assets/images/a851dc80436d17901886df4e213a5cf3.png);
 }
 .orange .button .highlight[data-v-01667337] {
-  background-image: url(/assets/images/orange-button-hilight.png);
+  background-image: url(/assets/images/7310c494be6b467672457937c6d686e0.png);
   background-position: -5px -5px;
 }
 .orange .button .line[data-v-01667337] {
@@ -5312,10 +5312,10 @@ readers do not read off random characters that represent icons */
   background-repeat: round;
 }
 .static-fragment.image-1[data-v-defccc8a] {
-    background-image: url(/assets/images/leaf_1.png);
+    background-image: url(/assets/images/a6de42389780729ba58007773773c3f3.png);
 }
 .static-fragment.image-2[data-v-defccc8a] {
-    background-image: url(/assets/images/leaf_2.png);
+    background-image: url(/assets/images/d4cf547cfaa2d7be1a51b71580c43a72.png);
 }
 
 .gallery-collapsible[data-v-c5a09e66] {
@@ -5374,7 +5374,7 @@ readers do not read off random characters that represent icons */
     border-top-right-radius: 100px;
     border-bottom-left-radius: 100px 40px;
     border-bottom-right-radius: 100px 40px;
-    background-image: url(/assets/images/right-icon-hilight.png);
+    background-image: url(/assets/images/a6f00f057b0bc88f0d56a6cfbd1aca78.png);
 }
 .icon-overlay .info-box[data-v-c5a09e66] {
     position: absolute;
@@ -5628,6 +5628,17 @@ readers do not read off random characters that represent icons */
 .themes-frame .theme-icon.r2c4[data-v-7d61b318] {
       transform: translate(900px, 400px);
 }
+.themes-frame .theme-icon .icon-background[data-v-7d61b318] {
+      position: absolute;
+      left: 3px;
+      right: 3px;
+      top: 3px;
+      bottom: 3px;
+      border-radius: 18px;
+}
+.themes-frame .theme-icon .icon-background.amber-icon[data-v-7d61b318] {
+        background-image: url(/assets/images/dde99697838742a337ece1829e3c26d4.png);
+}
 .themes-frame.themes-transition-collapse .theme-icon[data-v-7d61b318] {
     transition: all 200ms linear;
     transform: translate(0, 0) scale(0.2);
@@ -5737,7 +5748,7 @@ readers do not read off random characters that represent icons */
     border-top-right-radius: 100px;
     border-bottom-left-radius: 100px 40px;
     border-bottom-right-radius: 100px 40px;
-    background-image: url(/assets/images/left-icon-hilight.png);
+    background-image: url(/assets/images/da3cbdfbf83bb19db43e8a7b54bf7860.png);
 }
 .themes-transition-collapse[data-v-7d61b318] {
   animation-name: themes-collapse-data-v-7d61b318;
@@ -5873,7 +5884,7 @@ readers do not read off random characters that represent icons */
     position: absolute;
     width: 265px;
     height: 230px;
-    background-image: url(/assets/images/record-button-main.png);
+    background-image: url(/assets/images/801138c3d6d3d6e478611cd01c5e7411.png);
 }
 .record-button .ring-layer[data-v-6de3255b] {
     pointer-events: none;
@@ -5881,7 +5892,7 @@ readers do not read off random characters that represent icons */
     width: 265px;
     height: 230px;
     opacity: 0;
-    background-image: url(/assets/images/record-button-ring.png);
+    background-image: url(/assets/images/ae6072a8d42a1b53b62c72de1fff56a4.png);
 }
 .record-button .ring-layer.animate[data-v-6de3255b] {
       opacity: 1;
@@ -5895,7 +5906,7 @@ readers do not read off random characters that represent icons */
     position: absolute;
     width: 265px;
     height: 230px;
-    background-image: url(/assets/images/record-button-camera.png);
+    background-image: url(/assets/images/1710679e56bffc5ca3fabbdf7ac1f5e7.png);
     opacity: 0;
     transition: all 1000ms linear;
 }
@@ -6420,10 +6431,10 @@ input[data-v-0e538532]:focus {
   background-repeat: round;
 }
 .fragment.image-1[data-v-2e090f7b] {
-    background-image: url(/assets/images/leaf_1.png);
+    background-image: url(/assets/images/a6de42389780729ba58007773773c3f3.png);
 }
 .fragment.image-2[data-v-2e090f7b] {
-    background-image: url(/assets/images/leaf_2.png);
+    background-image: url(/assets/images/d4cf547cfaa2d7be1a51b71580c43a72.png);
 }
 .fragment.ts0[data-v-2e090f7b] {
     transform: var(--ts0);
@@ -6509,15 +6520,15 @@ input[data-v-0e538532]:focus {
       filter: brightness(1.5);
 }
 .languages div.lv[data-v-f668b85a] {
-      background-image: url(/assets/images/lv_flag.png);
+      background-image: url(/assets/images/d136aa5e68ec55db6b0e786a541d73c1.png);
       background-size: cover;
 }
 .languages div.en[data-v-f668b85a] {
-      background-image: url(/assets/images/en_flag.png);
+      background-image: url(/assets/images/7bb8ba56e72d35b8008ab1b61661c071.png);
       background-size: cover;
 }
 .languages div.ru[data-v-f668b85a] {
-      background-image: url(/assets/images/ru_flag.png);
+      background-image: url(/assets/images/91a9f82bba12bcd6fbfec7028ecf93bc.png);
       background-size: cover;
 }
 .languages div.selected[data-v-f668b85a] {
@@ -6542,7 +6553,7 @@ input[data-v-0e538532]:focus {
   opacity: 1;
   visibility: visible;
   transition: all 100ms linear;
-  background-image: url(/assets/images/record-button-main.png);
+  background-image: url(/assets/images/801138c3d6d3d6e478611cd01c5e7411.png);
 }
 .start-button[data-v-c76d1528]:hover {
     filter: brightness(1.75);
@@ -6551,7 +6562,7 @@ input[data-v-0e538532]:focus {
     pointer-events: none;
     width: 265px;
     height: 230px;
-    background-image: url(/assets/images/record-button-ring.png);
+    background-image: url(/assets/images/ae6072a8d42a1b53b62c72de1fff56a4.png);
     animation: spin-data-v-c76d1528 5s infinite;
     animation-timing-function: linear;
 }
@@ -6893,7 +6904,7 @@ input[data-v-0e538532]:focus {
 body {
     font-family: "customFont", serif;
     user-select: none;
-    background-color: #c7c7c7;
+    background-color: black;
     /*overflow: hidden;*/
 }
 

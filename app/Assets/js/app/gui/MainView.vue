@@ -87,7 +87,7 @@ export default {
 body {
     font-family: "customFont", serif;
     user-select: none;
-    background-color: #c7c7c7;
+    background-color: black;
     /*overflow: hidden;*/
 }
 </style>

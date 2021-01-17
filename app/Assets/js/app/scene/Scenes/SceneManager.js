@@ -14,6 +14,7 @@ export default class SceneManager {
         this.addScene(new AmberThemeScene(this, 'AmberScene'));
 
         this.onThemeSelected('DemoScene');
+        //this.onThemeSelected('AmberScene');
 
         this.engine.runRenderLoop(() => this.render());
     }
