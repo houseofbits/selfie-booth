@@ -18,12 +18,12 @@ export default class DemoScene extends BaseScene {
         super(mainScene, name);
 
         let camera = new BABYLON.ArcRotateCamera("Camera",
-            1.562905159080936,
-            1.8292730096422125,
-            189.99967542243158,
+            Math.PI * 0.5,
+            Math.PI * 0.5,
+            189,
             new BABYLON.Vector3(-0.11030575385577211, -8.87722000153747, -2.048547710987432),
             this.scene);
-        camera.attachControl(mainScene.canvas, true);
+        //camera.attachControl(mainScene.canvas, true);
 
         this.itemColumns = [[], [], [], [], []];
         this.itemsForRemoval = [];
@@ -83,13 +83,15 @@ export default class DemoScene extends BaseScene {
         this.createLeaf(35, 1);
         this.createLeaf(-35, 1);
 
-        this.scene.clearColor = new BABYLON.Color3(0.3, 0.3, 0.4);
+        this.scene.clearColor = new BABYLON.Color3(0.274, 0.407, 0.192);
+
+        //this.scene.clearColor = new BABYLON.Color3(1, 0, 1);
 
         this.createPostProcessEffect();
         this.backdropMaterial = new BasicMaterial(this.scene, "ground");
         this.backdropMaterial.setDiffuseMap(BackdropTexture);
 
-        this.createGround();
+        //this.createGround();
 
         // window.onclick = function () {
         //     //this.insertNewItem('d98bdc');

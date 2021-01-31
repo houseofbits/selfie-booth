@@ -46,6 +46,9 @@ export default {
         StaticItem
     },
     props: {
+        disabled: {
+            type: Boolean
+        },
         open: {
             type: Boolean
         },
@@ -107,7 +110,7 @@ export default {
     },
     methods: {
         openGallery() {
-            if (!this.isOpen) {
+            if (!this.isOpen && !this.disabled) {
                 this.isOpen = true;
                 this.$emit('open');
                 if (this.images.length > 1) {
@@ -118,7 +121,6 @@ export default {
                     this.imageData.isImagesCollapsed = false;
                 }
             }
-            this.isThemesSelected = false;
         },
         closeGallery() {
             if (this.isOpen) {

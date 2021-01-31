@@ -3,17 +3,18 @@
         <text-button class="finish-button green" icon="fas fa-backspace"
                      @click="finishCapture">{{ lang('capture.finish-button') }}</text-button>
 
-        <div class="gradient-under" :class="{expanded:(isGalleryOpen|isThemesOpen)}"></div>
+        <div :class="{expanded:(isGalleryOpen|isThemesOpen)}" class="gradient-under"></div>
 
         <dynamic-background :open="isDynamicBackgroundOpen" :state="dynamicBackgroundState"/>
         <gallery-collapsible :images="images"
                              :maximize-selected-image="isExpandedViewOpen"
                              :open="isGalleryOpen"
                              :selected-image="selectedImage"
+                             :disabled="isCaptureInProgress"
                              @close="closeGallery"
                              @open="openGallery"
                              @image-action="handleImageAction"/>
-        <themes-collapsible :open="isThemesOpen" @close="closeThemes" @open="openThemes"/>
+        <themes-collapsible :open="isThemesOpen" :disabled="isCaptureInProgress" @close="closeThemes" @open="openThemes"/>
         <record-button :enabled="isCaptureAvailable" @capture="startCapture" @record="captureImage"/>
         <snapshot-image :captured-image-data="images"></snapshot-image>
 
@@ -56,6 +57,7 @@ export default {
             isDynamicBackgroundOpen: false,
             dynamicBackgroundState: 0,
             sendEmailError: false,
+            isCaptureInProgress: false
         }
     },
     components: {
@@ -109,18 +111,27 @@ export default {
             this.dynamicBackgroundState = 0;
             this.sendEmailError = false;
             this.images = [];
+            this.isCaptureInProgress = false;
         },
         openGallery() {
-            this.isGalleryOpen = true;
-            this.isThemesOpen = false;
-            this.isDynamicBackgroundOpen = true;
-            this.dynamicBackgroundState = this.images.length;
+            if (!this.isCaptureInProgress) {
+                this.isGalleryOpen = true;
+                this.isThemesOpen = false;
+                this.isDynamicBackgroundOpen = true;
+                this.dynamicBackgroundState = this.images.length;
+            } else {
+                this.closeAll();
+            }
         },
         openThemes() {
-            this.isThemesOpen = true;
-            this.isGalleryOpen = false;
-            this.isDynamicBackgroundOpen = true;
-            this.dynamicBackgroundState = 4;
+            if (!this.isCaptureInProgress) {
+                this.isThemesOpen = true;
+                this.isGalleryOpen = false;
+                this.isDynamicBackgroundOpen = true;
+                this.dynamicBackgroundState = 4;
+            } else {
+                this.closeAll();
+            }
         },
         closeGallery() {
             this.isGalleryOpen = false;
@@ -136,11 +147,13 @@ export default {
         },
         startCapture() {
             this.closeAll();
+            this.isCaptureInProgress = true;
         },
         captureImage() {
             if (this.images.length < 4) {
                 MainSceneInstance.captureScreenshot().then(this.imageCaptureFinished);
             }
+            this.isCaptureInProgress = false;
         },
         imageCaptureFinished(base64Image) {
             if (this.images.length < 4) {
@@ -258,7 +271,7 @@ export default {
         height: 600px;
         //background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1.0) 100%);
         //background: linear-gradient(to bottom, rgba(98,125,77,0) 0%, rgba(31,59,8,0.84) 100%);
-        background: linear-gradient(to bottom, rgba(98,125,77,0) 0%, rgba(31,59,8,0.84) 50%, rgba(31,59,8,0.84) 100%);
+        background: linear-gradient(to bottom, rgba(98, 125, 77, 0) 0%, rgba(31, 59, 8, 0.84) 50%, rgba(31, 59, 8, 0.84) 100%);
         transition: height 300ms linear;
 
         &.expanded {
@@ -268,9 +281,10 @@ export default {
         }
     }
 }
+
 .finish-button {
     top: 30px;
     left: 30px;
-    width:220px;
+    width: 220px;
 }
 </style>

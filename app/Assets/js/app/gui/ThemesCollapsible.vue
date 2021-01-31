@@ -59,6 +59,9 @@ export default {
         StaticItem
     },
     props: {
+        disabled: {
+            type: Boolean
+        },
         open: {
             type: Boolean
         }
@@ -83,7 +86,9 @@ export default {
     },
     methods: {
         openThemes() {
-            this.$emit('open');
+            if (!this.disabled) {
+                this.$emit('open');
+            }
         },
         closeThemes() {
             this.$emit('close');
