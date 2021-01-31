@@ -48,7 +48,7 @@ export default {
     width: 1080px;
     height: 200px;
     position: absolute;
-    top: 1570px;
+    top: 1650px;
     left: 0;
     display: flex;
     align-items: center;

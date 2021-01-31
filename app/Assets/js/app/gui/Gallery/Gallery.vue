@@ -80,7 +80,7 @@ export default {
         left: 0;
         width: $screen-width+px;
         height: $screen-height+px;
-        background-color: rgba(0, 0, 0, 0.5);
+        background-color: rgba(31,59,8,0.65);  //rgba(0, 0, 0, 0.5);
         opacity: 0;
         display: none;
         transition: all 0.2s linear;

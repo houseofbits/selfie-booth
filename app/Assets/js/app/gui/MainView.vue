@@ -1,5 +1,6 @@
 <template>
     <div>
+        <div class="gradient-under" :class="{expanded:isConfirmationButtonVisible, hidden:isCaptureViewVisible}"></div>
         <start-button :is-visible="isStartButtonVisible" @start="start"/>
         <confirm-button :is-visible="isConfirmationButtonVisible" @confirm="confirm"/>
         <languages :is-visible="!isCaptureViewVisible"/>
@@ -61,6 +62,28 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+.gradient-under {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 900px;
+    background: linear-gradient(to bottom, rgba(98,125,77,0) 0%, rgba(31,59,8,0.84) 50%, rgba(31,59,8,0.84) 100%);
+    transition: height, opacity 300ms linear;
+    visibility: visible;
+    opacity: 0.9;
+
+    &.hidden {
+        visibility: hidden;
+    }
+
+    &.expanded {
+        height: 1400px;
+        transition: height, opacity 300ms linear;
+        opacity: 1.0;
+    }
+}
 
 .capture-view {
     //opacity: 0;

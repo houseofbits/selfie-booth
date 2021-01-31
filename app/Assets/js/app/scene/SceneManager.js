@@ -26,7 +26,7 @@ export default class SceneManager {
         this.addScene(new BugsThemeScene(this, 'BugsScene'));
 
         this.onThemeSelected('DemoScene');
-        //this.onThemeSelected('AmberScene');
+        //this.onThemeSelected('DinosaursScene');
 
         this.engine.runRenderLoop(() => this.render());
     }

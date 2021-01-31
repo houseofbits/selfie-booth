@@ -12,7 +12,7 @@ export default {
     props: {
         timeout: {
             type: Number,
-            default: 1000
+            default: 5000
         },
         enabled: {
             type: Boolean,
@@ -83,7 +83,7 @@ export default {
         &.animate {
             opacity: 1;
             animation-name: load;
-            animation-duration: 1000ms;
+            animation-duration: 5000ms;
             animation-fill-mode: forwards;
             animation-iteration-count: 1;
         }

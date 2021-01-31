@@ -3,6 +3,8 @@
         <text-button class="finish-button green" icon="fas fa-backspace"
                      @click="finishCapture">{{ lang('capture.finish-button') }}</text-button>
 
+        <div class="gradient-under" :class="{expanded:(isGalleryOpen|isThemesOpen)}"></div>
+
         <dynamic-background :open="isDynamicBackgroundOpen" :state="dynamicBackgroundState"/>
         <gallery-collapsible :images="images"
                              :maximize-selected-image="isExpandedViewOpen"
@@ -14,7 +16,6 @@
         <themes-collapsible :open="isThemesOpen" @close="closeThemes" @open="openThemes"/>
         <record-button :enabled="isCaptureAvailable" @capture="startCapture" @record="captureImage"/>
         <snapshot-image :captured-image-data="images"></snapshot-image>
-        <div class="gradient-under"></div>
 
         <sharing-view-redirect :image="selectedImage" :is-active="isShareViewOpen || isDownloadViewOpen"
                                :is-download-view="isDownloadViewOpen"
@@ -253,9 +254,18 @@ export default {
         position: absolute;
         left: 0;
         right: 0;
-        bottom: 0;
-        height: 200px;
-        background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.65) 100%);
+        bottom: -300px;
+        height: 600px;
+        //background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1.0) 100%);
+        //background: linear-gradient(to bottom, rgba(98,125,77,0) 0%, rgba(31,59,8,0.84) 100%);
+        background: linear-gradient(to bottom, rgba(98,125,77,0) 0%, rgba(31,59,8,0.84) 50%, rgba(31,59,8,0.84) 100%);
+        transition: height 300ms linear;
+
+        &.expanded {
+            height: 1600px;
+            transition: height 300ms linear;
+            bottom: 0;
+        }
     }
 }
 .finish-button {
