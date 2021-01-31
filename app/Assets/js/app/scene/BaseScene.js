@@ -1,4 +1,4 @@
-import ThemeStructure from "/js/app/scene/Structures/ThemeStructure";
+import ThemeStructure from "@app/scene/Structures/ThemeStructure";
 import * as BABYLON from 'babylonjs';
 
 export default class BaseScene {

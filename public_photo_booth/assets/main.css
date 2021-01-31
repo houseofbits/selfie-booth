@@ -5639,6 +5639,24 @@ readers do not read off random characters that represent icons */
 .themes-frame .theme-icon .icon-background.amber-icon[data-v-7d61b318] {
         background-image: url(/assets/images/dde99697838742a337ece1829e3c26d4.png);
 }
+.themes-frame .theme-icon .icon-background.dinosaurs-icon[data-v-7d61b318] {
+        background-image: url(/assets/images/2be082c1cd1110c3b21f480fd7b40134.png);
+}
+.themes-frame .theme-icon .icon-background.bugs-icon[data-v-7d61b318] {
+        background-image: url(/assets/images/396fcc7e96fd141bab1a6747a919c947.png);
+}
+.themes-frame .theme-icon .icon-background.shrooms-icon[data-v-7d61b318] {
+        background-image: url(/assets/images/396fcc7e96fd141bab1a6747a919c947.png);
+}
+.themes-frame .theme-icon .icon-background.coral-icon[data-v-7d61b318] {
+        background-image: url(/assets/images/396fcc7e96fd141bab1a6747a919c947.png);
+}
+.themes-frame .theme-icon .icon-background.birds-icon[data-v-7d61b318] {
+        background-image: url(/assets/images/396fcc7e96fd141bab1a6747a919c947.png);
+}
+.themes-frame .theme-icon .icon-background.archive-icon[data-v-7d61b318] {
+        background-image: url(/assets/images/396fcc7e96fd141bab1a6747a919c947.png);
+}
 .themes-frame.themes-transition-collapse .theme-icon[data-v-7d61b318] {
     transition: all 200ms linear;
     transform: translate(0, 0) scale(0.2);

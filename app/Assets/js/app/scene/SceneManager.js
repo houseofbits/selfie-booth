@@ -1,6 +1,12 @@
 import * as BABYLON from 'babylonjs';
-import AmberThemeScene from "/js/app/scene/Scenes/AmberThemeScene";
-import DemoScene from "/js/app/scene/Scenes/DemoScene";
+import AmberThemeScene from "@app/scene/Scenes/AmberThemeScene";
+import DemoScene from "@app/scene/Scenes/DemoScene";
+import DinosaursThemeScene from "@app/scene/Scenes/DinosaursThemeScene";
+import CoralThemeScene from "@app/scene/Scenes/CoralThemeScene";
+import ShroomsThemeScene from "@app/scene/Scenes/ShroomsThemeScene";
+import BirdsThemeScene from "@app/scene/Scenes/BirdsThemeScene";
+import ArchiveThemeScene from "@app/scene/Scenes/ArchiveThemeScene";
+import BugsThemeScene from "@app/scene/Scenes/BugsThemeScene";
 
 export default class SceneManager {
     constructor(canvas) {
@@ -12,6 +18,12 @@ export default class SceneManager {
 
         this.addScene(new DemoScene(this, 'DemoScene'));
         this.addScene(new AmberThemeScene(this, 'AmberScene'));
+        this.addScene(new DinosaursThemeScene(this, 'DinosaursScene'));
+        this.addScene(new CoralThemeScene(this, 'CoralScene'));
+        this.addScene(new ShroomsThemeScene(this, 'ShroomsScene'));
+        this.addScene(new BirdsThemeScene(this, 'BirdsScene'));
+        this.addScene(new ArchiveThemeScene(this, 'ArchiveScene'));
+        this.addScene(new BugsThemeScene(this, 'BugsScene'));
 
         this.onThemeSelected('DemoScene');
         //this.onThemeSelected('AmberScene');

@@ -9,13 +9,27 @@
             <div class="theme-icon r1c1" @click="select('AmberScene')">
                 <div class="icon-background amber-icon"></div>
             </div>
-            <div class="theme-icon r1c2">Work in progress</div>
-            <div class="theme-icon r1c3">Work in progress</div>
-            <div class="theme-icon r1c4">Work in progress</div>
-            <div class="theme-icon r2c1">Work in progress</div>
-            <div class="theme-icon r2c2">Work in progress</div>
-            <div class="theme-icon r2c3">Work in progress</div>
-            <div class="theme-icon r2c4">Work in progress</div>
+            <div class="theme-icon r1c2" @click="select('DinosaursScene')">
+                <div class="icon-background dinosaurs-icon"></div>
+            </div>
+            <div class="theme-icon r1c3" @click="select('CoralScene')">
+                <div class="icon-background coral-icon"></div>
+            </div>
+            <div class="theme-icon r1c4" @click="select('ShroomsScene')">
+                <div class="icon-background shrooms-icon"></div>
+            </div>
+            <div class="theme-icon r2c1" @click="select('BirdsScene')">
+                <div class="icon-background birds-icon"></div>
+            </div>
+            <div class="theme-icon r2c2" @click="select('ArchiveScene')">
+                <div class="icon-background archive-icon"></div>
+            </div>
+            <div class="theme-icon r2c3" @click="select('BugsScene')">
+                <div class="icon-background bugs-icon"></div>
+            </div>
+            <div class="theme-icon r2c4">
+                <div class="icon-background bugs-icon"></div>
+            </div>
         </div>
 
         <static-item :class="{visible: !isOpen}" class="leaf leaf-pos-1" image-id="2"></static-item>
@@ -166,6 +180,24 @@ $theme-icons-per-row: 4;
 
             &.amber-icon {
                 background-image: url('@images/amber/icon.png');
+            }
+            &.dinosaurs-icon {
+                background-image: url('@images/dinosaurs/icon.png');
+            }
+            &.bugs-icon {
+                background-image: url('@images/bugs/icon.png');
+            }
+            &.shrooms-icon {
+                background-image: url('@images/shrooms/icon.png');
+            }
+            &.coral-icon {
+                background-image: url('@images/coral/icon.png');
+            }
+            &.birds-icon {
+                background-image: url('@images/birds/icon.png');
+            }
+            &.archive-icon {
+                background-image: url('@images/archive/icon.png');
             }
         }
     }

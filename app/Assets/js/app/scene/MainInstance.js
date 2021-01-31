@@ -1,4 +1,4 @@
-import SceneManager from '/js/app/scene/Scenes/SceneManager';
+import SceneManager from '@app/scene/SceneManager';
 
 const MainSceneInstance = new SceneManager(document.getElementById('renderCanvas'));
 

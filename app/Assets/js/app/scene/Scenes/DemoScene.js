@@ -1,17 +1,17 @@
-import BaseScene from "/js/app/scene/Scenes/BaseScene";
+import BaseScene from "@app/scene/BaseScene";
 import * as BABYLON from 'babylonjs';
 import BackdropTexture from '@images/demo/background.png';
 import ImageEdgesMaskTexture from '@images/image-thumbnail-edges.jpg';
 //import ImageEdgesNormalTexture from '@images/image-thumbnail-edges-normal.png';
 import LeafTexture from '@images/leaf_1.png';
-import BasicMaterial from "@app/scene/Scenes/Materials/BasicMaterial";
+import BasicMaterial from "@app/scene/Materials/BasicMaterial";
 import DemoModeItem from "@app/scene/Structures/DemoModeItem";
 import axios from "axios";
-import ImageShadedMaterial from "@app/scene/Scenes/Materials/ImageShadedMaterial";
+import ImageShadedMaterial from "@app/scene/Materials/ImageShadedMaterial";
 import DemoModeItemStructure from "@app/scene/Structures/DemoModeItemStructure";
 import DemoScenePostProcess from '@shaders/demoScenePostProcess.frag';
 import DemoModeLeafItem from "@app/scene/Structures/DemoModeLeafItem";
-import BasicAlphaMaterial from "@app/scene/Scenes/Materials/BasicAlphaMaterial";
+import BasicAlphaMaterial from "@app/scene/Materials/BasicAlphaMaterial";
 
 export default class DemoScene extends BaseScene {
     constructor(mainScene, name) {
@@ -23,7 +23,7 @@ export default class DemoScene extends BaseScene {
             189.99967542243158,
             new BABYLON.Vector3(-0.11030575385577211, -8.87722000153747, -2.048547710987432),
             this.scene);
-        //camera.attachControl(mainScene.canvas, true);
+        camera.attachControl(mainScene.canvas, true);
 
         this.itemColumns = [[], [], [], [], []];
         this.itemsForRemoval = [];

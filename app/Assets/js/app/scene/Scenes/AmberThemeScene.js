@@ -1,10 +1,10 @@
-import BaseScene from "/js/app/scene/Scenes/BaseScene";
+import BaseScene from "@app/scene/BaseScene";
 import * as BABYLON from 'babylonjs';
 import BgMap from '@images/amber/background.png';
 //import MaskTexture from '@images/amber/mask-map.png';
-import AmberTexture from '@images/amber/diffuse-map2.png';
-import NormalsTexture from '@images/amber/normal-map2.png';
-import AmberMaterial from "@app/scene/Scenes/Materials/AmberMaterial";
+import AmberTexture from '@images/amber/amber2-diffuse.png';
+import NormalsTexture from '@images/amber/amber2-normal.png';
+import AmberMaterial from "@app/scene/Materials/AmberMaterial";
 
 const EffectTypes = {
     Bg1: 1,
@@ -51,7 +51,7 @@ export default class AmberThemeScene extends BaseScene {
         // box.position.x = 2;
         // box.position.y = 1.5;
 
-        this.amberMaterial = new AmberMaterial(this.scene, 'amber');
+        this.amberMaterial = new AmberMaterial(this.scene, this.name + 'MainMaterial');
         this.amberMaterial.setCameraTexture(new BABYLON.Texture(BgMap, this.scene));
         this.amberMaterial.setDiffuseMap(BgMap);
 //        this.amberMaterial.setMaskMap(MaskTexture);
