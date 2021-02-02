@@ -19,7 +19,11 @@ export default class BaseScene {
     }
 
     getTheme() {
-        return this.theme;
+        return this.name;
+    }
+
+    onOptionSelected(optionName) {
+
     }
 
     onSceneActivated() {

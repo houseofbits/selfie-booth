@@ -64,6 +64,9 @@ export default {
         },
         open: {
             type: Boolean
+        },
+        theme: {
+            type: String
         }
     },
     data() {
@@ -95,7 +98,7 @@ export default {
         },
         select(themeName){
             MainSceneInstance.onThemeSelected(themeName);
-            this.$emit('close');
+            this.$emit('select-theme', themeName);
         }
     }
 }

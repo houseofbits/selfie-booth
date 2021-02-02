@@ -1,16 +1,15 @@
 import BaseScene from "@app/scene/BaseScene";
 import * as BABYLON from 'babylonjs';
 import BgMap from '@images/amber/background.png';
-//import MaskTexture from '@images/amber/mask-map.png';
-import AmberTexture from '@images/amber/amber2-diffuse.png';
-import NormalsTexture from '@images/amber/amber2-normal.png';
+import AmberTexture1 from '@images/amber/amber1-diffuse.png';
+import NormalsTexture1 from '@images/amber/amber1-normal.png';
+import AmberTexture2 from '@images/amber/amber2-diffuse.png';
+import NormalsTexture2 from '@images/amber/amber2-normal.png';
+import AmberTexture3 from '@images/amber/amber3-diffuse.png';
+import NormalsTexture3 from '@images/amber/amber3-normal.png';
+import AmberTexture4 from '@images/amber/amber4-diffuse.png';
+import NormalsTexture4 from '@images/amber/amber4-normal.png';
 import AmberMaterial from "@app/scene/Materials/AmberMaterial";
-
-const EffectTypes = {
-    Bg1: 1,
-    Bg2: 2,
-    Bg3: 3
-};
 
 export default class AmberThemeScene extends BaseScene {
     constructor(mainScene, name) {
@@ -19,7 +18,6 @@ export default class AmberThemeScene extends BaseScene {
         this.scene.clearColor = new BABYLON.Color3(0.3, 0.3, 0.4);
 
         let camera = new BABYLON.ArcRotateCamera("Camera", 0, BABYLON.Angle.FromDegrees(90).radians(), 2000, new BABYLON.Vector3(0, 0, 0), this.scene);
-        //camera.attachControl(mainScene.canvas, true);
 
         this.createScene();
 
@@ -32,38 +30,50 @@ export default class AmberThemeScene extends BaseScene {
 
     createScene() {
 
-        // let light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0), this.scene);
-        // light.intensity = 0.7;
+        this.amber1Texture = new BABYLON.Texture(AmberTexture1, this.scene);
+        this.amber2Texture = new BABYLON.Texture(AmberTexture2, this.scene);
+        this.amber3Texture = new BABYLON.Texture(AmberTexture3, this.scene);
+        this.amber4Texture = new BABYLON.Texture(AmberTexture4, this.scene);
 
-        // this.amberMaterial = new BABYLON.StandardMaterial("mat", this.scene);
-        // this.amberMaterial.diffuseColor = BABYLON.Color3.White();
-
-//        this.background1Material = new BABYLON.StandardMaterial("mat", mainScene.scene);
-//        this.background1Material.emissiveTexture = new BABYLON.Texture(BackgroundTexture1, mainScene.scene);
-
-        // this.background1Material = new BasicMaterial(this.scene, 'bg1');
-        // this.background1Material.setDiffuseMap(this.videoTexture);
-
-        // let sphere = BABYLON.MeshBuilder.CreateSphere("sphere", {diameter: 4, segments: 32}, this.scene);
-        // sphere.position.y = 1;
-
-        // let box = BABYLON.MeshBuilder.CreateBox("box", {width: 2, height: 3, depth: 1}, this.getScene());
-        // box.position.x = 2;
-        // box.position.y = 1.5;
+        this.normal1Texture = new BABYLON.Texture(NormalsTexture1, this.scene);
+        this.normal2Texture = new BABYLON.Texture(NormalsTexture2, this.scene);
+        this.normal3Texture = new BABYLON.Texture(NormalsTexture3, this.scene);
+        this.normal4Texture = new BABYLON.Texture(NormalsTexture4, this.scene);
 
         this.amberMaterial = new AmberMaterial(this.scene, this.name + 'MainMaterial');
         this.amberMaterial.setCameraTexture(new BABYLON.Texture(BgMap, this.scene));
         this.amberMaterial.setDiffuseMap(BgMap);
-//        this.amberMaterial.setMaskMap(MaskTexture);
-        this.amberMaterial.setDiffuseSecondaryMap(AmberTexture);
-        this.amberMaterial.setNormalsMap(NormalsTexture);
 
-        let plane = BABYLON.MeshBuilder.CreatePlane("backplane", {width: 1000, height: 1770, sideOrientation: BABYLON.Mesh.DOUBLESIDE}, this.scene);
-        plane.material = this.amberMaterial.getMaterial();
-        plane.rotate(BABYLON.Axis.Y, BABYLON.Angle.FromDegrees(90).radians(), BABYLON.Space.WORLD);
+        this.amberMaterial.setDiffuseSecondaryTexture(this.amber1Texture);
+        this.amberMaterial.setNormalsTexture(this.normal1Texture);
+
+        this.plane = BABYLON.MeshBuilder.CreatePlane("backplane", {width: 1000, height: 1770, sideOrientation: BABYLON.Mesh.DOUBLESIDE}, this.scene);
+        this.plane.material = this.amberMaterial.getMaterial();
+        this.plane.rotate(BABYLON.Axis.Y, BABYLON.Angle.FromDegrees(90).radians(), BABYLON.Space.WORLD);
     }
 
     onVideoTextureCreated() {
         this.amberMaterial.setCameraTexture(this.videoTexture);
+    }
+
+    onOptionSelected(optionName) {
+        switch (optionName) {
+            case 'Amber1':
+                this.amberMaterial.setDiffuseSecondaryTexture(this.amber1Texture);
+                this.amberMaterial.setNormalsTexture(this.normal1Texture);
+                break;
+            case 'Amber2':
+                this.amberMaterial.setDiffuseSecondaryTexture(this.amber2Texture);
+                this.amberMaterial.setNormalsTexture(this.normal2Texture);
+                break;
+            case 'Amber3':
+                this.amberMaterial.setDiffuseSecondaryTexture(this.amber3Texture);
+                this.amberMaterial.setNormalsTexture(this.normal3Texture);
+                break;
+            case 'Amber4':
+                this.amberMaterial.setDiffuseSecondaryTexture(this.amber4Texture);
+                this.amberMaterial.setNormalsTexture(this.normal4Texture);
+                break;
+        }
     }
 }

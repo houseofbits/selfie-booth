@@ -17,7 +17,6 @@ uniform vec3 cameraPosition;
 uniform sampler2D diffuseMap;
 uniform sampler2D diffuseSecMap;
 uniform sampler2D cameraMap;
-//uniform sampler2D maskMap;
 uniform sampler2D normalsMap;
 
 vec3 reflection(sampler2D map, vec2 uv, vec3 normal, vec3 view)

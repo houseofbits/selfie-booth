@@ -50,6 +50,12 @@ export default class SceneManager {
         }
     }
 
+    onOptionSelected(optionName) {
+        if (this.activeScene) {
+            this.activeScene.onOptionSelected(optionName);
+        }
+    }
+
     onThemeSelected(themeName) {
         const result = this.scenes.find((e) => e.name === themeName);
         if (result) {

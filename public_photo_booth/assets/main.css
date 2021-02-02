@@ -6487,6 +6487,44 @@ input[data-v-0e538532]:focus {
     transition: opacity 100ms linear;
 }
 
+.open[data-v-467dc484] {
+  pointer-events: auto;
+}
+.open .o0[data-v-467dc484] {
+    left: 250px;
+    visibility: visible;
+}
+.open .o1[data-v-467dc484] {
+    left: 450px;
+    visibility: visible;
+}
+.open .o2[data-v-467dc484] {
+    left: 650px;
+    visibility: visible;
+}
+.open .o3[data-v-467dc484] {
+    left: 850px;
+    visibility: visible;
+}
+.closed .o0[data-v-467dc484], .closed .o1[data-v-467dc484], .closed .o2[data-v-467dc484], .closed .o3[data-v-467dc484] {
+  left: 50px;
+  background-color: #003ac4;
+  visibility: hidden;
+}
+.icon[data-v-467dc484] {
+  pointer-events: auto;
+  position: absolute;
+  left: 50px;
+  bottom: 250px;
+  width: 150px;
+  height: 150px;
+  border: solid 1px yellow;
+  background-color: #28a745;
+  transition: all 200ms linear;
+  font-size: 20px;
+  color: #003ac4;
+}
+
 .gui-frame[data-v-4091e27a] {
   position: absolute;
   top: 0;

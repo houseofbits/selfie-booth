@@ -5,6 +5,8 @@
 
         <div :class="{expanded:(isGalleryOpen|isThemesOpen)}" class="gradient-under"></div>
 
+        <options-collapsible :open="isOptionsOpen" :theme="selectedTheme" @open="openOptions" @select="selectOption"/>
+
         <dynamic-background :open="isDynamicBackgroundOpen" :state="dynamicBackgroundState"/>
         <gallery-collapsible :images="images"
                              :maximize-selected-image="isExpandedViewOpen"
@@ -14,7 +16,12 @@
                              @close="closeGallery"
                              @open="openGallery"
                              @image-action="handleImageAction"/>
-        <themes-collapsible :open="isThemesOpen" :disabled="isCaptureInProgress" @close="closeThemes" @open="openThemes"/>
+        <themes-collapsible :open="isThemesOpen"
+                            :theme="selectedTheme"
+                            :disabled="isCaptureInProgress"
+                            @close="closeThemes"
+                            @select-theme="selectTheme"
+                            @open="openThemes"/>
         <record-button :enabled="isCaptureAvailable" @capture="startCapture" @record="captureImage"/>
         <snapshot-image :captured-image-data="images"></snapshot-image>
 
@@ -41,6 +48,7 @@ import DynamicBackground from './DynamicBackground/DynamicBackground.vue';
 import ImageDataSyncService from "./Services/ImageDataSyncService";
 import EmailService from "./Services/EmailService.js";
 import TextButton from './TextButton.vue';
+import OptionsCollapsible from './OptionsCollapsible.vue';
 
 export default {
     name: "CaptureView",
@@ -51,13 +59,15 @@ export default {
             selectedImage: null,
             isGalleryOpen: false,
             isThemesOpen: false,
+            isOptionsOpen: false,
             isEmailViewOpen: false,
             isShareViewOpen: false,
             isDownloadViewOpen: false,
             isDynamicBackgroundOpen: false,
             dynamicBackgroundState: 0,
             sendEmailError: false,
-            isCaptureInProgress: false
+            isCaptureInProgress: false,
+            selectedTheme: '',
         }
     },
     components: {
@@ -68,7 +78,8 @@ export default {
         SharingViewRedirect,
         SharingViewEmail,
         DynamicBackground,
-        TextButton
+        TextButton,
+        OptionsCollapsible
     },
     props: {
         open: {
@@ -112,6 +123,7 @@ export default {
             this.sendEmailError = false;
             this.images = [];
             this.isCaptureInProgress = false;
+            this.selectedTheme = MainSceneInstance.getActiveTheme()
         },
         openGallery() {
             if (!this.isCaptureInProgress) {
@@ -144,6 +156,10 @@ export default {
             if (!this.isGalleryOpen) {
                 this.isDynamicBackgroundOpen = false;
             }
+        },
+        selectTheme(themeName) {
+            this.selectedTheme = themeName;
+            this.closeAll();
         },
         startCapture() {
             this.closeAll();
@@ -185,6 +201,7 @@ export default {
             this.isEmailViewOpen = false;
             this.isShareViewOpen = false;
             this.isDownloadViewOpen = false;
+            this.isOptionsOpen = false;
         },
         handleImageAction(action, image) {
             switch (action) {
@@ -246,6 +263,12 @@ export default {
         },
         generateImageId() {
             return (Date.now().toString(36) + Math.random().toString(36).substr(2)).substr(4, 8);
+        },
+        selectOption(option) {
+            this.isOptionsOpen = false;
+        },
+        openOptions() {
+            this.isOptionsOpen = true;
         }
     }
 }
