@@ -123,11 +123,13 @@ export default {
             this.sendEmailError = false;
             this.images = [];
             this.isCaptureInProgress = false;
+            this.isOptionsOpen = false;
             this.selectedTheme = MainSceneInstance.getActiveTheme()
         },
         openGallery() {
             if (!this.isCaptureInProgress) {
                 this.isGalleryOpen = true;
+                this.isOptionsOpen = false;
                 this.isThemesOpen = false;
                 this.isDynamicBackgroundOpen = true;
                 this.dynamicBackgroundState = this.images.length;
@@ -139,6 +141,7 @@ export default {
             if (!this.isCaptureInProgress) {
                 this.isThemesOpen = true;
                 this.isGalleryOpen = false;
+                this.isOptionsOpen = false;
                 this.isDynamicBackgroundOpen = true;
                 this.dynamicBackgroundState = 4;
             } else {
@@ -268,7 +271,12 @@ export default {
             this.isOptionsOpen = false;
         },
         openOptions() {
-            this.isOptionsOpen = true;
+            if (!this.isCaptureInProgress) {
+                this.isGalleryOpen = false;
+                this.isThemesOpen = false;
+                this.isDynamicBackgroundOpen = false;
+                this.isOptionsOpen = true;
+            }
         }
     }
 }

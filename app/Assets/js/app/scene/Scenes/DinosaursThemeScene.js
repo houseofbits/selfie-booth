@@ -1,7 +1,10 @@
 import BaseScene from "@app/scene/BaseScene";
 import * as BABYLON from 'babylonjs';
-import BgMap from '@images/dinosaurs/background.png';
 import DinosaursMaterial from "@app/scene/Materials/DinosaursMaterial";
+import BackgroundTexture1 from "@images/dinosaurs/bg1.png";
+import BackgroundTexture2 from "@images/dinosaurs/bg2.png";
+import BackgroundTexture3 from "@images/dinosaurs/bg3.png";
+import BackgroundTexture4 from "@images/dinosaurs/bg4.png";
 
 
 export default class DinosaursThemeScene extends BaseScene {
@@ -23,9 +26,14 @@ export default class DinosaursThemeScene extends BaseScene {
 
     createScene() {
 
+        this.bg1Texture = new BABYLON.Texture(BackgroundTexture1, this.scene);
+        this.bg2Texture = new BABYLON.Texture(BackgroundTexture2, this.scene);
+        this.bg3Texture = new BABYLON.Texture(BackgroundTexture3, this.scene);
+        this.bg4Texture = new BABYLON.Texture(BackgroundTexture4, this.scene);
+
         this.material = new DinosaursMaterial(this.scene, this.name + 'MainMaterial');
-        this.material.setCameraTexture(new BABYLON.Texture(BgMap, this.scene));
-        this.material.setDiffuseMap(BgMap);
+        //this.material.setCameraTexture(new BABYLON.Texture(BgMap, this.scene));
+        this.material.setDiffuseTexture(this.bg1Texture);
 
         let plane = BABYLON.MeshBuilder.CreatePlane("backplane2", {width: 1000, height: 1770, sideOrientation: BABYLON.Mesh.DOUBLESIDE}, this.scene);
         plane.material = this.material.getMaterial();
@@ -36,20 +44,19 @@ export default class DinosaursThemeScene extends BaseScene {
         this.material.setCameraTexture(this.videoTexture);
     }
 
-
     onOptionSelected(optionName) {
         switch (optionName) {
-            case 'Outfit1':
-
+            case 'dinosaurs1':
+                this.material.setDiffuseTexture(this.bg1Texture);
                 break;
-            case 'Outfit2':
-
+            case 'dinosaurs2':
+                this.material.setDiffuseTexture(this.bg2Texture);
                 break;
-            case 'Outfit3':
-
+            case 'dinosaurs3':
+                this.material.setDiffuseTexture(this.bg3Texture);
                 break;
-            case 'Outfit4':
-
+            case 'dinosaurs4':
+                this.material.setDiffuseTexture(this.bg4Texture);
                 break;
         }
     }

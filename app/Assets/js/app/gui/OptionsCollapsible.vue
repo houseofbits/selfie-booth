@@ -1,7 +1,12 @@
 <template>
     <div v-if="selectedOption" :class="{open: isOpen, closed: !isOpen}">
-        <div class="icon" @click="showOptions">{{ selectedOption }}</div>
-        <div v-for="(option, index) in themeOptions" class="icon" :class="['o'+index]" @click="select(option)">{{ option }}</div>
+        <div class="shadow"></div>
+        <div class="icon"  :class="[selectedOption]" @click="showOptions">
+            <div class="overlay"></div>
+        </div>
+        <div v-for="(option, index) in themeOptions" class="icon option" :class="['o'+index, option]" @click="select(option)">
+            <div class="overlay"></div>
+        </div>
     </div>
 </template>
 
@@ -24,8 +29,8 @@ export default {
     data() {
         return {
             options: {
-                AmberScene: ['Amber1', 'Amber2', 'Amber3', 'Amber4'],
-                DinosaursScene: ['Outfit1', 'Outfit2', 'Outfit3', 'Outfit4'],
+                AmberScene: ['amber1', 'amber2', 'amber3', 'amber4'],
+                DinosaursScene: ['dinosaurs1', 'dinosaurs2', 'dinosaurs3', 'dinosaurs4'],
                 CoralScene: [],
             },
             selectedOption: null,
@@ -48,7 +53,7 @@ export default {
     computed: {
         themeOptions() {
             if (this.options.hasOwnProperty(this.theme)) {
-                return this.options[this.theme];
+                return this.options[this.theme].filter(option => option !== this.selectedOption);
             }
             return [];
         }
@@ -62,6 +67,7 @@ export default {
             }
         },
         select(option) {
+            this.selectedOption = option;
             MainSceneInstance.onOptionSelected(option);
             this.$emit('select', option);
         }
@@ -73,26 +79,31 @@ export default {
 .open {
     pointer-events: auto;
     .o0 {
-        left: 250px;
+        left: 40px;
+        bottom: 440px;
         visibility: visible;
     }
     .o1 {
-        left: 450px;
+        left: 40px;
+        bottom: 660px;
         visibility: visible;
     }
     .o2 {
-        left: 650px;
+        left: 40px;
+        bottom: 880px;
         visibility: visible;
     }
     .o3 {
-        left: 850px;
+        left: 40px;
+        bottom: 1100px;
         visibility: visible;
     }
 }
 
 .closed {
     .o0, .o1, .o2, .o3 {
-        left: 50px;
+        left: 40px;
+        bottom: 220px;
         background-color: #003ac4;
         visibility: hidden;
     }
@@ -101,15 +112,77 @@ export default {
 .icon {
     pointer-events: auto;
     position: absolute;
-    left: 50px;
-    bottom: 250px;
-    width: 150px;
-    height: 150px;
-    border: solid 1px yellow;
-    background-color: #28a745;
+    left: 40px;
+    bottom: 220px;
+    width: 183px;
+    height: 183px;
+    background: linear-gradient(to bottom, rgba(255,234,209,1) 0%,rgba(178,176,0,1) 41%,rgba(170,92,0,1) 59%,rgba(235,155,29,1) 100%);
     transition: all 200ms linear;
     font-size: 20px;
     color: #003ac4;
-}
+    border-radius: 50%;
+    box-shadow: 0 5px 6px 3px rgba(0, 0, 0, 0.56);
 
+    &.option {
+        width: 177px;
+        height: 177px;
+    }
+
+    div.overlay {
+        width: 171px;
+        height: 220px;
+        position: absolute;
+        bottom: 6px;
+        left: 6px;
+    }
+
+    &.option div.overlay {
+        bottom: 3px;
+        left: 3px;
+    }
+
+    &.amber1 div.overlay {
+      background-image: url('@images/amber/option1.png');
+      height: 200px;
+    }
+    &.amber2  div.overlay {
+        background-image: url('@images/amber/option2.png');
+        height: 200px;
+    }
+    &.amber3  div.overlay {
+        background-image: url('@images/amber/option3.png');
+        height: 200px;
+    }
+    &.amber4  div.overlay {
+        background-image: url('@images/amber/option4.png');
+        height: 200px;
+    }
+
+    &.dinosaurs1 div.overlay {
+        background-image: url('@images/dinosaurs/option1.png');
+        height: 214px;
+    }
+    &.dinosaurs2  div.overlay {
+        background-image: url('@images/dinosaurs/option2.png');
+        height: 214px;
+    }
+    &.dinosaurs3  div.overlay {
+        background-image: url('@images/dinosaurs/option3.png');
+        height: 214px;
+    }
+    &.dinosaurs4  div.overlay {
+        background-image: url('@images/dinosaurs/option4.png');
+        height: 214px;
+    }
+}
+.shadow {
+    display: block;
+    position: absolute;
+    width: 223px;
+    height:183px;
+    left: 20px;
+    bottom: 220px;
+    border-radius: 50% 50% 100px 100px;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 45%, rgba(0, 0, 0, 0.48) 100%);
+}
 </style>

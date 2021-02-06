@@ -58,19 +58,19 @@ export default class AmberThemeScene extends BaseScene {
 
     onOptionSelected(optionName) {
         switch (optionName) {
-            case 'Amber1':
+            case 'amber1':
                 this.amberMaterial.setDiffuseSecondaryTexture(this.amber1Texture);
                 this.amberMaterial.setNormalsTexture(this.normal1Texture);
                 break;
-            case 'Amber2':
+            case 'amber2':
                 this.amberMaterial.setDiffuseSecondaryTexture(this.amber2Texture);
                 this.amberMaterial.setNormalsTexture(this.normal2Texture);
                 break;
-            case 'Amber3':
+            case 'amber3':
                 this.amberMaterial.setDiffuseSecondaryTexture(this.amber3Texture);
                 this.amberMaterial.setNormalsTexture(this.normal3Texture);
                 break;
-            case 'Amber4':
+            case 'amber4':
                 this.amberMaterial.setDiffuseSecondaryTexture(this.amber4Texture);
                 this.amberMaterial.setNormalsTexture(this.normal4Texture);
                 break;

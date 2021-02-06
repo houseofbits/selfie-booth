@@ -34,4 +34,7 @@ class CustomMaterial {
     setDiffuseMap(map){
         this.shaderMaterial.setTexture("diffuseMap", new BABYLON.Texture(map, this.scene));
     }
+    setDiffuseTexture(texture){
+        this.shaderMaterial.setTexture("diffuseMap", texture);
+    }
 }

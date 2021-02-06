@@ -34,11 +34,11 @@ export default {
     background-repeat: round;
 
     &.image-1 {
-        background-image: url('../../../../images/leaf_1.png');
+        background-image: url('@images/leaf_1.png');
     }
 
     &.image-2 {
-        background-image: url('../../../../images/leaf_2.png');
+        background-image: url('@images/leaf_2.png');
     }
 }
 </style>
