@@ -320,8 +320,10 @@ $theme-icons-per-row: 4;
     width: $theme-icon-size;
     height: $theme-icon-size;
     border-radius: $gallery-icon-size/2;
+    //background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.5) 100%),
+    //linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 34%, rgb(70, 107, 127) 100%);
     background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.5) 100%),
-    linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 34%, rgb(70, 107, 127) 100%);
+            linear-gradient(to bottom, rgba(0,0,0,0) 34%,rgba(67,109,61,1) 100%);
     transition: all 500ms linear;
     filter: brightness(1.0);
     z-index: 2;

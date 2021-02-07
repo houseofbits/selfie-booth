@@ -1,7 +1,7 @@
 <template>
     <div v-if="selectedOption" :class="{open: isOpen, closed: !isOpen}">
-        <div class="shadow"></div>
-        <div class="icon"  :class="[selectedOption]" @click="showOptions">
+        <div class="shadow" :class="{open: isOpen}" ></div>
+        <div class="icon"  :class="{[selectedOption]:true, open: isOpen}" @click="showOptions">
             <div class="overlay"></div>
         </div>
         <div v-for="(option, index) in themeOptions" class="icon option" :class="['o'+index, option]" @click="select(option)">
@@ -113,7 +113,7 @@ export default {
     pointer-events: auto;
     position: absolute;
     left: 40px;
-    bottom: 220px;
+    bottom: 160px;
     width: 183px;
     height: 183px;
     background: linear-gradient(to bottom, rgba(255,234,209,1) 0%,rgba(178,176,0,1) 41%,rgba(170,92,0,1) 59%,rgba(235,155,29,1) 100%);
@@ -122,6 +122,10 @@ export default {
     color: #003ac4;
     border-radius: 50%;
     box-shadow: 0 5px 6px 3px rgba(0, 0, 0, 0.56);
+
+    &.open {
+        bottom: 220px;
+    }
 
     &.option {
         width: 177px;
@@ -181,8 +185,13 @@ export default {
     width: 223px;
     height:183px;
     left: 20px;
-    bottom: 220px;
+    bottom: 160px;
     border-radius: 50% 50% 100px 100px;
     background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 45%, rgba(0, 0, 0, 0.48) 100%);
+    transition: all 200ms linear;
+
+    &.open {
+        bottom: 220px;
+    }
 }
 </style>

@@ -56,6 +56,10 @@ export default class AmberThemeScene extends BaseScene {
         this.amberMaterial.setCameraTexture(this.videoTexture);
     }
 
+    onSceneActivated() {
+        this.onOptionSelected('amber1');
+    }
+
     onOptionSelected(optionName) {
         switch (optionName) {
             case 'amber1':

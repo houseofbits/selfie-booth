@@ -44,6 +44,10 @@ export default class DinosaursThemeScene extends BaseScene {
         this.material.setCameraTexture(this.videoTexture);
     }
 
+    onSceneActivated() {
+        this.onOptionSelected('dinosaurs1');
+    }
+
     onOptionSelected(optionName) {
         switch (optionName) {
             case 'dinosaurs1':

@@ -5347,7 +5347,7 @@ readers do not read off random characters that represent icons */
   width: 160px;
   height: 160px;
   border-radius: 80px;
-  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.5) 100%), linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 34%, #466b7f 100%);
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.5) 100%), linear-gradient(to bottom, rgba(0, 0, 0, 0) 34%, #436d3d 100%);
   transition: all 500ms linear;
   filter: brightness(1);
   z-index: 3;
@@ -5550,14 +5550,14 @@ readers do not read off random characters that represent icons */
 }
 .info-text[data-v-c5a09e66] {
   position: absolute;
-  top: 990px;
+  top: 910px;
   width: 1080px;
   left: 0;
   display: inline-block;
   line-height: 28px;
   margin-top: 15px;
   -webkit-text-stroke: 1px rgba(0, 0, 0, 0.2);
-  filter: drop-shadow(0px 5px 3px rgba(0, 0, 0, 0.61));
+  filter: drop-shadow(0px 3px 1px rgba(0, 0, 0, 0.61));
   text-align: center;
   transition: all 300ms linear;
   opacity: 0;
@@ -5741,7 +5741,7 @@ readers do not read off random characters that represent icons */
   width: 160px;
   height: 160px;
   border-radius: 80px;
-  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.5) 100%), linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 34%, #466b7f 100%);
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.5) 100%), linear-gradient(to bottom, rgba(0, 0, 0, 0) 34%, #436d3d 100%);
   transition: all 500ms linear;
   filter: brightness(1);
   z-index: 2;
@@ -6520,7 +6520,7 @@ input[data-v-0e538532]:focus {
   pointer-events: auto;
   position: absolute;
   left: 40px;
-  bottom: 220px;
+  bottom: 160px;
   width: 183px;
   height: 183px;
   background: linear-gradient(to bottom, #ffead1 0%, #b2b000 41%, #aa5c00 59%, #eb9b1d 100%);
@@ -6529,6 +6529,9 @@ input[data-v-0e538532]:focus {
   color: #003ac4;
   border-radius: 50%;
   box-shadow: 0 5px 6px 3px rgba(0, 0, 0, 0.56);
+}
+.icon.open[data-v-467dc484] {
+    bottom: 220px;
 }
 .icon.option[data-v-467dc484] {
     width: 177px;
@@ -6583,9 +6586,13 @@ input[data-v-0e538532]:focus {
   width: 223px;
   height: 183px;
   left: 20px;
-  bottom: 220px;
+  bottom: 160px;
   border-radius: 50% 50% 100px 100px;
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 45%, rgba(0, 0, 0, 0.48) 100%);
+  transition: all 200ms linear;
+}
+.shadow.open[data-v-467dc484] {
+    bottom: 220px;
 }
 
 .gui-frame[data-v-4091e27a] {

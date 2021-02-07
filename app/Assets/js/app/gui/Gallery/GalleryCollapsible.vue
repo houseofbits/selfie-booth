@@ -187,8 +187,10 @@ export default {
     width: $gallery-icon-size;
     height: $gallery-icon-size;
     border-radius: $gallery-icon-size/2;
+    //background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.5) 100%),
+    //linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 34%, rgb(70, 107, 127) 100%);
     background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.5) 100%),
-    linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 34%, rgb(70, 107, 127) 100%);
+    linear-gradient(to bottom, rgba(0,0,0,0) 34%,rgba(67,109,61,1) 100%);
     transition: all 500ms linear;
     filter: brightness(1.0);
     z-index: 3;
@@ -426,14 +428,14 @@ export default {
 
 .info-text {
     position: absolute;
-    top: 990px;
+    top: 910px;
     width: 1080px;
     left: 0;
     display: inline-block;
     line-height: 28px;
     margin-top: 15px;
     -webkit-text-stroke: 1px rgba(0, 0, 0, 0.2);
-    filter: drop-shadow(0px 5px 3px rgba(0, 0, 0, 0.61));
+    filter: drop-shadow(0px 3px 1px rgba(0, 0, 0, 0.61));
     text-align: center;
     transition: all 300ms linear;
     opacity: 0;
