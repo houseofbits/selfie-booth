@@ -1,6 +1,8 @@
 <template>
     <div :class="{visible:isActive}" class="window">
 
+        <div class="gradient-underlay"></div>
+
         <static-item class="leaf leaf-pos-3" image-id="2"></static-item>
         <static-item class="leaf leaf-pos-1" image-id="1"></static-item>
         <static-item class="leaf leaf-pos-2" image-id="1"></static-item>
@@ -180,7 +182,7 @@ export default {
         text-align: center;
         font-size: 35px;
         -webkit-text-stroke: 1px rgba(0, 0, 0, 0.2);
-        filter: drop-shadow(0px 5px 3px rgba(0, 0, 0, 0.61));
+        filter: drop-shadow(0px 3px 1px rgba(0, 0, 0, 0.61));
         opacity: 1;
         transition: opacity 500ms linear;
 
@@ -222,15 +224,28 @@ export default {
 }
 
 .leaf-pos-1 {
+    opacity: 0.5;
     transform: translate(100px, 465px) rotate(-125deg) scale(1.2);
 }
 
 .leaf-pos-2 {
+    opacity: 0.5;
     transform: translate(790px,480px) rotate(125deg);
 }
 
 .leaf-pos-3 {
+    opacity: 0.5;
     transform: translate(200px, 480px) rotate(-150deg) scale(1.4);
+}
+
+.gradient-underlay {
+    position: absolute;
+    left: -30px;
+    top: -150px;
+    width: 900px;
+    height: 840px;
+    //background-color: rgba(31, 59, 8, 0.84);
+    background: linear-gradient(to bottom, rgba(98, 125, 77, 0) 0%, rgba(31, 59, 8, 0.58) 10%, rgba(31, 59, 8, 0.8) 18%, rgba(31, 59, 8, 0.8) 80%, rgba(31, 59, 8, 0) 100%);
 }
 
 </style>

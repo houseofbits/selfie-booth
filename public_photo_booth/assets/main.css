@@ -6070,7 +6070,7 @@ readers do not read off random characters that represent icons */
     text-align: center;
     font-size: 35px;
     -webkit-text-stroke: 1px rgba(0, 0, 0, 0.2);
-    filter: drop-shadow(0px 5px 3px rgba(0, 0, 0, 0.61));
+    filter: drop-shadow(0px 3px 1px rgba(0, 0, 0, 0.75));
     opacity: 1;
     transition: opacity 500ms linear;
 }
@@ -6176,12 +6176,15 @@ readers do not read off random characters that represent icons */
         transition: opacity 200ms linear;
 }
 .leaf-pos-1[data-v-23335e72] {
+  opacity: 0.5;
   transform: translate(185px, 350px) rotate(-125deg) scale(1.2);
 }
 .leaf-pos-2[data-v-23335e72] {
+  opacity: 0.5;
   transform: translate(670px, 340px) rotate(125deg);
 }
 .leaf-pos-3[data-v-23335e72] {
+  opacity: 0.5;
   transform: translate(290px, 420px) rotate(155deg) scale(1.4);
 }
 @keyframes rotation-data-v-23335e72 {
@@ -6191,6 +6194,14 @@ from {
 to {
     transform: rotate(359deg);
 }
+}
+.gradient-underlay[data-v-23335e72] {
+  position: absolute;
+  left: -30px;
+  top: -100px;
+  width: 900px;
+  height: 840px;
+  background: linear-gradient(to bottom, rgba(98, 125, 77, 0) 0%, rgba(31, 59, 8, 0.8) 65%, rgba(31, 59, 8, 0.8) 80%, rgba(31, 59, 8, 0) 100%);
 }
 
 
@@ -6392,7 +6403,7 @@ input[data-v-0e538532]:focus {
     text-align: center;
     font-size: 35px;
     -webkit-text-stroke: 1px rgba(0, 0, 0, 0.2);
-    filter: drop-shadow(0px 5px 3px rgba(0, 0, 0, 0.61));
+    filter: drop-shadow(0px 3px 1px rgba(0, 0, 0, 0.61));
     opacity: 1;
     transition: opacity 500ms linear;
 }
@@ -6428,13 +6439,24 @@ input[data-v-0e538532]:focus {
       transition: opacity 200ms linear;
 }
 .leaf-pos-1[data-v-3c7574c1] {
+  opacity: 0.5;
   transform: translate(100px, 465px) rotate(-125deg) scale(1.2);
 }
 .leaf-pos-2[data-v-3c7574c1] {
+  opacity: 0.5;
   transform: translate(790px, 480px) rotate(125deg);
 }
 .leaf-pos-3[data-v-3c7574c1] {
+  opacity: 0.5;
   transform: translate(200px, 480px) rotate(-150deg) scale(1.4);
+}
+.gradient-underlay[data-v-3c7574c1] {
+  position: absolute;
+  left: -30px;
+  top: -150px;
+  width: 900px;
+  height: 840px;
+  background: linear-gradient(to bottom, rgba(98, 125, 77, 0) 0%, rgba(31, 59, 8, 0.58) 10%, rgba(31, 59, 8, 0.8) 18%, rgba(31, 59, 8, 0.8) 80%, rgba(31, 59, 8, 0) 100%);
 }
 
 .fragment[data-v-2e090f7b] {
