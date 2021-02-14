@@ -202,7 +202,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony default export */ 
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony default export */ __webpack_exports__[\"default\"] = (\"/assets/images/93936b98a2eb56d46c8a513f5e8d589a.png\");\n\n//# sourceURL=webpack:///./app/Assets/images/archive/background.png?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony default export */ __webpack_exports__[\"default\"] = (\"/assets/images/6671d8d925efabe3ba380df43ffd0f4f.png\");\n\n//# sourceURL=webpack:///./app/Assets/images/archive/background.png?");
 
 /***/ }),
 
@@ -214,7 +214,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony default export */ 
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony default export */ __webpack_exports__[\"default\"] = (\"/assets/images/d315344a759ff16384719f317cad0c89.png\");\n\n//# sourceURL=webpack:///./app/Assets/images/birds/background.png?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony default export */ __webpack_exports__[\"default\"] = (\"/assets/images/6be76b266ff440bd40ab23a441ff7022.png\");\n\n//# sourceURL=webpack:///./app/Assets/images/birds/background.png?");
 
 /***/ }),
 

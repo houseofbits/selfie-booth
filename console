@@ -1,5 +1,6 @@
 #!/bin/bash
 
+
 function transl(){
     docker-compose exec php bash -c "php public_photo_booth/index.php cli translate $1";
 }
@@ -23,25 +24,44 @@ function ssh(){
     docker-compose exec php bash;
 }
 
-function build_release(){
+function release(){
 
-    ###npm ci;
-    ###npm install;
-    ###npm run build;
+    npm ci;
+    npm run build;
 
-
-    if [ ! -d "releases/tmp" ]
-    then
-        mkdir -m a=rwx -p releases/tmp;
-    fi
+    mkdir -p -m a=rwx -p releases/tmp;
 
     rm -Rf releases/tmp/*
 
+    echo "Make folders"
+
+    mkdir -p -m a=rwx releases/tmp/writable/models
+    mkdir -p -m a=rwx releases/tmp/writable/session
+    mkdir -p -m a=rwx releases/tmp/writable/logs
+    mkdir -p -m a=rwx releases/tmp/writable/uploads/images
+
+    echo "Copy files"
+
     cp -r app releases/tmp/
-    cp -r public releases/tmp/
+    cp -r public_photo_booth releases/tmp/
+    cp -r public_sharing releases/tmp/
     cp -r vendor releases/tmp/
 
-    ###mkdir writable/models, etc.
+    cp -r writable/models/app_models_email_config_model.ser releases/tmp/writable/models/
+    cp -r writable/models/app_models_sharing_config_model.ser releases/tmp/writable/models/
+    cp -r writable/models/app_models_translations_model.ser releases/tmp/writable/models/
+
+    echo "Renaming result"
+
+    rm -Rf releases/$1
+    mv releases/tmp/ releases/$1
+
+    echo "Creating zip archive"
+
+    rm -Rf releases/$1.zip
+    zip -r releases/$1.zip releases/$1
+
+    echo "================ DONE ================"
 }
 
 $1 $2 $3 $4 $5
