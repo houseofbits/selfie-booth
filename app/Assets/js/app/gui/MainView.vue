@@ -104,7 +104,7 @@ export default {
 <style>
 @font-face {
     font-family: "customFont";
-    src: url("../../../fonts/font.ttf");
+    src: url("../../../fonts/Arimo-SemiBold.ttf");
 }
 
 body {

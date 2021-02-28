@@ -7,6 +7,7 @@ import ShroomsThemeScene from "@app/scene/Scenes/ShroomsThemeScene";
 import BirdsThemeScene from "@app/scene/Scenes/BirdsThemeScene";
 import ArchiveThemeScene from "@app/scene/Scenes/ArchiveThemeScene";
 import BugsThemeScene from "@app/scene/Scenes/BugsThemeScene";
+import DisplayThemeScene from "./Scenes/DisplayThemeScene";
 
 export default class SceneManager {
     constructor(canvas) {
@@ -24,6 +25,7 @@ export default class SceneManager {
         this.addScene(new BirdsThemeScene(this, 'BirdsScene'));
         this.addScene(new ArchiveThemeScene(this, 'ArchiveScene'));
         this.addScene(new BugsThemeScene(this, 'BugsScene'));
+        this.addScene(new DisplayThemeScene(this, 'DisplayScene'));
 
         this.onThemeSelected('DemoScene');
         //this.onThemeSelected('DinosaursScene');

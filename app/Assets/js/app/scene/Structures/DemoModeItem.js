@@ -20,7 +20,7 @@ export default class DemoModeItem {
         this.removed = false;
     }
 
-    update(dt) {
+    update2(dt) {
         if (!this.parentMesh) {
             return;
         }
@@ -44,23 +44,52 @@ export default class DemoModeItem {
         this.parentMesh.rotationQuaternion = BABYLON.Quaternion.Identity();
         this.parentMesh.rotate(BABYLON.Axis.Z, this.angle);
 
-        if(this.flip) {
+        // if(this.flip) {
+        //
+        //     if(this.flipDirection) {
+        //         this.flipPos += (dt * this.flipSpeed);
+        //         if (this.flipPos > (Math.PI * 2)) {
+        //             this.flipPos = 0;
+        //             this.flip = false;
+        //         }
+        //     } else {
+        //         this.flipPos -= (dt * this.flipSpeed);
+        //         if (this.flipPos < -(Math.PI * 2)) {
+        //             this.flipPos = 0;
+        //             this.flip = false;
+        //         }
+        //     }
+        //     this.parentMesh.rotate(BABYLON.Axis.Y, this.flipPos);
+        // }
+    }
 
-            if(this.flipDirection) {
-                this.flipPos += (dt * this.flipSpeed);
-                if (this.flipPos > (Math.PI * 2)) {
-                    this.flipPos = 0;
-                    this.flip = false;
-                }
-            } else {
-                this.flipPos -= (dt * this.flipSpeed);
-                if (this.flipPos < -(Math.PI * 2)) {
-                    this.flipPos = 0;
-                    this.flip = false;
-                }
-            }
-            this.parentMesh.rotate(BABYLON.Axis.Y, this.flipPos);
+    update(dt) {
+        if (!this.parentMesh) {
+            return;
         }
+
+        let posv = this.targetPosition.subtract(this.position);
+        let posl = posv.length();
+
+        const y = Math.abs(this.position.y - this.targetPosition.y);
+
+        const sin = Math.sin(y * 0.5);
+
+        let velocity = dt * 100.0;
+        let stepsCount = posl / velocity;
+
+        if(posl > 1.0){
+            posv.normalize();
+            let posStep = posl / stepsCount;
+            posv.scaleInPlace(Math.min(posStep, posl));
+            this.position.addInPlace(posv);
+        }
+
+        this.parentMesh.position.x = this.position.x + sin * 3.0;
+        this.parentMesh.position.y = this.position.y;
+
+        this.parentMesh.rotationQuaternion = BABYLON.Quaternion.Identity();
+        this.parentMesh.rotate(BABYLON.Axis.Z, this.angle);
     }
 
     setFlip(speed, direction) {

@@ -5645,6 +5645,9 @@ readers do not read off random characters that represent icons */
 .themes-frame .theme-icon .icon-background.bugs-icon[data-v-7d61b318] {
         background-image: url(/assets/images/396fcc7e96fd141bab1a6747a919c947.png);
 }
+.themes-frame .theme-icon .icon-background.display-icon[data-v-7d61b318] {
+        background-image: url(/assets/images/47bcd0038d4e488d9a986af2466213b4.png);
+}
 .themes-frame .theme-icon .icon-background.shrooms-icon[data-v-7d61b318] {
         background-image: url(/assets/images/396fcc7e96fd141bab1a6747a919c947.png);
 }
@@ -7072,7 +7075,8 @@ input[data-v-0e538532]:focus {
 
 @font-face {
     font-family: "customFont";
-    src: url(fonts/font.ttf);
+    /*src: url("../../../fonts/font.ttf");*/
+    src: url(fonts/Arimo-SemiBold.ttf);
 }
 body {
     font-family: "customFont", serif;

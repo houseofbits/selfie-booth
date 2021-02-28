@@ -85,8 +85,6 @@ export default class DemoScene extends BaseScene {
 
         this.scene.clearColor = new BABYLON.Color3(0.274, 0.407, 0.192);
 
-        //this.scene.clearColor = new BABYLON.Color3(1, 0, 1);
-
         this.createPostProcessEffect();
         this.backdropMaterial = new BasicMaterial(this.scene, "ground");
         this.backdropMaterial.setDiffuseMap(BackdropTexture);

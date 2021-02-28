@@ -27,8 +27,8 @@
             <div class="theme-icon r2c3" @click="select('BugsScene')">
                 <div class="icon-background bugs-icon"></div>
             </div>
-            <div class="theme-icon r2c4">
-                <div class="icon-background bugs-icon"></div>
+            <div class="theme-icon r2c4" @click="select('DisplayScene')">
+                <div class="icon-background display-icon"></div>
             </div>
         </div>
 
@@ -194,6 +194,9 @@ $theme-icons-per-row: 4;
             }
             &.bugs-icon {
                 background-image: url('@images/bugs/icon.png');
+            }
+            &.display-icon {
+                background-image: url('@images/display/icon.png');
             }
             &.shrooms-icon {
                 background-image: url('@images/shrooms/icon.png');
