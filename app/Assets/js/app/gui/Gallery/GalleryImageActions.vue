@@ -7,13 +7,6 @@
                 icon-class="fas fa-trash-alt">{{ lang('capture.delete-button') }}
             </expandable-button>
         </div>
-        <div v-if="!isCollapsed" class="animated-button blue" @click="buttonShare">
-            <expandable-button
-                :is-expanded="buttonState.blueExpanded"
-                class="blue"
-                icon-class="fab fa-facebook-square">{{ lang('capture.share-button') }}
-            </expandable-button>
-        </div>
         <div v-if="!isCollapsed" class="animated-button green" @click="buttonEmail">
             <expandable-button :is-expanded="buttonState.greenExpanded" class="green"
                                icon-class="fas fa-envelope-open-text">{{ lang('capture.send-button') }}
@@ -57,11 +50,9 @@ export default {
             transitionInProcessTimer: null,
             buttonState: {
                 redExpanded: false,
-                blueExpanded: false,
                 greenExpanded: false,
                 orangeExpanded: false,
                 redTimer: null,
-                blueTimer: null,
                 greenTimer: null,
                 orangeTimer: null
             },
@@ -84,19 +75,16 @@ export default {
             this.isExpandedOrProcess = expand;
             clearTimeout(this.transitionCollapseTimer);
             clearTimeout(this.buttonState.redTimer);
-            clearTimeout(this.buttonState.blueTimer);
             clearTimeout(this.buttonState.greenTimer);
             clearTimeout(this.buttonState.orangeTimer);
             if (!expand) {
-                this.transitionCollapseTimer = setTimeout(() => this.isCollapsed = true, 600);
+                this.transitionCollapseTimer = setTimeout(() => this.isCollapsed = true, 700);
                 this.buttonState.redExpanded = false;
-                this.buttonState.blueTimer = setTimeout(() => this.buttonState.blueExpanded = false, 200);
-                this.buttonState.greenTimer = setTimeout(() => this.buttonState.greenExpanded = false, 300);
-                this.buttonState.orangeTimer = setTimeout(() => this.buttonState.orangeExpanded = false, 400);
+                this.buttonState.greenTimer = setTimeout(() => this.buttonState.greenExpanded = false, 200);
+                this.buttonState.orangeTimer = setTimeout(() => this.buttonState.orangeExpanded = false, 300);
             } else {
                 this.isCollapsed = false;
-                this.buttonState.redTimer = setTimeout(() => this.buttonState.redExpanded = true, 400);
-                this.buttonState.blueTimer = setTimeout(() => this.buttonState.blueExpanded = true, 300);
+                this.buttonState.redTimer = setTimeout(() => this.buttonState.redExpanded = true, 300);
                 this.buttonState.greenTimer = setTimeout(() => this.buttonState.greenExpanded = true, 200);
                 this.buttonState.orangeTimer = setTimeout(() => this.buttonState.orangeExpanded = true, 100);
             }
@@ -104,16 +92,11 @@ export default {
             this.transitionInProcessTimer = setTimeout(() => {
                 this.isEnabled = true;
                 this.transitionInProcessTimer = null;
-            }, 600);
+            }, 700);
         },
         buttonDelete() {
             if (this.isEnabled) {
                 this.$emit('action-delete');
-            }
-        },
-        buttonShare() {
-            if (this.isEnabled) {
-                this.$emit('action-share');
             }
         },
         buttonEmail() {
@@ -162,11 +145,6 @@ export default {
         @include animate-active(close-red)
     }
 
-    &.blue {
-        z-index: 4;
-        @include animate-active(close-blue)
-    }
-
     &.green {
         z-index: 3;
         @include animate-active(close-green)
@@ -184,10 +162,6 @@ export default {
 
     .buttons-block.active &.red {
         @include animate-active(activate-red)
-    }
-
-    .buttons-block.active &.blue {
-        @include animate-active(activate-blue)
     }
 
     .buttons-block.active &.green {
@@ -216,26 +190,6 @@ export default {
     }
 
     @keyframes activate-red {
-        0% {
-            @include start-position
-        }
-        20% {
-            @include middle-position(calc-vert-pos(0))
-        }
-        40% {
-            @include middle-position(calc-vert-pos(1))
-        }
-        60% {
-            @include middle-position(calc-vert-pos(2))
-        }
-        80% {
-            @include middle-position(calc-vert-pos(3))
-        }
-        100% {
-            @include expand-position(calc-vert-pos(3), $width)
-        }
-    }
-    @keyframes activate-blue {
         0% {
             @include start-position
         }
@@ -287,26 +241,6 @@ export default {
         }
     }
     @keyframes close-red {
-        0% {
-            @include expand-position(calc-vert-pos(3), $width)
-        }
-        20% {
-            @include middle-position(calc-vert-pos(3))
-        }
-        40% {
-            @include middle-position(calc-vert-pos(2))
-        }
-        60% {
-            @include middle-position(calc-vert-pos(1))
-        }
-        80% {
-            @include middle-position(calc-vert-pos(0))
-        }
-        100% {
-            @include start-position
-        }
-    }
-    @keyframes close-blue {
         0% {
             @include expand-position(calc-vert-pos(2), $width)
         }

@@ -6,8 +6,7 @@
                                class="buttons-block"
                                @action-delete="setForRemoval"
                                @action-download="selectDownload"
-                               @action-email="selectEmail"
-                               @action-share="selectShare"/>
+                               @action-email="selectEmail"/>
         <img :src="image.base64data" alt="Thumbnail" height="100%" width="100%" @click.self="setSelected"/>
     </div>
 </template>
@@ -94,9 +93,9 @@ export default {
             setTimeout(() => this.markedForRemoval = true, this.isSelected ? 400 : 0);
             setTimeout(() => this.selectAction(GalleryActions.DeleteImage), this.isSelected ? 800 : 200);
         },
-        selectShare() {
-            this.selectAction(GalleryActions.ShareFacebook);
-        },
+        // selectShare() {
+        //     this.selectAction(GalleryActions.ShareFacebook);
+        // },
         selectEmail() {
             this.selectAction(GalleryActions.ShareEmail);
         },

@@ -4738,28 +4738,21 @@ readers do not read off random characters that represent icons */
 .animated-button.red[data-v-a52cc222] {
     z-index: 5;
     animation-name: close-red-data-v-a52cc222;
-    animation-duration: 600ms;
-    animation-timing-function: ease-out;
-    animation-fill-mode: both;
-}
-.animated-button.blue[data-v-a52cc222] {
-    z-index: 4;
-    animation-name: close-blue-data-v-a52cc222;
-    animation-duration: 600ms;
+    animation-duration: 700ms;
     animation-timing-function: ease-out;
     animation-fill-mode: both;
 }
 .animated-button.green[data-v-a52cc222] {
     z-index: 3;
     animation-name: close-green-data-v-a52cc222;
-    animation-duration: 600ms;
+    animation-duration: 700ms;
     animation-timing-function: ease-out;
     animation-fill-mode: both;
 }
 .animated-button.orange[data-v-a52cc222] {
     z-index: 2;
     animation-name: close-orange-data-v-a52cc222;
-    animation-duration: 600ms;
+    animation-duration: 700ms;
     animation-timing-function: ease-out;
     animation-fill-mode: both;
 }
@@ -4769,62 +4762,23 @@ readers do not read off random characters that represent icons */
 }
 .buttons-block.active .animated-button.red[data-v-a52cc222] {
     animation-name: activate-red-data-v-a52cc222;
-    animation-duration: 600ms;
-    animation-timing-function: ease-out;
-    animation-fill-mode: both;
-}
-.buttons-block.active .animated-button.blue[data-v-a52cc222] {
-    animation-name: activate-blue-data-v-a52cc222;
-    animation-duration: 600ms;
+    animation-duration: 700ms;
     animation-timing-function: ease-out;
     animation-fill-mode: both;
 }
 .buttons-block.active .animated-button.green[data-v-a52cc222] {
     animation-name: activate-green-data-v-a52cc222;
-    animation-duration: 600ms;
+    animation-duration: 700ms;
     animation-timing-function: ease-out;
     animation-fill-mode: both;
 }
 .buttons-block.active .animated-button.orange[data-v-a52cc222] {
     animation-name: activate-orange-data-v-a52cc222;
-    animation-duration: 600ms;
+    animation-duration: 700ms;
     animation-timing-function: ease-out;
     animation-fill-mode: both;
 }
 @keyframes activate-red-data-v-a52cc222 {
-0% {
-    top: 0;
-    width: 80px;
-    margin-left: -40px;
-}
-20% {
-    top: -50px;
-    width: 80px;
-    margin-left: -40px;
-}
-40% {
-    top: -130px;
-    width: 80px;
-    margin-left: -40px;
-}
-60% {
-    top: -210px;
-    width: 80px;
-    margin-left: -40px;
-}
-80% {
-    top: -290px;
-    width: 80px;
-    margin-left: -40px;
-}
-100% {
-    top: -290px;
-    width: 250px;
-    height: 60px;
-    margin-left: -125px;
-}
-}
-@keyframes activate-blue-data-v-a52cc222 {
 0% {
     top: 0;
     width: 80px;
@@ -4912,39 +4866,6 @@ readers do not read off random characters that represent icons */
 }
 }
 @keyframes close-red-data-v-a52cc222 {
-0% {
-    top: -290px;
-    width: 250px;
-    height: 60px;
-    margin-left: -125px;
-}
-20% {
-    top: -290px;
-    width: 80px;
-    margin-left: -40px;
-}
-40% {
-    top: -210px;
-    width: 80px;
-    margin-left: -40px;
-}
-60% {
-    top: -130px;
-    width: 80px;
-    margin-left: -40px;
-}
-80% {
-    top: -50px;
-    width: 80px;
-    margin-left: -40px;
-}
-100% {
-    top: 0;
-    width: 80px;
-    margin-left: -40px;
-}
-}
-@keyframes close-blue-data-v-a52cc222 {
 0% {
     top: -210px;
     width: 250px;
