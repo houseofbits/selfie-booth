@@ -114,11 +114,11 @@ export default {
                 this.isOpen = true;
                 this.$emit('open');
                 if (this.images.length > 1) {
-                    setTimeout(() => this.imageData.imagesSize = GalleryImageSize.Normal, 30);
+                    setTimeout(() => this.imageData.imagesSize = GalleryImageSize.Normal, 100);
                     setTimeout(() => this.imageData.isImagesCollapsed = false, 160);
                 } else {
-                    this.imageData.imagesSize = GalleryImageSize.Normal;
-                    this.imageData.isImagesCollapsed = false;
+                    setTimeout(() => this.imageData.imagesSize = GalleryImageSize.Normal, 100);
+                    setTimeout(() => this.imageData.isImagesCollapsed = false, 160);
                 }
             }
         },

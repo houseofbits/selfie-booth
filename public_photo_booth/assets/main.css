@@ -4738,21 +4738,21 @@ readers do not read off random characters that represent icons */
 .animated-button.red[data-v-a52cc222] {
     z-index: 5;
     animation-name: close-red-data-v-a52cc222;
-    animation-duration: 500ms;
+    animation-duration: 700ms;
     animation-timing-function: ease-out;
     animation-fill-mode: both;
 }
 .animated-button.green[data-v-a52cc222] {
     z-index: 3;
     animation-name: close-green-data-v-a52cc222;
-    animation-duration: 500ms;
+    animation-duration: 700ms;
     animation-timing-function: ease-out;
     animation-fill-mode: both;
 }
 .animated-button.orange[data-v-a52cc222] {
     z-index: 2;
     animation-name: close-orange-data-v-a52cc222;
-    animation-duration: 500ms;
+    animation-duration: 700ms;
     animation-timing-function: ease-out;
     animation-fill-mode: both;
 }
@@ -4762,19 +4762,19 @@ readers do not read off random characters that represent icons */
 }
 .buttons-block.active .animated-button.red[data-v-a52cc222] {
     animation-name: activate-red-data-v-a52cc222;
-    animation-duration: 500ms;
+    animation-duration: 700ms;
     animation-timing-function: ease-out;
     animation-fill-mode: both;
 }
 .buttons-block.active .animated-button.green[data-v-a52cc222] {
     animation-name: activate-green-data-v-a52cc222;
-    animation-duration: 500ms;
+    animation-duration: 700ms;
     animation-timing-function: ease-out;
     animation-fill-mode: both;
 }
 .buttons-block.active .animated-button.orange[data-v-a52cc222] {
     animation-name: activate-orange-data-v-a52cc222;
-    animation-duration: 500ms;
+    animation-duration: 700ms;
     animation-timing-function: ease-out;
     animation-fill-mode: both;
 }

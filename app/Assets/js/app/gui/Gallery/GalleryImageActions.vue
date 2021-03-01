@@ -78,7 +78,7 @@ export default {
             clearTimeout(this.buttonState.greenTimer);
             clearTimeout(this.buttonState.orangeTimer);
             if (!expand) {
-                this.transitionCollapseTimer = setTimeout(() => this.isCollapsed = true, 500);
+                this.transitionCollapseTimer = setTimeout(() => this.isCollapsed = true, 700);
                 this.buttonState.redExpanded = false;
                 this.buttonState.greenTimer = setTimeout(() => this.buttonState.greenExpanded = false, 200);
                 this.buttonState.orangeTimer = setTimeout(() => this.buttonState.orangeExpanded = false, 300);
@@ -92,7 +92,7 @@ export default {
             this.transitionInProcessTimer = setTimeout(() => {
                 this.isEnabled = true;
                 this.transitionInProcessTimer = null;
-            }, 500);
+            }, 700);
         },
         buttonDelete() {
             if (this.isEnabled) {
