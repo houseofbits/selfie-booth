@@ -32,6 +32,11 @@ export default {
                 AmberScene: ['amber1', 'amber2', 'amber3', 'amber4'],
                 DinosaursScene: ['dinosaurs1', 'dinosaurs2', 'dinosaurs3', 'dinosaurs4'],
                 CoralScene: [],
+                BirdsScene: [],
+                DisplayScene: ['display1', 'display2', 'display3', 'display4'],
+                ShroomsScene: [],
+                BugsScene: [],
+                ArchiveScene: [],
             },
             selectedOption: null,
             isOpen: false
@@ -177,6 +182,23 @@ export default {
     &.dinosaurs4  div.overlay {
         background-image: url('@images/dinosaurs/option4.png');
         height: 214px;
+    }
+
+    &.display1 div.overlay {
+        background-image: url('@images/display/option4.png');
+        height: 215px;
+    }
+    &.display2  div.overlay {
+        background-image: url('@images/display/option3.png');
+        height: 215px;
+    }
+    &.display3  div.overlay {
+        background-image: url('@images/display/option1.png');
+        height: 215px;
+    }
+    &.display4  div.overlay {
+        background-image: url('@images/display/option2.png');
+        height: 215px;
     }
 }
 .shadow {
