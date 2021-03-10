@@ -5,7 +5,7 @@
 
         <div :class="{expanded:(isGalleryOpen|isThemesOpen)}" class="gradient-under"></div>
 
-        <options-collapsible v-if="!isThemesOpen" :open="isOptionsOpen" :theme="selectedTheme" @open="openOptions" @select="selectOption"/>
+        <options-collapsible :open="isOptionsOpen" :theme="selectedTheme" @open="openOptions" @select="selectOption"/>
 
         <dynamic-background :open="isDynamicBackgroundOpen" :state="dynamicBackgroundState"/>
         <gallery-collapsible :images="images"

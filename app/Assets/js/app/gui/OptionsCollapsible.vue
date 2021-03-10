@@ -32,7 +32,7 @@ export default {
                 AmberScene: ['amber1', 'amber2', 'amber3', 'amber4'],
                 DinosaursScene: ['dinosaurs1', 'dinosaurs2', 'dinosaurs3', 'dinosaurs4'],
                 CoralScene: [],
-                BirdsScene: [],
+                BirdsScene: ['egg1', 'egg2', 'egg3', 'egg4'],
                 DisplayScene: ['display1', 'display2', 'display3', 'display4'],
                 ShroomsScene: [],
                 BugsScene: [],
@@ -200,6 +200,24 @@ export default {
         background-image: url('@images/display/option2.png');
         height: 215px;
     }
+
+    &.egg1 div.overlay {
+        background-image: url('@images/birds/option1.png');
+        height: 215px;
+    }
+    &.egg2  div.overlay {
+        background-image: url('@images/birds/option3.png');
+        height: 215px;
+    }
+    &.egg3  div.overlay {
+        background-image: url('@images/birds/option4.png');
+        height: 215px;
+    }
+    &.egg4  div.overlay {
+        background-image: url('@images/birds/option2.png');
+        height: 215px;
+    }
+
 }
 .shadow {
     display: block;

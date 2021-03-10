@@ -85,7 +85,7 @@ export default class DemoModeItem {
             this.position.addInPlace(posv);
         }
 
-        this.parentMesh.position.x = this.position.x + sin * 3.0;
+        this.parentMesh.position.x = this.position.x;// + sin * 3.0;
         this.parentMesh.position.y = this.position.y;
 
         this.parentMesh.rotationQuaternion = BABYLON.Quaternion.Identity();
