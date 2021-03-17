@@ -35,7 +35,7 @@ export default {
                 BirdsScene: ['egg1', 'egg2', 'egg3', 'egg4'],
                 DisplayScene: ['display1', 'display2', 'display3', 'display4'],
                 ShroomsScene: [],
-                BugsScene: [],
+                BugsScene: ['bug1', 'bug2', 'bug3'],
                 ArchiveScene: [],
             },
             selectedOption: null,
@@ -215,6 +215,19 @@ export default {
     }
     &.egg4  div.overlay {
         background-image: url('@images/birds/option2.png');
+        height: 215px;
+    }
+
+    &.bug1  div.overlay {
+        background-image: url('@images/bugs/option1.png');
+        height: 215px;
+    }
+    &.bug2  div.overlay {
+        background-image: url('@images/bugs/option2.png');
+        height: 215px;
+    }
+    &.bug3  div.overlay {
+        background-image: url('@images/bugs/option3.png');
         height: 215px;
     }
 
