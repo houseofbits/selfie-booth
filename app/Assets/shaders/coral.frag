@@ -26,5 +26,5 @@ void main(void) {
 
     vec3 finalColor = mix(diffuse.xyz, camera, 1.0 - diffuse.w);
 
-    gl_FragColor = vec4(finalColor, 1.0);
+    gl_FragColor = vec4(camera, 1.0);
 }
