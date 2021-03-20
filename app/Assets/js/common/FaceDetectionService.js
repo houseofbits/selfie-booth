@@ -6,75 +6,26 @@ class FaceDetectionService {
         this.videoWidth = 0;
         this.videoHeight = 0;
         this.detectorNet = null;
-        this.video = null;
+        this.sourceCanvas = null;
         this.detectedWidth = 0;
         this.detectedHeight = 0;
         this.detectedX = 0;
         this.detectedY = 0;
+        this.isDetected = false;
+        this.detectionCallback = null;
     }
 
     async onWindowLoaded() {
+
+        this.sourceCanvas = document.getElementById('captureCanvas');
 
         await faceapi.tf.enableProdMode();
         await faceapi.tf.ENV.set('DEBUG', false);
         await faceapi.tf.ready();
 
         await this.initFaceAPI();
-        await this.initCameraStream();
 
         this.detect().then(() => {});
-    }
-
-    async initCameraStream() {
-        this.video = document.getElementById('video');
-        if (!this.video) {
-            return null;
-        }
-
-        console.log('Setting up camera');
-        // setup webcam. note that navigator.mediaDevices requires that page is accessed via https
-        if (!navigator.mediaDevices) {
-            console.log('Camera Error: access not supported');
-            return null;
-        }
-        let stream;
-        const constraints = {
-            audio: false,
-            video: { facingMode: 'user', resizeMode: 'crop-and-scale' },
-        };
-        if (window.innerWidth > window.innerHeight) constraints.video.width = { ideal: window.innerWidth };
-        else constraints.video.height = { ideal: window.innerHeight };
-        try {
-            stream = await navigator.mediaDevices.getUserMedia(constraints);
-        } catch (err) {
-            console.log(err);
-            return null;
-        }
-        if (stream) {
-            video.srcObject = stream;
-        }
-        else {
-            console.log('Camera Error: stream empty');
-            return null;
-        }
-        const track = stream.getVideoTracks()[0];
-        const settings = track.getSettings();
-        if (settings.deviceId) delete settings.deviceId;
-        if (settings.groupId) delete settings.groupId;
-        if (settings.aspectRatio) settings.aspectRatio = Math.trunc(100 * settings.aspectRatio) / 100;
-        console.log(`Camera active:`);
-        console.log(track.label);
-        console.log(`Camera settings:`);
-        console.log(settings);
-
-        return new Promise((resolve) => {
-            this.video.onloadeddata = async () => {
-                this.videoWidth = video.videoWidth;
-                this.videoHeight = video.videoHeight;
-                this.video.play();
-                resolve(true);
-            };
-        });
     }
 
     async initFaceAPI() {
@@ -95,20 +46,27 @@ class FaceDetectionService {
     }
 
     async detect() {
-        if (!this.video || this.video.paused) {
+        if (!this.sourceCanvas) {
             return false;
         }
 
         faceapi
-            .detectSingleFace(this.video, this.detectorNet)
+            .detectSingleFace(this.sourceCanvas, this.detectorNet)
             .then((result) => {
 
-                //console.log(result);
+                if (result) {
+                    this.detectedWidth = result.box.width;
+                    this.detectedHeight = result.box.height;
+                    this.detectedX = result.box.x;
+                    this.detectedY = result.box.y;
+                    this.isDetected = true;
+                } else {
+                    this.isDetected = false;
+                }
 
-                this.detectedWidth = result.box.width;
-                this.detectedHeight = result.box.height;
-                this.detectedX = result.box.x;
-                this.detectedY = result.box.y;
+                if (this.detectionCallback) {
+                    this.detectionCallback(this);
+                }
 
                 requestAnimationFrame(() => this.detect());
                 return true;
@@ -118,6 +76,10 @@ class FaceDetectionService {
                 return false;
             });
         return false;
+    }
+
+    setDetectionCallback(callback) {
+        this.detectionCallback = callback;
     }
 
 }

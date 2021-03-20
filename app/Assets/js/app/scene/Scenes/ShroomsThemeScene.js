@@ -4,12 +4,14 @@ import BgMap from '@images/shrooms/background.png';
 import ShroomsMaterial from "@app/scene/Materials/ShroomsMaterial";
 
 export default class ShroomsThemeScene extends BaseScene {
-    constructor(mainScene, name) {
-        super(mainScene, name);
+    constructor(mainScene, name, targetCanvas) {
+        super(mainScene, name, targetCanvas);
 
         this.scene.clearColor = new BABYLON.Color3(0.3, 0.3, 0.4);
 
         let camera = new BABYLON.ArcRotateCamera("Camera", 0, BABYLON.Angle.FromDegrees(90).radians(), 2000, new BABYLON.Vector3(0, 0, 0), this.scene);
+
+        this.registerView(camera);
 
         this.createScene();
 

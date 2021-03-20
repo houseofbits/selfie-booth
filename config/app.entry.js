@@ -9,4 +9,7 @@ module.exports = {
         publicPath: '/',
         path: path.resolve(__dirname, '../public_photo_booth/assets/'),
     },
+    node: {
+        fs: 'empty'
+    }
 };

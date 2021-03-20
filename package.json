@@ -11,6 +11,7 @@
     "build": "webpack --mode=development",
     "watch": "webpack --watch --mode=development"
   },
+  "browser": { "fs": false, "path": false, "os": false},
   "author": "",
   "license": "ISC",
   "devDependencies": {
