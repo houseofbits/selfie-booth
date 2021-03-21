@@ -255,7 +255,7 @@ $theme-icons-per-row: 4;
 }
 
 .close-button {
-    top: 1550px;
+    top: 1570px;
     left: 430px;
     width:220px;
     z-index: 2;

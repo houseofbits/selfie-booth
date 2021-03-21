@@ -1,5 +1,5 @@
 <template>
-    <div v-if="selectedOption" :class="{open: isOpen, closed: !isOpen}">
+    <div v-if="selectedOption && enabled" :class="{open: isOpen, closed: !isOpen}">
         <div class="shadow" :class="{open: isOpen}" ></div>
         <div class="icon"  :class="{[selectedOption]:true, open: isOpen}" @click="showOptions">
             <div class="overlay"></div>
@@ -25,6 +25,10 @@ export default {
             type: String,
             required: true
         },
+        enabled: {
+            type: Boolean,
+            default: true
+        }
     },
     data() {
         return {
@@ -118,7 +122,7 @@ export default {
     pointer-events: auto;
     position: absolute;
     left: 40px;
-    bottom: 160px;
+    bottom: 230px;
     width: 183px;
     height: 183px;
     background: linear-gradient(to bottom, rgba(255,234,209,1) 0%,rgba(178,176,0,1) 41%,rgba(170,92,0,1) 59%,rgba(235,155,29,1) 100%);
@@ -129,7 +133,7 @@ export default {
     box-shadow: 0 5px 6px 3px rgba(0, 0, 0, 0.56);
 
     &.open {
-        bottom: 220px;
+        bottom: 290px;
     }
 
     &.option {
@@ -251,13 +255,13 @@ export default {
     width: 223px;
     height:183px;
     left: 20px;
-    bottom: 160px;
+    bottom: 230px;
     border-radius: 50% 50% 100px 100px;
     background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 45%, rgba(0, 0, 0, 0.48) 100%);
     transition: all 200ms linear;
 
     &.open {
-        bottom: 220px;
+        bottom: 290px;
     }
 }
 </style>

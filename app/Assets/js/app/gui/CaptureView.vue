@@ -1,11 +1,11 @@
 <template>
     <div class="gui-frame">
-        <text-button class="finish-button green" icon="fas fa-backspace"
+        <text-button v-if="isFinishAvailable" class="finish-button green" icon="fas fa-backspace"
                      @click="finishCapture">{{ lang('capture.finish-button') }}</text-button>
 
         <div :class="{expanded:(isGalleryOpen|isThemesOpen)}" class="gradient-under"></div>
 
-        <options-collapsible :open="isOptionsOpen" :theme="selectedTheme" @open="openOptions" @select="selectOption"/>
+        <options-collapsible :enabled="isOptionsAvailable" :open="isOptionsOpen" :theme="selectedTheme" @open="openOptions" @select="selectOption"/>
 
         <dynamic-background :open="isDynamicBackgroundOpen" :state="dynamicBackgroundState"/>
         <gallery-collapsible :images="images"
@@ -91,7 +91,16 @@ export default {
             return this.isEmailViewOpen || this.isShareViewOpen || this.isDownloadViewOpen;
         },
         isCaptureAvailable() {
-            return (this.images.length < 4);
+            return (this.images.length < 4)
+                && !this.isGalleryOpen
+                && !this.isThemesOpen;
+        },
+        isOptionsAvailable() {
+            return !this.isThemesOpen;
+        },
+        isFinishAvailable() {
+            return !this.isGalleryOpen
+                && !this.isThemesOpen;
         }
     },
     watch: {
@@ -314,8 +323,9 @@ export default {
 }
 
 .finish-button {
-    top: 30px;
-    left: 30px;
+    bottom: 60px;
+    left: 430px;
     width: 220px;
+    z-index: 2;
 }
 </style>
