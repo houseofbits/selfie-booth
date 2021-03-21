@@ -34,7 +34,7 @@ export default class SceneManager {
 
         this.faceDetectorScene = new FaceDetectorScene(this, 'FaceDetectorScene', captureCanvas);
 
-        this.onThemeSelected('DemoScene');
+        this.onThemeSelected('CoralScene');
 
         this.engine.runRenderLoop(() => this.render());
     }

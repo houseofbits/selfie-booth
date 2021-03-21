@@ -31,7 +31,7 @@ export default {
             options: {
                 AmberScene: ['amber1', 'amber2', 'amber3', 'amber4'],
                 DinosaursScene: ['dinosaurs1', 'dinosaurs2', 'dinosaurs3', 'dinosaurs4'],
-                CoralScene: [],
+                CoralScene: ['coral1', 'coral2', 'coral3'],
                 BirdsScene: ['egg1', 'egg2', 'egg3', 'egg4'],
                 DisplayScene: ['display1', 'display2', 'display3', 'display4'],
                 ShroomsScene: [],
@@ -228,6 +228,19 @@ export default {
     }
     &.bug3  div.overlay {
         background-image: url('@images/bugs/option3.png');
+        height: 215px;
+    }
+
+    &.coral1  div.overlay {
+        background-image: url('@images/coral/option1.png');
+        height: 215px;
+    }
+    &.coral2  div.overlay {
+        background-image: url('@images/coral/option2.png');
+        height: 215px;
+    }
+    &.coral3  div.overlay {
+        background-image: url('@images/coral/option3.png');
         height: 215px;
     }
 

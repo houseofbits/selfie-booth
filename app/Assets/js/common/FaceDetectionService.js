@@ -12,7 +12,7 @@ class FaceDetectionService {
         this.detectedX = 0;
         this.detectedY = 0;
         this.isDetected = false;
-        this.detectionCallback = null;
+        this.detectionCallbackArray = [];
     }
 
     async onWindowLoaded() {
@@ -55,17 +55,19 @@ class FaceDetectionService {
             .then((result) => {
 
                 if (result) {
-                    this.detectedWidth = result.box.width;
-                    this.detectedHeight = result.box.height;
-                    this.detectedX = result.box.x;
-                    this.detectedY = result.box.y;
+                    this.detectedWidth = (this.detectedWidth * 0.8) + (result.box.width * 0.2);
+                    this.detectedHeight = (this.detectedHeight * 0.8) + (result.box.height * 0.2);
+                    this.detectedX = (this.detectedX * 0.6) + (result.box.x * 0.4);
+                    this.detectedY = (this.detectedY * 0.6) + (result.box.y * 0.4);
                     this.isDetected = true;
                 } else {
                     this.isDetected = false;
                 }
 
-                if (this.detectionCallback) {
-                    this.detectionCallback(this);
+                if (this.detectionCallbackArray.length > 0) {
+                    for (const callback of this.detectionCallbackArray) {
+                        callback(this);
+                    }
                 }
 
                 requestAnimationFrame(() => this.detect());
@@ -78,8 +80,8 @@ class FaceDetectionService {
         return false;
     }
 
-    setDetectionCallback(callback) {
-        this.detectionCallback = callback;
+    addDetectionCallback(callback) {
+        this.detectionCallbackArray.push(callback);
     }
 
 }

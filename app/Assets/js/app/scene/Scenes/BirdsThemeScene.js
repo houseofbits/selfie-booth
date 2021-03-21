@@ -5,6 +5,7 @@ import BackgroundTexture2 from '@images/birds/bg2.png';
 import BackgroundTexture3 from '@images/birds/bg3.png';
 import BackgroundTexture4 from '@images/birds/bg4.png';
 import BirdsMaterial from "@app/scene/Materials/BirdsMaterial";
+import FaceDetectionServiceInstance from '@common/FaceDetectionService.js';
 
 export default class BirdsThemeScene extends BaseScene {
     constructor(mainScene, name, targetCanvas) {
@@ -19,6 +20,8 @@ export default class BirdsThemeScene extends BaseScene {
         this.createScene();
 
         this.createVideoTexture();
+
+        FaceDetectionServiceInstance.addDetectionCallback(this.onFaceDetected.bind(this));
     }
 
     update(dt) {
@@ -34,9 +37,16 @@ export default class BirdsThemeScene extends BaseScene {
         this.material = new BirdsMaterial(this.scene, this.name + 'MainMaterial');
         this.material.setDiffuseTexture(this.bg1Texture);
 
+        this.material.setVector2Param('faceSize', this.detectedFaceSize);
+        this.material.setVector2Param('facePosition', this.detectedFacePosition);
+        this.material.setVector2Param('targetFacePosition', this.targetFacePosition);
+
         let plane = BABYLON.MeshBuilder.CreatePlane("backplane", {width: 1000, height: 1770, sideOrientation: BABYLON.Mesh.DOUBLESIDE}, this.scene);
         plane.material = this.material.getMaterial();
         plane.rotate(BABYLON.Axis.Y, BABYLON.Angle.FromDegrees(90).radians(), BABYLON.Space.WORLD);
+
+        this.targetFacePosition.x = 0.5;
+        this.targetFacePosition.y = 0.45;
     }
 
     onVideoTextureCreated() {

@@ -37,7 +37,7 @@ export default {
         }
     },
     mounted() {
-        FaceDetectionServiceInstance.setDetectionCallback(this.objectDetected);
+        FaceDetectionServiceInstance.addDetectionCallback(this.objectDetected);
     }
 }
 </script>

@@ -1,4 +1,3 @@
-import ThemeStructure from "@app/scene/Structures/ThemeStructure";
 import * as BABYLON from 'babylonjs';
 
 export default class BaseScene {
@@ -10,6 +9,10 @@ export default class BaseScene {
         this.parentNode = new BABYLON.TransformNode(this.name + "Parent");
         this.videoTexture = null;
         this.view = null;
+
+        this.detectedFacePosition = new BABYLON.Vector2(0, 0);
+        this.detectedFaceSize = new BABYLON.Vector2(0, 0);
+        this.targetFacePosition = new BABYLON.Vector2(0, 0);
     }
 
     registerView(camera) {
@@ -56,5 +59,12 @@ export default class BaseScene {
 
     onVideoTextureCreated() {
 
+    }
+
+    onFaceDetected(detectionService) {
+        this.detectedFaceSize.x = detectionService.detectedWidth / 1080;
+        this.detectedFaceSize.y = detectionService.detectedHeight / 1920;
+        this.detectedFacePosition.x = (detectionService.detectedX / 1080) + (this.detectedFaceSize.x * 0.5);
+        this.detectedFacePosition.y = (detectionService.detectedY / 1920) + (this.detectedFaceSize.y * 0.5);
     }
 }
