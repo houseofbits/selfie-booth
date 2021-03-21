@@ -17,6 +17,8 @@ class FaceDetectionService {
 
     async onWindowLoaded() {
 
+        console.log('Init face detector');
+
         this.sourceCanvas = document.getElementById('captureCanvas');
 
         await faceapi.tf.enableProdMode();
@@ -30,19 +32,15 @@ class FaceDetectionService {
 
     async initFaceAPI() {
 
+        console.log('Loading face detector models');
+
         await faceapi.nets.ssdMobilenetv1.load('/assets/models/');
 
         this.detectorNet = new faceapi.SsdMobilenetv1Options({ minConfidence: 0.2});
 
-        console.log('FaceAPI version');
-        console.log(faceapi.version.faceapi);
-
-        console.log('TensorFlow/JS');
-        console.log(faceapi.tf.version_core);
-
-        console.log('Models loaded:');
-        console.log(faceapi.tf.engine().state.numTensors);
-
+        console.log('FaceAPI version ' + faceapi.version.faceapi);
+        console.log('TensorFlow/JS ' + faceapi.tf.version_core);
+        console.log('Models loaded: ' + faceapi.tf.engine().state.numTensors);
     }
 
     async detect() {
