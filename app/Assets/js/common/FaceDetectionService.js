@@ -35,8 +35,10 @@ class FaceDetectionService {
         console.log('Loading face detector models');
 
         await faceapi.nets.ssdMobilenetv1.load('/assets/models/');
-
         this.detectorNet = new faceapi.SsdMobilenetv1Options({ minConfidence: 0.2});
+
+        // await faceapi.nets.tinyFaceDetector.load('/assets/models/');
+        // this.detectorNet = new faceapi.TinyFaceDetectorOptions({ minConfidence: 0.2});
 
         console.log('FaceAPI version ' + faceapi.version.faceapi);
         console.log('TensorFlow/JS ' + faceapi.tf.version_core);

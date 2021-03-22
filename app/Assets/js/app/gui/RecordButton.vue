@@ -46,7 +46,7 @@ export default {
 .record-button {
     pointer-events: auto;
     position: absolute;
-    top: 1500px;
+    top: 1400px;
     left: 407px;
     width: 265px;
     height: 230px;

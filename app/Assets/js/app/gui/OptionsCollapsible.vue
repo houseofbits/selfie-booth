@@ -89,22 +89,22 @@ export default {
     pointer-events: auto;
     .o0 {
         left: 40px;
-        bottom: 440px;
+        bottom: 620px;
         visibility: visible;
     }
     .o1 {
         left: 40px;
-        bottom: 660px;
+        bottom: 840px;
         visibility: visible;
     }
     .o2 {
         left: 40px;
-        bottom: 880px;
+        bottom: 1060px;
         visibility: visible;
     }
     .o3 {
         left: 40px;
-        bottom: 1100px;
+        bottom: 1280px;
         visibility: visible;
     }
 }
@@ -112,7 +112,7 @@ export default {
 .closed {
     .o0, .o1, .o2, .o3 {
         left: 40px;
-        bottom: 220px;
+        bottom: 320px;
         background-color: #003ac4;
         visibility: hidden;
     }
@@ -122,7 +122,7 @@ export default {
     pointer-events: auto;
     position: absolute;
     left: 40px;
-    bottom: 230px;
+    bottom: 330px;
     width: 183px;
     height: 183px;
     background: linear-gradient(to bottom, rgba(255,234,209,1) 0%,rgba(178,176,0,1) 41%,rgba(170,92,0,1) 59%,rgba(235,155,29,1) 100%);
@@ -133,7 +133,7 @@ export default {
     box-shadow: 0 5px 6px 3px rgba(0, 0, 0, 0.56);
 
     &.open {
-        bottom: 290px;
+        bottom: 390px;
     }
 
     &.option {
@@ -143,7 +143,7 @@ export default {
 
     div.overlay {
         width: 171px;
-        height: 220px;
+        height: 320px;
         position: absolute;
         bottom: 6px;
         left: 6px;
@@ -255,13 +255,13 @@ export default {
     width: 223px;
     height:183px;
     left: 20px;
-    bottom: 230px;
+    bottom: 330px;
     border-radius: 50% 50% 100px 100px;
     background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 45%, rgba(0, 0, 0, 0.48) 100%);
     transition: all 200ms linear;
 
     &.open {
-        bottom: 290px;
+        bottom: 390px;
     }
 }
 </style>

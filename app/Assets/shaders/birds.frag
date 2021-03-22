@@ -27,11 +27,9 @@ void main(void) {
 
     float dx = targetFacePosition.x - facePosition.x;
     float dy = targetFacePosition.y - facePosition.y;
-
     vec2 camuv = vCamUV;
     camuv.x = vCamUV.x + dy;
     camuv.y = vCamUV.y + dx;
-
     vec3 camera = texture2D(cameraMap, camuv).xyz;
 
     vec4 diffuse = texture2D(diffuseMap, uv).xyzw;

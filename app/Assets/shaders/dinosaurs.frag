@@ -14,6 +14,10 @@ uniform mat4 world;
 // Refs
 uniform vec3 cameraPosition;
 
+uniform vec2 faceSize;
+uniform vec2 facePosition;
+uniform vec2 targetFacePosition;
+
 uniform sampler2D diffuseMap;
 uniform sampler2D cameraMap;
 
@@ -65,14 +69,20 @@ void main(void) {
     vec2 uv = vUV;
     uv.x = 1.0 - uv.x;
 
-    vec4 diffuse = texture2D(diffuseMap, uv).xyzw;
-    vec4 camera = texture2D(cameraMap, vCamUV).xyzw;
+    float dx = targetFacePosition.x - facePosition.x;
+    float dy = targetFacePosition.y - facePosition.y;
+    vec2 camuv = vCamUV;
+    camuv.x = vCamUV.x + dy;
+    camuv.y = vCamUV.y + dx;
+    vec3 camera = texture2D(cameraMap, camuv).xyz;
 
-    camera = brightnessMatrix( brightness ) *
-                    contrastMatrix( contrast ) *
-                    saturationMatrix( saturation ) *
-                    camera *
-                    vec4(1.0, 1.0, 0.5, 1.0);
+    vec4 diffuse = texture2D(diffuseMap, uv).xyzw;
+
+//    camera = brightnessMatrix( brightness ) *
+//                    contrastMatrix( contrast ) *
+//                    saturationMatrix( saturation ) *
+//                    camera *
+//                    vec4(1.0, 1.0, 0.5, 1.0);
 
     vec3 finalColor = mix(diffuse.xyz, camera.xyz, 1.0 - diffuse.w);
 

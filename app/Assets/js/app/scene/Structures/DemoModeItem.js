@@ -71,11 +71,11 @@ export default class DemoModeItem {
         let posv = this.targetPosition.subtract(this.position);
         let posl = posv.length();
 
-        const y = Math.abs(this.position.y - this.targetPosition.y);
+        const y = this.position.y;  //Math.abs(this.position.y - this.targetPosition.y);
 
-        const sin = Math.sin(y * 0.5);
+        const sin = Math.sin(y * 0.1);
 
-        let velocity = dt * 100.0;
+        let velocity = dt * 20.0;
         let stepsCount = posl / velocity;
 
         if(posl > 1.0){
@@ -85,7 +85,9 @@ export default class DemoModeItem {
             this.position.addInPlace(posv);
         }
 
-        this.parentMesh.position.x = this.position.x;// + sin * 3.0;
+        const unitVert = Math.min(Math.abs(Math.min(y, 0.0)), 200.0) / 200.0;
+
+        this.parentMesh.position.x = this.position.x + (sin * (1.0 + (unitVert * 10)));
         this.parentMesh.position.y = this.position.y;
 
         this.parentMesh.rotationQuaternion = BABYLON.Quaternion.Identity();

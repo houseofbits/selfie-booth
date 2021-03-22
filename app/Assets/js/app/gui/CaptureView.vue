@@ -323,7 +323,7 @@ export default {
 }
 
 .finish-button {
-    bottom: 60px;
+    bottom: 80px;
     left: 430px;
     width: 220px;
     z-index: 2;
