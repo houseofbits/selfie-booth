@@ -101,7 +101,8 @@ export default {
         },
         isFinishAvailable() {
             return !this.isGalleryOpen
-                && !this.isThemesOpen;
+                && !this.isThemesOpen
+                && !this.isCaptureInProgress;
         }
     },
     watch: {
