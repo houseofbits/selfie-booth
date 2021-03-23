@@ -37,9 +37,7 @@ export default class BirdsThemeScene extends BaseScene {
         this.material = new BirdsMaterial(this.scene, this.name + 'MainMaterial');
         this.material.setDiffuseTexture(this.bg1Texture);
 
-        this.material.setVector2Param('faceSize', this.detectedFaceSize);
-        this.material.setVector2Param('facePosition', this.detectedFacePosition);
-        this.material.setVector2Param('targetFacePosition', this.targetFacePosition);
+        this.createFaceDetectorMaterialParams(this.material);
 
         let plane = BABYLON.MeshBuilder.CreatePlane("backplane", {width: 1000, height: 1770, sideOrientation: BABYLON.Mesh.DOUBLESIDE}, this.scene);
         plane.material = this.material.getMaterial();
@@ -47,6 +45,11 @@ export default class BirdsThemeScene extends BaseScene {
 
         this.targetFacePosition.x = 0.5;
         this.targetFacePosition.y = 0.45;
+    }
+
+    onFaceDetected(detectionService) {
+        super.onFaceDetected(detectionService);
+        this.material.setIntegerParam('isFaceDetectorEnabled', this.isFaceDetectorEnabled);
     }
 
     onVideoTextureCreated() {

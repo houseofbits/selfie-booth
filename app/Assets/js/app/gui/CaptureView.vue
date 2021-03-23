@@ -52,7 +52,7 @@ import OptionsCollapsible from './OptionsCollapsible.vue';
 
 export default {
     name: "CaptureView",
-    inject: ['lang'],
+    inject: ['lang', 'faceDetect'],
     data() {
         return {
             images: [],
@@ -68,6 +68,7 @@ export default {
             sendEmailError: false,
             isCaptureInProgress: false,
             selectedTheme: '',
+            enableDetectorTimer: null
         }
     },
     components: {
@@ -118,6 +119,7 @@ export default {
     },
     methods: {
         finishCapture() {
+            this.faceDetect.enableDetector(false);
             this.$emit('captureViewClose');
         },
         resetView() {
@@ -133,10 +135,12 @@ export default {
             this.images = [];
             this.isCaptureInProgress = false;
             this.isOptionsOpen = false;
-            this.selectedTheme = MainSceneInstance.getActiveTheme()
+            this.selectedTheme = MainSceneInstance.getActiveTheme();
+            this.faceDetect.enableDetector(false);
         },
         openGallery() {
             if (!this.isCaptureInProgress) {
+                this.faceDetect.enableDetector(false);
                 this.isGalleryOpen = true;
                 this.isOptionsOpen = false;
                 this.isThemesOpen = false;
@@ -148,6 +152,7 @@ export default {
         },
         openThemes() {
             if (!this.isCaptureInProgress) {
+                this.faceDetect.enableDetector(false);
                 this.isThemesOpen = true;
                 this.isGalleryOpen = false;
                 this.isOptionsOpen = false;
@@ -158,12 +163,14 @@ export default {
             }
         },
         closeGallery() {
+            this.enableFaceDetection();
             this.isGalleryOpen = false;
             if (!this.isThemesOpen) {
                 this.isDynamicBackgroundOpen = false;
             }
         },
         closeThemes() {
+            this.enableFaceDetection();
             this.isThemesOpen = false;
             if (!this.isGalleryOpen) {
                 this.isDynamicBackgroundOpen = false;
@@ -214,6 +221,7 @@ export default {
             this.isShareViewOpen = false;
             this.isDownloadViewOpen = false;
             this.isOptionsOpen = false;
+            this.enableFaceDetection();
         },
         handleImageAction(action, image) {
             switch (action) {
@@ -286,6 +294,12 @@ export default {
                 this.isDynamicBackgroundOpen = false;
                 this.isOptionsOpen = true;
             }
+        },
+        enableFaceDetection() {
+            if (this.enableDetectorTimer) {
+                clearTimeout(this.enableDetectorTimer);
+            }
+            this.enableDetectorTimer = setTimeout(() => this.faceDetect.enableDetector(true), 400);
         }
     }
 }

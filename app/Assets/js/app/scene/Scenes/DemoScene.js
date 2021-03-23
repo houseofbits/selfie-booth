@@ -59,8 +59,9 @@ export default class DemoScene extends BaseScene {
     }
 
     onSceneActivated() {
-        this.syncItems();
-        this.createShuffleTimer();
+        this.syncItems().then(r => {
+            this.createShuffleTimer();
+        });
     }
 
     onSceneDeactivated() {
@@ -107,25 +108,25 @@ export default class DemoScene extends BaseScene {
         ground.material = this.backdropMaterial.getMaterial();
     }
 
-    syncItems() {
+    async syncItems() {
         const data = JSON.stringify({data: this.imageSyncData});
-        axios
+        const response = await axios
             .post("/api/sync-images", data, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
-            }).then(response => {
-            if (response.status === 200) {
-                this.imageSyncData = this.imageSyncData.concat(response.data);
-                for (const image of response.data) {
-                    this.insertNewItem(image);
-                }
+            });
+
+        if (response.status === 200) {
+            this.imageSyncData = this.imageSyncData.concat(response.data);
+            for (const image of response.data) {
+                await this.insertNewItem(image);
             }
-        });
+        }
     }
 
     //Insert new image into one of columns and recalculate other item positions
-    insertNewItem(imageId) {
+    async insertNewItem(imageId) {
         const columnIndex = this.getNewItemColumn();
         const itemStructure = this.createNewItem(columnIndex);
         const item = new DemoModeItem(imageId);
@@ -281,7 +282,7 @@ export default class DemoScene extends BaseScene {
     shuffle() {
         const columnIndex = Math.floor(Math.random() * 5.0);
 
-        if(this.itemColumns[columnIndex].length < 4) {
+        if (this.itemColumns[columnIndex].length < 4) {
             return;
         }
 

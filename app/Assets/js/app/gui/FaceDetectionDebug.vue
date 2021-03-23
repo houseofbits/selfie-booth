@@ -31,7 +31,7 @@ export default {
             return {
                 width: this.width + 'px',
                 height: this.height + 'px',
-                left: this.left + 'px',
+                left: (1080 + this.left) + 'px',
                 top: this.top + 'px',
             };
         }

@@ -91,7 +91,7 @@ export default class DemoModeItem {
         this.parentMesh.position.y = this.position.y;
 
         this.parentMesh.rotationQuaternion = BABYLON.Quaternion.Identity();
-        this.parentMesh.rotate(BABYLON.Axis.Z, this.angle);
+        this.parentMesh.rotate(BABYLON.Axis.Z, this.angle + (sin * 0.1));
     }
 
     setFlip(speed, direction) {

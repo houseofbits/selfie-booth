@@ -13,6 +13,8 @@ export default class BaseScene {
         this.detectedFacePosition = new BABYLON.Vector2(0, 0);
         this.detectedFaceSize = new BABYLON.Vector2(0, 0);
         this.targetFacePosition = new BABYLON.Vector2(0, 0);
+        this.targetFacePosition = new BABYLON.Vector2(0, 0);
+        this.isFaceDetectorEnabled = 0;
     }
 
     registerView(camera) {
@@ -61,10 +63,18 @@ export default class BaseScene {
 
     }
 
+    createFaceDetectorMaterialParams(material) {
+        material.setVector2Param('faceSize', this.detectedFaceSize);
+        material.setVector2Param('facePosition', this.detectedFacePosition);
+        material.setVector2Param('targetFacePosition', this.targetFacePosition);
+        material.setIntegerParam('isFaceDetectorEnabled', this.isFaceDetectorEnabled);
+    }
+
     onFaceDetected(detectionService) {
         this.detectedFaceSize.x = detectionService.detectedWidth / 1080;
         this.detectedFaceSize.y = detectionService.detectedHeight / 1920;
         this.detectedFacePosition.x = (detectionService.detectedX / 1080) + (this.detectedFaceSize.x * 0.5);
         this.detectedFacePosition.y = (detectionService.detectedY / 1920) + (this.detectedFaceSize.y * 0.5);
+        this.isFaceDetectorEnabled = detectionService.isDetectOn ? 1 : 0;
     }
 }

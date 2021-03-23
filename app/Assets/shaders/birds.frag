@@ -17,6 +17,7 @@ uniform vec3 cameraPosition;
 uniform vec2 faceSize;
 uniform vec2 facePosition;
 uniform vec2 targetFacePosition;
+uniform int isFaceDetectorEnabled;
 
 uniform sampler2D diffuseMap;
 uniform sampler2D cameraMap;
@@ -25,11 +26,13 @@ void main(void) {
     vec2 uv = vUV;
     uv.x = 1.0 - uv.x;
 
-    float dx = targetFacePosition.x - facePosition.x;
-    float dy = targetFacePosition.y - facePosition.y;
     vec2 camuv = vCamUV;
-    camuv.x = vCamUV.x + dy;
-    camuv.y = vCamUV.y + dx;
+    if (isFaceDetectorEnabled == 1) {
+        float dx = targetFacePosition.x - facePosition.x;
+        float dy = targetFacePosition.y - facePosition.y;
+        camuv.x = vCamUV.x + dy;
+        camuv.y = vCamUV.y + dx;
+    }
     vec3 camera = texture2D(cameraMap, camuv).xyz;
 
     vec4 diffuse = texture2D(diffuseMap, uv).xyzw;

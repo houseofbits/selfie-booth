@@ -11,7 +11,8 @@ if(document.getElementById('gui')) {
         el: '#gui',
         provide:{
             langService: languageServiceObservable,
-            lang: languageServiceObservable.translate.bind(languageServiceObservable)
+            lang: languageServiceObservable.translate.bind(languageServiceObservable),
+            faceDetect: FaceDetectionServiceInstance
         },
     });
 }

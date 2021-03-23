@@ -117,6 +117,6 @@ body {
     font-family: "customFont", serif;
     user-select: none;
     background-color: black;
-    /*overflow: hidden;*/
+    overflow: hidden;
 }
 </style>
