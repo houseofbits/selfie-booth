@@ -44,7 +44,7 @@ export default {
 <style lang="scss" scoped>
 .confirm-button {
     width: 300px;
-    top: 1550px;
+    top: 1350px;
     left: 390px;
     opacity: 0;
     visibility: hidden;
@@ -59,7 +59,7 @@ export default {
 
 .info-row {
     position: absolute;
-    top: 1000px;
+    top: 800px;
     left: 80px;
     width: 900px;
     height: 500px;

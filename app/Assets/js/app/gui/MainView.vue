@@ -1,19 +1,24 @@
 <template>
     <div>
-        <div class="gradient-under" :class="{expanded:isConfirmationButtonVisible, hidden:isCaptureViewVisible}"></div>
+        <div :class="{expanded:isConfirmationButtonVisible, hidden:isCaptureViewVisible}" class="gradient-under"></div>
         <start-button :is-visible="isStartButtonVisible" @start="start"/>
         <confirm-button :is-visible="isConfirmationButtonVisible" @confirm="confirm"/>
         <languages :is-visible="!isCaptureViewVisible"/>
-        <capture-view :class="{visible: isCaptureViewVisible}" :open="isCaptureViewVisible" @captureViewClose="reset" class="capture-view"/>
+        <capture-view :class="{visible: isCaptureViewVisible}" :open="isCaptureViewVisible" class="capture-view"
+                      @captureViewClose="reset"/>
+
+        <face-detection-debug />
     </div>
 </template>
 
 <script>
+
 import CaptureView from "./CaptureView.vue";
 import Languages from "./Languages.vue";
 import StartButton from "./StartButton.vue";
 import ConfirmButton from "./ConfirmButton.vue";
 import MainSceneInstance from '/js/app/scene/MainInstance';
+import FaceDetectionDebug from './FaceDetectionDebug.vue';
 
 export default {
     name: "MainView",
@@ -21,7 +26,8 @@ export default {
         CaptureView,
         Languages,
         StartButton,
-        ConfirmButton
+        ConfirmButton,
+        FaceDetectionDebug
     },
     data() {
         return {
@@ -69,7 +75,7 @@ export default {
     right: 0;
     bottom: 0;
     height: 900px;
-    background: linear-gradient(to bottom, rgba(98,125,77,0) 0%, rgba(31,59,8,0.84) 50%, rgba(31,59,8,0.84) 100%);
+    background: linear-gradient(to bottom, rgba(98, 125, 77, 0) 0%, rgba(31, 59, 8, 0.84) 50%, rgba(31, 59, 8, 0.84) 100%);
     transition: height, opacity 300ms linear;
     visibility: visible;
     opacity: 0.9;
@@ -111,6 +117,6 @@ body {
     font-family: "customFont", serif;
     user-select: none;
     background-color: black;
-    /*overflow: hidden;*/
+    overflow: hidden;
 }
 </style>

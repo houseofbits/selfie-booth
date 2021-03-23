@@ -2,7 +2,6 @@ import BaseScene from "@app/scene/BaseScene";
 import * as BABYLON from 'babylonjs';
 import BackdropTexture from '@images/demo/background.png';
 import ImageEdgesMaskTexture from '@images/image-thumbnail-edges.jpg';
-//import ImageEdgesNormalTexture from '@images/image-thumbnail-edges-normal.png';
 import LeafTexture from '@images/leaf_1.png';
 import BasicMaterial from "@app/scene/Materials/BasicMaterial";
 import DemoModeItem from "@app/scene/Structures/DemoModeItem";
@@ -14,8 +13,8 @@ import DemoModeLeafItem from "@app/scene/Structures/DemoModeLeafItem";
 import BasicAlphaMaterial from "@app/scene/Materials/BasicAlphaMaterial";
 
 export default class DemoScene extends BaseScene {
-    constructor(mainScene, name) {
-        super(mainScene, name);
+    constructor(mainScene, name, targetCanvas) {
+        super(mainScene, name, targetCanvas);
 
         let camera = new BABYLON.ArcRotateCamera("Camera",
             Math.PI * 0.5,
@@ -24,6 +23,8 @@ export default class DemoScene extends BaseScene {
             new BABYLON.Vector3(-0.11030575385577211, -8.87722000153747, -2.048547710987432),
             this.scene);
         //camera.attachControl(mainScene.canvas, true);
+
+        this.registerView(camera);
 
         this.itemColumns = [[], [], [], [], []];
         this.itemsForRemoval = [];
@@ -58,8 +59,9 @@ export default class DemoScene extends BaseScene {
     }
 
     onSceneActivated() {
-        this.syncItems();
-        this.createShuffleTimer();
+        this.syncItems().then(r => {
+            this.createShuffleTimer();
+        });
     }
 
     onSceneDeactivated() {
@@ -106,25 +108,25 @@ export default class DemoScene extends BaseScene {
         ground.material = this.backdropMaterial.getMaterial();
     }
 
-    syncItems() {
+    async syncItems() {
         const data = JSON.stringify({data: this.imageSyncData});
-        axios
+        const response = await axios
             .post("/api/sync-images", data, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
-            }).then(response => {
-            if (response.status === 200) {
-                this.imageSyncData = this.imageSyncData.concat(response.data);
-                for (const image of response.data) {
-                    this.insertNewItem(image);
-                }
+            });
+
+        if (response.status === 200) {
+            this.imageSyncData = this.imageSyncData.concat(response.data);
+            for (const image of response.data) {
+                await this.insertNewItem(image);
             }
-        });
+        }
     }
 
     //Insert new image into one of columns and recalculate other item positions
-    insertNewItem(imageId) {
+    async insertNewItem(imageId) {
         const columnIndex = this.getNewItemColumn();
         const itemStructure = this.createNewItem(columnIndex);
         const item = new DemoModeItem(imageId);
@@ -280,7 +282,7 @@ export default class DemoScene extends BaseScene {
     shuffle() {
         const columnIndex = Math.floor(Math.random() * 5.0);
 
-        if(this.itemColumns[columnIndex].length < 4) {
+        if (this.itemColumns[columnIndex].length < 4) {
             return;
         }
 

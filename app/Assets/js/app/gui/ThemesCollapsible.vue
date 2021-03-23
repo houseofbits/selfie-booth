@@ -255,7 +255,7 @@ $theme-icons-per-row: 4;
 }
 
 .close-button {
-    top: 1550px;
+    top: 1570px;
     left: 430px;
     width:220px;
     z-index: 2;
@@ -427,11 +427,11 @@ $theme-icons-per-row: 4;
 }
 
 .leaf-pos-1 {
-    transform: translate(90px, 1800px) rotate(-20deg);
+    transform: translate(100px, 1680px) rotate(-160deg) scale(1.2);
 }
 
 .leaf-pos-inside {
-    transform: translate(130px, 1800px) rotate(20deg) scale(0.8);
+    transform: translate(130px, 1640px) rotate(20deg) scale(0.8);
     z-index: 1;
 }
 

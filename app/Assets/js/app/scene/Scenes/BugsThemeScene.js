@@ -6,12 +6,14 @@ import BackgroundTexture3 from '@images/bugs/bg3.png';
 import BugsMaterial from "@app/scene/Materials/BugsMaterial";
 
 export default class BugsThemeScene extends BaseScene {
-    constructor(mainScene, name) {
-        super(mainScene, name);
+    constructor(mainScene, name, targetCanvas) {
+        super(mainScene, name, targetCanvas);
 
         this.scene.clearColor = new BABYLON.Color3(0.3, 0.3, 0.4);
 
         let camera = new BABYLON.ArcRotateCamera("Camera", 0, BABYLON.Angle.FromDegrees(90).radians(), 2000, new BABYLON.Vector3(0, 0, 0), this.scene);
+
+        this.registerView(camera);
 
         this.createScene();
 

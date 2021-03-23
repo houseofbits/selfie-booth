@@ -164,7 +164,7 @@ export default {
     }
 
     .close-button {
-        top: 1550px;
+        top: 1570px;
         left: 430px;
         width: 220px;
         z-index: 2;
@@ -419,11 +419,11 @@ export default {
 }
 
 .leaf-pos-1 {
-    transform: translate(990px, 1770px) rotate(15deg);
+    transform: translate(990px, 1650px) rotate(15deg);
 }
 
 .leaf-pos-2 {
-    transform: translate(910px, 1820px) rotate(-120deg);
+    transform: translate(910px, 1680px) rotate(-120deg);
 }
 
 .info-text {

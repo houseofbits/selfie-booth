@@ -1,11 +1,11 @@
 <template>
     <div class="gui-frame">
-        <text-button class="finish-button green" icon="fas fa-backspace"
+        <text-button v-if="isFinishAvailable" class="finish-button green" icon="fas fa-backspace"
                      @click="finishCapture">{{ lang('capture.finish-button') }}</text-button>
 
         <div :class="{expanded:(isGalleryOpen|isThemesOpen)}" class="gradient-under"></div>
 
-        <options-collapsible :open="isOptionsOpen" :theme="selectedTheme" @open="openOptions" @select="selectOption"/>
+        <options-collapsible :enabled="isOptionsAvailable" :open="isOptionsOpen" :theme="selectedTheme" @open="openOptions" @select="selectOption"/>
 
         <dynamic-background :open="isDynamicBackgroundOpen" :state="dynamicBackgroundState"/>
         <gallery-collapsible :images="images"
@@ -52,7 +52,7 @@ import OptionsCollapsible from './OptionsCollapsible.vue';
 
 export default {
     name: "CaptureView",
-    inject: ['lang'],
+    inject: ['lang', 'faceDetect'],
     data() {
         return {
             images: [],
@@ -68,6 +68,7 @@ export default {
             sendEmailError: false,
             isCaptureInProgress: false,
             selectedTheme: '',
+            enableDetectorTimer: null
         }
     },
     components: {
@@ -91,7 +92,17 @@ export default {
             return this.isEmailViewOpen || this.isShareViewOpen || this.isDownloadViewOpen;
         },
         isCaptureAvailable() {
-            return (this.images.length < 4);
+            return (this.images.length < 4)
+                && !this.isGalleryOpen
+                && !this.isThemesOpen;
+        },
+        isOptionsAvailable() {
+            return !this.isThemesOpen;
+        },
+        isFinishAvailable() {
+            return !this.isGalleryOpen
+                && !this.isThemesOpen
+                && !this.isCaptureInProgress;
         }
     },
     watch: {
@@ -109,6 +120,7 @@ export default {
     },
     methods: {
         finishCapture() {
+            this.faceDetect.enableDetector(false);
             this.$emit('captureViewClose');
         },
         resetView() {
@@ -124,10 +136,12 @@ export default {
             this.images = [];
             this.isCaptureInProgress = false;
             this.isOptionsOpen = false;
-            this.selectedTheme = MainSceneInstance.getActiveTheme()
+            this.selectedTheme = MainSceneInstance.getActiveTheme();
+            this.faceDetect.enableDetector(false);
         },
         openGallery() {
             if (!this.isCaptureInProgress) {
+                this.faceDetect.enableDetector(false);
                 this.isGalleryOpen = true;
                 this.isOptionsOpen = false;
                 this.isThemesOpen = false;
@@ -139,6 +153,7 @@ export default {
         },
         openThemes() {
             if (!this.isCaptureInProgress) {
+                this.faceDetect.enableDetector(false);
                 this.isThemesOpen = true;
                 this.isGalleryOpen = false;
                 this.isOptionsOpen = false;
@@ -149,12 +164,14 @@ export default {
             }
         },
         closeGallery() {
+            this.enableFaceDetection();
             this.isGalleryOpen = false;
             if (!this.isThemesOpen) {
                 this.isDynamicBackgroundOpen = false;
             }
         },
         closeThemes() {
+            this.enableFaceDetection();
             this.isThemesOpen = false;
             if (!this.isGalleryOpen) {
                 this.isDynamicBackgroundOpen = false;
@@ -205,6 +222,7 @@ export default {
             this.isShareViewOpen = false;
             this.isDownloadViewOpen = false;
             this.isOptionsOpen = false;
+            this.enableFaceDetection();
         },
         handleImageAction(action, image) {
             switch (action) {
@@ -277,6 +295,12 @@ export default {
                 this.isDynamicBackgroundOpen = false;
                 this.isOptionsOpen = true;
             }
+        },
+        enableFaceDetection() {
+            if (this.enableDetectorTimer) {
+                clearTimeout(this.enableDetectorTimer);
+            }
+            this.enableDetectorTimer = setTimeout(() => this.faceDetect.enableDetector(true), 400);
         }
     }
 }
@@ -314,8 +338,9 @@ export default {
 }
 
 .finish-button {
-    top: 30px;
-    left: 30px;
+    bottom: 80px;
+    left: 430px;
     width: 220px;
+    z-index: 2;
 }
 </style>

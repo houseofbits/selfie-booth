@@ -37,4 +37,13 @@ class CustomMaterial {
     setDiffuseTexture(texture){
         this.shaderMaterial.setTexture("diffuseMap", texture);
     }
+    setFaceRect(rect){
+        this.shaderMaterial.setVector4("faceRect", rect);
+    }
+    setIntegerParam(name, value){
+        this.shaderMaterial.setInt(name, value);
+    }
+    setVector2Param(name, value){
+        this.shaderMaterial.setVector2(name, value);
+    }
 }

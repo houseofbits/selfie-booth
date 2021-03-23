@@ -5,19 +5,23 @@ import BackgroundTexture1 from "@images/dinosaurs/bg1.png";
 import BackgroundTexture2 from "@images/dinosaurs/bg2.png";
 import BackgroundTexture3 from "@images/dinosaurs/bg3.png";
 import BackgroundTexture4 from "@images/dinosaurs/bg4.png";
-
+import FaceDetectionServiceInstance from "@common/FaceDetectionService";
 
 export default class DinosaursThemeScene extends BaseScene {
-    constructor(mainScene, name) {
-        super(mainScene, name);
+    constructor(mainScene, name, targetCanvas) {
+        super(mainScene, name, targetCanvas);
 
         this.scene.clearColor = new BABYLON.Color3(0.3, 0.3, 0.4);
 
         let camera = new BABYLON.ArcRotateCamera("Camera", 0, BABYLON.Angle.FromDegrees(90).radians(), 2000, new BABYLON.Vector3(0, 0, 0), this.scene);
 
+        this.registerView(camera);
+
         this.createScene();
 
         this.createVideoTexture();
+
+        FaceDetectionServiceInstance.addDetectionCallback(this.onFaceDetected.bind(this));
     }
 
     update(dt) {
@@ -32,12 +36,18 @@ export default class DinosaursThemeScene extends BaseScene {
         this.bg4Texture = new BABYLON.Texture(BackgroundTexture4, this.scene);
 
         this.material = new DinosaursMaterial(this.scene, this.name + 'MainMaterial');
-        //this.material.setCameraTexture(new BABYLON.Texture(BgMap, this.scene));
         this.material.setDiffuseTexture(this.bg1Texture);
+
+        this.material.setVector2Param('faceSize', this.detectedFaceSize);
+        this.material.setVector2Param('facePosition', this.detectedFacePosition);
+        this.material.setVector2Param('targetFacePosition', this.targetFacePosition);
 
         let plane = BABYLON.MeshBuilder.CreatePlane("backplane2", {width: 1000, height: 1770, sideOrientation: BABYLON.Mesh.DOUBLESIDE}, this.scene);
         plane.material = this.material.getMaterial();
         plane.rotate(BABYLON.Axis.Y, BABYLON.Angle.FromDegrees(90).radians(), BABYLON.Space.WORLD);
+
+        this.targetFacePosition.x = 0.45;
+        this.targetFacePosition.y = 0.3;
     }
 
     onVideoTextureCreated() {
@@ -52,15 +62,23 @@ export default class DinosaursThemeScene extends BaseScene {
         switch (optionName) {
             case 'dinosaurs1':
                 this.material.setDiffuseTexture(this.bg1Texture);
+                this.targetFacePosition.x = 0.43;
+                this.targetFacePosition.y = 0.32;
                 break;
             case 'dinosaurs2':
                 this.material.setDiffuseTexture(this.bg2Texture);
+                this.targetFacePosition.x = 0.32;
+                this.targetFacePosition.y = 0.33;
                 break;
             case 'dinosaurs3':
                 this.material.setDiffuseTexture(this.bg3Texture);
+                this.targetFacePosition.x = 0.34;
+                this.targetFacePosition.y = 0.34;
                 break;
             case 'dinosaurs4':
                 this.material.setDiffuseTexture(this.bg4Texture);
+                this.targetFacePosition.x = 0.37;
+                this.targetFacePosition.y = 0.35;
                 break;
         }
     }

@@ -94,7 +94,7 @@ export default {
 .start-button {
     pointer-events: auto;
     position: absolute;
-    top: 1430px;
+    top: 1230px;
     left: 407px;
     width: 265px;
     height: 230px;
@@ -125,7 +125,7 @@ export default {
 
 .start-text {
     position: absolute;
-    top: 1340px;
+    top: 1140px;
     left:390px;
     width:300px;
     text-align: center;

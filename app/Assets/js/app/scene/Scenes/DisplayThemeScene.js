@@ -7,12 +7,14 @@ import BackgroundTexture4 from "@images/display/background4.png";
 import DisplayMaterial from "@app/scene/Materials/DisplayMaterial";
 
 export default class DisplayThemeScene extends BaseScene {
-    constructor(mainScene, name) {
-        super(mainScene, name);
+    constructor(mainScene, name, targetCanvas) {
+        super(mainScene, name, targetCanvas);
 
         this.scene.clearColor = new BABYLON.Color3(0.3, 0.3, 0.4);
 
         let camera = new BABYLON.ArcRotateCamera("Camera", 0, BABYLON.Angle.FromDegrees(90).radians(), 2000, new BABYLON.Vector3(0, 0, 0), this.scene);
+
+        this.registerView(camera);
 
         this.createScene();
 
