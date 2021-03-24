@@ -150,11 +150,16 @@ export default {
             white-space: nowrap;
             font-weight: bold;
             font-size: 45px;
+            line-height: 80px;
             //background: linear-gradient(to bottom, #6d0019 0%, #8f0222 56%, #a90329 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             -webkit-text-stroke: 1px rgba(0, 0, 0, 0.3);
             //filter: drop-shadow(0 1px 3px rgba(255, 92, 92, 1));
+
+            i {
+                line-height: 80px;
+            }
 
             .text {
                 line-height: 80px;

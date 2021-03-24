@@ -59,9 +59,9 @@ export default class DemoScene extends BaseScene {
     }
 
     onSceneActivated() {
-        this.syncItems().then(r => {
-            this.createShuffleTimer();
-        });
+        // this.syncItems().then(r => {
+        //     this.createShuffleTimer();
+        // });
     }
 
     onSceneDeactivated() {
@@ -73,17 +73,17 @@ export default class DemoScene extends BaseScene {
         this.leafMaterial = new BasicAlphaMaterial(this.scene, "leaf");
         this.leafMaterial.setDiffuseMap(LeafTexture);
 
-        this.createLeaf(0, 1);
-        this.createLeaf(-15, 1);
-        this.createLeaf(-10, 1);
-        this.createLeaf(-20, 1);
-        this.createLeaf(-30, 1);
-        this.createLeaf(10, 1);
-        this.createLeaf(15, 1);
-        this.createLeaf(20, 1);
-        this.createLeaf(30, 1);
-        this.createLeaf(35, 1);
-        this.createLeaf(-35, 1);
+        // this.createLeaf(0, 1);
+        // this.createLeaf(-15, 1);
+        // this.createLeaf(-10, 1);
+        // this.createLeaf(-20, 1);
+        // this.createLeaf(-30, 1);
+        // this.createLeaf(10, 1);
+        // this.createLeaf(15, 1);
+        // this.createLeaf(20, 1);
+        // this.createLeaf(30, 1);
+        // this.createLeaf(35, 1);
+        // this.createLeaf(-35, 1);
 
         this.scene.clearColor = new BABYLON.Color3(0.274, 0.407, 0.192);
 

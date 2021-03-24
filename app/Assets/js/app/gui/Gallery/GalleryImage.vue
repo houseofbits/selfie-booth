@@ -1,24 +1,23 @@
 <template>
-    <div
-        :class="getMainClass"
-        class="image">
-        <gallery-image-actions :is-expanded="isButtonsExpanded" :is-visible="isButtonsVisible"
-                               class="buttons-block"
-                               @action-delete="setForRemoval"
-                               @action-download="selectDownload"
-                               @action-email="selectEmail"/>
+    <div :class="getMainClass" class="image">
+        <round-button v-if="isDeleteButtonVisible"
+                      :class="deleteButtonClass"
+                      class="delete-button red"
+                      icon="fas fa-trash-alt"
+                      @click="setForRemoval"/>
+
         <img :src="image.base64data" alt="Thumbnail" height="100%" width="100%" @click.self="setSelected"/>
     </div>
 </template>
 
 <script>
-import GalleryImageActions from './GalleryImageActions.vue';
 import {GalleryActions} from '../Constants.js';
+import RoundButton from '../RoundButton.vue';
 
 export default {
     name: "GalleryImage",
     components: {
-        GalleryImageActions
+        RoundButton
     },
     props: {
         selected: {
@@ -41,29 +40,28 @@ export default {
             isSelected: null,
             isCollapsed: true,
             markedForRemoval: false,
-            isButtonsExpanded: false,
+            isDeleteButtonVisible: false,
             transformIndex: 0,
         };
     },
     watch: {
         collapse(val) {
             if (val) {
-                this.isButtonsExpanded = false;
+                this.isDeleteButtonVisible = false;
                 setTimeout(() => this.isCollapsed = true, this.isSelected ? 600 : 0);
+                this.isDeleteButtonVisible = false;
             } else {
                 this.isCollapsed = false;
+                setTimeout(() => this.isDeleteButtonVisible = true, this.isSelected ? 200 : 0);
             }
         },
         selected(val) {
             this.isSelected = val ? (val.id === this.$vnode.key) : false;
-            if (!this.isSelected) {
-                this.isButtonsExpanded = false;
-            }
         }
     },
     computed: {
         isButtonsVisible() {
-            return !this.markedForRemoval && !this.isCollapsed;
+            return !this.markedForRemoval && !this.collapsedType !== 2;
         },
         isNotSelected() {
             return (this.selected !== null && this.$vnode.key !== this.selected.id);
@@ -75,27 +73,29 @@ export default {
                 selected: this.isSelected,
                 'not-selected': this.isNotSelected,
                 collapse: this.collapse,
-                large: this.collapsedType === 1,
+                large: this.collapsedType === 1 && !this.markedForRemoval,
                 small: this.collapsedType === 2,
                 [transformClass]: true
             };
         },
+        deleteButtonClass() {
+            return {
+                expanded: (this.isSelected || this.isCollapsed)
+            };
+        }
     },
     methods: {
         setSelected() {
-            this.isButtonsExpanded = true;
+            this.isDeleteButtonVisible = true;
             this.isSelected = true;
             this.selectAction(GalleryActions.SelectImage);
             this.shuffle();
         },
         setForRemoval() {
-            this.isButtonsExpanded = false;
-            setTimeout(() => this.markedForRemoval = true, this.isSelected ? 400 : 0);
-            setTimeout(() => this.selectAction(GalleryActions.DeleteImage), this.isSelected ? 800 : 200);
+            this.isDeleteButtonVisible = false;
+            this.markedForRemoval = true;
+            setTimeout(() => this.selectAction(GalleryActions.DeleteImage), 200);
         },
-        // selectShare() {
-        //     this.selectAction(GalleryActions.ShareFacebook);
-        // },
         selectEmail() {
             this.selectAction(GalleryActions.ShareEmail);
         },
@@ -169,12 +169,16 @@ export default {
         transform: rotate(-1deg) scale(1.0);
     }
 
-    .buttons-block {
+    .delete-button {
         position: absolute;
         bottom: -40px;
-        width: 100%;
-        height: 80px;
+        left: 60px;
         transition: all 0.2s linear;
+
+        &.expanded {
+            bottom: 40px;
+            left: 520px;
+        }
     }
 
     &.selected {

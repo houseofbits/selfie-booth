@@ -5,25 +5,32 @@
 
         <div :class="{expanded:(isGalleryOpen|isThemesOpen)}" class="gradient-under"></div>
 
-        <options-collapsible :enabled="isOptionsAvailable" :open="isOptionsOpen" :theme="selectedTheme" @open="openOptions" @select="selectOption"/>
+        <options-collapsible :enabled="isOptionsAvailable" :open="isOptionsOpen" :theme="selectedTheme"
+                             @open="openOptions" @select="selectOption"/>
 
         <dynamic-background :open="isDynamicBackgroundOpen" :state="dynamicBackgroundState"/>
-        <gallery-collapsible :images="images"
+        <gallery-collapsible :disabled="isCaptureInProgress"
+                             :images="images"
                              :maximize-selected-image="isExpandedViewOpen"
                              :open="isGalleryOpen"
                              :selected-image="selectedImage"
-                             :disabled="isCaptureInProgress"
                              @close="closeGallery"
                              @open="openGallery"
                              @image-action="handleImageAction"/>
-        <themes-collapsible :open="isThemesOpen"
+        <themes-collapsible :disabled="isCaptureInProgress"
+                            :open="isThemesOpen"
                             :theme="selectedTheme"
-                            :disabled="isCaptureInProgress"
                             @close="closeThemes"
-                            @select-theme="selectTheme"
-                            @open="openThemes"/>
+                            @open="openThemes"
+                            @select-theme="selectTheme"/>
+
         <record-button :enabled="isCaptureAvailable" @capture="startCapture" @record="captureImage"/>
         <snapshot-image :captured-image-data="images"></snapshot-image>
+
+        <sharing-view-options :is-active="isImageViewOpen" @close="closeImageView"
+                              @share-download="openShareDownloadView"
+                              @share-email="openShareEmailView"
+                            @delete="deleteSelectedImage"/>
 
         <sharing-view-redirect :image="selectedImage" :is-active="isShareViewOpen || isDownloadViewOpen"
                                :is-download-view="isDownloadViewOpen"
@@ -41,6 +48,7 @@ import GalleryCollapsible from './Gallery/GalleryCollapsible.vue';
 import ThemesCollapsible from './ThemesCollapsible.vue';
 import SnapshotImage from './SnapshotImage.vue';
 import RecordButton from './RecordButton.vue';
+import SharingViewOptions from './SharingView/SharingViewOptions.vue';
 import SharingViewRedirect from './SharingView/SharingViewRedirect.vue';
 import SharingViewEmail from './SharingView/SharingViewEmail.vue';
 import {GalleryActions} from './Constants.js';
@@ -80,7 +88,8 @@ export default {
         SharingViewEmail,
         DynamicBackground,
         TextButton,
-        OptionsCollapsible
+        OptionsCollapsible,
+        SharingViewOptions
     },
     props: {
         open: {
@@ -88,8 +97,11 @@ export default {
         }
     },
     computed: {
+        isImageViewOpen() {
+            return this.selectedImage !== null && !this.isEmailViewOpen && !this.isDownloadViewOpen;
+        },
         isExpandedViewOpen() {
-            return this.isEmailViewOpen || this.isShareViewOpen || this.isDownloadViewOpen;
+            return this.isImageViewOpen || this.isEmailViewOpen || this.isShareViewOpen || this.isDownloadViewOpen;
         },
         isCaptureAvailable() {
             return (this.images.length < 4)
@@ -213,6 +225,9 @@ export default {
                 }
             }
         },
+        deleteSelectedImage() {
+            this.deleteImage(this.selectedImage);
+        },
         closeAll() {
             this.isGalleryOpen = false;
             this.isThemesOpen = false;
@@ -238,23 +253,19 @@ export default {
                     this.isShareViewOpen = false;
                     this.isDownloadViewOpen = false;
                     break;
-                case GalleryActions.ShareFacebook:
-                    this.selectedImage = image;
-                    this.syncImageData();
-                    this.isShareViewOpen = true;
-                    break;
-                case GalleryActions.ShareEmail:
-                    this.selectedImage = image;
-                    this.syncImageData();
-                    this.isEmailViewOpen = true;
-                    this.sendEmailError = false;
-                    break;
-                case GalleryActions.ShareDownload:
-                    this.selectedImage = image;
-                    this.syncImageData();
-                    this.isDownloadViewOpen = true;
-                    break;
             }
+        },
+        openShareEmailView() {
+            this.syncImageData();
+            this.isEmailViewOpen = true;
+            this.sendEmailError = false;
+        },
+        openShareDownloadView() {
+            this.syncImageData();
+            this.isDownloadViewOpen = true;
+        },
+        closeImageView() {
+            this.selectedImage = null;
         },
         closeEmailView() {
             this.isEmailViewOpen = false;

@@ -6,29 +6,10 @@
         </div>
         <div :class="themesFrameClass" class="themes-frame">
             <div class="close-button" @click.self="closeThemes"></div>
-            <div class="theme-icon r1c1" @click="select('AmberScene')">
-                <div class="icon-background amber-icon"></div>
-            </div>
-            <div class="theme-icon r1c2" @click="select('DinosaursScene')">
-                <div class="icon-background dinosaurs-icon"></div>
-            </div>
-            <div class="theme-icon r1c3" @click="select('CoralScene')">
-                <div class="icon-background coral-icon"></div>
-            </div>
-            <div class="theme-icon r1c4" @click="select('ShroomsScene')">
-                <div class="icon-background shrooms-icon"></div>
-            </div>
-            <div class="theme-icon r2c1" @click="select('BirdsScene')">
-                <div class="icon-background birds-icon"></div>
-            </div>
-            <div class="theme-icon r2c2" @click="select('ArchiveScene')">
-                <div class="icon-background archive-icon"></div>
-            </div>
-            <div class="theme-icon r2c3" @click="select('BugsScene')">
-                <div class="icon-background bugs-icon"></div>
-            </div>
-            <div class="theme-icon r2c4" @click="select('DisplayScene')">
-                <div class="icon-background display-icon"></div>
+
+            <div v-for="(theme, index) in themeDefinitions" :key="index" class="theme-icon" :class="themeClass(theme)"
+                 @click="select(theme.name)">
+                <div class="icon-background" :class="[theme.iconClass]"></div>
             </div>
         </div>
 
@@ -39,13 +20,55 @@
             <div class="highlight"></div>
         </div>
 
-
         <text-button :class="{visible: isOpen}" class="close-button red" icon="fas fa-times-circle"
                      @click="closeThemes">{{ lang('capture.close-button') }}</text-button>
     </div>
 </template>
 
 <script>
+
+const ThemeDefinitions = [
+    {
+        name: 'AmberScene',
+        positionClass: 'r1c1',
+        iconClass: 'amber-icon',
+    },
+    {
+        name: 'DinosaursScene',
+        positionClass: 'r1c2',
+        iconClass: 'dinosaurs-icon',
+    },
+    {
+        name: 'CoralScene',
+        positionClass: 'r1c3',
+        iconClass: 'coral-icon',
+    },
+    {
+        name: 'ShroomsScene',
+        positionClass: 'r1c4',
+        iconClass: 'shrooms-icon',
+    },
+    {
+        name: 'BirdsScene',
+        positionClass: 'r2c1',
+        iconClass: 'birds-icon',
+    },
+    {
+        name: 'ArchiveScene',
+        positionClass: 'r2c2',
+        iconClass: 'archive-icon',
+    },
+    {
+        name: 'BugsScene',
+        positionClass: 'r2c3',
+        iconClass: 'bugs-icon',
+    },
+    {
+        name: 'DisplayScene',
+        positionClass: 'r2c4',
+        iconClass: 'display-icon',
+    },
+];
 
 import TextButton from './TextButton.vue';
 import StaticItem from './DynamicBackground/StaticItem.vue';
@@ -80,6 +103,9 @@ export default {
         }
     },
     computed: {
+        themeDefinitions() {
+            return ThemeDefinitions;
+        },
         themesFrameClass() {
             if (this.isOpen) {
                 return 'themes-transition-expand';
@@ -88,6 +114,12 @@ export default {
         },
     },
     methods: {
+        themeClass(theme) {
+            return {
+                [theme.positionClass]: true,
+                selected: (theme.name === this.theme)
+            };
+        },
         openThemes() {
             if (!this.disabled) {
                 this.$emit('open');
@@ -134,8 +166,9 @@ $theme-icons-per-row: 4;
         margin-top: -100px;
         width: 200px;
         height: 200px;
-        //        background: linear-gradient(to bottom, rgba(206,220,231,0.43) 0%,rgba(89,106,114,0.65) 100%);
-        background: linear-gradient(to bottom, #e6f0a3 0%, #d2e638 50%, #c3d825 51%, #dbf043 100%);
+        //background: linear-gradient(to bottom, #e6f0a3 0%, #d2e638 50%, #c3d825 51%, #dbf043 100%);
+        background: linear-gradient(to bottom, rgba(180,221,180,1) 0%,rgba(131,199,131,1) 17%,rgba(82,177,82,1) 33%,rgba(0,138,0,1) 67%,rgba(0,132,46,1) 82%,rgba(0,170,88,1) 100%);
+
         border-radius: 20px;
         transition: all 200ms linear;
         transition-delay: 150ms;
@@ -178,6 +211,11 @@ $theme-icons-per-row: 4;
             transform: translate(icon-pos-x(3), 400px);
         }
 
+        &.selected {
+            background: linear-gradient(to bottom, #e6f0a3 0%, #d2e638 50%, #c3d825 51%, #dbf043 100%);
+            box-shadow: 0 5px 12px 7px rgba(0,0,0,0.63);
+        }
+
         .icon-background {
             position: absolute;
             left:3px;
@@ -211,6 +249,14 @@ $theme-icons-per-row: 4;
                 background-image: url('@images/archive/icon.png');
             }
         }
+        //
+        //&.selected .icon-background {
+        //    left:5px;
+        //    right: 5px;
+        //    top: 5px;
+        //    bottom: 5px;
+        //    border-radius: 16px;
+        //}
     }
 
     &.themes-transition-collapse {

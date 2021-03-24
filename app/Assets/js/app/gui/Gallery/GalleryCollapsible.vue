@@ -113,13 +113,15 @@ export default {
             if (!this.isOpen && !this.disabled) {
                 this.isOpen = true;
                 this.$emit('open');
-                if (this.images.length > 1) {
+                // if (this.images.length > 1) {
+                // this.imageData.isImagesCollapsed = false;
+
                     setTimeout(() => this.imageData.imagesSize = GalleryImageSize.Normal, 100);
                     setTimeout(() => this.imageData.isImagesCollapsed = false, 160);
-                } else {
-                    setTimeout(() => this.imageData.imagesSize = GalleryImageSize.Normal, 100);
-                    setTimeout(() => this.imageData.isImagesCollapsed = false, 160);
-                }
+                // } else {
+                //     setTimeout(() => this.imageData.imagesSize = GalleryImageSize.Normal, 100);
+                //     setTimeout(() => this.imageData.isImagesCollapsed = false, 160);
+                // }
             }
         },
         closeGallery() {
@@ -142,6 +144,7 @@ export default {
                 case GalleryActions.ShareFacebook:
                 case GalleryActions.ShareEmail:
                 case GalleryActions.ShareDownload:
+                case GalleryActions.SelectImage:
                     this.imageData.imagesSize = GalleryImageSize.Expanded;
                     this.imageData.isImagesCollapsed = true;
             }
