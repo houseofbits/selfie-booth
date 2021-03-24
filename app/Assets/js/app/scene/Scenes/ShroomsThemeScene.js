@@ -30,7 +30,6 @@ export default class ShroomsThemeScene extends BaseScene {
         this.material.setCameraTexture(new BABYLON.Texture(BgMap, this.scene));
         this.material.setDiffuseMap(BgMap);
 
-        this.material.setVector2Param('faceSize', this.detectedFaceSize);
         this.material.setVector2Param('facePosition', this.detectedFacePosition);
         this.material.setVector2Param('targetFacePosition', this.targetFacePosition);
 

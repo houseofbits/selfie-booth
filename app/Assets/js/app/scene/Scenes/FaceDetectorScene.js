@@ -18,7 +18,7 @@ export default class FaceDetectorScene extends BaseScene {
     }
 
     update(dt) {
-        super.update(dt);
+
     }
 
     createScene() {

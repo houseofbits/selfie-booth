@@ -38,7 +38,6 @@ export default class DinosaursThemeScene extends BaseScene {
         this.material = new DinosaursMaterial(this.scene, this.name + 'MainMaterial');
         this.material.setDiffuseTexture(this.bg1Texture);
 
-        this.material.setVector2Param('faceSize', this.detectedFaceSize);
         this.material.setVector2Param('facePosition', this.detectedFacePosition);
         this.material.setVector2Param('targetFacePosition', this.targetFacePosition);
 

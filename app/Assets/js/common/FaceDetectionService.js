@@ -1,6 +1,6 @@
 import * as faceapi from '@vladmandic/face-api';
 
-const DETECTOR_INTERVAL = 50;
+const DETECTOR_INTERVAL = 500;
 
 class FaceDetectionService {
 

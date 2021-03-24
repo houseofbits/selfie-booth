@@ -14,7 +14,6 @@ uniform mat4 world;
 // Refs
 uniform vec3 cameraPosition;
 
-uniform vec2 faceSize;
 uniform vec2 facePosition;
 uniform vec2 targetFacePosition;
 uniform int isFaceDetectorEnabled;
@@ -33,7 +32,10 @@ void main(void) {
         camuv.x = vCamUV.x + dy;
         camuv.y = vCamUV.y + dx;
     }
-    vec3 camera = texture2D(cameraMap, camuv).xyz;
+    //vec3 camera = vec3(0.0);
+    //if (camuv.x > 0.0 && camuv.x < 1.0 && camuv.y > 0.0 && camuv.y < 1.0) {
+        vec3 camera = texture2D(cameraMap, camuv).xyz;
+    //}
 
     vec4 diffuse = texture2D(diffuseMap, uv).xyzw;
 
