@@ -1,5 +1,7 @@
 import * as faceapi from '@vladmandic/face-api';
 
+const DETECTOR_INTERVAL = 50;
+
 class FaceDetectionService {
 
     constructor() {
@@ -63,7 +65,7 @@ class FaceDetectionService {
             result = await faceapi.detectSingleFace(this.sourceCanvas, this.detectorNet);
         }
         this.detectComplete(result);
-        this.detectorTimer = setTimeout(this.detect.bind(this), 50);
+        this.detectorTimer = setTimeout(this.detect.bind(this), DETECTOR_INTERVAL);
     }
 
     enableDetector(val) {

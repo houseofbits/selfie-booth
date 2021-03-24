@@ -5340,7 +5340,7 @@ readers do not read off random characters that represent icons */
 }
 .themes-frame .theme-icon.selected[data-v-7d61b318] {
       background: linear-gradient(to bottom, #e6f0a3 0%, #d2e638 50%, #c3d825 51%, #dbf043 100%);
-      box-shadow: 0 5px 12px 7px rgba(0, 0, 0, 0.63);
+      box-shadow: 0 9px 12px 7px rgba(0, 0, 0, 0.63);
 }
 .themes-frame .theme-icon .icon-background[data-v-7d61b318] {
       position: absolute;

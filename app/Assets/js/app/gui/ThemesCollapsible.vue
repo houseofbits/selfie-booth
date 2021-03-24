@@ -213,7 +213,7 @@ $theme-icons-per-row: 4;
 
         &.selected {
             background: linear-gradient(to bottom, #e6f0a3 0%, #d2e638 50%, #c3d825 51%, #dbf043 100%);
-            box-shadow: 0 5px 12px 7px rgba(0,0,0,0.63);
+            box-shadow: 0 9px 12px 7px rgba(0,0,0,0.63);
         }
 
         .icon-background {
