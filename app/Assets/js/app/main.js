@@ -17,4 +17,4 @@ if(document.getElementById('gui')) {
     });
 }
 
-// window.onload = FaceDetectionServiceInstance.onWindowLoaded.bind(FaceDetectionServiceInstance);
+window.onload = FaceDetectionServiceInstance.onWindowLoaded.bind(FaceDetectionServiceInstance);
