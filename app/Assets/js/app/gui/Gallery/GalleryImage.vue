@@ -86,10 +86,12 @@ export default {
     },
     methods: {
         setSelected() {
-            this.isDeleteButtonVisible = true;
-            this.isSelected = true;
-            this.selectAction(GalleryActions.SelectImage);
-            this.shuffle();
+            if (!this.collapse) {
+                this.isDeleteButtonVisible = true;
+                this.isSelected = true;
+                this.selectAction(GalleryActions.SelectImage);
+                this.shuffle();
+            }
         },
         setForRemoval() {
             this.isDeleteButtonVisible = false;

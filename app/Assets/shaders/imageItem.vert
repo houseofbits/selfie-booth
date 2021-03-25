@@ -28,6 +28,7 @@ void main(void) {
     vNormalW = normalize(normalWorld * normal);
 
     vUV = uv;
+    vUV.x = 1.0 - uv.x;
 
     vCamUV = uv;
     vCamUV.y = uv.x;

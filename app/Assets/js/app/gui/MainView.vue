@@ -7,7 +7,7 @@
         <capture-view :class="{visible: isCaptureViewVisible}" :open="isCaptureViewVisible" class="capture-view"
                       @captureViewClose="reset"/>
 
-        <face-detection-debug />
+<!--        <face-detection-debug />-->
     </div>
 </template>
 

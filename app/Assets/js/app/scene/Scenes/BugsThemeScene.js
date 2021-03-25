@@ -3,7 +3,8 @@ import * as BABYLON from 'babylonjs';
 import BackgroundTexture1 from '@images/bugs/bg1.png';
 import BackgroundTexture2 from '@images/bugs/bg2.png';
 import BackgroundTexture3 from '@images/bugs/bg3.png';
-import BugsMaterial from "@app/scene/Materials/BugsMaterial";
+import BasicCameraMaterial from "@app/scene/Materials/BasicCameraMaterial";
+import FaceDetectionServiceInstance from "@common/FaceDetectionService";
 
 export default class BugsThemeScene extends BaseScene {
     constructor(mainScene, name, targetCanvas) {
@@ -17,11 +18,11 @@ export default class BugsThemeScene extends BaseScene {
 
         this.createScene();
 
-        this.createVideoTexture();
-    }
+        this.createLogo(-160, 730);
 
-    update(dt) {
-        super.update(dt);
+        this.createVideoTexture();
+
+        FaceDetectionServiceInstance.addDetectionCallback(this.onFaceDetected.bind(this));
     }
 
     createScene() {
@@ -29,8 +30,10 @@ export default class BugsThemeScene extends BaseScene {
         this.bg2Texture = new BABYLON.Texture(BackgroundTexture2, this.scene);
         this.bg3Texture = new BABYLON.Texture(BackgroundTexture3, this.scene);
 
-        this.material = new BugsMaterial(this.scene, this.name + 'MainMaterial');
+        this.material = new BasicCameraMaterial(this.scene, this.name + 'MainMaterial');
         this.material.setDiffuseTexture(this.bg1Texture);
+
+        this.createFaceDetectorMaterialParams(this.material);
 
         let plane = BABYLON.MeshBuilder.CreatePlane("backplane", {width: 1000, height: 1770, sideOrientation: BABYLON.Mesh.DOUBLESIDE}, this.scene);
         plane.material = this.material.getMaterial();
@@ -39,6 +42,11 @@ export default class BugsThemeScene extends BaseScene {
 
     onVideoTextureCreated() {
         this.material.setCameraTexture(this.videoTexture);
+    }
+
+    onFaceDetected(detectionService) {
+        super.onFaceDetected(detectionService);
+        this.material.setIntegerParam('isFaceDetectorEnabled', this.isFaceDetectorEnabled);
     }
 
     onOptionSelected(optionName) {

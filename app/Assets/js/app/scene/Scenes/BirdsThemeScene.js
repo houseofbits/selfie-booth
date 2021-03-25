@@ -4,7 +4,7 @@ import BackgroundTexture1 from '@images/birds/bg1.png';
 import BackgroundTexture2 from '@images/birds/bg2.png';
 import BackgroundTexture3 from '@images/birds/bg3.png';
 import BackgroundTexture4 from '@images/birds/bg4.png';
-import BirdsMaterial from "@app/scene/Materials/BirdsMaterial";
+import BasicCameraMaterial from "@app/scene/Materials/BasicCameraMaterial";
 import FaceDetectionServiceInstance from '@common/FaceDetectionService.js';
 
 export default class BirdsThemeScene extends BaseScene {
@@ -19,13 +19,11 @@ export default class BirdsThemeScene extends BaseScene {
 
         this.createScene();
 
+        this.createLogo(-160, 730);
+
         this.createVideoTexture();
 
         FaceDetectionServiceInstance.addDetectionCallback(this.onFaceDetected.bind(this));
-    }
-
-    update(dt) {
-        super.update(dt);
     }
 
     createScene() {
@@ -34,7 +32,7 @@ export default class BirdsThemeScene extends BaseScene {
         this.bg3Texture = new BABYLON.Texture(BackgroundTexture3, this.scene);
         this.bg4Texture = new BABYLON.Texture(BackgroundTexture4, this.scene);
 
-        this.material = new BirdsMaterial(this.scene, this.name + 'MainMaterial');
+        this.material = new BasicCameraMaterial(this.scene, this.name + 'MainMaterial');
         this.material.setDiffuseTexture(this.bg1Texture);
 
         this.createFaceDetectorMaterialParams(this.material);

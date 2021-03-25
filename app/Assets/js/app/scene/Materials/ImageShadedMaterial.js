@@ -1,7 +1,5 @@
 import * as BABYLON from 'babylonjs';
 import CustomMaterial from './CustomMaterial.js';
-// import VertexShader from '@shaders/imageShaded.vert';
-// import FragmentShader from '@shaders/imageShaded.frag';
 import VertexShader from '@shaders/imageItem.vert';
 import FragmentShader from '@shaders/imageItem.frag';
 

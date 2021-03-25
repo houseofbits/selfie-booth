@@ -208,7 +208,6 @@ export default {
 .key-item span {
     display: inline-block;
     width: 1em;
-    height: 1.5em;
 }
 
 .aspect-wrapper {

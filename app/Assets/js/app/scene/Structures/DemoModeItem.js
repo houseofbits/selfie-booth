@@ -75,7 +75,7 @@ export default class DemoModeItem {
 
         const sin = Math.sin(y * 0.1);
 
-        let velocity = dt * 20.0;
+        let velocity = dt * posl * 0.4;      //20.0;
         let stepsCount = posl / velocity;
 
         if(posl > 1.0){

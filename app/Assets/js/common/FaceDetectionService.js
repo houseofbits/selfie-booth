@@ -1,6 +1,6 @@
 import * as faceapi from '@vladmandic/face-api';
 
-const DETECTOR_INTERVAL = 500;
+const DETECTOR_INTERVAL = 100;
 
 class FaceDetectionService {
 
@@ -43,7 +43,7 @@ class FaceDetectionService {
         console.log('Loading face detector models');
 
         await faceapi.nets.ssdMobilenetv1.load('/assets/models/');
-        this.detectorNet = new faceapi.SsdMobilenetv1Options({ minConfidence: 0.2});
+        this.detectorNet = new faceapi.SsdMobilenetv1Options({minConfidence: 0.2});
 
         // await faceapi.nets.tinyFaceDetector.load('/assets/models/');
         // this.detectorNet = new faceapi.TinyFaceDetectorOptions({ minConfidence: 0.2});
@@ -61,11 +61,31 @@ class FaceDetectionService {
         this.clearDetectTimer();
         let result = null;
 
-        if(this.isDetectOn) {
-            result = await faceapi.detectSingleFace(this.sourceCanvas, this.detectorNet);
+        if (this.isDetectOn) {
+            //result = await faceapi.detectSingleFace(this.sourceCanvas, this.detectorNet);
+            const results = await faceapi.detectAllFaces(this.sourceCanvas, this.detectorNet);
+            result = this.findNearestResult(results);
         }
         this.detectComplete(result);
         this.detectorTimer = setTimeout(this.detect.bind(this), DETECTOR_INTERVAL);
+    }
+
+    findNearestResult(results) {
+        if (results.length > 1) {
+            const resultDistances = [];
+            for (const result of results) {
+                resultDistances.push({
+                    distance: Math.hypot(result.box.x - this.detectedX, result.box.y - this.detectedY),
+                    result: result
+                });
+            }
+            resultDistances.sort((a, b) => a.distance > b.distance);
+            return resultDistances[0].result;
+
+        } else if (results.length === 1) {
+            return results[0];
+        }
+        return null;
     }
 
     enableDetector(val) {
@@ -73,7 +93,7 @@ class FaceDetectionService {
     }
 
     clearDetectTimer() {
-        if(this.detectorTimer) {
+        if (this.detectorTimer) {
             clearTimeout(this.detectorTimer);
             this.detectorTimer = null;
         }
@@ -81,10 +101,10 @@ class FaceDetectionService {
 
     detectComplete(result) {
         if (result) {
-            this.detectedWidth = (this.detectedWidth * 0.8) + (result.box.width * 0.2);
-            this.detectedHeight = (this.detectedHeight * 0.8) + (result.box.height * 0.2);
-            this.detectedX = (this.detectedX * 0.6) + (result.box.x * 0.4);
-            this.detectedY = (this.detectedY * 0.6) + (result.box.y * 0.4);
+            this.detectedWidth = result.box.width;
+            this.detectedHeight = result.box.height;
+            this.detectedX = result.box.x;
+            this.detectedY = result.box.y;
             this.isDetected = true;
         } else {
             this.isDetected = false;

@@ -23,6 +23,8 @@ export default class AmberThemeScene extends BaseScene {
 
         this.createScene();
 
+        this.createLogo(-160, 730);
+
         this.createVideoTexture();
     }
 

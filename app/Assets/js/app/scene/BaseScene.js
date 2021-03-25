@@ -1,4 +1,6 @@
 import * as BABYLON from 'babylonjs';
+import BasicAlphaMaterial from "@app/scene/Materials/BasicAlphaMaterial";
+import LogoTexture from "@images/LNDM175.jpg";
 
 export default class BaseScene {
     constructor(mainScene, name, targetCanvas) {
@@ -12,7 +14,7 @@ export default class BaseScene {
 
         this.currentFacePosition = new BABYLON.Vector2(0, 0);
         this.detectedFacePosition = new BABYLON.Vector2(0, 0);
-        this.detectedFaceSize= new BABYLON.Vector2(0, 0);
+        this.detectedFaceSize = new BABYLON.Vector2(0, 0);
         this.targetFacePosition = new BABYLON.Vector2(0, 0);
         this.isFaceDetectorEnabled = 0;
     }
@@ -28,12 +30,25 @@ export default class BaseScene {
         let posl = posv.length();
         let velocity = dt * 0.4;
         let stepsCount = posl / velocity;
-        if(posl > 0.001){
+        if (posl > 0.02) {
             posv.normalize();
             let posStep = posl / stepsCount;
             posv.scaleInPlace(Math.min(posStep, posl));
             this.currentFacePosition.addInPlace(posv);
         }
+    }
+
+    createLogo(x, y) {
+        let logoMaterial = new BasicAlphaMaterial(this.scene, "leaf");
+        logoMaterial.setDiffuseMap(LogoTexture);
+
+        let logoPlane = BABYLON.MeshBuilder.CreatePlane("backplane", {width: 550, height: 140, sideOrientation: BABYLON.Mesh.DOUBLESIDE}, this.scene);
+        logoPlane.material = logoMaterial.getMaterial();
+        logoPlane.position.x = 10;
+        logoPlane.position.y = y;
+        logoPlane.position.z = x;
+        logoPlane.rotate(BABYLON.Axis.Y, BABYLON.Angle.FromDegrees(90).radians(), BABYLON.Space.WORLD);
+        // logoPlane.rotate(BABYLON.Axis.X, BABYLON.Angle.FromDegrees(-10).radians(), BABYLON.Space.WORLD);
     }
 
     render() {

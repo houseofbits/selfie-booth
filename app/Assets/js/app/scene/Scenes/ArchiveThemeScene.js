@@ -1,7 +1,8 @@
 import BaseScene from "@app/scene/BaseScene";
 import * as BABYLON from 'babylonjs';
 import BgMap from '@images/archive/background.png';
-import ArchiveMaterial from "@app/scene/Materials/ArchiveMaterial";
+import BasicCameraMaterial from "@app/scene/Materials/BasicCameraMaterial";
+import FaceDetectionServiceInstance from "@common/FaceDetectionService";
 
 export default class ArchiveThemeScene extends BaseScene {
     constructor(mainScene, name, targetCanvas) {
@@ -15,17 +16,19 @@ export default class ArchiveThemeScene extends BaseScene {
 
         this.createScene();
 
-        this.createVideoTexture();
-    }
+        this.createLogo(-160, 730);
 
-    update(dt) {
-        super.update(dt);
+        this.createVideoTexture();
+
+        FaceDetectionServiceInstance.addDetectionCallback(this.onFaceDetected.bind(this));
     }
 
     createScene() {
-        this.material = new ArchiveMaterial(this.scene, this.name + 'MainMaterial');
+        this.material = new BasicCameraMaterial(this.scene, this.name + 'MainMaterial');
         this.material.setCameraTexture(new BABYLON.Texture(BgMap, this.scene));
         this.material.setDiffuseMap(BgMap);
+
+        this.createFaceDetectorMaterialParams(this.material);
 
         let plane = BABYLON.MeshBuilder.CreatePlane("backplane", {width: 1000, height: 1770, sideOrientation: BABYLON.Mesh.DOUBLESIDE}, this.scene);
         plane.material = this.material.getMaterial();
@@ -34,5 +37,10 @@ export default class ArchiveThemeScene extends BaseScene {
 
     onVideoTextureCreated() {
         this.material.setCameraTexture(this.videoTexture);
+    }
+
+    onFaceDetected(detectionService) {
+        super.onFaceDetected(detectionService);
+        this.material.setIntegerParam('isFaceDetectorEnabled', this.isFaceDetectorEnabled);
     }
 }

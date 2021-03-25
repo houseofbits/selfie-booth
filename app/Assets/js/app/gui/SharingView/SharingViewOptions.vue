@@ -2,12 +2,12 @@
     <div :class="{visible:isActive}" class="window">
         <text-button class="back-button green" icon="fas fa-arrow-circle-left" @click="closeView">{{ lang('capture.back-button') }}</text-button>
 <!--        <text-button class="send-button orange" icon="fas fa-envelope-open-text" @click="openEmailView">{{ lang('capture.send-button') }}</text-button>-->
-<!--        <text-button class="download-button blue" icon="fas fa-cloud-download-alt" @click="openDownloadView">{{ lang('capture.download-button') }}</text-button>-->
+        <text-button class="delete-button red" icon="fas fa-trash-alt" @click="deleteSelectedImage">{{ lang('capture.delete-button') }}</text-button>
 
-        <round-button class="delete-button red"
-                      icon="fas fa-trash-alt"
-                      @click="deleteSelectedImage"
-                      />
+<!--        <round-button class="delete-button red"-->
+<!--                      icon="fas fa-trash-alt"-->
+<!--                      @click="deleteSelectedImage"-->
+<!--                      />-->
 
         <round-button class="send-button orange"
                       icon="fas fa-envelope-open-text"
@@ -96,29 +96,29 @@ export default {
     .back-button {
         position: absolute;
         top: 580px;
-        left: 20px;
+        left: 10px;
         width: 250px;
     }
 
     .delete-button {
         position: absolute;
         top: 580px;
-        right: 260px;
-        //width: 300px;
+        left: 280px;
+        width: 230px;
     }
 
     .send-button {
         position: absolute;
-        top: 580px;
-        right: 140px;
-        //width: 300px;
+        top: 560px;
+        right: 160px;
+        transform: scale(1.5);
     }
 
     .download-button {
         position: absolute;
-        top: 580px;
+        top: 560px;
         right: 20px;
-        //width: 300px;
+        transform: scale(1.5);
     }
 
     .button-disabled {

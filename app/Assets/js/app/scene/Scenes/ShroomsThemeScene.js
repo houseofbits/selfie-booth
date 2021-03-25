@@ -1,8 +1,9 @@
 import BaseScene from "@app/scene/BaseScene";
 import * as BABYLON from 'babylonjs';
 import BgMap from '@images/shrooms/background.png';
-import ShroomsMaterial from "@app/scene/Materials/ShroomsMaterial";
+import BasicCameraMaterial from "@app/scene/Materials/BasicCameraMaterial";
 import FaceDetectionServiceInstance from "@common/FaceDetectionService";
+
 
 export default class ShroomsThemeScene extends BaseScene {
     constructor(mainScene, name, targetCanvas) {
@@ -18,20 +19,17 @@ export default class ShroomsThemeScene extends BaseScene {
 
         this.createVideoTexture();
 
+        this.createLogo(-160, 730);
+
         FaceDetectionServiceInstance.addDetectionCallback(this.onFaceDetected.bind(this));
     }
 
-    update(dt) {
-        super.update(dt);
-    }
-
     createScene() {
-        this.material = new ShroomsMaterial(this.scene, this.name + 'MainMaterial');
+        this.material = new BasicCameraMaterial(this.scene, this.name + 'MainMaterial');
         this.material.setCameraTexture(new BABYLON.Texture(BgMap, this.scene));
         this.material.setDiffuseMap(BgMap);
 
-        this.material.setVector2Param('facePosition', this.detectedFacePosition);
-        this.material.setVector2Param('targetFacePosition', this.targetFacePosition);
+        this.createFaceDetectorMaterialParams(this.material);
 
         let plane = BABYLON.MeshBuilder.CreatePlane("backplane", {width: 1000, height: 1770, sideOrientation: BABYLON.Mesh.DOUBLESIDE}, this.scene);
         plane.material = this.material.getMaterial();
@@ -43,5 +41,10 @@ export default class ShroomsThemeScene extends BaseScene {
 
     onVideoTextureCreated() {
         this.material.setCameraTexture(this.videoTexture);
+    }
+
+    onFaceDetected(detectionService) {
+        super.onFaceDetected(detectionService);
+        this.material.setIntegerParam('isFaceDetectorEnabled', this.isFaceDetectorEnabled);
     }
 }

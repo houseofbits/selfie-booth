@@ -13,78 +13,44 @@ uniform mat4 world;
 
 // Refs
 uniform vec3 cameraPosition;
+uniform sampler2D diffuseMap;
 
-uniform vec2 faceSize;
+// Face detection params
 uniform vec2 facePosition;
 uniform vec2 targetFacePosition;
-
-uniform sampler2D diffuseMap;
+uniform int isFaceDetectorEnabled;
 uniform sampler2D cameraMap;
-
-const float brightness = -0.3;
-const float contrast = 1.5;
-const float saturation = 1.5;
-
-mat4 brightnessMatrix(float brightness)
-{
-    return mat4(1, 0, 0, 0,
-    0, 1, 0, 0,
-    0, 0, 1, 0,
-    brightness, brightness, brightness, 1);
-}
-
-mat4 contrastMatrix(float contrast)
-{
-    float t = (1.0 - contrast) / 2.0;
-
-    return mat4(contrast, 0, 0, 0,
-    0, contrast, 0, 0,
-    0, 0, contrast, 0,
-    t, t, t, 1);
-
-}
-
-mat4 saturationMatrix(float saturation)
-{
-    vec3 luminance = vec3(0.3086, 0.6094, 0.0820);
-
-    float oneMinusSat = 1.0 - saturation;
-
-    vec3 red = vec3(luminance.x * oneMinusSat);
-    red+= vec3(saturation, 0, 0);
-
-    vec3 green = vec3(luminance.y * oneMinusSat);
-    green += vec3(0, saturation, 0);
-
-    vec3 blue = vec3(luminance.z * oneMinusSat);
-    blue += vec3(0, 0, saturation);
-
-    return mat4(red, 0,
-    green, 0,
-    blue, 0,
-    0, 0, 0, 1);
+vec3 adjustedCameraMap(int enable, vec2 position, vec2 target, sampler2D map, vec2 uv) {
+    float margin = 0.1;
+    vec2 camuv = uv;
+    if (enable == 1) {
+        float dx = target.x - position.x;
+        float dy = target.y - position.y;
+        camuv.x = uv.x + dy;
+        camuv.y = uv.y + dx;
+    }
+    vec3 camera = vec3(0.0);
+    if (camuv.x > 0.0 && camuv.x < 1.0 && camuv.y > 0.0 && camuv.y < 1.0) {
+        camera = texture2D(map, camuv).xyz;
+    }
+    if (camuv.x < margin) {
+        camera = camera * (camuv.x / margin);
+    }
+    if (camuv.y < margin) {
+        camera = camera * (camuv.y / margin);
+    }
+    if (camuv.y > (1.0 - margin)) {
+        camera = camera * ((1.0 - camuv.y) / margin);
+    }
+    if (camuv.x > (1.0 - margin)) {
+        camera = camera * ((1.0 - camuv.x) / margin);
+    }
+    return camera;
 }
 
 void main(void) {
-    vec2 uv = vUV;
-    uv.x = 1.0 - uv.x;
-
-    float dx = targetFacePosition.x - facePosition.x;
-    float dy = targetFacePosition.y - facePosition.y;
-    vec2 camuv = vCamUV;
-    camuv.x = vCamUV.x + dy;
-    camuv.y = vCamUV.y + dx;
-    vec3 camera = texture2D(cameraMap, camuv).xyz;
-
-    vec4 diffuse = texture2D(diffuseMap, uv).xyzw;
-
-//    camera = brightnessMatrix( brightness ) *
-//                    contrastMatrix( contrast ) *
-//                    saturationMatrix( saturation ) *
-//                    camera *
-//                    vec4(1.0, 1.0, 0.5, 1.0);
-
-    vec3 finalColor = mix(diffuse.xyz, camera.xyz, 1.0 - diffuse.w);
-
+    vec3 camera = adjustedCameraMap(isFaceDetectorEnabled, facePosition, targetFacePosition, cameraMap, vCamUV);
+    vec4 diffuse = texture2D(diffuseMap, vUV).xyzw;
+    vec3 finalColor = mix(camera, diffuse.xyz, diffuse.w);
     gl_FragColor = vec4(finalColor, 1.0);
 }

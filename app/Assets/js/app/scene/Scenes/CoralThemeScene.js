@@ -16,13 +16,11 @@ export default class CoralThemeScene extends BaseScene {
 
         this.createScene();
 
+        this.createLogo(-300, 700);
+
         this.createVideoTexture();
 
         FaceDetectionServiceInstance.addDetectionCallback(this.onFaceDetected.bind(this));
-    }
-
-    update(dt) {
-        super.update(dt);
     }
 
     createScene() {
@@ -30,11 +28,7 @@ export default class CoralThemeScene extends BaseScene {
         this.material.setCameraTexture(new BABYLON.Texture(BgMap, this.scene));
         this.material.setDiffuseMap(BgMap);
 
-        //this.detectedFace = new BABYLON.Vector4(0, 0, 0, 0);
-//        this.material.setFaceRect(this.detectedFace);
-        this.material.setVector2Param('faceSize', this.detectedFaceSize);
-        this.material.setVector2Param('facePosition', this.detectedFacePosition);
-        this.material.setVector2Param('targetFacePosition', this.targetFacePosition);
+        this.createFaceDetectorMaterialParams(this.material);
 
         this.material.setIntegerParam('displaceState', 0);
 
@@ -50,13 +44,10 @@ export default class CoralThemeScene extends BaseScene {
         this.material.setCameraTexture(this.videoTexture);
     }
 
-    // onFaceDetected(detectionService) {
-    //     this.detectedFace.z = detectionService.detectedWidth / 1080;
-    //     this.detectedFace.w = detectionService.detectedHeight / 1920;
-    //
-    //     this.detectedFace.x = (detectionService.detectedX / 1080) + (this.detectedFace.z * 0.5);
-    //     this.detectedFace.y = (detectionService.detectedY / 1920) + (this.detectedFace.w * 0.5);
-    // }
+    onFaceDetected(detectionService) {
+        super.onFaceDetected(detectionService);
+        this.material.setIntegerParam('isFaceDetectorEnabled', this.isFaceDetectorEnabled);
+    }
 
     onOptionSelected(optionName) {
         switch (optionName) {

@@ -1,6 +1,6 @@
 import BaseScene from "@app/scene/BaseScene";
 import * as BABYLON from 'babylonjs';
-import DinosaursMaterial from "@app/scene/Materials/DinosaursMaterial";
+import BasicCameraMaterial from "@app/scene/Materials/BasicCameraMaterial";
 import BackgroundTexture1 from "@images/dinosaurs/bg1.png";
 import BackgroundTexture2 from "@images/dinosaurs/bg2.png";
 import BackgroundTexture3 from "@images/dinosaurs/bg3.png";
@@ -19,13 +19,11 @@ export default class DinosaursThemeScene extends BaseScene {
 
         this.createScene();
 
+        this.createLogo(-160, 730);
+
         this.createVideoTexture();
 
         FaceDetectionServiceInstance.addDetectionCallback(this.onFaceDetected.bind(this));
-    }
-
-    update(dt) {
-        super.update(dt);
     }
 
     createScene() {
@@ -35,11 +33,10 @@ export default class DinosaursThemeScene extends BaseScene {
         this.bg3Texture = new BABYLON.Texture(BackgroundTexture3, this.scene);
         this.bg4Texture = new BABYLON.Texture(BackgroundTexture4, this.scene);
 
-        this.material = new DinosaursMaterial(this.scene, this.name + 'MainMaterial');
+        this.material = new BasicCameraMaterial(this.scene, this.name + 'MainMaterial');
         this.material.setDiffuseTexture(this.bg1Texture);
 
-        this.material.setVector2Param('facePosition', this.detectedFacePosition);
-        this.material.setVector2Param('targetFacePosition', this.targetFacePosition);
+        this.createFaceDetectorMaterialParams(this.material);
 
         let plane = BABYLON.MeshBuilder.CreatePlane("backplane2", {width: 1000, height: 1770, sideOrientation: BABYLON.Mesh.DOUBLESIDE}, this.scene);
         plane.material = this.material.getMaterial();
@@ -47,6 +44,11 @@ export default class DinosaursThemeScene extends BaseScene {
 
         this.targetFacePosition.x = 0.45;
         this.targetFacePosition.y = 0.3;
+    }
+
+    onFaceDetected(detectionService) {
+        super.onFaceDetected(detectionService);
+        this.material.setIntegerParam('isFaceDetectorEnabled', this.isFaceDetectorEnabled);
     }
 
     onVideoTextureCreated() {

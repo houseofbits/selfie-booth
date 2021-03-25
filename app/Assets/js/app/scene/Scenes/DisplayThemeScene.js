@@ -4,7 +4,8 @@ import BackgroundTexture1 from "@images/display/background1.png";
 import BackgroundTexture2 from "@images/display/background2.png";
 import BackgroundTexture3 from "@images/display/background3.png";
 import BackgroundTexture4 from "@images/display/background4.png";
-import DisplayMaterial from "@app/scene/Materials/DisplayMaterial";
+import BasicCameraMaterial from "@app/scene/Materials/BasicCameraMaterial";
+import FaceDetectionServiceInstance from "@common/FaceDetectionService";
 
 export default class DisplayThemeScene extends BaseScene {
     constructor(mainScene, name, targetCanvas) {
@@ -18,11 +19,11 @@ export default class DisplayThemeScene extends BaseScene {
 
         this.createScene();
 
-        this.createVideoTexture();
-    }
+        this.createLogo(-160, 730);
 
-    update(dt) {
-        super.update(dt);
+        this.createVideoTexture();
+
+        FaceDetectionServiceInstance.addDetectionCallback(this.onFaceDetected.bind(this));
     }
 
     createScene() {
@@ -32,10 +33,10 @@ export default class DisplayThemeScene extends BaseScene {
         this.bg3Texture = new BABYLON.Texture(BackgroundTexture3, this.scene);
         this.bg4Texture = new BABYLON.Texture(BackgroundTexture4, this.scene);
 
-        this.material = new DisplayMaterial(this.scene, this.name + 'MainMaterial');
-        // this.material.setCameraTexture(new BABYLON.Texture(BgMap, this.scene));
-        // this.material.setDiffuseMap(BgMap);
+        this.material = new BasicCameraMaterial(this.scene, this.name + 'MainMaterial');
         this.material.setDiffuseTexture(this.bg1Texture);
+
+        this.createFaceDetectorMaterialParams(this.material);
 
         let plane = BABYLON.MeshBuilder.CreatePlane("backplane", {width: 1000, height: 1770, sideOrientation: BABYLON.Mesh.DOUBLESIDE}, this.scene);
         plane.material = this.material.getMaterial();
@@ -48,6 +49,11 @@ export default class DisplayThemeScene extends BaseScene {
 
     onSceneActivated() {
         this.onOptionSelected('display1');
+    }
+
+    onFaceDetected(detectionService) {
+        super.onFaceDetected(detectionService);
+        this.material.setIntegerParam('isFaceDetectorEnabled', this.isFaceDetectorEnabled);
     }
 
     onOptionSelected(optionName) {
