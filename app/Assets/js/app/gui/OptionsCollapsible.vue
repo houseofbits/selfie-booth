@@ -38,7 +38,7 @@ export default {
                 CoralScene: ['coral1', 'coral2', 'coral3'],
                 BirdsScene: ['egg1', 'egg2', 'egg3', 'egg4'],
                 DisplayScene: ['display1', 'display2', 'display3', 'display4'],
-                ShroomsScene: [],
+                ShroomsScene: ['shroom1', 'shroom2'],
                 BugsScene: ['bug1', 'bug2', 'bug3'],
                 ArchiveScene: [],
             },
@@ -248,6 +248,15 @@ export default {
         height: 215px;
     }
 
+
+    &.shroom1  div.overlay {
+        background-image: url('@images/shrooms/option1.png');
+        height: 215px;
+    }
+    &.shroom2  div.overlay {
+        background-image: url('@images/shrooms/option2.png');
+        height: 215px;
+    }
 }
 .shadow {
     display: block;
