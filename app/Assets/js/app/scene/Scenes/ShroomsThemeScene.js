@@ -1,7 +1,7 @@
 import BaseScene from "@app/scene/BaseScene";
 import * as BABYLON from 'babylonjs';
-import BackgroundTexture1 from '@images/shrooms/bg1.png';
-import BackgroundTexture2 from '@images/shrooms/bg2.png';
+import BackgroundTexture1 from '@images/shrooms/bg1-2.png';
+import BackgroundTexture2 from '@images/shrooms/bg2-2.png';
 import BasicCameraMaterial from "@app/scene/Materials/BasicCameraMaterial";
 import FaceDetectionServiceInstance from "@common/FaceDetectionService";
 
@@ -31,6 +31,8 @@ export default class ShroomsThemeScene extends BaseScene {
         this.bg2Texture = new BABYLON.Texture(BackgroundTexture2, this.scene);
 
         this.material = new BasicCameraMaterial(this.scene, this.name + 'MainMaterial');
+
+        this.material.setVector3Param('cameraTint', new BABYLON.Vector3(0.9, 1.0, 0.8));
 
         this.createFaceDetectorMaterialParams(this.material);
 
@@ -63,5 +65,9 @@ export default class ShroomsThemeScene extends BaseScene {
                 this.targetFacePosition.y = 0.3;
                 break;
         }
+    }
+
+    onSceneActivated() {
+        this.onOptionSelected('shroom1');
     }
 }

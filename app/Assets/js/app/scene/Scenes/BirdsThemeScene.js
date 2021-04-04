@@ -70,4 +70,8 @@ export default class BirdsThemeScene extends BaseScene {
                 break;
         }
     }
+
+    onSceneActivated() {
+        this.onOptionSelected('egg1');
+    }
 }

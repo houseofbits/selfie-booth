@@ -15,6 +15,8 @@ uniform mat4 world;
 uniform vec3 cameraPosition;
 uniform sampler2D diffuseMap;
 
+uniform vec3 cameraTint;
+
 // Face detection params
 uniform vec2 facePosition;
 uniform vec2 targetFacePosition;
@@ -49,8 +51,9 @@ vec3 adjustedCameraMap(int enable, vec2 position, vec2 target, sampler2D map, ve
 }
 
 void main(void) {
-    vec3 camera = adjustedCameraMap(isFaceDetectorEnabled, facePosition, targetFacePosition, cameraMap, vCamUV);
+    vec3 camera = adjustedCameraMap(isFaceDetectorEnabled, facePosition, targetFacePosition, cameraMap, vCamUV) * cameraTint;
     vec4 diffuse = texture2D(diffuseMap, vUV).xyzw;
+
     vec3 finalColor = mix(camera, diffuse.xyz, diffuse.w);
     gl_FragColor = vec4(finalColor, 1.0);
 }

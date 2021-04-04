@@ -46,4 +46,7 @@ class CustomMaterial {
     setVector2Param(name, value){
         this.shaderMaterial.setVector2(name, value);
     }
+    setVector3Param(name, value){
+        this.shaderMaterial.setVector3(name, value);
+    }
 }

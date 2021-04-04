@@ -1,8 +1,8 @@
 import BaseScene from "@app/scene/BaseScene";
 import * as BABYLON from 'babylonjs';
 import BackgroundTexture1 from '@images/bugs/bg1.png';
-import BackgroundTexture2 from '@images/bugs/bg2.png';
-import BackgroundTexture3 from '@images/bugs/bg3.png';
+import BackgroundTexture2 from '@images/bugs/bg2-2.png';
+import BackgroundTexture3 from '@images/bugs/bg3-2.png';
 import BasicCameraMaterial from "@app/scene/Materials/BasicCameraMaterial";
 import FaceDetectionServiceInstance from "@common/FaceDetectionService";
 
@@ -23,6 +23,9 @@ export default class BugsThemeScene extends BaseScene {
         this.createVideoTexture();
 
         FaceDetectionServiceInstance.addDetectionCallback(this.onFaceDetected.bind(this));
+
+        this.targetFacePosition.x = 0.45;
+        this.targetFacePosition.y = 0.3;
     }
 
     createScene() {
@@ -56,10 +59,18 @@ export default class BugsThemeScene extends BaseScene {
                 break;
             case 'bug2':
                 this.material.setDiffuseTexture(this.bg2Texture);
+                this.targetFacePosition.x = 0.68;
+                this.targetFacePosition.y = 0.27;
                 break;
             case 'bug3':
                 this.material.setDiffuseTexture(this.bg3Texture);
+                this.targetFacePosition.x = 0.4;
+                this.targetFacePosition.y = 0.33;
                 break;
         }
+    }
+
+    onSceneActivated() {
+        this.onOptionSelected('bug1');
     }
 }

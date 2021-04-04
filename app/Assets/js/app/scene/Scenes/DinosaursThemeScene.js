@@ -34,16 +34,13 @@ export default class DinosaursThemeScene extends BaseScene {
         this.bg4Texture = new BABYLON.Texture(BackgroundTexture4, this.scene);
 
         this.material = new BasicCameraMaterial(this.scene, this.name + 'MainMaterial');
-        this.material.setDiffuseTexture(this.bg1Texture);
-
         this.createFaceDetectorMaterialParams(this.material);
 
         let plane = BABYLON.MeshBuilder.CreatePlane("backplane2", {width: 1000, height: 1770, sideOrientation: BABYLON.Mesh.DOUBLESIDE}, this.scene);
         plane.material = this.material.getMaterial();
         plane.rotate(BABYLON.Axis.Y, BABYLON.Angle.FromDegrees(90).radians(), BABYLON.Space.WORLD);
 
-        this.targetFacePosition.x = 0.45;
-        this.targetFacePosition.y = 0.3;
+        this.onSceneActivated();
     }
 
     onFaceDetected(detectionService) {

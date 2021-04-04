@@ -1,14 +1,10 @@
 import BaseScene from "@app/scene/BaseScene";
 import * as BABYLON from 'babylonjs';
-import BgMap from '@images/amber/background.png';
-import AmberTexture1 from '@images/amber/amber1-diffuse.png';
-import NormalsTexture1 from '@images/amber/amber1-normal.png';
-import AmberTexture2 from '@images/amber/amber2-diffuse.png';
-import NormalsTexture2 from '@images/amber/amber2-normal.png';
-import AmberTexture3 from '@images/amber/amber3-diffuse.png';
-import NormalsTexture3 from '@images/amber/amber3-normal.png';
-import AmberTexture4 from '@images/amber/amber4-diffuse.png';
-import NormalsTexture4 from '@images/amber/amber4-normal.png';
+import BackgroundTexture1 from '@images/amber/bg1.png';
+import BackgroundTexture2 from '@images/amber/bg2.png';
+import BackgroundTexture3 from '@images/amber/bg3.png';
+import BackgroundTexture4 from '@images/amber/bg4.png';
+import FaceDetectionServiceInstance from "@common/FaceDetectionService";
 import AmberMaterial from "@app/scene/Materials/AmberMaterial";
 
 export default class AmberThemeScene extends BaseScene {
@@ -26,6 +22,8 @@ export default class AmberThemeScene extends BaseScene {
         this.createLogo(-160, 730);
 
         this.createVideoTexture();
+
+        FaceDetectionServiceInstance.addDetectionCallback(this.onFaceDetected.bind(this));
     }
 
     update(dt) {
@@ -34,30 +32,29 @@ export default class AmberThemeScene extends BaseScene {
 
     createScene() {
 
-        this.amber1Texture = new BABYLON.Texture(AmberTexture1, this.scene);
-        this.amber2Texture = new BABYLON.Texture(AmberTexture2, this.scene);
-        this.amber3Texture = new BABYLON.Texture(AmberTexture3, this.scene);
-        this.amber4Texture = new BABYLON.Texture(AmberTexture4, this.scene);
+        this.bg1Texture = new BABYLON.Texture(BackgroundTexture1, this.scene);
+        this.bg2Texture = new BABYLON.Texture(BackgroundTexture2, this.scene);
+        this.bg3Texture = new BABYLON.Texture(BackgroundTexture3, this.scene);
+        this.bg4Texture = new BABYLON.Texture(BackgroundTexture4, this.scene);
 
-        this.normal1Texture = new BABYLON.Texture(NormalsTexture1, this.scene);
-        this.normal2Texture = new BABYLON.Texture(NormalsTexture2, this.scene);
-        this.normal3Texture = new BABYLON.Texture(NormalsTexture3, this.scene);
-        this.normal4Texture = new BABYLON.Texture(NormalsTexture4, this.scene);
+        this.material = new AmberMaterial(this.scene, this.name + 'MainMaterial');
 
-        this.amberMaterial = new AmberMaterial(this.scene, this.name + 'MainMaterial');
-        this.amberMaterial.setCameraTexture(new BABYLON.Texture(BgMap, this.scene));
-        this.amberMaterial.setDiffuseMap(BgMap);
-
-        this.amberMaterial.setDiffuseSecondaryTexture(this.amber1Texture);
-        this.amberMaterial.setNormalsTexture(this.normal1Texture);
+        this.createFaceDetectorMaterialParams(this.material);
 
         this.plane = BABYLON.MeshBuilder.CreatePlane("backplane", {width: 1000, height: 1770, sideOrientation: BABYLON.Mesh.DOUBLESIDE}, this.scene);
-        this.plane.material = this.amberMaterial.getMaterial();
+        this.plane.material = this.material.getMaterial();
         this.plane.rotate(BABYLON.Axis.Y, BABYLON.Angle.FromDegrees(90).radians(), BABYLON.Space.WORLD);
+
+        this.onSceneActivated();
+    }
+
+    onFaceDetected(detectionService) {
+        super.onFaceDetected(detectionService);
+        this.material.setIntegerParam('isFaceDetectorEnabled', this.isFaceDetectorEnabled);
     }
 
     onVideoTextureCreated() {
-        this.amberMaterial.setCameraTexture(this.videoTexture);
+        this.material.setCameraTexture(this.videoTexture);
     }
 
     onSceneActivated() {
@@ -67,20 +64,24 @@ export default class AmberThemeScene extends BaseScene {
     onOptionSelected(optionName) {
         switch (optionName) {
             case 'amber1':
-                this.amberMaterial.setDiffuseSecondaryTexture(this.amber1Texture);
-                this.amberMaterial.setNormalsTexture(this.normal1Texture);
+                this.material.setDiffuseTexture(this.bg1Texture);
+                this.targetFacePosition.x = 0.5;
+                this.targetFacePosition.y = 0.45;
                 break;
             case 'amber2':
-                this.amberMaterial.setDiffuseSecondaryTexture(this.amber2Texture);
-                this.amberMaterial.setNormalsTexture(this.normal2Texture);
+                this.material.setDiffuseTexture(this.bg2Texture);
+                this.targetFacePosition.x = 0.5;
+                this.targetFacePosition.y = 0.55;
                 break;
             case 'amber3':
-                this.amberMaterial.setDiffuseSecondaryTexture(this.amber3Texture);
-                this.amberMaterial.setNormalsTexture(this.normal3Texture);
+                this.material.setDiffuseTexture(this.bg3Texture);
+                this.targetFacePosition.x = 0.65;
+                this.targetFacePosition.y = 0.6;
                 break;
             case 'amber4':
-                this.amberMaterial.setDiffuseSecondaryTexture(this.amber4Texture);
-                this.amberMaterial.setNormalsTexture(this.normal4Texture);
+                this.material.setDiffuseTexture(this.bg4Texture);
+                this.targetFacePosition.x = 0.5;
+                this.targetFacePosition.y = 0.6;
                 break;
         }
     }

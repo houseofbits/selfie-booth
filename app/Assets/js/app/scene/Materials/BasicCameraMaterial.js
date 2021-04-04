@@ -12,6 +12,8 @@ export default class BasicCameraMaterial extends CustomMaterial {
         this.createDefaultShader();
 
         this.setCameraPosition(this.scene.activeCamera.position);
+
+        this.setVector3Param('cameraTint', new BABYLON.Vector3(1.0, 1.0, 1.0));
     }
 
     setCameraTexture(texture) {

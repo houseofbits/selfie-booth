@@ -30,7 +30,7 @@ export default class BaseScene {
         let posl = posv.length();
         let velocity = dt * 0.4;
         let stepsCount = posl / velocity;
-        if (posl > 0.02) {
+        if (posl > 0.01) {
             posv.normalize();
             let posStep = posl / stepsCount;
             posv.scaleInPlace(Math.min(posStep, posl));
