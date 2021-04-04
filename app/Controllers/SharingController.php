@@ -96,7 +96,7 @@ class SharingController extends Controller
             if (!$imageData) {
                 throw new \Exception('Image not found');
             }
-            return $this->response->download('selfie-booth-image.png', $imageData->data);
+            return $this->response->download('lvdm-' . $imageId . '.png', $imageData->data);
         } catch (\Exception $e) {
             log_message('error', '[ERROR] {exception}', ['exception' => $e]);
             return $this->pageNotFound();
