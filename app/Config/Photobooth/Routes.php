@@ -5,8 +5,8 @@ $routes = Services::routes();
 $routes->get('/', 'ApplicationController::index');
 
 $routes->get('/admin', 'AdminController::index');
-
-//$routes->get('/test', 'AdminController::test');
+$routes->post('/admin/auth', 'AdminController::auth');
+$routes->post('/admin/logout', 'AdminController::logout');
 
 $routes->get('/conf/email', 'ConfigurationApiController::getEmailConfiguration');
 $routes->post('/conf/email', 'ConfigurationApiController::saveEmailConfiguration');

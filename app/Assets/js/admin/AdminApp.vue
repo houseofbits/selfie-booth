@@ -1,9 +1,12 @@
 <template>
+    <form action="/admin/logout" method="post" accept-charset="utf-8">
     <div class="container h-100 p-0">
-        <div class="row p-1 text-light bg-dark d-flex">
-            <div class="justify-content-center align-self-center ml-3">
+        <div class="row p-1 text-light bg-dark form-check mb-0 d-flex">
+            <div class="justify-content-center align-self-center">
                 <h5><i class="fas fa-camera"></i> <strong>Selfie Photo Booth</strong></h5>
             </div>
+            <button type="submit" class="btn btn-success ml-auto">Log-out
+            </button>
         </div>
         <div class="row h-100 border-left border-dark border-right border-bottom">
             <div class="col-md-3 bg-secondary p-1">
@@ -32,6 +35,7 @@
             </div>
         </div>
     </div>
+    </form>
 </template>
 
 <script>

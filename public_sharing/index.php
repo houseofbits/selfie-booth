@@ -1,6 +1,6 @@
 <?php
 
-define('APPLICATION_TYPE', 'Facebook');
+define('APPLICATION_TYPE', 'Share');
 
 // Valid PHP Version?
 $minPHPVersion = '7.2';
