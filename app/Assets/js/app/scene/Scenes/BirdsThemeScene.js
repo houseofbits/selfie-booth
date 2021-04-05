@@ -58,15 +58,23 @@ export default class BirdsThemeScene extends BaseScene {
         switch (optionName) {
             case 'egg1':
                 this.material.setDiffuseTexture(this.bg1Texture);
+                this.targetFacePosition.x = 0.5;
+                this.targetFacePosition.y = 0.5;
                 break;
             case 'egg2':
                 this.material.setDiffuseTexture(this.bg2Texture);
+                this.targetFacePosition.x = 0.45;
+                this.targetFacePosition.y = 0.5;
                 break;
             case 'egg3':
                 this.material.setDiffuseTexture(this.bg3Texture);
+                this.targetFacePosition.x = 0.55;
+                this.targetFacePosition.y = 0.5;
                 break;
             case 'egg4':
                 this.material.setDiffuseTexture(this.bg4Texture);
+                this.targetFacePosition.x = 0.45;
+                this.targetFacePosition.y = 0.4;
                 break;
         }
     }

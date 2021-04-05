@@ -210,15 +210,15 @@ export default {
         height: 215px;
     }
     &.egg2  div.overlay {
-        background-image: url('@images/birds/option3.png');
+        background-image: url('@images/birds/option2.png');
         height: 215px;
     }
     &.egg3  div.overlay {
-        background-image: url('@images/birds/option4.png');
+        background-image: url('@images/birds/option3.png');
         height: 215px;
     }
     &.egg4  div.overlay {
-        background-image: url('@images/birds/option2.png');
+        background-image: url('@images/birds/option4.png');
         height: 215px;
     }
 
