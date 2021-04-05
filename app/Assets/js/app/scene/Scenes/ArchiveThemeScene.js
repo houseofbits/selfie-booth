@@ -1,7 +1,7 @@
 import BaseScene from "@app/scene/BaseScene";
 import * as BABYLON from 'babylonjs';
-import BgMap from '@images/archive/background.png';
-import BasicCameraMaterial from "@app/scene/Materials/BasicCameraMaterial";
+import BgMap from '@images/archive/bg1.png';
+import ArchiveMaterial from "@app/scene/Materials/ArchiveMaterial";
 import FaceDetectionServiceInstance from "@common/FaceDetectionService";
 
 export default class ArchiveThemeScene extends BaseScene {
@@ -24,8 +24,7 @@ export default class ArchiveThemeScene extends BaseScene {
     }
 
     createScene() {
-        this.material = new BasicCameraMaterial(this.scene, this.name + 'MainMaterial');
-        this.material.setCameraTexture(new BABYLON.Texture(BgMap, this.scene));
+        this.material = new ArchiveMaterial(this.scene, this.name + 'MainMaterial');
         this.material.setDiffuseMap(BgMap);
 
         this.createFaceDetectorMaterialParams(this.material);
@@ -33,6 +32,9 @@ export default class ArchiveThemeScene extends BaseScene {
         let plane = BABYLON.MeshBuilder.CreatePlane("backplane", {width: 1000, height: 1770, sideOrientation: BABYLON.Mesh.DOUBLESIDE}, this.scene);
         plane.material = this.material.getMaterial();
         plane.rotate(BABYLON.Axis.Y, BABYLON.Angle.FromDegrees(90).radians(), BABYLON.Space.WORLD);
+
+        this.targetFacePosition.x = 0.47;
+        this.targetFacePosition.y = 0.37;
     }
 
     onVideoTextureCreated() {

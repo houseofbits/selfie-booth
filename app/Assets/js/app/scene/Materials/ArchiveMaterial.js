@@ -12,21 +12,19 @@ export default class ArchiveMaterial extends CustomMaterial {
         this.createDefaultShader();
 
         this.setCameraPosition(this.scene.activeCamera.position);
+
+        this.setVector3Param('cameraTint', new BABYLON.Vector3(1.0, 1.0, 1.0));
     }
 
     setCameraTexture(texture) {
         this.shaderMaterial.setTexture("cameraMap", texture);
     }
 
-    setMaskMap(map) {
-        this.shaderMaterial.setTexture("maskMap", new BABYLON.Texture(map, this.scene));
+    setDiffuseSecondaryTexture(texture) {
+        this.shaderMaterial.setTexture("diffuseSecMap", texture);
     }
 
-    setDiffuseSecondaryMap(map) {
-        this.shaderMaterial.setTexture("diffuseSecMap", new BABYLON.Texture(map, this.scene));
-    }
-
-    setNormalsMap(map) {
-        this.shaderMaterial.setTexture("normalsMap", new BABYLON.Texture(map, this.scene));
+    setNormalsTexture(texture) {
+        this.shaderMaterial.setTexture("normalsMap", texture);
     }
 }
