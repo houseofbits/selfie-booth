@@ -90,7 +90,7 @@ class ApiController extends ResourceController
 
     public function syncListOfImages()
     {
-        $images = $this->imageService->getListOfImages();
+        $images = $this->imageService->getListOfImagesActive();
         $inputData = $this->request->getJSON();
         $result = $this->imageService->getDiffListOfImages($inputData->data ?? [], $images);
         return $this->respond($result);

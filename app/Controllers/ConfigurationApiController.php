@@ -161,6 +161,13 @@ class ConfigurationApiController extends ResourceController
             ->setJSON($images);
     }
 
+    public function getImagesCount()
+    {
+        $images = ImageModel::findAllIndexes();
+        return $this->response->setHeader('Content-Type', 'application/json')
+            ->setJSON(['count' => count($images)]);
+    }
+
     public function deleteImage()
     {
         $imageService = new ImageService();
@@ -169,5 +176,14 @@ class ConfigurationApiController extends ResourceController
             $imageService->deleteImage($id);
         }
         return $this->getAllImages();
+    }
+
+    public function cleanUpImages()
+    {
+        $imageService = new ImageService();
+        $imageService->cleanUpImages();
+        $images = ImageModel::findAllIndexes();
+        return $this->response->setHeader('Content-Type', 'application/json')
+            ->setJSON(['count' => count($images)]);
     }
 }

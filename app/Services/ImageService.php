@@ -12,6 +12,8 @@ use Exception;
 
 class ImageService
 {
+    const ACTIVE_IMAGES_COUNT = 40;
+
     /** @var string */
     public $publicAppUrl = "";
 
@@ -117,6 +119,22 @@ class ImageService
         return ImageModel::findAllIndexes();
     }
 
+    public function getListOfImagesActive(): array
+    {
+        $images = ImageModel::findAll();
+        usort(
+            $images,
+            function (ImageModel $a, ImageModel $b) {
+                return $a->createdAt > $b->createdAt;
+            }
+        );
+        $images = array_splice($images, 0, self::ACTIVE_IMAGES_COUNT);
+
+        return array_map(function (ImageModel $imageModel) {
+            return $imageModel->id;
+        }, $images);
+    }
+
     /**
      * @param string[] $source
      * @param string[] $destination
@@ -125,6 +143,23 @@ class ImageService
     public function getDiffListOfImages(array $source, array $destination): array
     {
         return array_values(array_diff($destination, $source));
+    }
+
+    public function cleanUpImages() : void
+    {
+        $images = ImageModel::findAll();
+        usort(
+            $images,
+            function (ImageModel $a, ImageModel $b) {
+                return $a->createdAt > $b->createdAt;
+            }
+        );
+        $images = array_slice($images, self::ACTIVE_IMAGES_COUNT);
+        foreach ($images as $image) {
+            if (!$this->isSharingAvailable($image)) {
+                $image->delete();
+            }
+        }
     }
 }
 

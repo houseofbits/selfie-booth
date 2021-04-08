@@ -37,6 +37,9 @@
                                @close="closeRedirectView"/>
         <sharing-view-email :is-active="isEmailViewOpen" :is-error.sync="sendEmailError"
                             @close="closeEmailView" @send="sendEmail"/>
+
+        <session-alert v-if="isSessionAlertVisible" @finish="finishCapture"/>
+
     </div>
 </template>
 
@@ -57,6 +60,9 @@ import ImageDataSyncService from "./Services/ImageDataSyncService";
 import EmailService from "./Services/EmailService.js";
 import TextButton from './TextButton.vue';
 import OptionsCollapsible from './OptionsCollapsible.vue';
+import SessionAlert from './SessionAlert.vue';
+
+const SESSION_TIMEOUT_MS = 180000; //3min
 
 export default {
     name: "CaptureView",
@@ -65,6 +71,7 @@ export default {
         return {
             images: [],
             selectedImage: null,
+            isSessionAlertVisible: true,
             isGalleryOpen: false,
             isThemesOpen: false,
             isOptionsOpen: false,
@@ -76,7 +83,8 @@ export default {
             sendEmailError: false,
             isCaptureInProgress: false,
             selectedTheme: '',
-            enableDetectorTimer: null
+            enableDetectorTimer: null,
+            sessionAlertTimer: null,
         }
     },
     components: {
@@ -89,7 +97,8 @@ export default {
         DynamicBackground,
         TextButton,
         OptionsCollapsible,
-        SharingViewOptions
+        SharingViewOptions,
+        SessionAlert
     },
     props: {
         open: {
@@ -131,6 +140,14 @@ export default {
         }
     },
     methods: {
+        updateSessionAlertTimer() {
+            if (this.sessionAlertTimer) {
+                clearTimeout(this.sessionAlertTimer);
+                this.sessionAlertTimer = null;
+                this.isSessionAlertVisible = false;
+            }
+            this.sessionAlertTimer = setTimeout(() => this.isSessionAlertVisible = true, SESSION_TIMEOUT_MS);
+        },
         finishCapture() {
             this.faceDetect.enableDetector(false);
             this.$emit('captureViewClose');
@@ -313,6 +330,17 @@ export default {
             }
             this.enableDetectorTimer = setTimeout(() => this.faceDetect.enableDetector(true), 400);
         }
+    },
+    mounted() {
+        document.addEventListener('click', function (event) {
+            this.updateSessionAlertTimer();
+        }.bind(this), false);
+        document.addEventListener('touchstart', function (event) {
+            this.updateSessionAlertTimer();
+        }.bind(this), false);
+        document.addEventListener('touchmove', function (event) {
+            this.updateSessionAlertTimer();
+        }.bind(this), false);
     }
 }
 </script>

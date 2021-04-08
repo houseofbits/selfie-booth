@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Services\ImageService;
 use CodeIgniter\CLI\CLI;
 use CodeIgniter\Controller;
 
@@ -9,11 +10,10 @@ class Cron extends Controller
 {
 	public function index()
 	{
-        CLI::write('Selfie-booth temporary data deleted!', 'black', 'green');
+        $imageService = new ImageService();
+        $imageService->cleanUpImages();
 
-        //TODO:
-        // 1) Delete session data
-        // 2) Delete outdated images
+        CLI::write('Selfie-booth temporary data deleted!', 'black', 'green');
 
         return '';
 	}
