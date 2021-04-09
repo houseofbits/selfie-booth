@@ -1,13 +1,8 @@
 <template>
     <div :class="{visible:isActive}" class="window">
         <text-button class="back-button green" icon="fas fa-arrow-circle-left" @click="closeView">{{ lang('capture.back-button') }}</text-button>
-<!--        <text-button class="send-button orange" icon="fas fa-envelope-open-text" @click="openEmailView">{{ lang('capture.send-button') }}</text-button>-->
-        <text-button class="delete-button red" icon="fas fa-trash-alt" @click="deleteSelectedImage">{{ lang('capture.delete-button') }}</text-button>
 
-<!--        <round-button class="delete-button red"-->
-<!--                      icon="fas fa-trash-alt"-->
-<!--                      @click="deleteSelectedImage"-->
-<!--                      />-->
+        <round-button class="delete-button red" icon="fas fa-trash-alt" @click="deleteSelectedImage"/>
 
         <round-button class="send-button orange"
                       icon="fas fa-envelope-open-text"
@@ -16,9 +11,6 @@
         <round-button class="download-button blue"
                       icon="fas fa-cloud-download-alt"
                       @click="openDownloadView"/>
-
-
-
     </div>
 </template>
 
@@ -52,7 +44,7 @@ export default {
     },
     watch: {
         isActive(val) {
-            if(val) {
+            if (val) {
                 this.emailAddress = '';
                 this.emailInputValid = false;
             }
@@ -104,21 +96,21 @@ export default {
         position: absolute;
         top: 580px;
         left: 280px;
-        width: 230px;
+        //width: 230px;
     }
 
     .send-button {
         position: absolute;
         top: 560px;
-        right: 160px;
-        transform: scale(1.5);
+        right: 170px;
+        transform: scale(1.6);
     }
 
     .download-button {
         position: absolute;
         top: 560px;
         right: 20px;
-        transform: scale(1.5);
+        transform: scale(1.6);
     }
 
     .button-disabled {
@@ -215,7 +207,7 @@ export default {
         line-height: 100px;
         text-align: center;
         font-size: 35px;
-        background: linear-gradient(to bottom, #feccb1 0%,#f95a04 100%);
+        background: linear-gradient(to bottom, #feccb1 0%, #f95a04 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         -webkit-text-stroke: 1px rgba(0, 0, 0, 0.2);
@@ -237,7 +229,7 @@ export default {
 
 .leaf-pos-2 {
     opacity: 0.5;
-    transform: translate(790px,480px) rotate(125deg);
+    transform: translate(790px, 480px) rotate(125deg);
 }
 
 .leaf-pos-3 {

@@ -12,6 +12,8 @@ export default class CoralMaterial extends CustomMaterial {
         this.createDefaultShader();
 
         this.setCameraPosition(this.scene.activeCamera.position);
+
+        this.setVector3Param('cameraTint', new BABYLON.Vector3(1.0, 1.0, 1.0));
     }
 
     setCameraTexture(texture) {
@@ -24,9 +26,5 @@ export default class CoralMaterial extends CustomMaterial {
 
     setDiffuseSecondaryMap(map) {
         this.shaderMaterial.setTexture("diffuseSecMap", new BABYLON.Texture(map, this.scene));
-    }
-
-    setNormalsMap(map) {
-        this.shaderMaterial.setTexture("normalsMap", new BABYLON.Texture(map, this.scene));
     }
 }

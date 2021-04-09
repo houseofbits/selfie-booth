@@ -13,76 +13,57 @@ uniform mat4 world;
 
 // Refs
 uniform vec3 cameraPosition;
+uniform sampler2D diffuseMap;
 
-uniform vec2 faceSize;
+uniform vec3 cameraTint;
+
+// Face detection params
 uniform vec2 facePosition;
 uniform vec2 targetFacePosition;
-
-uniform int displaceState;
-
-uniform sampler2D diffuseMap;
+uniform int isFaceDetectorEnabled;
 uniform sampler2D cameraMap;
+vec3 adjustedCameraMap(int enable, vec2 position, vec2 target, sampler2D map, vec2 uv) {
+    float margin = 0.1;
+    vec2 camuv = uv;
+    if (enable == 1) {
+        float dx = target.x - position.x;
+        float dy = target.y - position.y;
+        camuv.x = uv.x + dy;
+        camuv.y = uv.y + dx;
+    }
+    vec3 camera = vec3(0.0);
+    if (camuv.x > 0.0 && camuv.x < 1.0 && camuv.y > 0.0 && camuv.y < 1.0) {
+        camera = texture2D(map, camuv).xyz;
+    }
+    if (camuv.x < margin) {
+        camera = camera * (camuv.x / margin);
+    }
+    if (camuv.y < margin) {
+        camera = camera * (camuv.y / margin);
+    }
+    if (camuv.y > (1.0 - margin)) {
+        camera = camera * ((1.0 - camuv.y) / margin);
+    }
+    if (camuv.x > (1.0 - margin)) {
+        camera = camera * ((1.0 - camuv.x) / margin);
+    }
+    return camera;
+}
 
 void main(void) {
-    vec2 uv = vUV;
-    uv.x = 1.0 - uv.x;
+    vec3 camera = adjustedCameraMap(isFaceDetectorEnabled, facePosition, targetFacePosition, cameraMap, vCamUV) * cameraTint;
+    vec4 diffuse = texture2D(diffuseMap, vUV).xyzw;
 
-    vec2 camuv = vCamUV;
-
-//    vec2 desiredPosition = vec2(0.47, 0.3);
-//    vec2 desiredSize = vec2(0.3, 0.3);
-
-    vec2 displace = vec2(0, 0);
-//    vec2 scale = vec2(1.0, 1.0);
-
-    //Transform position
-    if (displaceState == 1) {
-        displace.x = targetFacePosition.x - facePosition.x;
-        displace.y = targetFacePosition.y - facePosition.y;
-
-        camuv.x = vCamUV.x + displace.y;
-        camuv.y = vCamUV.y + displace.x;
-    }
-    //Transform position and size
-    if (displaceState == 2) {
-
-//        float targetWidth = 0.1;
-//        float targetHeight = 0.1;
-//        float targetRight = 0.5;
-//        float targetBottom = 0.5;
-//
-//        float actualWidth = faceRect.z;
-//        float actualHeight = faceRect.w;
-//        float actualRight = faceRect.x;
-//        float actualBottom = faceRect.y;
-
-        //float scaleX = targetWidth / actualWidth;
-//        float scaleInvX = actualWidth / targetWidth;
-
-        //float translateRight = targetRight - (actualRight / scaleX);
-       // float translateBottom = 0.0;//(targetBottom - actualBottom) * scaleInvX;
-
-//        scale.x = desiredSize.x / faceRect.z;
-//        scale.y = desiredSize.y / faceRect.w;
-//
-        //float scaledWidth = 0.0;  //actualWidth * scaleInvX;
-        //float scaledHeight = 0.0;//actualHeight * scaleInvX;
-
-//        displace.x = desiredPosition.x - (faceRect.x * scale.x);
-//        displace.y = desiredPosition.y - (faceRect.y * scale.y);
-
-        //camuv.x = ((camuv.x / scaleX) + translateBottom);// + (scaledHeight * 0.5);         //(((vCamUV.x * scale.y) + displace.y) - scale.y) - (scaledHeight * 0.5);
-        //camuv.y = ((camuv.y / scaleX) + translateRight);// + (scaledWidth * 0.5);
-        //camuv.y = (((vCamUV.y * scale.x) + displace.x) - scale.x) - (scaledWidth * 0.5);
+    vec3 cameraMix = diffuse.xyz;
+    //Overlay
+    //http://www.simplefilter.de/en/basics/mixmods.html
+    float bgTone = dot(diffuse.xyz, vec3(1.0)) * 0.333;
+    if (bgTone <= 0.5) {
+        cameraMix = 2.0 * cameraMix * camera;
+    } else {
+        cameraMix = 1.0 - 2.0 * (1.0 - cameraMix) * (1.0 - camera);
     }
 
-    vec3 camera = texture2D(cameraMap, camuv).xyz;
-
-    vec3 finalColor = camera;
-    if (displaceState != 0) {
-        vec4 diffuse = texture2D(diffuseMap, uv).xyzw;
-        finalColor = mix(diffuse.xyz, camera, 1.0 - diffuse.w);
-    }
-
+    vec3 finalColor = mix(cameraMix, diffuse.xyz, diffuse.w);
     gl_FragColor = vec4(finalColor, 1.0);
 }

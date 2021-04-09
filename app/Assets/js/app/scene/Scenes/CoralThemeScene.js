@@ -1,8 +1,11 @@
 import BaseScene from "@app/scene/BaseScene";
 import * as BABYLON from 'babylonjs';
-import BgMap from '@images/coral/background.png';
+import BackgroundTexture1 from '@images/coral/bg1.png';
+import BackgroundTexture2 from '@images/coral/bg2.png';
+import BackgroundTexture3 from '@images/coral/bg3.png';
 import CoralMaterial from "@app/scene/Materials/CoralMaterial";
 import FaceDetectionServiceInstance from '@common/FaceDetectionService.js';
+import BackgroundTexture4 from "@images/amber/bg4.png";
 
 export default class CoralThemeScene extends BaseScene {
     constructor(mainScene, name, targetCanvas) {
@@ -16,7 +19,7 @@ export default class CoralThemeScene extends BaseScene {
 
         this.createScene();
 
-        this.createLogo(-300, 700);
+        this.createLogo(-160, 730);
 
         this.createVideoTexture();
 
@@ -24,24 +27,25 @@ export default class CoralThemeScene extends BaseScene {
     }
 
     createScene() {
+
+        this.bg1Texture = new BABYLON.Texture(BackgroundTexture1, this.scene);
+        this.bg2Texture = new BABYLON.Texture(BackgroundTexture2, this.scene);
+        this.bg3Texture = new BABYLON.Texture(BackgroundTexture3, this.scene);
+        this.bg4Texture = new BABYLON.Texture(BackgroundTexture4, this.scene);
+
         this.material = new CoralMaterial(this.scene, this.name + 'MainMaterial');
-        this.material.setCameraTexture(new BABYLON.Texture(BgMap, this.scene));
-        this.material.setDiffuseMap(BgMap);
 
         this.createFaceDetectorMaterialParams(this.material);
 
-        this.material.setIntegerParam('displaceState', 0);
+        this.plane = BABYLON.MeshBuilder.CreatePlane("backplane", {
+            width: 1000,
+            height: 1770,
+            sideOrientation: BABYLON.Mesh.DOUBLESIDE
+        }, this.scene);
+        this.plane.material = this.material.getMaterial();
+        this.plane.rotate(BABYLON.Axis.Y, BABYLON.Angle.FromDegrees(90).radians(), BABYLON.Space.WORLD);
 
-        let plane = BABYLON.MeshBuilder.CreatePlane("backplane", {width: 1000, height: 1770, sideOrientation: BABYLON.Mesh.DOUBLESIDE}, this.scene);
-        plane.material = this.material.getMaterial();
-        plane.rotate(BABYLON.Axis.Y, BABYLON.Angle.FromDegrees(90).radians(), BABYLON.Space.WORLD);
-
-        this.targetFacePosition.x = 0.47;
-        this.targetFacePosition.y = 0.3;
-    }
-
-    onVideoTextureCreated() {
-        this.material.setCameraTexture(this.videoTexture);
+        this.onSceneActivated();
     }
 
     onFaceDetected(detectionService) {
@@ -49,16 +53,30 @@ export default class CoralThemeScene extends BaseScene {
         this.material.setIntegerParam('isFaceDetectorEnabled', this.isFaceDetectorEnabled);
     }
 
+    onVideoTextureCreated() {
+        this.material.setCameraTexture(this.videoTexture);
+    }
+
+    onSceneActivated() {
+        this.onOptionSelected('coral1');
+    }
+
     onOptionSelected(optionName) {
         switch (optionName) {
             case 'coral1':
-                this.material.setIntegerParam('displaceState', 0);
+                this.material.setDiffuseTexture(this.bg1Texture);
+                this.targetFacePosition.x = 0.4;
+                this.targetFacePosition.y = 0.35;
                 break;
             case 'coral2':
-                this.material.setIntegerParam('displaceState', 1);
+                this.material.setDiffuseTexture(this.bg2Texture);
+                this.targetFacePosition.x = 0.4;
+                this.targetFacePosition.y = 0.75;
                 break;
             case 'coral3':
-                this.material.setIntegerParam('displaceState', 2);
+                this.material.setDiffuseTexture(this.bg3Texture);
+                this.targetFacePosition.x = 0.85;
+                this.targetFacePosition.y = 0.2;
                 break;
         }
     }

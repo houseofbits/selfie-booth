@@ -53,11 +53,13 @@ class EmailService
      */
     public function sendEmail($emailAddress, $imageId = null, $language = null): void
     {
+        $this->applyConfiguration();
+
         $this->email->clear();
         $this->email->setTo($emailAddress);
         $this->email->setFrom($this->emailConfig->senderAddress);
-        $this->email->setSubject('Test message');
-        $this->email->setMessage('Test content');
+        $this->email->setSubject('LVDM');
+        $this->email->setMessage('Photo Booth image attachment');
 
         $imageModel = ImageModel::findOne($imageId);
         if ($imageModel instanceof ImageModel) {
@@ -67,10 +69,10 @@ class EmailService
             throw new \Exception("Image not found");
         }
 
-        $result = null;//$this->email->send();
+        $result = $this->email->send();
 
         if (!$result) {
-            throw new \Exception("Email not sent");
+            throw new \Exception($this->email->printDebugger());
         }
     }
 
@@ -89,7 +91,7 @@ class EmailService
         $result = $this->email->send();
 
         if (!$result) {
-            throw new \Exception("Connection failed");
+            throw new \Exception($this->email->printDebugger());
         }
     }
 
