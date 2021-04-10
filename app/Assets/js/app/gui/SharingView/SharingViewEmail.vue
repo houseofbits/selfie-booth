@@ -176,8 +176,9 @@ export default {
     .info-row {
         position: absolute;
         top: 480px;
-        width: 100%;
+        width: 860px;
         height: 100px;
+        left: -10px;
         line-height: 40px;
         text-align: center;
         font-size: 35px;

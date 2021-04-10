@@ -128,11 +128,11 @@ export default {
     }
 
     &[data-count="3"] {
-        &[data-position="0"] {
+        &[data-position="1"] {
             transform: translate(540px, 1270px) scale(1.0);
         }
 
-        &[data-position="1"] {
+        &[data-position="0"] {
             transform: translate(300px, 1280px) scale(1.0) rotate(-2deg);
         }
 
@@ -142,15 +142,15 @@ export default {
     }
 
     &[data-count="4"] {
-        &[data-position="0"] {
+        &[data-position="1"] {
             transform: translate(420px, 1280px) scale(1.0) rotate(-2deg);
         }
 
-        &[data-position="1"] {
+        &[data-position="2"] {
             transform: translate(660px, 1280px) scale(1.0) rotate(2deg);
         }
 
-        &[data-position="2"] {
+        &[data-position="0"] {
             transform: translate(190px, 1290px) scale(1.0) rotate(-3deg);
         }
 
@@ -160,7 +160,7 @@ export default {
     }
 
     &[data-large="true"] {
-        transform: translate(540px, 890px) scale(4.7) !important;
+        transform: translate(540px, 900px) scale(4.5) !important;
         z-index: 5;
     }
 
@@ -169,6 +169,7 @@ export default {
                 scale($image-collapsed-scale-x, $image-collapsed-scale-y) !important;
         border-radius: 50%;
         overflow: hidden;
+        box-shadow:none !important;
     }
 
     &.remove {

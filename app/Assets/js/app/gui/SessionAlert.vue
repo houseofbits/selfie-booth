@@ -44,7 +44,7 @@ export default {
 .continue-btn {
     bottom: 710px;
     left: 530px;
-    width: 270px;
+    width: 290px;
 }
 
 .finish-btn {

@@ -29,11 +29,19 @@ $gallery-icon-pos-left: 880;
 $gallery-icon-size: 160;
 $gallery-height: 550px;
 $gallery-pos-top: 1000px;
+
 $theme-icon-pos-top: 1550;
 $theme-icon-pos-left: 50;
-$theme-icon-size: 160px;
+$theme-icon-size: 160;
 $theme-height: 650px;
-$theme-pos-top: 1000px;
+$theme-pos-top: 1000;
+$theme-image-width: 200;
+$theme-image-height: 200;
+
+$theme-image-collapsed-scale-x: $theme-icon-size / $theme-image-width;
+$theme-image-collapsed-scale-y: $theme-icon-size / $theme-image-height;
+$theme-image-collapsed-pos-x: $theme-icon-pos-left + ($theme-icon-size  * 0.5);
+$theme-image-collapsed-pos-y: $theme-icon-pos-top + ($theme-icon-size  * 0.5);
 
 $image-collapsed-scale-x: $gallery-icon-size / $image-default-width;
 $image-collapsed-scale-y: $gallery-icon-size / $image-default-height;

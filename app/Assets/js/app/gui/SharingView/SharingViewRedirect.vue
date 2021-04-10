@@ -8,7 +8,7 @@
         <static-item class="leaf leaf-pos-2" image-id="1"></static-item>
 
         <div class="info-row">
-            <div class="main-text"><span><i class="fas fa-mobile-alt icon-size"></i> {{ infoText }}</span></div>
+            <div class="main-text"><i class="fas fa-mobile-alt icon-size"></i><span> {{ infoText }}</span></div>
             <div class="secondary-text"><span><i class="fas fa-info-circle"></i> {{ detailInfoText }}</span></div>
         </div>
         <div :class="{visible: isError}" class="error-row"><i class="fas fa-exclamation-triangle"></i> {{ lang('capture.qr-error') }}
@@ -16,7 +16,7 @@
 
         <div class="qr-image">
             <div class="loading"><i class="fas fa-hourglass-half"></i></div>
-            <img :src="qrCodeImage" :class="{loaded:isLoaded}" @error="onError" @load="qrCodeLoaded">
+            <img :src="qrCodeImage" :class="{loaded:isLoaded}" @error="onError" @load="qrCodeLoaded" alt="">
         </div>
 
         <text-button class="back-button orange" icon="fas fa-arrow-circle-left"
@@ -128,7 +128,16 @@ export default {
 
         .main-text {
             display: inline-block;
-            line-height: 38px;
+            line-height: 40px;
+
+            .icon-size {
+                font-size: 40px;
+                background: linear-gradient(to bottom, #fefcea 0%, #f1da36 100%);
+                box-decoration-break: clone;
+                -webkit-box-decoration-break: clone;
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
 
             span {
                 display: inline;
@@ -139,10 +148,7 @@ export default {
                 -webkit-background-clip: text;
                 -webkit-text-fill-color: transparent;
                 font-size: 35px;
-
-                .icon-size {
-                    font-size: 40px;
-                }
+                line-height: 40px;
             }
         }
 

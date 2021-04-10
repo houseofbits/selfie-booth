@@ -5,7 +5,7 @@
             <div class="border"></div>
         </div>
 
-        <div :class="themesFrameClass" class="themes-frame">
+        <div class="themes-frame">
             <div class="close-button" @click.self="closeThemes"></div>
 
             <div v-for="(theme, index) in themeDefinitions" :key="index" class="theme-icon" :class="themeClass(theme)"
@@ -36,12 +36,12 @@ const ThemeDefinitions = [
     },
     {
         name: 'DinosaursScene',
-        positionClass: 'r1c2',
+        positionClass: 'r2c1',
         iconClass: 'dinosaurs-icon',
     },
     {
         name: 'CoralScene',
-        positionClass: 'r1c3',
+        positionClass: 'r1c2',
         iconClass: 'coral-icon',
     },
     {
@@ -51,7 +51,7 @@ const ThemeDefinitions = [
     },
     {
         name: 'BirdsScene',
-        positionClass: 'r2c1',
+        positionClass: 'r1c3',
         iconClass: 'birds-icon',
     },
     {
@@ -107,18 +107,13 @@ export default {
         themeDefinitions() {
             return ThemeDefinitions;
         },
-        themesFrameClass() {
-            if (this.isOpen) {
-                return 'themes-transition-expand';
-            }
-            return 'themes-transition-collapse';
-        },
     },
     methods: {
         themeClass(theme) {
             return {
                 [theme.positionClass]: true,
-                selected: (theme.name === this.theme)
+                selected: (theme.name === this.theme),
+                collapsed: !this.isOpen,
             };
         },
         openThemes() {
@@ -152,22 +147,26 @@ $theme-icons-per-row: 4;
 }
 
 .themes-frame {
-    pointer-events: auto;
+    pointer-events: none;
     position: absolute;
     text-align: center;
     transition: all 800ms linear;
-    //overflow: hidden;
+    top: 0;
+    left: 0;
+    width: $screen-width+px;
+    height: $screen-height+px;
 
     .theme-icon {
+        pointer-events: auto;
         position: absolute;
-        z-index: 2;
+        z-index: 1;
         left: 0;
         top: 0;
-        margin-left: -100px;
-        margin-top: -100px;
-        width: 200px;
-        height: 200px;
-        //background: linear-gradient(to bottom, #e6f0a3 0%, #d2e638 50%, #c3d825 51%, #dbf043 100%);
+        overflow: hidden;
+        margin-left: -($theme-image-width/2)+px;
+        margin-top: -($theme-image-height/2)+px;
+        width: $theme-image-width+px;
+        height: $theme-image-height+px;
         background: linear-gradient(to bottom, rgba(180,221,180,1) 0%,rgba(131,199,131,1) 17%,rgba(82,177,82,1) 33%,rgba(0,138,0,1) 67%,rgba(0,132,46,1) 82%,rgba(0,170,88,1) 100%);
 
         border-radius: 20px;
@@ -181,40 +180,48 @@ $theme-icons-per-row: 4;
         color: #747474;
 
         &.r1c1 {
-            transform: translate(icon-pos-x(0), 150px);
+            transform: translate(icon-pos-x(0), ($theme-pos-top + 150)+px);
         }
 
         &.r1c2 {
-            transform: translate(icon-pos-x(1), 150px);
+            transform: translate(icon-pos-x(1), ($theme-pos-top + 150)+px);
         }
 
         &.r1c3 {
-            transform: translate(icon-pos-x(2), 150px);
+            transform: translate(icon-pos-x(2), ($theme-pos-top + 150)+px);
         }
 
         &.r1c4 {
-            transform: translate(icon-pos-x(3), 150px);
+            transform: translate(icon-pos-x(3), ($theme-pos-top + 150)+px);
         }
 
         &.r2c1 {
-            transform: translate(icon-pos-x(0), 400px);
+            transform: translate(icon-pos-x(0), ($theme-pos-top + 400)+px);
         }
 
         &.r2c2 {
-            transform: translate(icon-pos-x(1), 400px);
+            transform: translate(icon-pos-x(1), ($theme-pos-top + 400)+px);
         }
 
         &.r2c3 {
-            transform: translate(icon-pos-x(2), 400px);
+            transform: translate(icon-pos-x(2), ($theme-pos-top + 400)+px);
         }
 
         &.r2c4 {
-            transform: translate(icon-pos-x(3), 400px);
+            transform: translate(icon-pos-x(3), ($theme-pos-top + 400)+px);
+        }
+
+        &.collapsed {
+            transform: translate($theme-image-collapsed-pos-x+px, $theme-image-collapsed-pos-y+px)
+                    scale($theme-image-collapsed-scale-x, $theme-image-collapsed-scale-y);
+            border-radius: 50%;
+            box-shadow: none !important;
         }
 
         &.selected {
             background: linear-gradient(to bottom, #e6f0a3 0%, #d2e638 50%, #c3d825 51%, #dbf043 100%);
             box-shadow: 0 9px 12px 7px rgba(0,0,0,0.63);
+            z-index: 2;
         }
 
         .icon-background {
@@ -250,55 +257,14 @@ $theme-icons-per-row: 4;
                 background-image: url('@images/archive/icon.png');
             }
         }
-        //
-        //&.selected .icon-background {
-        //    left:5px;
-        //    right: 5px;
-        //    top: 5px;
-        //    bottom: 5px;
-        //    border-radius: 16px;
-        //}
-    }
 
-    &.themes-transition-collapse {
-        .theme-icon {
-            transition: all 200ms linear;
-            transform: translate(0, 0) scale(0.2);
-
-            &.r1c1 {
-                transform: translate(40px, 40px) scale(0.3);
-            }
-
-            &.r1c2 {
-                transform: translate(40px, 40px) scale(0.3);
-            }
-
-            &.r1c3 {
-                transform: translate(120px, 40px) scale(0.3);
-            }
-
-            &.r1c4 {
-                transform: translate(120px, 40px) scale(0.3);
-            }
-
-            &.r2c1 {
-                transform: translate(40px, 120px) scale(0.3);
-            }
-
-            &.r2c2 {
-                transform: translate(40px, 120px) scale(0.3);
-            }
-
-            &.r2c3 {
-                transform: translate(120px, 120px) scale(0.3);
-            }
-
-            &.r2c4 {
-                transform: translate(120px, 120px) scale(0.3);
-            }
+        &.collapsed .icon-background {
+            left:0;
+            right: 0;
+            top: 0;
+            bottom: 0;
         }
     }
-
 }
 
 .close-button {
@@ -321,8 +287,8 @@ $theme-icons-per-row: 4;
     position: absolute;
     top: $theme-icon-pos-top+px;
     left: $theme-icon-pos-left+px;
-    width: $theme-icon-size;
-    height: $theme-icon-size;
+    width: $theme-icon-size+px;
+    height: $theme-icon-size+px;
     z-index: 1;
     transition: all 200ms linear;
     opacity: 0;
@@ -367,8 +333,8 @@ $theme-icons-per-row: 4;
     position: absolute;
     top: $theme-icon-pos-top+px;
     left: $theme-icon-pos-left+px;
-    width: $theme-icon-size;
-    height: $theme-icon-size;
+    width: $theme-icon-size+px;
+    height: $theme-icon-size+px;
     border-radius: ($gallery-icon-size/2)+px;
     //background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.5) 100%),
     //linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 34%, rgb(70, 107, 127) 100%);
@@ -399,64 +365,7 @@ $theme-icons-per-row: 4;
         border-top-right-radius: 100px;
         border-bottom-left-radius: 100px 40px;
         border-bottom-right-radius: 100px 40px;
-        //background: linear-gradient(to bottom, rgba(254, 252, 234, 0.05) 0%, rgba(54, 225, 241, 0.6) 100%);
         background-image: url('@images/left-icon-hilight.png');
-    }
-}
-
-.themes-transition-collapse {
-    animation-name: themes-collapse;
-    animation-duration: 300ms;
-    animation-timing-function: ease-out;
-    animation-fill-mode: both;
-    animation-direction: alternate;
-}
-
-.themes-transition-expand {
-    animation-name: themes-expand;
-    animation-duration: 300ms;
-    animation-timing-function: ease-out;
-    animation-fill-mode: both;
-}
-
-.themes-transition-collapse .close-button {
-    display: none;
-}
-
-.themes-transition-expand .close-button {
-    display: block;
-}
-
-@mixin theme-state-0 {
-    top: $theme-pos-top;
-    left: 0;
-    width: 1080px;
-    height: $theme-height;
-}
-
-@mixin theme-state-100 {
-    top: $theme-icon-pos-top+px;
-    left: $theme-icon-pos-left+px;
-    width: $theme-icon-size;
-    height: $theme-icon-size;
-    border-radius: $theme-icon-size/2;
-}
-
-@keyframes themes-collapse {
-    0% {
-        @include theme-state-0;
-    }
-    100% {
-        @include theme-state-100;
-    }
-}
-
-@keyframes themes-expand {
-    0% {
-        @include theme-state-100;
-    }
-    100% {
-        @include theme-state-0;
     }
 }
 
