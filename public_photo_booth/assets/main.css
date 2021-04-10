@@ -5167,7 +5167,6 @@ readers do not read off random characters that represent icons */
   position: absolute;
   text-align: center;
   transition: all 800ms linear;
-  overflow: hidden;
 }
 .themes-frame .theme-icon[data-v-7d61b318] {
     position: absolute;

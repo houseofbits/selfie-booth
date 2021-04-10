@@ -4,6 +4,7 @@
             <div class="shadow"></div>
             <div class="border"></div>
         </div>
+
         <div :class="themesFrameClass" class="themes-frame">
             <div class="close-button" @click.self="closeThemes"></div>
 
@@ -155,7 +156,7 @@ $theme-icons-per-row: 4;
     position: absolute;
     text-align: center;
     transition: all 800ms linear;
-    overflow: hidden;
+    //overflow: hidden;
 
     .theme-icon {
         position: absolute;
