@@ -26,7 +26,7 @@ $duration: 700;
 ///GalleryCollapsible.vue
 $gallery-icon-pos-top: 1550;
 $gallery-icon-pos-left: 880;
-$gallery-icon-size: 160px;
+$gallery-icon-size: 160;
 $gallery-height: 550px;
 $gallery-pos-top: 1000px;
 $theme-icon-pos-top: 1550;
@@ -35,3 +35,7 @@ $theme-icon-size: 160px;
 $theme-height: 650px;
 $theme-pos-top: 1000px;
 
+$image-collapsed-scale-x: $gallery-icon-size / $image-default-width;
+$image-collapsed-scale-y: $gallery-icon-size / $image-default-height;
+$image-collapsed-pos-x: $gallery-icon-pos-left + ($gallery-icon-size * 0.5);
+$image-collapsed-pos-y: $gallery-icon-pos-top + ($gallery-icon-size * 0.5);

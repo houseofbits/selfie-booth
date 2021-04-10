@@ -4,6 +4,7 @@
             <div class="shadow"></div>
             <div class="border"></div>
         </div>
+
         <div :class="themesFrameClass" class="themes-frame">
             <div class="close-button" @click.self="closeThemes"></div>
 
@@ -155,7 +156,7 @@ $theme-icons-per-row: 4;
     position: absolute;
     text-align: center;
     transition: all 800ms linear;
-    overflow: hidden;
+    //overflow: hidden;
 
     .theme-icon {
         position: absolute;
@@ -368,7 +369,7 @@ $theme-icons-per-row: 4;
     left: $theme-icon-pos-left+px;
     width: $theme-icon-size;
     height: $theme-icon-size;
-    border-radius: $gallery-icon-size/2;
+    border-radius: ($gallery-icon-size/2)+px;
     //background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.5) 100%),
     //linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 34%, rgb(70, 107, 127) 100%);
     background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.5) 100%),

@@ -4735,112 +4735,81 @@ readers do not read off random characters that represent icons */
     background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 45%, rgba(0, 0, 0, 0.48) 100%);
 }
 
-.image[data-v-6ee85444] {
-  display: inline-block;
-  position: relative;
+.gallery-image[data-v-6ee85444] {
+  pointer-events: auto;
+  display: block;
+  position: absolute;
   width: 200px;
   height: 355.55556px;
-  padding: 0;
   transition: all 0.2s linear;
-  vertical-align: top;
+  margin-left: -100px;
+  margin-top: -177.77778px;
   box-shadow: 0 3px 9px 0 rgba(0, 0, 0, 0.78);
-  margin: 80px 15px;
 }
-.image.transform-rnd-0[data-v-6ee85444] {
-    transform: rotate(3deg) scale(1.2);
+.gallery-image[data-count="1"][data-position="0"][data-v-6ee85444] {
+    transform: translate(540px, 1280px) scale(1);
 }
-.image.transform-rnd-1[data-v-6ee85444] {
-    transform: rotate(-3deg) scale(1.1);
+.gallery-image[data-count="2"][data-position="0"][data-v-6ee85444] {
+    transform: translate(420px, 1280px) scale(1) rotate(-2deg);
 }
-.image.transform-rnd-2[data-v-6ee85444] {
-    transform: rotate(1deg) scale(0.9);
+.gallery-image[data-count="2"][data-position="1"][data-v-6ee85444] {
+    transform: translate(660px, 1280px) scale(1) rotate(2deg);
 }
-.image.transform-rnd-3[data-v-6ee85444] {
-    transform: rotate(2deg) scale(0.85);
+.gallery-image[data-count="3"][data-position="0"][data-v-6ee85444] {
+    transform: translate(540px, 1270px) scale(1);
 }
-.image.transform-rnd-4[data-v-6ee85444] {
-    transform: rotate(-2deg) scale(0.8);
+.gallery-image[data-count="3"][data-position="1"][data-v-6ee85444] {
+    transform: translate(300px, 1280px) scale(1) rotate(-2deg);
 }
-.image.transform-rnd-5[data-v-6ee85444] {
-    transform: rotate(-1deg) scale(0.9);
+.gallery-image[data-count="3"][data-position="2"][data-v-6ee85444] {
+    transform: translate(780px, 1280px) scale(1) rotate(2deg);
 }
-.image.transform-rnd-6[data-v-6ee85444] {
-    transform: rotate(-2deg) scale(1.1);
+.gallery-image[data-count="4"][data-position="0"][data-v-6ee85444] {
+    transform: translate(420px, 1280px) scale(1) rotate(-2deg);
 }
-.image.transform-rnd-7[data-v-6ee85444] {
-    transform: rotate(2deg) scale(1);
+.gallery-image[data-count="4"][data-position="1"][data-v-6ee85444] {
+    transform: translate(660px, 1280px) scale(1) rotate(2deg);
 }
-.image.transform-rnd-8[data-v-6ee85444] {
-    transform: rotate(-3deg) scale(1);
+.gallery-image[data-count="4"][data-position="2"][data-v-6ee85444] {
+    transform: translate(190px, 1290px) scale(1) rotate(-3deg);
 }
-.image.transform-rnd-9[data-v-6ee85444] {
-    transform: rotate(-1deg) scale(1);
+.gallery-image[data-count="4"][data-position="3"][data-v-6ee85444] {
+    transform: translate(890px, 1290px) scale(1) rotate(3deg);
 }
-.image .delete-button[data-v-6ee85444] {
-    position: absolute;
-    bottom: -40px;
-    left: 60px;
-    transition: all 0.2s linear;
-}
-.image .delete-button.expanded[data-v-6ee85444] {
-      bottom: 40px;
-      left: 520px;
-}
-.image.selected[data-v-6ee85444] {
-    width: 270px;
-    height: 480px;
-    transition: all 0.2s linear;
+.gallery-image[data-large="true"][data-v-6ee85444] {
+    transform: translate(540px, 890px) scale(4.7) !important;
     z-index: 5;
-    box-shadow: 0 3px 20px 0 rgba(0, 0, 0, 0.79);
-    margin: 40px 15px 0;
 }
-.image.not-selected[data-v-6ee85444] {
-    width: 170px;
-    height: 302.22222px;
-    transition: all 0.2s linear;
+.gallery-image[data-collapsed="true"][data-v-6ee85444] {
+    transform: translate(960px, 1630px) scale(0.8, 0.45) !important;
+    border-radius: 50%;
+    overflow: hidden;
 }
-.image.collapse[data-v-6ee85444] {
-    margin: 100px 0 0 -200px;
-    transform: translateX(50%) rotate(0) scale(1);
-}
-.image.not-selected.collapse[data-v-6ee85444] {
-    margin: 0 0 0 -170px;
-    opacity: 0;
-    transform: translateX(50%) rotate(0) scale(1);
-}
-.image.selected.collapse[data-v-6ee85444] {
-    margin: 0 0 0 -270px;
-    transform: translateX(50%) rotate(0) scale(1);
-}
-.image.selected.collapse.large[data-v-6ee85444] {
-    margin: -900px 0 0 -900px;
-    width: 900px;
-    height: 1600px;
-    box-shadow: 0 3px 44px 5px rgba(0, 0, 0, 0.87);
-}
-.image.collapse.small[data-v-6ee85444] {
-    margin: -60px 0 0 -160px;
-    width: 160px;
-    height: 284.44444px;
-    box-shadow: none;
-}
-.image.remove[data-v-6ee85444] {
+.gallery-image.remove[data-v-6ee85444] {
     width: 0;
     margin-left: 0;
     margin-right: 0;
     transition: all 0.2s ease-in;
 }
-
-.relative-items[data-v-66ff682d] {
-  pointer-events: auto;
-  position: absolute;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  transition: all 0.2s linear;
+.gallery-image .delete-button[data-v-6ee85444] {
+    position: absolute;
+    bottom: -40px;
+    left: 60px;
+    transition: all 0.2s linear;
 }
-.relative-items .static-backdrop[data-v-66ff682d] {
+
+.gallery-frame[data-v-66ff682d] {
+  pointer-events: none;
+  position: absolute;
+  opacity: 1;
+  z-index: 3;
+  top: 0;
+  left: 0;
+  width: 1080px;
+  height: 1920px;
+}
+.gallery-frame .static-backdrop[data-v-66ff682d] {
+    pointer-events: auto;
     position: fixed;
     top: 0;
     left: 0;
@@ -4852,39 +4821,9 @@ readers do not read off random characters that represent icons */
     transition: all 0.2s linear;
     z-index: 4;
 }
-.relative-items .static-backdrop.active[data-v-66ff682d] {
+.gallery-frame .static-backdrop.active[data-v-66ff682d] {
       display: block;
       opacity: 1;
-}
-.relative-items.background-hide-transition[data-v-66ff682d] {
-    animation-name: background-hide-transition-data-v-66ff682d;
-    animation-duration: 500ms;
-    animation-timing-function: linear;
-    animation-fill-mode: both;
-}
-.relative-items.background-show-transition[data-v-66ff682d] {
-    animation-name: background-show-transition-data-v-66ff682d;
-    animation-duration: 500ms;
-    animation-timing-function: linear;
-    animation-fill-mode: both;
-}
-@keyframes background-hide-transition-data-v-66ff682d {
-0% {
-}
-40% {
-}
-60% {
-}
-100% {
-}
-}
-@keyframes background-show-transition-data-v-66ff682d {
-0% {
-}
-30% {
-}
-100% {
-}
 }
 
 .red .button .gradient[data-v-01667337] {
@@ -5173,75 +5112,11 @@ readers do not read off random characters that represent icons */
     box-shadow: 0 5px 6px 3px rgba(0, 0, 0, 0.56);
     background: linear-gradient(to bottom, #ffffff 0%, #a9d2f3 10%, #90bae4 25%, #90bcea 37%, #91d271 50%, #57b975 56%, #34c9bd 100%);
 }
-.gallery-icon-overlay[data-v-c5a09e66] {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0);
-  pointer-events: auto;
-}
-.gallery-frame[data-v-c5a09e66] {
-  pointer-events: none;
-  position: absolute;
-  transition: all 200ms linear;
-  opacity: 1;
-  z-index: 3;
-}
-.gallery-frame.hidden[data-v-c5a09e66] {
-    opacity: 0;
-}
-.gallery-frame.images-collapse[data-v-c5a09e66] {
-    overflow: hidden;
-    background-color: rgba(0, 0, 0, 0);
-}
-.gallery-frame.transition-collapse[data-v-c5a09e66] {
-    animation-name: gallery-collapse-data-v-c5a09e66;
-    animation-duration: 300ms;
-    animation-timing-function: ease-out;
-    animation-fill-mode: both;
-    animation-direction: alternate;
-}
-.gallery-frame.transition-expand[data-v-c5a09e66] {
-    animation-name: gallery-expand-data-v-c5a09e66;
-    animation-duration: 300ms;
-    animation-timing-function: ease-out;
-    animation-fill-mode: both;
-}
 .gallery-transition-collapse .close-button[data-v-c5a09e66] {
   display: none;
 }
 .gallery-transition-expand .close-button[data-v-c5a09e66] {
   display: block;
-}
-@keyframes gallery-collapse-data-v-c5a09e66 {
-0% {
-    top: 1000px;
-    left: 0;
-    width: 1080px;
-    height: 550px;
-}
-100% {
-    top: 1550px;
-    left: 880px;
-    width: 160px;
-    height: 160px;
-    border-radius: 80px;
-}
-}
-@keyframes gallery-expand-data-v-c5a09e66 {
-0% {
-    top: 1550px;
-    left: 880px;
-    width: 160px;
-    height: 160px;
-    border-radius: 80px;
-}
-100% {
-    top: 1000px;
-    left: 0;
-    width: 1080px;
-    height: 550px;
-}
 }
 .leaf[data-v-c5a09e66] {
   opacity: 0;
@@ -5292,7 +5167,6 @@ readers do not read off random characters that represent icons */
   position: absolute;
   text-align: center;
   transition: all 800ms linear;
-  overflow: hidden;
 }
 .themes-frame .theme-icon[data-v-7d61b318] {
     position: absolute;
@@ -5553,47 +5427,45 @@ readers do not read off random characters that represent icons */
   z-index: 1;
 }
 
-
 .snap[data-v-545d0baf] {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 1080px;
-    height: 1920px;
-    transform: scale(1.0);
-    box-shadow: -1px 17px 38px 9px rgba(0, 0, 0, 0.6);
-    overflow: hidden;
-    border: solid 2px black;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1080px;
+  height: 1920px;
+  transform: translate(0px, 0px) scale(1);
+  box-shadow: -1px 17px 38px 9px rgba(0, 0, 0, 0.6);
+  overflow: hidden;
+  border: solid 2px black;
 }
 .transition[data-v-545d0baf] {
-    animation-name: moving-snap-data-v-545d0baf;
-    animation-duration: 1000ms;
-    animation-timing-function: ease-out;
-    animation-fill-mode: forwards;
+  animation-name: moving-snap-data-v-545d0baf;
+  animation-duration: 1000ms;
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards;
 }
 @keyframes moving-snap-data-v-545d0baf {
 0% {
-        transform: translate(0px, 0px) scale(1);
-        opacity: 1.0;
-        filter: brightness(1.0);
+    transform: translate(0px, 0px) scale(1);
+    opacity: 1.0;
+    filter: brightness(1);
 }
 40% {
-        transform: translate(0px, 0px) scale(0.6);
-        filter: brightness(2.0);
-        border-radius: 0;
+    transform: translate(0px, 0px) scale(0.6);
+    filter: brightness(2);
+    border-radius: 0;
 }
 60% {
-        opacity: 1.0;
-        transform: translate(100px, 200px) scale(0.4, 0.23);
-        border-radius: 40%;
+    opacity: 1.0;
+    transform: translate(100px, 200px) scale(0.4, 0.23);
+    border-radius: 40%;
 }
 100% {
-        transform: translate(470px, 880px) scale(0.07, 0.03);
-        opacity: 0;
-        border-radius: 50%;
+    transform: translate(440px, 775px) scale(0.07, 0.03);
+    opacity: 0.0;
+    border-radius: 50%;
 }
 }
-
 
 .record-button[data-v-6de3255b] {
   pointer-events: auto;
