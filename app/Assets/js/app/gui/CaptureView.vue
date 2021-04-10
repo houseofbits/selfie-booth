@@ -316,7 +316,7 @@ export default {
             if (this.enableDetectorTimer) {
                 clearTimeout(this.enableDetectorTimer);
             }
-            this.enableDetectorTimer = setTimeout(() => this.faceDetect.enableDetector(true), 400);
+            this.enableDetectorTimer = setTimeout(() => this.faceDetect.enableDetector(true), 600);
         }
     },
     mounted() {
