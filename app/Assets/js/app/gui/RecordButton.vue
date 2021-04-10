@@ -12,7 +12,7 @@ export default {
     props: {
         timeout: {
             type: Number,
-            default: 5000
+            default: 500
         },
         enabled: {
             type: Boolean,

@@ -55,14 +55,17 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+
+@import '/css/app/variables.scss';
+
 .snap {
     position: absolute;
     top: 0;
     left: 0;
-    width: 1080px;
-    height: 1920px;
-    transform: scale(1.0);
+    width: $screen-width+px;
+    height: $screen-height+px;
+    transform: translate(0px, 0px) scale(1.0);
     box-shadow: -1px 17px 38px 9px rgba(0, 0, 0, 0.6);
     overflow: hidden;
     border: solid 2px black;
@@ -92,8 +95,8 @@ export default {
         border-radius: 40%;
     }
     100% {
-        transform: translate(470px, 880px) scale(0.07, 0.03);
-        opacity: 0;
+        transform: translate(($gallery-icon-pos-left/2)+px, ($gallery-icon-pos-top/2)+px) scale(0.07, 0.03);
+        opacity: 0.0;
         border-radius: 50%;
     }
 }

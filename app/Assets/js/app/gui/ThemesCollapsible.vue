@@ -368,7 +368,7 @@ $theme-icons-per-row: 4;
     left: $theme-icon-pos-left+px;
     width: $theme-icon-size;
     height: $theme-icon-size;
-    border-radius: $gallery-icon-size/2;
+    border-radius: ($gallery-icon-size/2)+px;
     //background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.5) 100%),
     //linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 34%, rgb(70, 107, 127) 100%);
     background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.5) 100%),

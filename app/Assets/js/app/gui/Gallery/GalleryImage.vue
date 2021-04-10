@@ -1,12 +1,13 @@
 <template>
-    <div :class="getMainClass" class="image">
-        <round-button v-if="isDeleteButtonVisible"
+    <div class="gallery-image" :class="{remove: this.markedForRemoval}" :data-position="index" :data-count="imageNumber"
+         :data-large="isSelected" :data-collapsed="isCollapsed">
+        <round-button v-if="isButtonsVisible"
                       :class="deleteButtonClass"
                       class="delete-button red"
                       icon="fas fa-trash-alt"
                       @click="setForRemoval"/>
 
-        <img :src="image.base64data" alt="Thumbnail" height="100%" width="100%" @click.self="setSelected"/>
+        <img :src="image.base64data" alt="Thumbnail" height="100%" width="100%" @click.self="click"/>
     </div>
 </template>
 
@@ -20,6 +21,10 @@ export default {
         RoundButton
     },
     props: {
+        index: {
+            type: Number,
+            default: 0
+        },
         selected: {
             type: Object
         },
@@ -27,13 +32,13 @@ export default {
             type: Boolean,
             default: false
         },
-        collapsedType: {
-            type: Number,
-            default: false
-        },
         image: {
             type: Object,
-        }
+        },
+        imageNumber: {
+            type: Number,
+            default: 0
+        },
     },
     data() {
         return {
@@ -41,7 +46,6 @@ export default {
             isCollapsed: true,
             markedForRemoval: false,
             isDeleteButtonVisible: false,
-            transformIndex: 0,
         };
     },
     watch: {
@@ -61,22 +65,7 @@ export default {
     },
     computed: {
         isButtonsVisible() {
-            return !this.markedForRemoval && !this.collapsedType !== 2;
-        },
-        isNotSelected() {
-            return (this.selected !== null && this.$vnode.key !== this.selected.id);
-        },
-        getMainClass() {
-            const transformClass = 'transform-rnd-' + this.transformIndex;
-            return {
-                remove: this.markedForRemoval,
-                selected: this.isSelected,
-                'not-selected': this.isNotSelected,
-                collapse: this.collapse,
-                large: this.collapsedType === 1 && !this.markedForRemoval,
-                small: this.collapsedType === 2,
-                [transformClass]: true
-            };
+            return !this.markedForRemoval && !this.isSelected && !this.isCollapsed;
         },
         deleteButtonClass() {
             return {
@@ -85,34 +74,25 @@ export default {
         }
     },
     methods: {
+        click() {
+            this.$emit('select', this.image);
+        },
+
         setSelected() {
             if (!this.collapse) {
-                this.isDeleteButtonVisible = true;
+                this.isDeleteButtonVisible = false;
                 this.isSelected = true;
                 this.selectAction(GalleryActions.SelectImage);
-                this.shuffle();
             }
         },
         setForRemoval() {
             this.isDeleteButtonVisible = false;
             this.markedForRemoval = true;
-            setTimeout(() => this.selectAction(GalleryActions.DeleteImage), 200);
+            setTimeout(() => this.deleteImage(this.image), 200);
         },
-        selectEmail() {
-            this.selectAction(GalleryActions.ShareEmail);
+        deleteImage(image) {
+            this.$emit('delete', this.image);
         },
-        selectDownload() {
-            this.selectAction(GalleryActions.ShareDownload);
-        },
-        selectAction(action) {
-            this.$emit('action', action, this.image);
-        },
-        shuffle() {
-            this.transformIndex = Math.floor(Math.random() * 10);
-        }
-    },
-    mounted() {
-        this.shuffle();
     }
 }
 </script>
@@ -120,112 +100,75 @@ export default {
 <style lang="scss" scoped>
 @import '/css/app/variables.scss';
 
-.image {
-    display: inline-block;
-    position: relative;
+.gallery-image {
+    pointer-events: auto;
+    display: block;
+    position: absolute;
     width: $image-default-width+px;
     height: $image-default-height+px;
-    padding: 0;
     transition: all 0.2s linear;
-    vertical-align: top;
+    margin-left: -($image-default-width/2)+px;
+    margin-top: -($image-default-height/2)+px;
     box-shadow: 0 3px 9px 0 rgba(0, 0, 0, 0.78);
-    margin: 80px 15px;
 
-    &.transform-rnd-0 {
-        transform: rotate(3deg) scale(1.2);
-    }
-
-    &.transform-rnd-1 {
-        transform: rotate(-3deg) scale(1.1);
-    }
-
-    &.transform-rnd-2 {
-        transform: rotate(1deg) scale(0.9);
-    }
-
-    &.transform-rnd-3 {
-        transform: rotate(2deg) scale(0.85);
-    }
-
-    &.transform-rnd-4 {
-        transform: rotate(-2deg) scale(0.8);
-    }
-
-    &.transform-rnd-5 {
-        transform: rotate(-1deg) scale(0.9);
-    }
-
-    &.transform-rnd-6 {
-        transform: rotate(-2deg) scale(1.1);
-    }
-
-    &.transform-rnd-7 {
-        transform: rotate(2deg) scale(1.0);
-    }
-
-    &.transform-rnd-8 {
-        transform: rotate(-3deg) scale(1.0);
-    }
-
-    &.transform-rnd-9 {
-        transform: rotate(-1deg) scale(1.0);
-    }
-
-    .delete-button {
-        position: absolute;
-        bottom: -40px;
-        left: 60px;
-        transition: all 0.2s linear;
-
-        &.expanded {
-            bottom: 40px;
-            left: 520px;
+    &[data-count="1"] {
+        &[data-position="0"] {
+            transform: translate(540px, 1280px) scale(1.0);
         }
     }
 
-    &.selected {
-        width: $image-selected-width+px;
-        height: $image-selected-height+px;
-        transition: all 0.2s linear;
+    &[data-count="2"] {
+        &[data-position="0"] {
+            transform: translate(420px, 1280px) scale(1.0) rotate(-2deg);
+        }
+
+        &[data-position="1"] {
+            transform: translate(660px, 1280px) scale(1.0) rotate(2deg);
+        }
+    }
+
+    &[data-count="3"] {
+        &[data-position="0"] {
+            transform: translate(540px, 1270px) scale(1.0);
+        }
+
+        &[data-position="1"] {
+            transform: translate(300px, 1280px) scale(1.0) rotate(-2deg);
+        }
+
+        &[data-position="2"] {
+            transform: translate(780px, 1280px) scale(1.0) rotate(2deg);
+        }
+    }
+
+    &[data-count="4"] {
+        &[data-position="0"] {
+            transform: translate(420px, 1280px) scale(1.0) rotate(-2deg);
+        }
+
+        &[data-position="1"] {
+            transform: translate(660px, 1280px) scale(1.0) rotate(2deg);
+        }
+
+        &[data-position="2"] {
+            transform: translate(190px, 1290px) scale(1.0) rotate(-3deg);
+        }
+
+        &[data-position="3"] {
+            transform: translate(890px, 1290px) scale(1.0) rotate(3deg);
+        }
+    }
+
+    &[data-large="true"] {
+        transform: translate(540px, 890px) scale(4.7) !important;
         z-index: 5;
-        box-shadow: 0 3px 20px 0 rgba(0, 0, 0, 0.79);
-        margin: 40px 15px 0;
     }
 
-    &.not-selected {
-        width: $image-not-selected-width+px;
-        height: $image-not-selected-height+px;
-        transition: all 0.2s linear;
-    }
-
-    &.collapse {
-        margin: 100px 0 0 (-$image-default-width)+px;
-        transform: translateX(50%) rotate(0) scale(1.0);
-    }
-
-    &.not-selected.collapse {
-        margin: 0 0 0 (-$image-not-selected-width)+px;
-        opacity: 0;
-        transform: translateX(50%) rotate(0) scale(1.0);
-    }
-
-    &.selected.collapse {
-        margin: 0 0 0 (-$image-selected-width)+px;
-        transform: translateX(50%) rotate(0) scale(1.0);
-    }
-
-    &.selected.collapse.large {
-        margin: -900px 0 0 (-$image-large-width)+px;
-        width: $image-large-width+px;
-        height: $image-large-height+px;
-        box-shadow: 0 3px 44px 5px rgba(0, 0, 0, 0.87);
-    }
-
-    &.collapse.small {
-        margin: -60px 0 0 (-$image-collapsed-width)+px;
-        width: $image-collapsed-width+px;
-        height: $image-collapsed-height+px;
-        box-shadow: none;
+    &[data-collapsed="true"] {
+        transform: translate($image-collapsed-pos-x+px, $image-collapsed-pos-y+px)
+                scale($image-collapsed-scale-x, $image-collapsed-scale-y) !important;
+        border-radius: 50%;
+        overflow: hidden;
     }
 
     &.remove {
@@ -234,7 +177,13 @@ export default {
         margin-right: 0;
         transition: all 0.2s ease-in;
     }
+
+    .delete-button {
+        position: absolute;
+        bottom: -40px;
+        left: 60px;
+        transition: all 0.2s linear;
+    }
+
 }
-
-
 </style>

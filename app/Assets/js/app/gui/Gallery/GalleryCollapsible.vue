@@ -1,18 +1,17 @@
 <template>
     <div :class="{visible: images.length}" class="gallery-collapsible">
-        <div :class="{visible: !isOpen}" class="icon-backdrop">
+
+        <div :class="{visible: !isOpen}" class="icon-backdrop" @click.self="openGallery">
             <div class="shadow"></div>
             <div class="border"></div>
         </div>
-        <div :class="galleryFrameClass" class="gallery-frame" @click.self="openGallery">
-            <gallery :collapse-images="imageData.isImagesCollapsed"
-                     :images="images"
-                     :images-size="imageData.imagesSize"
-                     :selected="selectedImage"
-                     @image-action="imageAction"
-            />
-            <div v-if="imageData.isImagesCollapsed" class="gallery-icon-overlay" @click.self="openGallery"></div>
-        </div>
+
+        <gallery :collapse-images="imageData.isImagesCollapsed"
+                 :images="images"
+                 :selected="selectedImage"
+                 @select-image="selectImage"
+                 @delete-image="deleteImage"/>
+
         <div :class="{bounce: blinkImageCaptured, visible: !isOpen}" class="icon-overlay">
             <div class="highlight"></div>
             <div :class="{bounce: blinkImageCaptured}" class="info-box">
@@ -57,9 +56,6 @@ export default {
         },
         selectedImage: {
             type: Object
-        },
-        maximizeSelectedImage: {
-            type: Boolean
         }
     },
     data() {
@@ -83,12 +79,6 @@ export default {
                 this.closeGallery();
             }
         },
-        maximizeSelectedImage(val) {
-            if (!val && this.imageData.imagesSize === GalleryImageSize.Expanded) {
-                this.imageData.imagesSize = GalleryImageSize.Normal;
-                this.imageData.isImagesCollapsed = false;
-            }
-        },
         images(val) {
             clearTimeout(this.blinkImageCapturedTimer);
             this.blinkImageCaptured = true;
@@ -96,14 +86,6 @@ export default {
         }
     },
     computed: {
-        galleryFrameClass() {
-            return {
-                'transition-expand': this.isOpen,
-                'transition-collapse': !this.isOpen,
-                'images-collapse': (this.imageData.isImagesCollapsed && this.imageData.imagesSize === GalleryImageSize.Minimized),
-                'hidden': this.images.length === 0,
-            };
-        },
         isInfoMessageVisible() {
             return !this.selectedImage && this.open;
         }
@@ -113,15 +95,7 @@ export default {
             if (!this.isOpen && !this.disabled) {
                 this.isOpen = true;
                 this.$emit('open');
-                // if (this.images.length > 1) {
-                // this.imageData.isImagesCollapsed = false;
-
-                    setTimeout(() => this.imageData.imagesSize = GalleryImageSize.Normal, 100);
-                    setTimeout(() => this.imageData.isImagesCollapsed = false, 160);
-                // } else {
-                //     setTimeout(() => this.imageData.imagesSize = GalleryImageSize.Normal, 100);
-                //     setTimeout(() => this.imageData.isImagesCollapsed = false, 160);
-                // }
+                setTimeout(() => this.imageData.isImagesCollapsed = false, 160);
             }
         },
         closeGallery() {
@@ -131,24 +105,21 @@ export default {
                 this.imageData.imagesSize = GalleryImageSize.Normal;
                 this.$emit('image-action', GalleryActions.SelectImage, null);
                 if (this.images.length > 1) {
-                    setTimeout(() => this.imageData.imagesSize = GalleryImageSize.Minimized, 300);
                     setTimeout(() => this.isOpen = false, 300);
                 } else {
-                    this.imageData.imagesSize = GalleryImageSize.Minimized;
                     this.isOpen = false;
                 }
             }
         },
-        imageAction(action, image) {
-            switch (action) {
-                case GalleryActions.ShareFacebook:
-                case GalleryActions.ShareEmail:
-                case GalleryActions.ShareDownload:
-                case GalleryActions.SelectImage:
-                    this.imageData.imagesSize = GalleryImageSize.Expanded;
-                    this.imageData.isImagesCollapsed = true;
+        selectImage(image) {
+            if (!this.isOpen) {
+                this.openGallery();
+            } else {
+                this.$emit('select-image', image);
             }
-            this.$emit('image-action', action, image);
+        },
+        deleteImage(image) {
+            this.$emit('delete-image', image);
         }
     }
 }
@@ -187,11 +158,9 @@ export default {
     position: absolute;
     top: $gallery-icon-pos-top+px;
     left: $gallery-icon-pos-left+px;
-    width: $gallery-icon-size;
-    height: $gallery-icon-size;
-    border-radius: $gallery-icon-size/2;
-    //background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.5) 100%),
-    //linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 34%, rgb(70, 107, 127) 100%);
+    width: $gallery-icon-size+px;
+    height: $gallery-icon-size+px;
+    border-radius: ($gallery-icon-size/2)+px;
     background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.5) 100%),
     linear-gradient(to bottom, rgba(0,0,0,0) 34%,rgba(67,109,61,1) 100%);
     transition: all 500ms linear;
@@ -222,7 +191,6 @@ export default {
         border-top-right-radius: 100px;
         border-bottom-left-radius: 100px 40px;
         border-bottom-right-radius: 100px 40px;
-        //background: linear-gradient(to bottom, rgba(254, 252, 234, 0.05) 0%, rgba(54, 225, 241, 0.6) 100%);
         background-image: url('@images/right-icon-hilight.png');
     }
 
@@ -287,8 +255,8 @@ export default {
     position: absolute;
     top: $gallery-icon-pos-top+px;
     left: $gallery-icon-pos-left+px;
-    width: $gallery-icon-size;
-    height: $gallery-icon-size;
+    width: $gallery-icon-size+px;
+    height: $gallery-icon-size+px;
     z-index: 1;
     transition: all 200ms linear;
     opacity: 0;
@@ -329,85 +297,12 @@ export default {
     }
 }
 
-.gallery-icon-overlay {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0);
-    pointer-events: auto;
-}
-
-.gallery-frame {
-    pointer-events: none;
-    position: absolute;
-    transition: all 200ms linear;
-    opacity: 1;
-    z-index: 3;
-
-    &.hidden {
-        opacity: 0;
-    }
-
-    &.images-collapse {
-        overflow: hidden;
-        background-color: rgba(0, 0, 0, 0);
-    }
-
-    &.transition-collapse {
-        animation-name: gallery-collapse;
-        animation-duration: 300ms;
-        animation-timing-function: ease-out;
-        animation-fill-mode: both;
-        animation-direction: alternate;
-    }
-
-    &.transition-expand {
-        animation-name: gallery-expand;
-        animation-duration: 300ms;
-        animation-timing-function: ease-out;
-        animation-fill-mode: both;
-    }
-}
-
 .gallery-transition-collapse .close-button {
     display: none;
 }
 
 .gallery-transition-expand .close-button {
     display: block;
-}
-
-@mixin gallery-state-0 {
-    top: $gallery-pos-top;
-    left: 0;
-    width: 1080px;
-    height: $gallery-height;
-}
-
-@mixin gallery-state-100 {
-    top: $gallery-icon-pos-top+px;
-    left: $gallery-icon-pos-left+px;
-    width: $gallery-icon-size;
-    height: $gallery-icon-size;
-    border-radius: $gallery-icon-size/2;
-}
-
-@keyframes gallery-collapse {
-    0% {
-        @include gallery-state-0;
-    }
-    100% {
-        @include gallery-state-100;
-    }
-}
-
-@keyframes gallery-expand {
-    0% {
-        @include gallery-state-100;
-    }
-    100% {
-        @include gallery-state-0;
-    }
 }
 
 .leaf {

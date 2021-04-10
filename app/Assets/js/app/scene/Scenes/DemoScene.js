@@ -59,9 +59,9 @@ export default class DemoScene extends BaseScene {
     }
 
     onSceneActivated() {
-        this.syncItems().then(r => {
-            this.createShuffleTimer();
-        });
+        // this.syncItems().then(r => {
+        //     this.createShuffleTimer();
+        // });
     }
 
     onSceneDeactivated() {

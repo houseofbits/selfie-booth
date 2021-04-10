@@ -11,12 +11,13 @@
         <dynamic-background :open="isDynamicBackgroundOpen" :state="dynamicBackgroundState"/>
         <gallery-collapsible :disabled="isCaptureInProgress"
                              :images="images"
-                             :maximize-selected-image="isExpandedViewOpen"
                              :open="isGalleryOpen"
                              :selected-image="selectedImage"
                              @close="closeGallery"
                              @open="openGallery"
-                             @image-action="handleImageAction"/>
+                             @select-image="selectImage"
+                             @delete-image="deleteImage"
+        />
         <themes-collapsible :disabled="isCaptureInProgress"
                             :open="isThemesOpen"
                             :theme="selectedTheme"
@@ -109,9 +110,9 @@ export default {
         isImageViewOpen() {
             return this.selectedImage !== null && !this.isEmailViewOpen && !this.isDownloadViewOpen;
         },
-        isExpandedViewOpen() {
-            return this.isImageViewOpen || this.isEmailViewOpen || this.isShareViewOpen || this.isDownloadViewOpen;
-        },
+        // isExpandedViewOpen() {
+        //     return this.isImageViewOpen || this.isEmailViewOpen || this.isShareViewOpen || this.isDownloadViewOpen;
+        // },
         isCaptureAvailable() {
             return (this.images.length < 4)
                 && !this.isGalleryOpen
@@ -256,21 +257,8 @@ export default {
             this.isOptionsOpen = false;
             this.enableFaceDetection();
         },
-        handleImageAction(action, image) {
-            switch (action) {
-                case GalleryActions.SelectImage:
-                    this.selectedImage = image;
-                    break;
-                case GalleryActions.DeleteImage:
-                    this.deleteImage(image);
-                    break;
-                case GalleryActions.MinimizeImage:
-                    this.selectedImage = null;
-                    this.isEmailViewOpen = false;
-                    this.isShareViewOpen = false;
-                    this.isDownloadViewOpen = false;
-                    break;
-            }
+        selectImage(image) {
+            this.selectedImage = image;
         },
         openShareEmailView() {
             this.syncImageData();

@@ -1,19 +1,21 @@
 <template>
-    <div :class="frameClass" class="relative-items">
+    <div class="gallery-frame">
         <div :class="backDropClass" class="static-backdrop"></div>
         <gallery-image v-for="(image, index) in images"
+                       :index="index"
                        :key="image.id"
                        :collapse="collapseImages"
-                       :collapsed-type="imagesSize"
+                       :image-number="images.length"
                        :image="image"
                        :selected="selected"
-                       @action="imageAction"/>
+                       @select="clickedOnImage"
+                       @delete="deleteImage"
+        />
     </div>
 </template>
 
 <script>
 import GalleryImage from './GalleryImage.vue';
-import {GalleryActions} from '../Constants.js';
 
 export default {
     name: "Gallery",
@@ -27,9 +29,6 @@ export default {
         collapseImages: {
             type: Boolean
         },
-        imagesSize: {
-            type: Number
-        },
         selected: {
             type: Object
         }
@@ -40,22 +39,16 @@ export default {
     computed: {
         backDropClass() {
             return {
-                active: this.collapseImages && this.imagesSize === 1
-            };
-        },
-        frameClass() {
-            return {
-                'background-hide-transition': this.collapseImages,
-                'background-show-transition': !this.collapseImages,
+                active: !!this.selected
             };
         }
     },
     methods: {
-        closeImage() {
-            this.imageAction(GalleryActions.MinimizeImage)
+        clickedOnImage(image) {
+            this.$emit('select-image', image);
         },
-        imageAction(action, image) {
-            this.$emit('image-action', action, image);
+        deleteImage(image) {
+            this.$emit('delete-image', image);
         }
     }
 }
@@ -64,23 +57,24 @@ export default {
 <style lang="scss" scoped>
 @import '/css/app/variables.scss';
 
-.relative-items {
-    pointer-events: auto;
+.gallery-frame {
+    pointer-events: none;
     position: absolute;
+    opacity: 1;
+    z-index: 3;
     top: 0;
-    //background: linear-gradient(to right, rgba(157, 213, 58, 0) 0%, rgba(92, 145, 55, 0.36) 21%, rgba(93, 148, 53, 0.39) 23%, rgba(112, 191, 22, 0.39) 49%, rgba(72, 156, 10, 0.39) 75%, rgba(69, 153, 9, 0.36) 77%, rgba(69, 153, 9, 0) 100%);
-    width: 100%;
-    height: 100%;
-    text-align: center;
-    transition: all 0.2s linear;
+    left: 0;
+    width: $screen-width+px;
+    height: $screen-height+px;
 
     .static-backdrop {
+        pointer-events: auto;
         position: fixed;
         top: 0;
         left: 0;
         width: $screen-width+px;
         height: $screen-height+px;
-        background-color: rgba(31,59,8,0.65);  //rgba(0, 0, 0, 0.5);
+        background-color: rgba(31,59,8,0.65);
         opacity: 0;
         display: none;
         transition: all 0.2s linear;
@@ -91,48 +85,6 @@ export default {
             opacity: 1;
         }
     }
-
-    &.background-hide-transition {
-        animation-name: background-hide-transition;
-        animation-duration: 500ms;
-        animation-timing-function: linear;
-        animation-fill-mode: both;
-    }
-
-    &.background-show-transition {
-        animation-name: background-show-transition;
-        animation-duration: 500ms;
-        animation-timing-function: linear;
-        animation-fill-mode: both;
-    }
 }
-
-@keyframes background-hide-transition {
-    0% {
-    //    background-color: rgba(0, 0, 0, 0.5);
-    }
-    40% {
-     //   background-color: rgba(0, 0, 0, 0.4);
-    }
-    60% {
-    //    background-color: rgba(0, 0, 0, 0);
-    }
-    100% {
-    //    background-color: rgba(0, 0, 0, 0);
-    }
-}
-
-@keyframes background-show-transition {
-    0% {
-
-    }
-    30% {
-
-    }
-    100% {
-
-    }
-}
-
 
 </style>
