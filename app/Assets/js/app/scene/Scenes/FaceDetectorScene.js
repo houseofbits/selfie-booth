@@ -30,5 +30,6 @@ export default class FaceDetectorScene extends BaseScene {
     onVideoTextureCreated() {
         this.material.setDiffuseTexture(this.videoTexture);
         this.plane.material = this.material.getMaterial();
+        this.mainScene.logLoadingMessage('FaceDetectorScene video texture created');
     }
 }

@@ -150,7 +150,6 @@ $theme-icons-per-row: 4;
     pointer-events: none;
     position: absolute;
     text-align: center;
-    transition: all 800ms linear;
     top: 0;
     left: 0;
     width: $screen-width+px;
@@ -216,6 +215,11 @@ $theme-icons-per-row: 4;
                     scale($theme-image-collapsed-scale-x, $theme-image-collapsed-scale-y);
             border-radius: 50%;
             box-shadow: none !important;
+            opacity: 0.0;
+        }
+
+        &.collapsed.selected {
+            opacity: 1.0;
         }
 
         &.selected {
@@ -231,6 +235,7 @@ $theme-icons-per-row: 4;
             top: 3px;
             bottom: 3px;
             border-radius: 18px;
+            transition: all 200ms linear;
 
             &.amber-icon {
                 background-image: url('@images/amber/icon.png');
@@ -258,7 +263,7 @@ $theme-icons-per-row: 4;
             }
         }
 
-        &.collapsed .icon-background {
+        &.collapsed.selected .icon-background {
             left:0;
             right: 0;
             top: 0;

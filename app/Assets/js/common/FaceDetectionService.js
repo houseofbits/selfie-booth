@@ -1,4 +1,5 @@
 import * as faceapi from '@vladmandic/face-api';
+import MainSceneInstance from '/js/app/scene/MainInstance';
 
 const DETECTOR_INTERVAL = 100;
 
@@ -21,7 +22,7 @@ class FaceDetectionService {
 
     async onWindowLoaded() {
 
-        console.log('Init face detector');
+        MainSceneInstance.logLoadingMessage('Init face detector');
 
         this.sourceCanvas = document.getElementById('captureCanvas');
 
@@ -36,11 +37,15 @@ class FaceDetectionService {
         await this.detect();
 
         this.enableDetector(false);
+
+        MainSceneInstance.logLoadingMessage('Application ready!', true);
     }
 
     async initFaceAPI() {
 
         console.log('Loading face detector models');
+
+        MainSceneInstance.logLoadingMessage('Loading face detector models');
 
         await faceapi.nets.ssdMobilenetv1.load('/assets/models/');
         this.detectorNet = new faceapi.SsdMobilenetv1Options({minConfidence: 0.2});
@@ -51,6 +56,10 @@ class FaceDetectionService {
         console.log('FaceAPI version ' + faceapi.version.faceapi);
         console.log('TensorFlow/JS ' + faceapi.tf.version_core);
         console.log('Models loaded: ' + faceapi.tf.engine().state.numTensors);
+
+        MainSceneInstance.logLoadingMessage('FaceAPI version ' + faceapi.version.faceapi);
+        MainSceneInstance.logLoadingMessage('TensorFlow/JS ' + faceapi.tf.version_core);
+        MainSceneInstance.logLoadingMessage('Models loaded: ' + faceapi.tf.engine().state.numTensors);
     }
 
     async detect() {

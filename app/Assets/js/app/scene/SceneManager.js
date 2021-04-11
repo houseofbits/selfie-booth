@@ -37,6 +37,8 @@ export default class SceneManager {
         this.onThemeSelected('DemoScene');
 
         this.engine.runRenderLoop(() => this.render());
+
+        this.loaderViewCallback = null;
     }
 
     render() {
@@ -92,6 +94,16 @@ export default class SceneManager {
 
     addScene(scene) {
         this.scenes.push(scene);
+    }
+
+    logLoadingMessage(message, isLoaded) {
+        if (this.loaderViewCallback) {
+            this.loaderViewCallback(message, isLoaded || false);
+        }
+    }
+
+    registerLoaderViewCallback(callback) {
+        this.loaderViewCallback = callback;
     }
 }
 

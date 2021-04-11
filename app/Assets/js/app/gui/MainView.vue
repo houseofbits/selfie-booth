@@ -8,6 +8,7 @@
                       @captureViewClose="reset"/>
 
 <!--        <face-detection-debug />-->
+        <loading-view/>
     </div>
 </template>
 
@@ -19,6 +20,7 @@ import StartButton from "./StartButton.vue";
 import ConfirmButton from "./ConfirmButton.vue";
 import MainSceneInstance from '/js/app/scene/MainInstance';
 import FaceDetectionDebug from './FaceDetectionDebug.vue';
+import LoadingView from './LoadingView.vue';
 
 export default {
     name: "MainView",
@@ -27,7 +29,8 @@ export default {
         Languages,
         StartButton,
         ConfirmButton,
-        FaceDetectionDebug
+        FaceDetectionDebug,
+        LoadingView
     },
     data() {
         return {

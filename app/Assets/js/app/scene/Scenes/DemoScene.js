@@ -146,6 +146,8 @@ export default class DemoScene extends BaseScene {
 
             item.setMesh(mesh);
             this.cleanUpItems();
+
+            this.mainScene.logLoadingMessage('DemoScene item ' + imageId + ' loaded');
         });
     }
 
