@@ -71,12 +71,12 @@ export default class DinosaursThemeScene extends BaseScene {
             case 'dinosaurs3':
                 this.material.setDiffuseTexture(this.bg3Texture);
                 this.targetFacePosition.x = 0.34;
-                this.targetFacePosition.y = 0.34;
+                this.targetFacePosition.y = 0.42;
                 break;
             case 'dinosaurs4':
                 this.material.setDiffuseTexture(this.bg4Texture);
                 this.targetFacePosition.x = 0.37;
-                this.targetFacePosition.y = 0.35;
+                this.targetFacePosition.y = 0.41;
                 break;
         }
     }
