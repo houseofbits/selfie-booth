@@ -56,6 +56,8 @@ export default class BugsThemeScene extends BaseScene {
         switch (optionName) {
             case 'bug1':
                 this.material.setDiffuseTexture(this.bg1Texture);
+                this.targetFacePosition.x = 0.76;
+                this.targetFacePosition.y = 0.42;
                 break;
             case 'bug2':
                 this.material.setDiffuseTexture(this.bg2Texture);

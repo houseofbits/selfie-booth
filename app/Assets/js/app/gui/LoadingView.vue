@@ -3,6 +3,7 @@
         <ul>
             <li v-for="(val, index) in messages" :key="index">{{ val }}</li>
         </ul>
+        <div class="title">{{ title }}</div>
     </div>
 </template>
 
@@ -10,7 +11,7 @@
 
 import MainSceneInstance from '/js/app/scene/MainInstance';
 
-const packageVersion = JSON.stringify(require('/package.json').version);
+const packageVersion = require('/package.json').version;
 
 export default {
     name: "LoadingView",
@@ -28,10 +29,12 @@ export default {
             this.isLoaded = true;
         }
     },
+    computed: {
+        title() {
+            return 'SELFIE BOOTH ' + packageVersion;
+        }
+    },
     mounted() {
-        this.addLine('SELFIE BOOTH ' + packageVersion);
-        this.addLine('-----------------------------------------------');
-
         MainSceneInstance.registerLoaderViewCallback((message, isLoaded) => {
             this.addLine(message);
             if (isLoaded) {
@@ -43,6 +46,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+    .title {
+        display: inline-block;
+        position:absolute;
+        top:30px;
+        right: 30px;
+        font-size: 30px;
+    }
     .overlay {
         position: absolute;
         left: 0;

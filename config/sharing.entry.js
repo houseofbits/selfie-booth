@@ -9,4 +9,7 @@ module.exports = {
         publicPath: '/',
         path: path.resolve(__dirname, '../public_sharing/assets/'),
     },
+    node: {
+        fs: 'empty'
+    }
 };

@@ -67,11 +67,6 @@ class ApiController extends ResourceController
         return $this->failNotFound("QR Code not found");
     }
 
-    public function dropExpiredImages()
-    {
-        //TODO
-    }
-
     public function serveImage(string $id)
     {
         $imageData = $this->imageService->getImageData($id);

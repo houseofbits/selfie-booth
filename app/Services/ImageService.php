@@ -116,18 +116,16 @@ class ImageService
 
     public function getListOfImages(): array
     {
-        return ImageModel::findAllIndexes();
+        $images = ImageModel::findAll();
+        $this->sortImagesByNewest($images);
+        return $images;
     }
 
     public function getListOfImagesActive(): array
     {
         $images = ImageModel::findAll();
-        usort(
-            $images,
-            function (ImageModel $a, ImageModel $b) {
-                return $a->createdAt > $b->createdAt;
-            }
-        );
+        $this->sortImagesByNewest($images);
+
         $images = array_splice($images, 0, self::ACTIVE_IMAGES_COUNT);
 
         return array_map(function (ImageModel $imageModel) {
@@ -148,18 +146,23 @@ class ImageService
     public function cleanUpImages() : void
     {
         $images = ImageModel::findAll();
-        usort(
-            $images,
-            function (ImageModel $a, ImageModel $b) {
-                return $a->createdAt > $b->createdAt;
-            }
-        );
+        $this->sortImagesByNewest($images);
         $images = array_slice($images, self::ACTIVE_IMAGES_COUNT);
         foreach ($images as $image) {
             if (!$this->isSharingAvailable($image)) {
                 $image->delete();
             }
         }
+    }
+
+    private function sortImagesByNewest(array &$images): void
+    {
+        usort(
+            $images,
+            function (ImageModel $a, ImageModel $b) {
+                return $a->createdAt < $b->createdAt;
+            }
+        );
     }
 }
 

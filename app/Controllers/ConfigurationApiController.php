@@ -144,13 +144,8 @@ class ConfigurationApiController extends ResourceController
 
     public function getAllImages()
     {
-        $images = ImageModel::findAll();
-        usort(
-            $images,
-            function (ImageModel $a, ImageModel $b) {
-                return $a->createdAt > $b->createdAt;
-            }
-        );
+        $imagesService = new ImageService();
+        $images = $imagesService->getListOfImages();
         $images = array_map(
             function (ImageModel $model) {
                 return new ImageInfoStructure($model);
