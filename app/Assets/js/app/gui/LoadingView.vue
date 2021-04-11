@@ -10,6 +10,8 @@
 
 import MainSceneInstance from '/js/app/scene/MainInstance';
 
+const packageVersion = JSON.stringify(require('/package.json').version);
+
 export default {
     name: "LoadingView",
     data () {
@@ -27,6 +29,9 @@ export default {
         }
     },
     mounted() {
+        this.addLine('SELFIE BOOTH ' + packageVersion);
+        this.addLine('-----------------------------------------------');
+
         MainSceneInstance.registerLoaderViewCallback((message, isLoaded) => {
             this.addLine(message);
             if (isLoaded) {
