@@ -1,6 +1,6 @@
 {
   "name": "selfie-booth",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "## What is CodeIgniter?",
   "main": "index.js",
   "directories": {
@@ -11,7 +11,11 @@
     "build": "webpack --mode=development",
     "watch": "webpack --watch --mode=development"
   },
-  "browser": { "fs": false, "path": false, "os": false},
+  "browser": {
+    "fs": false,
+    "path": false,
+    "os": false
+  },
   "author": "",
   "license": "ISC",
   "devDependencies": {
