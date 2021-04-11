@@ -2,6 +2,18 @@
 # Operating Specific Junk Files
 #-------------------------
 
+public_photo_booth/assets/main.js
+public_photo_booth/assets/main.css
+public_photo_booth/assets/admin.js
+public_photo_booth/assets/admin.css
+public_photo_booth/assets/images/*
+public_photo_booth/assets/fonts/*
+
+public_sharing/assets/sharing.css
+public_sharing/assets/sharing.js
+public_sharing/assets/images/*
+public_sharing/assets/fonts/*
+
 node_modules
 releases
 
