@@ -1,4 +1,5 @@
 import axios from "axios";
+import MainSceneInstance from '/js/app/scene/MainInstance';
 
 export default class LanguageService {
 
@@ -55,6 +56,7 @@ export default class LanguageService {
         axios.get('/translations').then(response => {
             if (response.status === 200) {
                 this.translations = response.data;
+                MainSceneInstance.logLoadingMessage('Backend translations loaded');
             }
         });
     }

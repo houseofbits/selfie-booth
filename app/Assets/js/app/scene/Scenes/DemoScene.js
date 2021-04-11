@@ -118,6 +118,7 @@ export default class DemoScene extends BaseScene {
             });
 
         if (response.status === 200) {
+            this.mainScene.logLoadingMessage('DemoScene items list fetched');
             this.imageSyncData = this.imageSyncData.concat(response.data);
             for (const image of response.data) {
                 await this.insertNewItem(image);
