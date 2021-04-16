@@ -3,7 +3,6 @@ import * as BABYLON from 'babylonjs';
 import BackgroundTexture1 from "@images/display/background1.png";
 import BackgroundTexture2 from "@images/display/background2.png";
 import BackgroundTexture3 from "@images/display/background3.png";
-import BackgroundTexture4 from "@images/display/background4.png";
 import BasicCameraMaterial from "@app/scene/Materials/BasicCameraMaterial";
 import FaceDetectionServiceInstance from "@common/FaceDetectionService";
 
@@ -31,7 +30,6 @@ export default class DisplayThemeScene extends BaseScene {
         this.bg1Texture = new BABYLON.Texture(BackgroundTexture1, this.scene);
         this.bg2Texture = new BABYLON.Texture(BackgroundTexture2, this.scene);
         this.bg3Texture = new BABYLON.Texture(BackgroundTexture3, this.scene);
-        this.bg4Texture = new BABYLON.Texture(BackgroundTexture4, this.scene);
 
         this.material = new BasicCameraMaterial(this.scene, this.name + 'MainMaterial');
         this.material.setDiffuseTexture(this.bg1Texture);
@@ -60,15 +58,18 @@ export default class DisplayThemeScene extends BaseScene {
         switch (optionName) {
             case 'display1':
                 this.material.setDiffuseTexture(this.bg1Texture);
+                this.targetFacePosition.x = 0.58;
+                this.targetFacePosition.y = 0.32;
                 break;
             case 'display2':
                 this.material.setDiffuseTexture(this.bg2Texture);
+                this.targetFacePosition.x = 0.6;
+                this.targetFacePosition.y = 0.4;
                 break;
             case 'display3':
                 this.material.setDiffuseTexture(this.bg3Texture);
-                break;
-            case 'display4':
-                this.material.setDiffuseTexture(this.bg4Texture);
+                this.targetFacePosition.x = 0.54;
+                this.targetFacePosition.y = 0.4;
                 break;
         }
     }

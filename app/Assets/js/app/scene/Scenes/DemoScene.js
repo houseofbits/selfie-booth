@@ -74,13 +74,17 @@ export default class DemoScene extends BaseScene {
         this.leafMaterial.setDiffuseMap(LeafTexture);
 
         this.createLeaf(0, 1);
+        this.createLeaf(-5, 1);
         this.createLeaf(-15, 1);
         this.createLeaf(-10, 1);
         this.createLeaf(-20, 1);
+        this.createLeaf(-25, 1);
         this.createLeaf(-30, 1);
+        this.createLeaf(5, 1);
         this.createLeaf(10, 1);
         this.createLeaf(15, 1);
         this.createLeaf(20, 1);
+        this.createLeaf(25, 1);
         this.createLeaf(30, 1);
         this.createLeaf(35, 1);
         this.createLeaf(-35, 1);
@@ -144,6 +148,8 @@ export default class DemoScene extends BaseScene {
             const mesh = this.createItemMesh(item, 10);
             mesh.material = material.getMaterial();
             mesh.setEnabled(true);
+
+            mesh.setPivotPoint(new BABYLON.Vector3(-8, -8, 0));
 
             item.setMesh(mesh);
             this.cleanUpItems();
@@ -298,7 +304,7 @@ export default class DemoScene extends BaseScene {
         this.itemColumns[columnIndex].unshift(item);
 
         this.calculateColumnItemPositions(columnIndex);
-        this.calculateColumnItemTransforms(columnIndex);
+        //this.calculateColumnItemTransforms(columnIndex);
     }
 
     createShuffleTimer() {

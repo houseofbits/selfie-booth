@@ -1,6 +1,7 @@
 <template>
     <div v-if="!isLoaded" class="overlay">
         <ul>
+            <li class="loading-text"></li>
             <li v-for="(val, index) in messages" :key="index">{{ val }}</li>
         </ul>
         <div class="title">{{ title }}</div>
@@ -69,6 +70,28 @@ export default {
             padding: 0;
             margin: 30px;
         }
+    }
 
+    @keyframes loadingContent {
+        0% {
+            content: "Loading";
+        }
+        25% {
+            content: "Loading.";
+        }
+        50% {
+            content: "Loading..";
+        }
+        75% {
+            content: "Loading...";
+        }
+    }
+
+    .loading-text {
+        margin-bottom: 10px;
+        &:after {
+            content: "Loading";
+            animation: loadingContent 2s linear infinite;
+        }
     }
 </style>
