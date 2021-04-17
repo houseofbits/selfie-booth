@@ -36,7 +36,7 @@
         <sharing-view-redirect :image="selectedImage" :is-active="isShareViewOpen || isDownloadViewOpen"
                                :is-download-view="isDownloadViewOpen"
                                @close="closeRedirectView"/>
-        <sharing-view-email :is-active="isEmailViewOpen" :is-error.sync="sendEmailError"
+        <sharing-view-email :is-active="isEmailViewOpen" :is-error.sync="isEmailSentError" :is-success="isEmailSentSuccessfully"
                             @close="closeEmailView" @send="sendEmail"/>
 
         <session-alert v-if="isSessionAlertVisible" @finish="finishCapture"/>
@@ -66,7 +66,7 @@ const SESSION_TIMEOUT_MS = 180000; //3min
 
 export default {
     name: "CaptureView",
-    inject: ['lang', 'faceDetect'],
+    inject: ['lang', 'langService', 'faceDetect'],
     data() {
         return {
             images: [],
@@ -80,7 +80,8 @@ export default {
             isDownloadViewOpen: false,
             isDynamicBackgroundOpen: false,
             dynamicBackgroundState: 0,
-            sendEmailError: false,
+            isEmailSentError: false,
+            isEmailSentSuccessfully: false,
             isCaptureInProgress: false,
             selectedTheme: '',
             enableDetectorTimer: null,
@@ -109,9 +110,6 @@ export default {
         isImageViewOpen() {
             return this.selectedImage !== null && !this.isEmailViewOpen && !this.isDownloadViewOpen;
         },
-        // isExpandedViewOpen() {
-        //     return this.isImageViewOpen || this.isEmailViewOpen || this.isShareViewOpen || this.isDownloadViewOpen;
-        // },
         isCaptureAvailable() {
             return (this.images.length < 4)
                 && !this.isGalleryOpen
@@ -161,7 +159,8 @@ export default {
             this.isDownloadViewOpen = false;
             this.isDynamicBackgroundOpen = false;
             this.dynamicBackgroundState = 0;
-            this.sendEmailError = false;
+            this.isEmailSentError = false;
+            this.isEmailSentSuccessfully = false;
             this.images = [];
             this.isCaptureInProgress = false;
             this.isOptionsOpen = false;
@@ -262,7 +261,8 @@ export default {
         openShareEmailView() {
             this.syncImageData();
             this.isEmailViewOpen = true;
-            this.sendEmailError = false;
+            this.isEmailSentError = false;
+            this.isEmailSentSuccessfully = false;
         },
         openShareDownloadView() {
             this.syncImageData();
@@ -289,13 +289,18 @@ export default {
                 }
             }
         },
-        sendEmail(emailAddress) {
+        async sendEmail(emailAddress) {
             const emailService = new EmailService();
             if (this.selectedImage && this.selectedImage.hash !== null) {
-                this.sendEmailError = !emailService.send(emailAddress, this.selectedImage.hash);
-            } else {
-                this.sendEmailError = true;
+                const success = await emailService.send(emailAddress, this.selectedImage.hash, this.langService.getLanguage());
+                if(success) {
+                    this.isEmailSentError = false;
+                    this.isEmailSentSuccessfully = true;
+                    return;
+                }
             }
+            this.isEmailSentError = true;
+            this.isEmailSentSuccessfully = false;
         },
         generateImageId() {
             return (Date.now().toString(36) + Math.random().toString(36).substr(2)).substr(4, 8);

@@ -74,9 +74,9 @@
                 </div>
                 <div class="row mb-2">
                     <div class="form-group col-12 col-md-6">
-                        <label for="imagename">Attacment image name (located in uploads folder)</label>
+                        <label for="imagename">Attachment image ID</label>
                         <input id="imagename" class="form-control" name="imageName"
-                               placeholder="Image file name">
+                               placeholder="Image ID">
                     </div>
                 </div>
                 <div class="row">

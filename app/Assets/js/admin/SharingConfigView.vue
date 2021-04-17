@@ -32,10 +32,12 @@
             <div class="row">
                 <div class="form-group col-12 col-md-6">
                     <label for="linkTTL">Shareable link TTL (minutes):</label>
-                    <input id="linkTTL" v-model="formData.linkTTL" class="form-control" name="linkTTL">
-                </div>
-                <div class="form-group col-12 col-md-6">
-
+                    <div class="input-group mb-3">
+                        <input type="text" id="linkTTL" v-model="formData.linkTTL" class="form-control" name="linkTTL">
+                        <div class="input-group-append">
+                            <span class="input-group-text" id="basic-addon2">{{ formattedTTL }}</span>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -75,6 +77,13 @@ export default {
             handler() {
                 this.saveButtonDisabled = false;
             }
+        }
+    },
+    computed: {
+        formattedTTL() {
+            const date = new Date(null);
+            date.setSeconds(this.formData.linkTTL);
+            return date.toISOString().substr(11, 8);
         }
     },
     methods: {

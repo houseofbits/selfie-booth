@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\EmailConfigModel;
 use App\Models\ImageModel;
+use App\Structures\TranslationStructure;
 use CodeIgniter\Email\Email;
 use CodeIgniter\HTTP\Request;
 use CodeIgniter\Model;
@@ -14,11 +15,14 @@ class EmailService
     protected $email;
     /** @var EmailConfigModel  */
     protected $emailConfig;
+    /** @var TranslationsService  */
+    protected  $translations;
 
     public function __construct()
     {
         $this->email = \Config\Services::email();
         $this->emailConfig = $this->getConfiguration();
+        $this->translations = new TranslationsService();
     }
 
     public function applyConfiguration(): void
@@ -32,7 +36,7 @@ class EmailService
             'SMTPCrypto' => 'tls',
             'CRLF' => "\r\n",
             'newline' => "\r\n",
-            'mailPath' => '/usr/sbin/sendmail',
+//            'mailPath' => '/usr/sbin/sendmail',
             'wordWrap' => true,
             'charset' => 'UTF-8',
             'mailType' => 'html',
@@ -58,13 +62,12 @@ class EmailService
         $this->email->clear();
         $this->email->setTo($emailAddress);
         $this->email->setFrom($this->emailConfig->senderAddress);
-        $this->email->setSubject('LVDM');
-        $this->email->setMessage('Photo Booth image attachment');
+        $this->setTranslatedContent($language ?? TranslationStructure::ENG_NAME);
 
         $imageModel = ImageModel::findOne($imageId);
         if ($imageModel instanceof ImageModel) {
             $fileUrl = $imageModel->getFullUrl();
-            $this->email->attach($fileUrl, 'attachment', 'image.png');
+            $this->email->attach($fileUrl, 'attachment', 'lvdm-' . $imageId . '.png');
         } else {
             throw new \Exception("Image not found");
         }
@@ -74,6 +77,15 @@ class EmailService
         if (!$result) {
             throw new \Exception($this->email->printDebugger());
         }
+    }
+
+    private function setTranslatedContent($language)
+    {
+        $subjectTransl = $this->translations->getTranslation('sharing.email-subject');
+        $messageTransl = $this->translations->getTranslation('sharing.email-message');
+
+        $this->email->setSubject($subjectTransl->getByLanguageName($language));
+        $this->email->setMessage($messageTransl->getByLanguageName($language));
     }
 
     /**

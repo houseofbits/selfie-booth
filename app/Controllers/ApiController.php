@@ -32,9 +32,10 @@ class ApiController extends ResourceController
     {
         $email = $this->request->getVar('email');
         $imageId = $this->request->getVar('imageId');
+        $language = $this->request->getVar('language');
 
         try {
-            $this->emailService->sendEmail($email, $imageId);
+            $this->emailService->sendEmail($email, $imageId, $language);
         } catch (Exception $e) {
             return $this->respond("Email error. " . $e->getMessage(), 400);
         }

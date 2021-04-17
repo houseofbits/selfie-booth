@@ -7,18 +7,34 @@
         <static-item class="leaf leaf-pos-1" image-id="1"></static-item>
         <static-item class="leaf leaf-pos-2" image-id="1"></static-item>
 
-        <div :class="{hidden: emailInputValid}" class="info-row"><span><i class="fas fa-info-circle"></i> {{ lang('capture.enter-email-address') }}</span></div>
-        <div :class="{visible: emailInputValid && isError}" class="error-row"><i class="fas fa-exclamation-triangle"></i> {{ lang('capture.send-error') }}</div>
+        <div :class="{hidden: emailInputValid}" class="info-row"><span><i
+            class="fas fa-info-circle"></i> {{ lang('capture.enter-email-address') }}</span></div>
 
         <div v-if="emailAddress.length === 0" class="placeholder-row">email@address.lv</div>
         <div :class="{valid:emailInputValid}" class="input-row">{{ emailAddress }}</div>
         <div :class="{'non-valid':!emailInputValid}" class="input-row">{{ emailAddress }}</div>
 
-        <keyboard-email-input :email-address.sync="emailAddress"></keyboard-email-input>
+        <keyboard-email-input v-if="isActive" :email-address.sync="emailAddress"></keyboard-email-input>
 
-        <text-button class="back-button orange" icon="fas fa-arrow-circle-left" @click="closeView">{{ lang('capture.back-button') }}</text-button>
         <text-button :class="{'button-disabled': !emailInputValid}" class="send-button green" icon="fas fa-envelope"
                      @click="sendEmail">{{ lang('capture.send-mail-button') }}</text-button>
+
+        <div v-if="isActive" :class="{visible: isMessageBlockVisible}" class="message-overlay">
+            <div :class="{visible: isError}" class="error-row">
+                <span>
+                    <i class="fas fa-exclamation-triangle"></i> {{ lang('capture.send-error') }}
+                </span>
+            </div>
+            <div :class="{visible: isEmailSubmitted}" class="loading"><i class="fas fa-hourglass-half"></i></div>
+            <div :class="{visible: isSuccess}" class="success-row">
+                <span>
+                    <i class="fas fa-thumbs-up"></i> {{ lang('capture.send-success') }}
+                </span>
+            </div>
+        </div>
+
+        <text-button class="back-button orange" icon="fas fa-arrow-circle-left"
+                     @click="closeView">{{ lang('capture.back-button') }}</text-button>
 
     </div>
 </template>
@@ -42,6 +58,10 @@ export default {
             type: Boolean,
             required: true,
         },
+        isSuccess: {
+            type: Boolean,
+            required: true,
+        },
     },
     components: {
         KeyboardEmailInput,
@@ -52,6 +72,7 @@ export default {
         return {
             emailInputValid: false,
             emailAddress: '',
+            isEmailSubmitted: false,
         }
     },
     watch: {
@@ -61,10 +82,20 @@ export default {
             this.$emit('update:isError', false);
         },
         isActive(val) {
-            if(val) {
-                this.emailAddress = '';
-                this.emailInputValid = false;
-            }
+            this.emailAddress = '';
+            this.emailInputValid = false;
+            this.isEmailSubmitted = false;
+        },
+        isError() {
+            this.isEmailSubmitted = false;
+        },
+        isSuccess() {
+            this.isEmailSubmitted = false;
+        }
+    },
+    computed: {
+        isMessageBlockVisible() {
+            return this.isEmailSubmitted || this.isError || this.isSuccess;
         }
     },
     methods: {
@@ -73,6 +104,7 @@ export default {
         },
         sendEmail() {
             if (this.emailInputValid) {
+                this.isEmailSubmitted = true;
                 this.$emit('send', this.emailAddress);
             }
         }
@@ -200,28 +232,6 @@ export default {
             transition: opacity 500ms linear;
         }
     }
-
-    .error-row {
-        position: absolute;
-        top: 470px;
-        width: 100%;
-        height: 100px;
-        line-height: 100px;
-        text-align: center;
-        font-size: 35px;
-        background: linear-gradient(to bottom, #feccb1 0%,#f95a04 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        -webkit-text-stroke: 1px rgba(0, 0, 0, 0.2);
-        filter: drop-shadow(0px 3px 2px rgba(0, 0, 0, 0.8));
-        opacity: 0;
-        transition: opacity 200ms linear;
-
-        &.visible {
-            opacity: 1;
-            transition: opacity 200ms linear;
-        }
-    }
 }
 
 .leaf-pos-1 {
@@ -231,7 +241,7 @@ export default {
 
 .leaf-pos-2 {
     opacity: 0.5;
-    transform: translate(790px,480px) rotate(125deg);
+    transform: translate(790px, 480px) rotate(125deg);
 }
 
 .leaf-pos-3 {
@@ -247,6 +257,117 @@ export default {
     height: 840px;
     //background-color: rgba(31, 59, 8, 0.84);
     background: linear-gradient(to bottom, rgba(98, 125, 77, 0) 0%, rgba(31, 59, 8, 0.58) 10%, rgba(31, 59, 8, 0.8) 18%, rgba(31, 59, 8, 0.8) 80%, rgba(31, 59, 8, 0) 100%);
+}
+
+.message-overlay {
+    pointer-events: auto;
+    position: absolute;
+    left: -30px;
+    top: -150px;
+    width: 900px;
+    height: 840px;
+    background: linear-gradient(to bottom, rgba(98, 125, 77, 0) 0%, rgba(31, 59, 8, 0.58) 10%, rgba(31, 59, 8, 0.8) 18%, rgba(31, 59, 8, 0.8) 80%, rgba(31, 59, 8, 0) 100%);
+    transition: all 400ms linear;
+    display: none;
+    opacity: 0;
+
+    &.visible {
+        opacity: 1;
+        display: block;
+        transition: all 400ms linear;
+    }
+
+    .error-row {
+        position: absolute;
+        top: 450px;
+        width: 800px;
+        height: 100px;
+        left: 50px;
+        line-height: 50px;
+        text-align: center;
+        font-size: 35px;
+        -webkit-text-stroke: 1px rgba(0, 0, 0, 0.2);
+        filter: drop-shadow(0px 3px 1px rgba(0, 0, 0, 0.61));
+        opacity: 0;
+        transition: opacity 500ms linear;
+
+        span {
+            background: linear-gradient(to bottom, #feccb1 0%, #f95a04 100%);
+            box-decoration-break: clone;
+            -webkit-box-decoration-break: clone;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        &.visible {
+            opacity: 1;
+            transition: opacity 200ms linear;
+        }
+    }
+
+    .success-row {
+        position: absolute;
+        top: 450px;
+        width: 800px;
+        height: 100px;
+        left: 50px;
+        line-height: 50px;
+        text-align: center;
+        font-size: 41px;
+        -webkit-text-stroke: 1px rgba(0, 0, 0, 0.2);
+        filter: drop-shadow(0px 3px 1px rgba(0, 0, 0, 0.61));
+        opacity: 0;
+        transition: opacity 500ms linear;
+
+        span {
+            background: linear-gradient(to bottom, rgba(254,252,234,1) 0%,rgba(241,218,54,1) 100%);
+            box-decoration-break: clone;
+            -webkit-box-decoration-break: clone;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        &.visible {
+            opacity: 1;
+            transition: opacity 200ms linear;
+        }
+    }
+
+    .loading{
+        position: absolute;
+        top:0;
+        left:0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: opacity 200ms linear;
+        opacity: 0;
+
+        i {
+            display: inline-block;
+            font-size: 100px;
+            animation: rotation 2s infinite linear;
+            color:white;
+            opacity: 0.7;
+        }
+
+        &.visible {
+            opacity: 1;
+            transition: opacity 200ms linear;
+        }
+    }
+
+}
+
+@keyframes rotation {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(359deg);
+    }
 }
 
 </style>

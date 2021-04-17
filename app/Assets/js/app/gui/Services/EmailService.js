@@ -13,14 +13,14 @@ export default class EmailService {
         });
     }
 
-    async send(address, imageId, handler) {
+    async send(address, imageId, language, handler) {
         let formData = new FormData();
         formData.append('email', address);
         formData.append('imageId', imageId);
+        formData.append('language', language);
         try {
-            const res = await axios.post("/api/mail", formData);
-            console.log(res);
-            return res;
+            const response = await axios.post("/api/mail", formData);
+            return response.status === 200;
         }catch (e) {
             return false;
         }

@@ -76,7 +76,10 @@ class ConfigurationApiController extends ResourceController
         }
 
         try {
-            $emailService->sendEmail($this->request->getVar('receivingEmailAddress'));
+            $emailService->sendEmail(
+                $this->request->getVar('receivingEmailAddress'),
+                $this->request->getVar('imageName')
+            );
         } catch (\Exception $e) {
             return $this->respond("Email send failed. " . $e->getMessage(), 400);
         }
