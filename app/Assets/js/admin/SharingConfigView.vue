@@ -81,9 +81,9 @@ export default {
     },
     computed: {
         formattedTTL() {
-            const date = new Date(null);
-            date.setSeconds(this.formData.linkTTL);
-            return date.toISOString().substr(11, 8);
+            const hours = Math.floor(this.formData.linkTTL / 60);
+            const minutes = this.formData.linkTTL % 60;
+            return hours + ":" + minutes;
         }
     },
     methods: {

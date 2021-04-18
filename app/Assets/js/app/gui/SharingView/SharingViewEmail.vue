@@ -16,7 +16,7 @@
 
         <keyboard-email-input v-if="isActive" :email-address.sync="emailAddress"></keyboard-email-input>
 
-        <text-button :class="{'button-disabled': !emailInputValid}" class="send-button green" icon="fas fa-envelope"
+        <text-button :class="{'button-disabled': !isSendButtonAvailable}" class="send-button green" icon="fas fa-envelope"
                      @click="sendEmail">{{ lang('capture.send-mail-button') }}</text-button>
 
         <div v-if="isActive" :class="{visible: isMessageBlockVisible}" class="message-overlay">
@@ -73,6 +73,7 @@ export default {
             emailInputValid: false,
             emailAddress: '',
             isEmailSubmitted: false,
+            successTimer: null
         }
     },
     watch: {
@@ -85,17 +86,26 @@ export default {
             this.emailAddress = '';
             this.emailInputValid = false;
             this.isEmailSubmitted = false;
+            this.clearSuccessTimeout();
         },
         isError() {
             this.isEmailSubmitted = false;
+            this.clearSuccessTimeout();
         },
-        isSuccess() {
+        isSuccess(val) {
+            this.clearSuccessTimeout();
             this.isEmailSubmitted = false;
+            if (val && this.isActive) {
+                this.successTimer = setTimeout(this.successTimeoutHandler, 3000);
+            }
         }
     },
     computed: {
         isMessageBlockVisible() {
             return this.isEmailSubmitted || this.isError || this.isSuccess;
+        },
+        isSendButtonAvailable() {
+            return this.emailInputValid && !this.isError && !this.isEmailSubmitted && !this.isSuccess;
         }
     },
     methods: {
@@ -107,6 +117,13 @@ export default {
                 this.isEmailSubmitted = true;
                 this.$emit('send', this.emailAddress);
             }
+        },
+        successTimeoutHandler() {
+            this.$emit('reset');
+        },
+        clearSuccessTimeout() {
+            clearTimeout(this.successTimer);
+            this.successTimer = null;
         }
     }
 };

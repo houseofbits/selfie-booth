@@ -37,7 +37,7 @@
                                :is-download-view="isDownloadViewOpen"
                                @close="closeRedirectView"/>
         <sharing-view-email :is-active="isEmailViewOpen" :is-error.sync="isEmailSentError" :is-success="isEmailSentSuccessfully"
-                            @close="closeEmailView" @send="sendEmail"/>
+                            @close="closeEmailView" @send="sendEmail" @reset="resetEmailSuccessState"/>
 
         <session-alert v-if="isSessionAlertVisible" @finish="finishCapture"/>
 
@@ -301,6 +301,11 @@ export default {
             }
             this.isEmailSentError = true;
             this.isEmailSentSuccessfully = false;
+        },
+        resetEmailSuccessState() {
+            this.isEmailSentError = false;
+            this.isEmailSentSuccessfully = false;
+            this.closeEmailView();
         },
         generateImageId() {
             return (Date.now().toString(36) + Math.random().toString(36).substr(2)).substr(4, 8);
