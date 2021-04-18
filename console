@@ -26,8 +26,14 @@ function ssh(){
 
 function release(){
 
+    rm -Rf public_photo_booth/assets/fonts
+    rm -Rf public_photo_booth/assets/images
+
+    rm -Rf releases/assets/fonts
+    rm -Rf releases/assets/images
+
     npm ci;
-    npm run build;
+    npm run build:prod;
 
     mkdir -p -m a=rwx -p releases/tmp;
 
