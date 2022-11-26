@@ -16,8 +16,8 @@ export default class BasicCameraMaterial extends CustomMaterial {
         this.setVector3Param('cameraTint', new BABYLON.Vector3(1.0, 1.0, 1.0));
     }
 
-    setCameraTexture(texture) {
-        this.shaderMaterial.setTexture("cameraMap", texture);
+    setVideoTexture(texture) {
+        this.shaderMaterial.setTexture("videoMap", texture);
     }
 
     setMaskMap(map) {
@@ -26,5 +26,13 @@ export default class BasicCameraMaterial extends CustomMaterial {
 
     setDiffuseSecondaryMap(map) {
         this.shaderMaterial.setTexture("diffuseSecMap", new BABYLON.Texture(map, this.scene));
+    }
+
+    setFacePosition(x, y) {
+        this.setVector2Param('facePosition', new BABYLON.Vector2(x / 1080.0, y / 1920.0));
+    }
+
+    setFaceSize(width, height) {
+        this.setVector2Param('faceSize', new BABYLON.Vector2(width / 1080.0, height / 1920.0));
     }
 }

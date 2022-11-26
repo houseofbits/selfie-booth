@@ -5,7 +5,7 @@
 	"homepage": "https://codeigniter.com",
 	"license": "MIT",
 	"require": {
-		"php": ">=7.3.25",
+		"php": ">=7.4",
 		"codeigniter4/framework": "^4",
 		"symfony/polyfill-mbstring": "^1.18",
 		"endroid/qr-code": "^3.9"

@@ -1,5 +1,8 @@
 #!/bin/bash
 
+function open(){
+  bash install/kiosk.sh
+}
 
 function transl(){
     docker-compose exec php bash -c "php public_photo_booth/index.php cli translate $1";

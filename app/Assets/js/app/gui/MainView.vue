@@ -66,6 +66,9 @@ export default {
             this.isConfirmationVisible = false;
             MainSceneInstance.onThemeSelected('DemoScene');
         }
+    },
+    mounted() {
+        MainSceneInstance.init(document.getElementById('renderCanvas'));
     }
 }
 </script>
@@ -121,6 +124,8 @@ body {
     user-select: none;
     background-color: black;
     overflow: hidden;
+
+    cursor:crosshair;
 
     -webkit-user-select: none;
     -khtml-user-select: none;

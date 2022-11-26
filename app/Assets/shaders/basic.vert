@@ -31,8 +31,8 @@ void main(void) {
     vUV.x = 1.0 - uv.x;
 
     vCamUV = uv;
-    vCamUV.y = uv.x;
-    vCamUV.x = uv.y;
+    vCamUV.y = 1.0 - uv.y;
+    vCamUV.x = 1.0 - uv.x;
 
     vPosition = position;
     vNormal = normal;

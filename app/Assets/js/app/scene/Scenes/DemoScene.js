@@ -24,7 +24,7 @@ export default class DemoScene extends BaseScene {
             this.scene);
         //camera.attachControl(mainScene.canvas, true);
 
-        this.registerView(camera);
+        //this.registerView(camera);
 
         this.itemColumns = [[], [], [], [], []];
         this.itemsForRemoval = [];
@@ -58,10 +58,9 @@ export default class DemoScene extends BaseScene {
         }
     }
 
-    onSceneActivated() {
-        this.syncItems().then(r => {
-            this.createShuffleTimer();
-        });
+    async onSceneActivated() {
+        await this.syncItems();
+        this.createShuffleTimer();
     }
 
     onSceneDeactivated() {
@@ -122,7 +121,7 @@ export default class DemoScene extends BaseScene {
             });
 
         if (response.status === 200) {
-            this.mainScene.logLoadingMessage('DemoScene items list fetched');
+            this.sceneManager.logLoadingMessage('DemoScene items list fetched');
             this.imageSyncData = this.imageSyncData.concat(response.data);
             for (const image of response.data) {
                 await this.insertNewItem(image);
@@ -154,7 +153,7 @@ export default class DemoScene extends BaseScene {
             item.setMesh(mesh);
             this.cleanUpItems();
 
-            this.mainScene.logLoadingMessage('DemoScene item ' + imageId + ' loaded');
+            this.sceneManager.logLoadingMessage('DemoScene item ' + imageId + ' loaded');
         });
     }
 
