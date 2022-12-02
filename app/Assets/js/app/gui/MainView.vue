@@ -1,5 +1,7 @@
 <template>
     <div>
+<!--        <face-position-configurator/>-->
+
         <div :class="{expanded:isConfirmationButtonVisible, hidden:isCaptureViewVisible}" class="gradient-under"></div>
         <start-button :is-visible="isStartButtonVisible" @start="start"/>
         <confirm-button :is-visible="isConfirmationButtonVisible" @confirm="confirm"/>
@@ -21,10 +23,12 @@ import ConfirmButton from "./ConfirmButton.vue";
 import MainSceneInstance from '/js/app/scene/MainInstance';
 import FaceDetectionDebug from './FaceDetectionDebug.vue';
 import LoadingView from './LoadingView.vue';
+import FacePositionConfigurator from "./FacePositionConfigurator.vue";
 
 export default {
     name: "MainView",
     components: {
+        FacePositionConfigurator,
         CaptureView,
         Languages,
         StartButton,

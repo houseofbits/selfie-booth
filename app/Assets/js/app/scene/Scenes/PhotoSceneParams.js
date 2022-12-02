@@ -26,22 +26,26 @@ import DisplayTexture3 from "@images/display/background3.png";
 const Effects = {
     MIX_ALPHA: 0,
     OVERLAY: 1,
+    ARCHIVE: 2,
+    HEADS: 3,
+    WATER: 4,
+    SHROOMS: 5,
 };
 
 export default function getPhotoSceneParams() {
     return {
         ShroomsScene: {
-            effect: Effects.MIX_ALPHA,
+            effect: Effects.SHROOMS,
             logoPosition: [-160, 730],
             tint: [0.9, 1.0, 0.8],
             options: {
                 shroom1: {
                     texture: ShroomsTexture1,
-                    faceParams: [500, 500, 200, 200],
+                    faceParams: [350, 330, 400, 620],
                 },
                 shroom2: {
                     texture: ShroomsTexture2,
-                    faceParams: [0.67, 0.88, 0.34, 0.34],
+                    faceParams: [320, 240, 400, 620],
                 },
             },
         },
@@ -52,30 +56,30 @@ export default function getPhotoSceneParams() {
             options: {
                 amber1: {
                     texture: AmberTexture1,
-                    faceParams: [0.75, 0.78, 0.51, 0.6],
+                    faceParams: [150, 400, 800, 1150],
                 },
                 amber2: {
                     texture: AmberTexture2,
-                    faceParams: [0.79, 0.8, 0.62, 0.64],
+                    faceParams: [150, 450, 800, 1150],
                 },
                 amber3: {
                     texture: AmberTexture3,
-                    faceParams: [0.7, 0.7, 0.65, 0.65],
+                    faceParams: [300, 600, 700, 1100],
                 },
                 amber4: {
                     texture: AmberTexture4,
-                    faceParams: [0.73, 0.7, 0.6, 0.65],
+                    faceParams: [200, 500, 700, 1150],
                 },
             }
         },
         ArchiveScene: {
-            effect: Effects.OVERLAY,
+            effect: Effects.ARCHIVE,
             logoPosition: [-160, 730],
             tint: [1.0, 1.0, 1.0],
             options: {
                 archive1: {
                     texture: ArchiveTexture,
-                    faceParams: [0.7, 0.83, 0.33, 0.45],
+                    faceParams: [340, 450, 350, 700],
                 }
             }
         },
@@ -86,99 +90,99 @@ export default function getPhotoSceneParams() {
             options: {
                 egg1: {
                     texture: BirdsTexture1,
-                    faceParams: [0.7, 0.75, 0.42, 0.45],
+                    faceParams: [300, 600, 500, 800],
                 },
                 egg2: {
                     texture: BirdsTexture2,
-                    faceParams: [0.74, 0.75, 0.52, 0.48],
+                    faceParams: [200, 700, 700, 850],
                 },
                 egg3: {
                     texture: BirdsTexture3,
-                    faceParams: [0.7, 0.75, 0.42, 0.45],
+                    faceParams: [350, 600, 500, 800],
                 },
                 egg4: {
                     texture: BirdsTexture4,
-                    faceParams: [0.7, 0.75, 0.42, 0.45],
+                    faceParams: [260, 500, 600, 900],
                 },
             }
         },
         BugsScene: {
-            effect: Effects.MIX_ALPHA,
+            effect: Effects.HEADS,
             logoPosition: [-160, 730],
             tint: [1.0, 1.0, 1.0],
             options: {
                 bug1: {
                     texture: BugsTexture1,
-                    faceParams: [0.5, 0.25, 0.5, 0.5],
+                    faceParams: [610, 610, 400, 500],
                 },
                 bug2: {
                     texture: BugsTexture2,
-                    faceParams: [0.5, 0.25, 0.5, 0.5],
+                    faceParams: [540, 340, 400, 580],
                 },
                 bug3: {
                     texture: BugsTexture3,
-                    faceParams: [0.5, 0.25, 0.5, 0.5],
+                    faceParams: [200, 410, 430, 600],
                 },
             }
         },
         CoralScene: {
-            effect: Effects.OVERLAY,
+            effect: Effects.WATER,
             logoPosition: [-160, 730],
             tint: [1.0, 1.0, 1.0],
             options: {
                 coral1: {
                     texture: CoralTexture1,
-                    faceParams: [0.5, 0.25, 0.5, 0.5],
+                    faceParams: [150, 270, 600, 900],
                 },
                 coral2: {
                     texture: CoralTexture2,
-                    faceParams: [0.5, 0.25, 0.5, 0.5],
+                    faceParams: [50, 990, 600, 1000],
                 },
                 coral3: {
                     texture: CoralTexture3,
-                    faceParams: [0.5, 0.25, 0.5, 0.5],
+                    faceParams: [580, 100, 500, 900],
                 },
             }
         },
         DinosaursScene: {
-            effect: Effects.MIX_ALPHA,
+            effect: Effects.HEADS,
             logoPosition: [-160, 730],
             tint: [1.0, 1.0, 1.0],
             options: {
                 dinosaurs1: {
                     texture: DinosaursTexture1,
-                    faceParams: [0.5, 0.25, 0.5, 0.5],
+                    faceParams: [260, 410, 420, 560],
                 },
                 dinosaurs2: {
                     texture: DinosaursTexture2,
-                    faceParams: [0.5, 0.25, 0.5, 0.5],
+                    faceParams: [140, 460, 430, 560],
                 },
                 dinosaurs3: {
                     texture: DinosaursTexture3,
-                    faceParams: [0.5, 0.25, 0.5, 0.5],
+                    faceParams: [160, 600, 460, 520],
                 },
                 dinosaurs4: {
                     texture: DinosaursTexture4,
-                    faceParams: [0.5, 0.25, 0.5, 0.5],
+                    faceParams: [160, 600, 460, 540],
                 },
             }
         },
         DisplayScene: {
-            effect: Effects.MIX_ALPHA,
+            effect: Effects.HEADS,
             logoPosition: [-160, 730],
             tint: [1.0, 1.0, 1.0],
             options: {
                 display1: {
                     texture: DisplayTexture1,
-                    faceParams: [0.5, 0.25, 0.5, 0.5],
+                    faceParams: [420, 440, 420, 560],
                 },
                 display2: {
                     texture: DisplayTexture2,
-                    faceParams: [0.5, 0.25, 0.5, 0.5],
+                    faceParams: [430, 570, 420, 520],
                 },
                 display3: {
                     texture: DisplayTexture3,
-                    faceParams: [0.5, 0.25, 0.5, 0.5],
+                    faceParams: [390, 550, 420, 560],
                 },
             }
         },

@@ -20,10 +20,10 @@ export default class SceneManager {
         this.photoScene = new PhotoScene(this);
         this.photoScene.init();
         this.onThemeSelected('ShroomsScene');
-        this.photoScene.onOptionSelected('shroom1');
+        this.photoScene.onOptionSelected('shroom2');
 
-        this.demoScene = new DemoScene(this, 'DemoScene', this.canvas);
-        await this.demoScene.onSceneActivated();
+        // this.demoScene = new DemoScene(this, 'DemoScene', this.canvas);
+        // await this.demoScene.onSceneActivated();
 
         this.engine.runRenderLoop(() => this.render());
 
