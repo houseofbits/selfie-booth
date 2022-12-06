@@ -50,8 +50,8 @@ export default class PhotoScene extends BaseScene {
         if (this.selectedParams) {
             this.material.setVector3Param('videoTint', new BABYLON.Vector3(this.selectedParams.tint[0], this.selectedParams.tint[1], this.selectedParams.tint[2]));
             this.material.setIntegerParam('effectId', this.selectedParams.effect);
-            this.logoPlane.position.y = this.selectedParams.logoPosition[1];
-            this.logoPlane.position.z = this.selectedParams.logoPosition[0];
+            // this.logoPlane.position.y = this.selectedParams.logoPosition[1];
+            // this.logoPlane.position.z = this.selectedParams.logoPosition[0];
 
             const firstOption = Object.keys(this.selectedParams.options)[0];
             if (firstOption) {
@@ -74,14 +74,14 @@ export default class PhotoScene extends BaseScene {
         logoMaterial.setDiffuseMap(LogoTexture);
 
         this.logoPlane = BABYLON.MeshBuilder.CreatePlane("backplane", {
-            width: 550,
-            height: 140,
+            width: 640,
+            height: 170,
             sideOrientation: BABYLON.Mesh.DOUBLESIDE
         }, this.scene);
         this.logoPlane.material = logoMaterial.getMaterial();
         this.logoPlane.position.x = 10;
-        this.logoPlane.position.y = 0;
-        this.logoPlane.position.z = 0;
+        this.logoPlane.position.y = 800;
+        this.logoPlane.position.z = -150;
         this.logoPlane.rotate(BABYLON.Axis.Y, BABYLON.Angle.FromDegrees(90).radians(), BABYLON.Space.WORLD);
     }
 
