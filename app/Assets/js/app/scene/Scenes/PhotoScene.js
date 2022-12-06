@@ -25,7 +25,8 @@ export default class PhotoScene extends BaseScene {
         this.mainPlane.material = this.material.getMaterial();
         this.initMaterial();
         // this.createVideoTexture();
-        this.createVirtualCameraTexture('Virtual Webcam');
+        // this.createVirtualCameraTexture('Virtual Webcam');
+        this.deviceEnumerationProcess();
     }
 
     onVideoTextureCreated() {

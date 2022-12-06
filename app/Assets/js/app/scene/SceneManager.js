@@ -22,8 +22,10 @@ export default class SceneManager {
         this.onThemeSelected('ShroomsScene');
         this.photoScene.onOptionSelected('shroom2');
 
-        // this.demoScene = new DemoScene(this, 'DemoScene', this.canvas);
-        // await this.demoScene.onSceneActivated();
+        this.demoScene = new DemoScene(this, 'DemoScene', this.canvas);
+        await this.demoScene.onSceneActivated();
+
+        this.onThemeSelected('DemoScene');
 
         this.engine.runRenderLoop(() => this.render());
 
@@ -44,8 +46,8 @@ export default class SceneManager {
 
     captureScreenshot() {
         this.render();
-        if (this.activeScene) {
-            return BABYLON.Tools.CreateScreenshotUsingRenderTargetAsync(this.engine, this.scene.activeCamera, {
+        if (!this.isDemoSceneActive) {
+            return BABYLON.Tools.CreateScreenshotUsingRenderTargetAsync(this.engine, this.photoScene.scene.activeCamera, {
                 width: 1080,
                 height: 1920,
                 precision: 1.0
