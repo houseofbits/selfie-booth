@@ -1,4 +1,5 @@
 import * as BABYLON from 'babylonjs';
+import MainSceneInstance from "./MainInstance";
 
 export default class BaseScene {
     constructor(sceneMnager, name, targetCanvas) {
@@ -64,6 +65,12 @@ export default class BaseScene {
 
     detectDevice(name) {
         const mediaDevices = navigator.mediaDevices;
+
+        if (!mediaDevices) {
+            MainSceneInstance.logLoadingMessage('! Media devices not found (navigator.mediaDevices)');
+
+            return;
+        }
 
         mediaDevices.enumerateDevices().then((result) => {
             for (const mediaDeviceInfo of result) {
