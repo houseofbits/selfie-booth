@@ -44,8 +44,8 @@ export default class SceneManager {
         this.deltaTime = this.engine.getDeltaTime() / 1000.0;
 
         if (this.isDemoSceneActive) {
-            this.demoScene.update(this.deltaTime);
-            this.demoScene.render();
+            // this.demoScene.update(this.deltaTime);
+            // this.demoScene.render();
         } else {
             if (this.engine.activeView === this.photoScene.view) {
                 this.photoScene.update(this.deltaTime);

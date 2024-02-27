@@ -24,8 +24,12 @@ uniform vec3 videoTint;
 // Face detection params
 uniform vec2 facePosition;
 uniform vec2 faceSize;
+uniform vec2 targetFacePosition;
+
 uniform sampler2D videoMap;
 uniform int effectId;
+
+uniform int isFaceDetectorEnabled;
 
 // All components are in the range [0…1], including hue.
 vec3 rgb2hsv(vec3 c)
@@ -45,6 +49,34 @@ vec3 hsv2rgb(vec3 c)
     vec4 K = vec4(1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);
     vec3 p = abs(fract(c.xxx + K.xyz) * 6.0 - K.www);
     return c.z * mix(K.xxx, clamp(p - K.xxx, 0.0, 1.0), c.y);
+}
+
+vec3 adjustedCameraMap(int enable, vec2 position, vec2 target, sampler2D map, vec2 uv) {
+    float margin = 0.1;
+    vec2 camuv = uv;
+    if (enable == 1) {
+        float dx = target.x - position.x;
+        float dy = target.y - position.y;
+        camuv.x = uv.x + dy;
+        camuv.y = uv.y + dx;
+    }
+    vec3 camera = vec3(0.0);
+    if (camuv.x > 0.0 && camuv.x < 1.0 && camuv.y > 0.0 && camuv.y < 1.0) {
+        camera = texture2D(map, camuv).xyz;
+    }
+    if (camuv.x < margin) {
+        camera = camera * (camuv.x / margin);
+    }
+    if (camuv.y < margin) {
+        camera = camera * (camuv.y / margin);
+    }
+    if (camuv.y > (1.0 - margin)) {
+        camera = camera * ((1.0 - camuv.y) / margin);
+    }
+    if (camuv.x > (1.0 - margin)) {
+        camera = camera * ((1.0 - camuv.x) / margin);
+    }
+    return camera;
 }
 
 vec3 getScaledVideoSample() {
@@ -123,7 +155,8 @@ vec3 effectShrooms(vec3 video, vec4 diffuse) {
 }
 
 void main(void) {
-    vec3 videoSample = getScaledVideoSample();
+    vec3 videoSample = adjustedCameraMap(isFaceDetectorEnabled, facePosition, targetFacePosition, videoMap, vCamUV);
+
     vec4 diffuse = texture2D(diffuseMap, vUV).xyzw;
 
     vec3 finalColor = videoSample;
@@ -150,5 +183,5 @@ void main(void) {
             finalColor = effectMixAlpha(videoSample, diffuse);
     }
 
-    gl_FragColor = vec4(finalColor, 1.0);
+    gl_FragColor = vec4(videoSample, 1.0);
 }

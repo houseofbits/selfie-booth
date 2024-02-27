@@ -4,6 +4,7 @@ import BasicCameraMaterial from "@app/scene/Materials/BasicCameraMaterial";
 import getPhotoSceneParams from "@app/scene/Scenes/PhotoSceneParams";
 import BasicAlphaMaterial from "../Materials/BasicAlphaMaterial";
 import LogoTexture from "@images/LNDM175.jpg";
+import FaceDetectionServiceInstance from "@common/FaceDetectionService";
 
 export default class PhotoScene extends BaseScene {
     /**
@@ -13,6 +14,11 @@ export default class PhotoScene extends BaseScene {
         super(sceneManager);
         this.params = null;
         this.selectedParams = null;
+        this.currentFacePosition = new BABYLON.Vector2(0, 0);
+        this.detectedFacePosition = new BABYLON.Vector2(0, 0);
+        this.detectedFaceSize = new BABYLON.Vector2(0, 0);
+        this.targetFacePosition = new BABYLON.Vector2(0, 0);
+        this.isFaceDetectorEnabled = 0;
     }
 
     init(canvas) {
@@ -30,6 +36,24 @@ export default class PhotoScene extends BaseScene {
 
         // this.createVirtualCameraTexture('Virtual Webcam');
         // this.deviceEnumerationProcess();
+        FaceDetectionServiceInstance.addDetectionCallback(this.onFaceDetected.bind(this));
+    }
+
+    update(dt) {
+        let posv = this.detectedFacePosition.subtract(this.currentFacePosition);
+        let posl = posv.length();
+        let velocity = dt * 0.4;
+        let stepsCount = posl / velocity;
+        if (posl > 0.01) {
+            posv.normalize();
+            let posStep = posl / stepsCount;
+            posv.scaleInPlace(Math.min(posStep, posl));
+            this.currentFacePosition.addInPlace(posv);
+
+            // this.material.setVector2Param('facePosition', this.currentFacePosition);
+            this.material.setVector2Param('targetFacePosition', this.targetFacePosition);
+            this.material.setIntegerParam('isFaceDetectorEnabled', this.isFaceDetectorEnabled);
+        }
     }
 
     onVideoTextureCreated() {
@@ -43,7 +67,7 @@ export default class PhotoScene extends BaseScene {
             if (optionParams) {
                 this.material.setDiffuseTexture(optionParams.texture);
                 this.material.setFaceSize(optionParams.faceParams[2], optionParams.faceParams[3]);
-                this.material.setFacePosition(optionParams.faceParams[0], optionParams.faceParams[1]);
+                // this.material.setFacePosition(optionParams.faceParams[0], optionParams.faceParams[1]);
             }
         }
     }
@@ -105,5 +129,22 @@ export default class PhotoScene extends BaseScene {
         );
         this.material.setDiffuseTexture(temporaryTexture);
         this.material.setVideoTexture(temporaryTexture);
+
+        this.material.setVector2Param('facePosition', this.currentFacePosition);
+        this.material.setVector2Param('targetFacePosition', this.targetFacePosition);
+        this.material.setIntegerParam('isFaceDetectorEnabled', this.isFaceDetectorEnabled);
+    }
+
+    onFaceDetected(detectionService) {
+        if (detectionService.isDetected) {
+            this.detectedFaceSize.x = detectionService.detectedWidth / 1080.0;
+            this.detectedFaceSize.y = detectionService.detectedHeight / 1920.0;
+            this.detectedFacePosition.x = (detectionService.detectedX / 1080.0) + (this.detectedFaceSize.x * 0.5);
+            this.detectedFacePosition.y = (detectionService.detectedY / 1920.0) + (this.detectedFaceSize.y * 0.5);
+            this.isFaceDetectorEnabled = detectionService.isDetectOn ? 1 : 0;
+
+            // console.log(this);
+        }
+        this.material.setIntegerParam('isFaceDetectorEnabled', this.isFaceDetectorEnabled);
     }
 }
