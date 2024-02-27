@@ -1,31 +1,39 @@
 import * as BABYLON from 'babylonjs';
 import DemoScene from "@app/scene/Scenes/DemoScene";
 import PhotoScene from "@app/scene/Scenes/PhotoScene";
-
+import CameraScene from "@app/scene/Scenes/CameraScene";
 export default class SceneManager {
     constructor() {
         this.engine = null;
-        this.canvas = null;
+        // this.canvas = null;
         this.deltaTime = 0;
         this.loaderViewCallback = null;
         this.demoScene = null;
         this.isDemoSceneActive = true;
         this.selectedTheme = null;
+        this.videoTexture = null;
     }
 
-    async init(canvas) {
-        this.canvas = canvas;
-        this.engine = new BABYLON.Engine(this.canvas, true, {preserveDrawingBuffer: false, stencil: false});
+    async init() {
+        document.getElementById('renderCanvas')
+
+        const tmpCanvas = document.createElement("canvas");
+        this.engine = new BABYLON.Engine(tmpCanvas, true, {preserveDrawingBuffer: false, stencil: false});
+
+        const renderCanvas = document.getElementById('renderCanvas');
+        const captureCanvas = document.getElementById('captureCanvas');
 
         this.photoScene = new PhotoScene(this);
-        this.photoScene.init();
+        this.photoScene.init(renderCanvas);
         this.onThemeSelected('ShroomsScene');
         this.photoScene.onOptionSelected('shroom2');
 
-        this.demoScene = new DemoScene(this, 'DemoScene', this.canvas);
-        await this.demoScene.onSceneActivated();
+        // this.demoScene = new DemoScene(this, 'DemoScene', renderCanvas);
+        // await this.demoScene.onSceneActivated();
+        // this.onThemeSelected('DemoScene');
 
-        this.onThemeSelected('DemoScene');
+        this.captureScene = new CameraScene(this);
+        this.captureScene.init(captureCanvas);
 
         this.engine.runRenderLoop(() => this.render());
 
@@ -39,8 +47,13 @@ export default class SceneManager {
             this.demoScene.update(this.deltaTime);
             this.demoScene.render();
         } else {
-            //this.photoScene.update(this.deltaTime);
-            this.photoScene.render();
+            if (this.engine.activeView === this.photoScene.view) {
+                this.photoScene.update(this.deltaTime);
+                this.photoScene.render();
+            } else if (this.engine.activeView === this.captureScene.view) {
+                this.captureScene.update(this.deltaTime);
+                this.captureScene.render();
+            }
         }
     }
 

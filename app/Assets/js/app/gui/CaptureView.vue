@@ -66,7 +66,7 @@ const SESSION_TIMEOUT_MS = 180000; //3min
 
 export default {
     name: "CaptureView",
-    inject: ['lang', 'langService'],    //, 'faceDetect'
+    inject: ['lang', 'langService', 'faceDetect'],
     data() {
         return {
             images: [],
@@ -147,8 +147,10 @@ export default {
             this.sessionAlertTimer = setTimeout(() => this.isSessionAlertVisible = true, SESSION_TIMEOUT_MS);
         },
         finishCapture() {
-            //this.faceDetect.enableDetector(false);
-            this.$emit('captureViewClose');
+            if(this.faceDetect) {
+              this.faceDetect.enableDetector(false);
+              this.$emit('captureViewClose');
+            }
         },
         resetView() {
             this.selectedImage = null;
@@ -165,11 +167,11 @@ export default {
             this.isCaptureInProgress = false;
             this.isOptionsOpen = false;
             this.selectedTheme = MainSceneInstance.getActiveTheme();
-           // this.faceDetect.enableDetector(false);
+           this.faceDetect.enableDetector(false);
         },
         openGallery() {
             if (!this.isCaptureInProgress) {
-                //this.faceDetect.enableDetector(false);
+                this.faceDetect.enableDetector(false);
                 this.isGalleryOpen = true;
                 this.isOptionsOpen = false;
                 this.isThemesOpen = false;
@@ -181,7 +183,7 @@ export default {
         },
         openThemes() {
             if (!this.isCaptureInProgress) {
-                //this.faceDetect.enableDetector(false);
+                this.faceDetect.enableDetector(false);
                 this.isThemesOpen = true;
                 this.isGalleryOpen = false;
                 this.isOptionsOpen = false;
@@ -192,14 +194,14 @@ export default {
             }
         },
         closeGallery() {
-            //this.enableFaceDetection();
+            this.enableFaceDetection();
             this.isGalleryOpen = false;
             if (!this.isThemesOpen) {
                 this.isDynamicBackgroundOpen = false;
             }
         },
         closeThemes() {
-            //this.enableFaceDetection();
+            this.enableFaceDetection();
             this.isThemesOpen = false;
             if (!this.isGalleryOpen) {
                 this.isDynamicBackgroundOpen = false;
@@ -253,7 +255,7 @@ export default {
             this.isShareViewOpen = false;
             this.isDownloadViewOpen = false;
             this.isOptionsOpen = false;
-            //this.enableFaceDetection();
+            this.enableFaceDetection();
         },
         selectImage(image) {
             this.selectedImage = image;
@@ -321,12 +323,12 @@ export default {
                 this.isOptionsOpen = true;
             }
         },
-        // enableFaceDetection() {
-        //     if (this.enableDetectorTimer) {
-        //         clearTimeout(this.enableDetectorTimer);
-        //     }
-        //     this.enableDetectorTimer = setTimeout(() => this.faceDetect.enableDetector(true), 600);
-        // }
+        enableFaceDetection() {
+            if (this.enableDetectorTimer) {
+                clearTimeout(this.enableDetectorTimer);
+            }
+            this.enableDetectorTimer = setTimeout(() => this.faceDetect.enableDetector(true), 600);
+        }
     },
     mounted() {
         document.addEventListener('click', function (event) {

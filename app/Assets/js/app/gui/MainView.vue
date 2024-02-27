@@ -9,7 +9,7 @@
         <capture-view :class="{visible: isCaptureViewVisible}" :open="isCaptureViewVisible" class="capture-view"
                       @captureViewClose="reset"/>
 
-<!--        <face-detection-debug />-->
+        <face-detection-debug />
         <loading-view/>
     </div>
 </template>
@@ -72,7 +72,7 @@ export default {
         }
     },
     mounted() {
-        MainSceneInstance.init(document.getElementById('renderCanvas'));
+        MainSceneInstance.init();
     }
 }
 </script>

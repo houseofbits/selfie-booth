@@ -15,8 +15,10 @@ export default class PhotoScene extends BaseScene {
         this.selectedParams = null;
     }
 
-    init() {
+    init(canvas) {
         const camera = new BABYLON.ArcRotateCamera("Camera", 0, BABYLON.Angle.FromDegrees(90).radians(), 2270, new BABYLON.Vector3(0, 0, 0), this.scene);
+        this.registerView(camera, canvas);
+
         this.params = getPhotoSceneParams();
         this.loadTextures();
         this.createGeometry();
@@ -24,9 +26,10 @@ export default class PhotoScene extends BaseScene {
         this.material = new BasicCameraMaterial(this.scene, 'MainMaterial');
         this.mainPlane.material = this.material.getMaterial();
         this.initMaterial();
-        // this.createVideoTexture();
+        this.createVideoTexture();
+
         // this.createVirtualCameraTexture('Virtual Webcam');
-        this.deviceEnumerationProcess();
+        // this.deviceEnumerationProcess();
     }
 
     onVideoTextureCreated() {

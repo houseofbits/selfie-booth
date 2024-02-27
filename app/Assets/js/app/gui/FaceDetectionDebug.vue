@@ -19,6 +19,8 @@ export default {
     },
     methods: {
         objectDetected(detectionService) {
+            // console.log(detectionService);
+
             this.width = detectionService.detectedWidth;
             this.height = detectionService.detectedHeight;
             this.left = detectionService.detectedX;
@@ -37,6 +39,7 @@ export default {
         }
     },
     mounted() {
+      FaceDetectionServiceInstance.enableDetector(true);
         FaceDetectionServiceInstance.addDetectionCallback(this.objectDetected);
     }
 }
@@ -50,6 +53,7 @@ export default {
     background-color: rgba(255, 0, 0, 0.4);
     width: 100px;
     height: 100px;
+    z-index: 1001;
 
     &.detected {
         background-color: rgba(0, 255, 0, 0.4);

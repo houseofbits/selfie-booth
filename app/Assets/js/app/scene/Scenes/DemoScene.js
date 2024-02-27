@@ -24,7 +24,7 @@ export default class DemoScene extends BaseScene {
             this.scene);
         //camera.attachControl(mainScene.canvas, true);
 
-        //this.registerView(camera);
+        // this.registerView(camera, targetCanvas);
 
         this.itemColumns = [[], [], [], [], []];
         this.itemsForRemoval = [];

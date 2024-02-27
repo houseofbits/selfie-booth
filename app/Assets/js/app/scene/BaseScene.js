@@ -9,6 +9,11 @@ export default class BaseScene {
         this.videoTexture = null;
         this.sceneManager = sceneMnager;
         this.isStreaming = false;
+        this.view = null;
+    }
+
+    registerView(camera, canvas) {
+        this.view = this.sceneManager.engine.registerView(canvas, camera);
     }
 
     render() {
@@ -24,7 +29,7 @@ export default class BaseScene {
         BABYLON.VideoTexture.CreateFromWebCam(this.scene, (videoTexture) => {
             this.videoTexture = videoTexture;
             this.onVideoTextureCreated();
-        }, {deviceId: '', maxWidth: 1080, maxHeight: 1920});
+        }, {maxWidth: 1080, maxHeight: 1920});
     }
 
     update(dt) {
